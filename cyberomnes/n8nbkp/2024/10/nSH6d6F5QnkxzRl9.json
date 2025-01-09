@@ -1,0 +1,40 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-10-01T17:56:22.975Z",
+  "id": "nSH6d6F5QnkxzRl9",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Omnestalk stream receive",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "a45887cf-1518-45bc-a0bf-da9bb1ac4392",
+        "options": {}
+      },
+      "id": "8617ba45-bdf6-49ea-b211-79f8e376cbf7",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        600
+      ],
+      "webhookId": "a45887cf-1518-45bc-a0bf-da9bb1ac4392"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-10-01T17:58:58.000Z",
+  "versionId": "9ae50dc9-b3e2-4371-8941-1f4ab591cb18"
+}

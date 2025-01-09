@@ -1,0 +1,396 @@
+{
+  "active": true,
+  "connections": {
+    "Chat OpenAI1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Filter only confirmed and with set time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format response": {
+      "main": [
+        [
+          {
+            "node": "Stringify Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract start, end and name": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter only confirmed and with set time": {
+      "main": [
+        [
+          {
+            "node": "Extract start, end and name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Format response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stringify Response": {
+      "main": [
+        [
+          {
+            "node": "Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-15T17:42:42.767Z",
+  "id": "UYsd221dhXhlgLOY",
+  "meta": null,
+  "name": "My workflow 16",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "87e84f65-f518-419e-bfd3-6dcf981e482f",
+      "name": "Chat OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        280,
+        999
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get calendar availability and compose a response\nMake sure to update the Workflow ID if you are running this as 2 workflows",
+        "height": 241.70645019745504,
+        "width": 676.1951194231482
+      },
+      "id": "f6606e7c-361a-44af-9bc2-bede98a88ee8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        200,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "avelarafonso@gmail.com",
+          "mode": "list",
+          "cachedResultName": "avelarafonso@gmail.com"
+        },
+        "returnAll": true,
+        "options": {
+          "timeMin": "={{ $now.minus(1, 'day').toISO() }}",
+          "timeMax": "={{ $now.plus(1, 'month').toISO() }}",
+          "singleEvents": true
+        }
+      },
+      "id": "8e60dc52-eb44-4cf1-be1b-5b927345adc8",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "position": [
+        -500,
+        1321
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "akguFeu0y70N22uG",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "concatenateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "response",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "sort",
+        "options": {}
+      },
+      "id": "3fd71308-0791-483b-99b5-eb46b66302eb",
+      "name": "Format response",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        380,
+        1321
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "response",
+              "value": "={{ JSON.stringify($json.response) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f46c2cf9-475e-4089-8d7e-bccd0949e25c",
+      "name": "Stringify Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        600,
+        1321
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "start",
+              "value": "={{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.summary }}"
+            },
+            {
+              "name": "sort",
+              "value": "={{ $json.start.dateTime }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9bf4df71-6c5f-4c0a-b37b-2a0151876fec",
+      "name": "Extract start, end and name",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -80,
+        1321
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "confirmed"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.start.dateTime }}",
+              "operation": "notEqual",
+              "value2": "={{ undefined }}"
+            }
+          ]
+        }
+      },
+      "id": "0e6a6919-01ce-4a70-b780-e46cc2880167",
+      "name": "Filter only confirmed and with set time",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        -300,
+        1321
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Get all query google events for the next month and extract relevant data",
+        "height": 224.60561166142082,
+        "width": 810.4923211935056
+      },
+      "id": "d8b75db3-42fa-4dfd-b48e-3e84aaef531c",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -540,
+        1260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Wrap the result in `response` object and return ",
+        "height": 220.42397542781927,
+        "width": 444.4130232558142
+      },
+      "id": "deb84f84-f4be-4b99-928c-9127d93bd7c3",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        333,
+        1261
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "sort"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e76dc538-95e2-45f1-a9b5-da0966af059d",
+      "name": "Sort",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        140,
+        1321
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "path": "a5e8cd50-52aa-4bba-aae3-31a79202624b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e9ed4b24-1b35-442c-a128-5ea1eb2c1ecb",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -140,
+        760
+      ],
+      "webhookId": "a5e8cd50-52aa-4bba-aae3-31a79202624b"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "20de451e-b6d0-4e31-9791-97623fce5b67",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "text": "=these are my booked dates {{ $json.response }}, all other timnes from 9:00am to 6:00pm are available",
+        "options": {
+          "systemMessage": "=You are a scheduling assistant. I need you to check my availability and propose an appropriate response. \nAim to get a specific time, rather than just a day. When checking my availability, make sure that there's enough time in between meetings.\nIf I'm not available, ALWAYS propose a new time based on my availability. When proposing a new time, always leave 15 minutes buffer from previous meeting.\nToday date and time is: {{ $now.toISO() }}.\n\nwrite this message as if you were telling the client our next available tiem. propose 2 other times available as well. Ask the client what he would prefer."
+        }
+      },
+      "id": "386a3d15-7585-4b85-bca1-9672a200d8de",
+      "name": "Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        460,
+        460
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {
+    "Stringify Response": [
+      {
+        "json": {
+          "response": "[{\"start\":\"Thursday, August 22, 2024, 17:50:00 EDT\",\"end\":\"Thursday, August 22, 2024, 18:50:00 EDT\",\"name\":\"Sarah habit coach\"},{\"start\":\"Wednesday, August 28, 2024, 11:30:00 EDT\",\"end\":\"Wednesday, August 28, 2024, 12:30:00 EDT\",\"name\":\"Dr peter  Afonso \"},{\"start\":\"Wednesday, September 11, 2024, 11:30:00 EDT\",\"end\":\"Wednesday, September 11, 2024, 12:30:00 EDT\",\"name\":\"Dr peter  Afonso \"}]"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-15T22:04:31.000Z",
+  "versionId": "7e9aa8e6-cc92-47cf-83f6-8843c9f0a257"
+}

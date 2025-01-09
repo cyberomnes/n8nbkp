@@ -1,0 +1,40 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-08-12T19:12:36.369Z",
+  "id": "z9rD95NBmI7UuN0f",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "OZap GHL",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fe8571f3-eec4-45e6-b346-ffbcfaa3a9fb",
+        "options": {}
+      },
+      "id": "6a2bffcb-e57f-4069-a808-3e5a88d5ce0c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        360
+      ],
+      "webhookId": "fe8571f3-eec4-45e6-b346-ffbcfaa3a9fb"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-12T19:12:47.000Z",
+  "versionId": "8db3b899-6915-4af7-b876-de4b9460761f"
+}

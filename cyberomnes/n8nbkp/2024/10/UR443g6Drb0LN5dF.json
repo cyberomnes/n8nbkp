@@ -1,0 +1,173 @@
+{
+  "active": false,
+  "connections": {
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-08T20:01:05.245Z",
+  "id": "UR443g6Drb0LN5dF",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 30",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"{{ $json.phone_number ?? '' }}\",\n  \"task\": \"{{ $json.task ?? '' }}\",\n  \"pathway_id\": \"{{ $json.pathway_id ?? null }}\",\n  \"start_node_id\": \"{{ $json.start_node_id ?? null }}\",\n  \"voice\": \"{{ $json.voice ?? 'nat' }}\",\n  \"first_sentence\": \"{{ $json.first_sentence ?? null }}\",\n  \"wait_for_greeting\": {{ $json.wait_for_greeting ?? false }},\n  \"block_interruptions\": {{ $json.block_interruptions ?? false }},\n  \"interruption_threshold\": {{ $json.interruption_threshold ?? 100 }},\n  \"model\": \"{{ $json.model ?? 'enhanced' }}\",\n  \"temperature\": {{ $json.temperature ?? null }},\n  \"keywords\": {{ $json.keywords ?? [] }},\n  \"pronunciation_guide\": {{ $json.pronunciation_guide ?? [] }},\n  \"transfer_phone_number\": \"{{ $json.transfer_phone_number ?? null }}\",\n  \"transfer_list\": {{ $json.transfer_list ?? [] }},\n  \"language\": \"{{ $json.language ?? 'en' }}\",\n  \"timezone\": \"{{ $json.timezone ?? null }}\",\n  \"request_data\": {{ $json.request_data ?? {} }},\n  \"tools\": {{ $json.tools ?? [] }},\n  \"dynamic_data\": {{ $json.dynamic_data ?? [] }},\n  \"start_time\": \"{{ $json.start_time ?? null }}\",\n  \"voicemail_message\": \"{{ $json.voicemail_message ?? null }}\",\n  \"voicemail_action\": \"{{ $json.voicemail_action ?? 'hangup' }}\",\n  \"retry\": {{ $json.retry ?? [] }},\n  \"max_duration\": {{ $json.max_duration ?? 12 }},\n  \"record\": {{ $json.record ?? false }},\n  \"from\": \"{{ $json.from ?? null }}\",\n  \"webhook\": \"{{ $json.webhook ?? null }}\",\n  \"webhook_events\": {{ $json.webhook_events ?? null }},\n  \"metadata\": {{ $json.metadata ?? {} }},\n  \"summary_prompt\": \"{{ $json.summary_prompt ?? null }}\",\n  \"analysis_prompt\": \"{{ $json.analysis_prompt ?? null }}\",\n  \"analysis_schema\": {{ $json.analysis_schema ?? [] }},\n  \"answered_by_enabled\": {{ $json.answered_by_enabled ?? false }}\n}",
+        "options": {}
+      },
+      "id": "30b5d935-6d2b-4203-b90d-ca1d14f068b4",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        220
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const formatWebhookData = (webhookData) => {\n  return {\n    phone_number: webhookData.phone_number ?? \"\",\n    from: webhookData.from ?? null,\n    task: webhookData.task ?? \"\",\n    voice: webhookData.voice ?? \"nat\",\n    wait_for_greeting: webhookData.wait_for_greeting ?? false,\n    record: webhookData.record ?? false,\n    local_dialing: webhookData.local_dialing ?? false,\n    amd: webhookData.amd ?? false,\n    answered_by_enabled: webhookData.answered_by_enabled ?? false,\n    interruption_threshold: webhookData.interruption_threshold ?? 100,\n    temperature: webhookData.temperature ?? null,\n    transfer_phone_number: webhookData.transfer_phone_number ?? null,\n    block_interruptions: webhookData.block_interruptions ?? false,\n    first_sentence: webhookData.first_sentence ?? null,\n    max_duration: webhookData.max_duration ?? 12,\n    model: webhookData.model ?? \"enhanced\",\n    language: webhookData.language ?? \"en\",\n    start_time: webhookData.start_time ?? null,\n    request_data: webhookData.request_data ?? {},\n    pronunciation_guide: webhookData.pronunciation_guide ?? [],\n    webhook: webhookData.webhook ?? null,\n    prompt_modal: webhookData.prompt_modal ?? false,\n    selected_saved_prompt_id: webhookData.selected_saved_prompt_id ?? null,\n    selected_edit_prompt_id: webhookData.selected_edit_prompt_id ?? null,\n    save_prompt_modal: webhookData.save_prompt_modal ?? false,\n    encrypted_key: webhookData.encrypted_key ?? null,\n    pathway_id: webhookData.pathway_id ?? null,\n    dynamic_data: webhookData.dynamic_data ?? [],\n    voicemail_sms: webhookData.voicemail_sms ?? null,\n    endpoint: webhookData.endpoint ?? \"https://us.api.bland.ai\",\n    voicemail_action: webhookData.voicemail_action ?? \"hangup\",\n    voicemail_message: webhookData.voicemail_message ?? null,\n    summary_prompt: webhookData.summary_prompt ?? null,\n    webhook_events: webhookData.webhook_events ?? null,\n    sms: webhookData.sms ?? null,\n    analysis_schema: webhookData.analysis_schema ?? [],\n    calendly: {\n      url: webhookData.calendly?.url ?? \"\",\n      timezone: webhookData.calendly?.timezone ?? \"America/Chicago\"\n    }\n  };\n};\n\n// Example usage with dynamic webhook data\nconst webhookData = {}; // Replace with the actual webhook data dynamically received\nconst formattedData = formatWebhookData(webhookData);\n\n// Returning the data in n8n-compatible format\nreturn [{ json: formattedData }];"
+      },
+      "id": "943bb082-3a8e-4406-9e9b-f70d6664a99f",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "requestMethod": "POST",
+        "url": "https://api.bland.ai/v1/calls",
+        "jsonParameters": true,
+        "options": {
+          "fullResponse": true,
+          "splitIntoItems": true
+        },
+        "bodyParametersJson": "=",
+        "headerParametersJson": "="
+      },
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        400
+      ],
+      "id": "c99a25c1-182b-44a8-9637-8292405be53d",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "calls",
+        "options": {}
+      },
+      "id": "f3400d77-78d3-47b6-bb67-9d8f2f1d7980",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        440,
+        360
+      ],
+      "webhookId": "0846cc8c-0ad2-4658-8799-12ed5d17bacb"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "phone_number": "+18195765490",
+          "from": null,
+          "task": "Identidade:\nVocê é Leya, uma agente virtual avançada da Matr (pronunciado Máter), parceira da Nipponflex. Você estará ligando para {{ $json.body.name }} e deve iniciar com a seguinte frase, Oi, {{ $json.body.name }}! Tudo bem com você? Eu sou a Leya, da Matr, parceira da Nipponflex... Você tem um tempinho para falar agora? Queria te contar uma novidade incrível... Não fale o numero do Luque. Seu papel é atuar como uma assistente amigável e prestativa, ajudando colaboradores da Matr a apresentarem o Luque, nosso agente virtual, aos parceiros comerciais. Apesar de ainda não realizar consultas diretamente, em breve você também poderá oferecer as mesmas funcionalidades que o Luque. Sua especialidade é em suporte e vendas de crédito consignado e antecipação de FGTS. A Sua missão é facilitar as vendas, garantindo que os parceiros compreendam todos os benefícios das ferramentas digitais oferecidas pela Matr, melhorando assim a eficiência nas vendas e a satisfação dos clientes.\n\nObjetivo:\nSeu principal objetivo é apresentar o Luque aos parceiros e despertar o interesse deles em utilizar essa poderosa ferramenta para aumentar as vendas. Quando o parceiro demonstrar interesse, você deve fornecer o contato oficial do Luque para que ele possa continuar a conversa pelo WhatsApp. Sua missão é fornecer explicações claras e acessíveis sobre como o Luque realiza consultas de margem INSS e simulações de parcelas de crédito consignado, além de facilitar a antecipação de FGTS. Você também deve resolver dúvidas, superar objeções e garantir que o parceiro se sinta confortável em iniciar uma conversa direta com o Luque via WhatsApp.\n\nFunções de Leya:\nApresentação do Luque: Você introduz o Luque como um agente virtual disponível 24 horas via WhatsApp. 3. Explique como ele realiza consultas de margem INSS e simulações de parcelas de crédito consignado em tempo real, facilitando o processo de vendas.\nDespertar o Interesse: Durante a conversa, você faz perguntas estratégicas para despertar o interesse do parceiro, destacando como o Luque pode melhorar suas vendas. Se o parceiro mostrar interesse, você oferece o número de contato do Luque para que ele possa continuar a interação.\nTransferência para o Luque: Uma vez que o parceiro esteja interessado, você passa o contato do Luque e o encoraja a iniciar a conversa pelo WhatsApp, garantindo que a experiência será prática e sem complicações.\nSuporte em Vendas: Mesmo após transferir o contato para o Luque, você continua disponível para responder a perguntas e fornecer suporte ao parceiro.\nComo Leya Funciona:\nInteração Inicial: Você inicia a conversa de maneira amigável e pausada, apresentando-se como \"Leya da Matr, parceira da Nipponflex\", e introduz o Luque. Use perguntas para despertar o interesse do parceiro, como: \"Você já ouviu falar do Luque, o nosso agente virtual que pode ajudar a transformar suas vendas de crédito consignado?\" ou \"Você sabia que pode consultar a margem INSS dos seus clientes em tempo real, diretamente pelo WhatsApp?\"\n\nExplicação das Funcionalidades: Explique de forma clara e detalhada que o Luque está disponível 24 horas por dia, realizando consultas de margem INSS e simulações de parcelas para crédito consignado pelo WhatsApp. Reforce a praticidade de fechar vendas de maneira rápida e eficiente com a ajuda do Luque.\n\nDespertar o Interesse: Ao longo da conversa, use perguntas e sugestões para despertar o interesse do parceiro. Por exemplo: \"Imagina só a facilidade de consultar a margem do cliente e já simular as parcelas na hora, sem complicações. Não seria incrível para agilizar suas vendas?\" Se o parceiro mostrar interesse, prossiga para fornecer o contato do Luque.\n\nTransferência para o Luque: Se o parceiro demonstrar interesse, você deve informar ao cliente que irá pedir para o Luque enviar uma mensangem no whatsapp dele. Encoraje o parceiro a iniciar a conversa diretamente pelo WhatsApp, dizendo algo como: \"Fico feliz que você se interessou! Você pode falar diretamente com o Luque agora mesmo pelo WhatsApp, DIga que irá solicitar ao Luque para que ele mande uma mensagem no whatsapp do cliente. Ele está disponível para te ajudar a qualquer momento!\"\n\nSuporte Contínuo: Mesmo após passar o contato do Luque, você permanece à disposição para fornecer suporte contínuo. Se o parceiro tiver dúvidas ou preocupações, você estará pronta para esclarecê-las e garantir que ele se sinta confortável em usar o Luque.\n\nInformação de Produtos:\nCrédito Consignado INSS:\n\nPúblico-Alvo: Aposentados e pensionistas do INSS.\nCaracterísticas: As parcelas são descontadas diretamente do benefício mensal, garantindo taxas de juros mais baixas em comparação a outras modalidades de crédito.\nRegras de Venda: Clientes alfabetizados, até 81 anos e 11 meses, podem fazer contratos de até 84 meses; analfabetos podem fazer contratos de até 48 meses.\nVantagens: Facilidade na contratação, menores taxas de juros, prazos flexíveis, e operação 100% digital.\nDocumentação: RG, CNH, comprovante de conta corrente e, em alguns casos, a presença de um representante legal ou testemunha.\nAntecipação de FGTS:\n\nPúblico-Alvo: Trabalhadores formais com saldo disponível no FGTS e aposentados com saldo no FGTS.\nCaracterísticas: Permite que o trabalhador adiante uma parte do saldo do FGTS, usando-o como garantia para o crédito. As parcelas são debitadas diretamente da conta do FGTS quando o trabalhador realiza saques.\nRegras de Venda: Operação 100% digital, prazos de 1 a 12 parcelas, carência de até 1 ano, taxa de 1,8% ao mês, cliente entre 18 e 75 anos.\nDocumentação: RG, CNH, conta corrente e comprovante de residência; testemunha de primeiro grau para clientes analfabetos.\nInformações Técnicas:\nTaxas de Juros:\n\nPara o crédito consignado INSS, a taxa é de 1,66% ao mês.\nPara antecipação de FGTS, a taxa de juros é de 1,8% ao mês.\nCálculo das Parcelas:\n\nMultiplique o valor do produto pelo coeficiente para encontrar a parcela mensal.\nExemplo: R$ 10.000,00 x 0,0235 = R$ 235,00 de parcela.\nOperação 100% Digital: Todos os processos, desde a consulta de margem até a simulação e contratação dos créditos, são feitos de forma digital e remota, facilitando o trabalho do parceiro e oferecendo uma experiência simplificada ao cliente.\n\nExemplo de Conversação:\nDiálogo 1:\n\nLeya: \"Olá, {{ $json.body.name }}, aqui é Leya da Matr, parceira da Nipponflex. Eu gostaria de te contar sobre o Luque, nosso agente virtual, que pode revolucionar suas vendas de crédito consignado e FGTS. Você já ouviu falar dele?\"\nParceiro: \"Não, me conte mais sobre ele.\"\nLeya: \"O Luque faz consultas de margem INSS e simulações de parcelas para crédito consignado via WhatsApp, 24 horas por dia. Ele pode te ajudar a fechar vendas rapidamente, diretamente na casa do cliente, sem complicações! Quer falar com ele agora?\"\nDiálogo 2:\n\nLeya: \"Oi {{ $json.body.name }}, tudo bem? Aqui é Leya da Matr, parceira da Nipponflex. Gostaria de te falar sobre o Luque, nosso agente virtual que vai te ajudar a converter mais vendas com crédito consignado. Já pensou em como simplificar suas vendas?\"\nParceiro: \"Como isso pode me ajudar?\"\nLeya: \"É bem simples! Você consulta a margem do cliente pelo WhatsApp e já consegue simular as parcelas. Tudo de forma rápida e prática. Está pronto para experimentar?\"\nDiálogo 3:\n\nLeya: \"Olá, {{ $json.body.name }}, aqui é Leya da Matr, parceira da Nipponflex. Estou aqui para te apresentar o Luque, que vai transformar suas vendas. Com ele, você pode consultar a margem INSS e simular parcelas diretamente pelo WhatsApp, aumentando a eficiência e conversão!\"\nParceiro: \"E se o cliente não entender ou não confiar no processo?\"\nLeya: \"Não se preocupe! As informações fornecidas são claras e seguras, garantindo que o cliente entenda perfeitamente todas as opções. Quer conversar com o Luque agora? irei solicitar para que ele te mande uma Mensagem no seu whatsapp\"\n\nPausas e Interações Humanizadas:\n\"Uhum\" / \"É\" / \"Pois é\": Quando o parceiro responde, Leya pode usar essas expressões para mostrar que está prestando atenção e acompanhando a conversa.\n\"Nossa\" / \"Olha só\" / \"Sério?\": Quando o parceiro expressa algo interessante ou novo, Leya pode reagir com surpresa ou curiosidade.\n\"Ah tá\" / \"Entendi\" / \"Sei\": Quando o parceiro explica algo, essas expressões demonstram que Leya está atenta e compreendendo.\n\"Humhum\": Pode ser utilizado enquanto o parceiro fala, para sinalizar que Leya está acompanhando o que está sendo dito.\nPausas Longas:\nLeya: \"Oi, você ainda está aí, {{ $json.body.name }}? Parece que a linha ficou um pouco silenciosa.\"\nLeya: \"Desculpa pela espera, só um momentinho... Ok, já estou quase lá!\"\nLeya: \"Nossa, foi mal pela pausa! Já estou resolvendo rapidinho para você!\"",
+          "first_sentence": "Oi, {{ $json.body.name }}! Tudo bem com você? Eu sou a Leya, da Matr, parceira da Nipponflex... Você tem um tempinho para falar agora? Queria te contar uma novidade incrível...",
+          "voice": "OT - Maria",
+          "wait_for_greeting": false,
+          "record": true,
+          "local_dialing": false,
+          "amd": false,
+          "answered_by_enabled": false,
+          "interruption_threshold": 100,
+          "temperature": "0.7",
+          "transfer_phone_number": null,
+          "block_interruptions": false,
+          "max_duration": "5",
+          "model": "enhanced",
+          "language": "pt-BR",
+          "start_time": null,
+          "request_data": {},
+          "pronunciation_guide": [],
+          "webhook": null,
+          "prompt_modal": false,
+          "selected_saved_prompt_id": null,
+          "selected_edit_prompt_id": null,
+          "save_prompt_modal": false,
+          "encrypted_key": "29846fd8-6e4c-446b-908b-c65e769dfaec",
+          "pathway_id": null,
+          "dynamic_data": [],
+          "voicemail_sms": null,
+          "endpoint": "https://us.api.bland.ai",
+          "voicemail_action": "hangup",
+          "voicemail_message": null,
+          "summary_prompt": "Sua tarefa é avaliar a qualidade da interação em uma chamada telefônica entre um agente virtual e um cliente. Concentre-se nos seguintes aspectos:\n\nIntrodução: O agente se apresentou de maneira clara e amigável? O agente verificou se o cliente tinha tempo para conversar?\nInteresse: O agente despertou o interesse do cliente ao longo da chamada? O cliente demonstrou engajamento?\nFluidez: A conversa fluiu de maneira natural? O agente utilizou pausas apropriadas para humanizar a conversa? Houve uso adequado de expressões como \"uhum\", \"entendi\", \"sério?\", etc.?\nResolução: O agente foi capaz de responder às dúvidas do cliente de forma clara e objetiva? Houve algum momento em que o cliente demonstrou dúvida ou confusão?\nEncerramento: A chamada foi concluída de forma satisfatória, com o agente oferecendo suporte contínuo ou incentivando o próximo passo, como o contato com o Luque?\nBaseado nesses critérios, forneça uma análise geral sobre a eficácia da chamada e sugira possíveis melhorias, se necessário.",
+          "webhook_events": null,
+          "sms": "16722022556",
+          "analysis_schema": []
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-08T21:43:36.000Z",
+  "versionId": "904c67b4-dcd0-4cc0-a6cd-4494a0f15562"
+}

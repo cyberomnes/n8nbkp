@@ -1,0 +1,62 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-14T12:34:57.885Z",
+  "id": "MAtqEIDjChXxF8ze",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "otalk site webhook",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "724a083d-5f49-43da-a42e-22ec439f5b79",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnestalk.com/wp-json/bit-integrations/v1/callback/7b5fa8b0-a81b-43a0-b4e6-f59bcec4aa33",
+        "options": {}
+      },
+      "id": "637a3a23-70e9-487a-bc38-361dfa7f8320",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1780,
+        540
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-14T12:34:57.885Z",
+  "versionId": "08035bcc-0685-430c-b435-e1ac8c1d0cab"
+}

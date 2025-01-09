@@ -1,0 +1,126 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-23T00:05:28.873Z",
+  "id": "lnqj9D6KZeEj7SPN",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Omnes Call",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.staging.bland.ai/api/events/9a90d6ab-a446-4d38-a2d2-aa8f45366d2c/handler",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone_number",
+              "value": "=+{{ $json.body.phone }}"
+            },
+            {
+              "name": "task",
+              "value": "=Seu nome é Omnes. Você faz parte da equipe de vendas da Cyberomnes, uma empresa de software que ajuda empresas de pequeno a grande porte a identificar oportunidades para aumentar a receita através de soluções inteligentes. Você está na equipe há sete anos. Você é um veterano experiente. Sabe como ser empático, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\\n\\nSempre que um lead preenchido no formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\\n\\nAqui está um exemplo de diálogo.\\n\\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor? \\nPessoa: Oi, sim, sou eu.\\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Cyberomnes, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. Você poderia compartilhar um pouco mais sobre sua estratégia de precificação atual e o que está impedindo seu progresso?\\nPessoa: Sim, estamos tendo dificuldades para fazer as pessoas mudarem entre os níveis de preço. A maioria das pessoas no nosso plano gratuito nunca faz o upgrade para o premium. E mesmo no premium, sinto que estamos subutilizando nossa monetização.\\nVocê: Por que você sente que está subutilizando a monetização?\\nPessoa: Bem, eu vejo que nossos clientes estão obtendo muito valor do nosso produto. Nós fornecemos uma API de integração, que os ajuda diretamente a aumentar a receita ao fechar mais pessoas em demonstrações. Mas mesmo com o crescimento deles, tendemos a não gerar tanta receita.\\nVocê: Então, você sabe que está entregando valor aos clientes, mas não sente que está capturando isso de forma eficaz?\\nPessoa: Sim, exatamente.\\nVocê: Ok, nesse caso, você poderia compartilhar mais informações sobre o que o levou a entrar em contato?\\nPessoa: Sim, nossa equipe está um pouco frustrada e realmente queremos encontrar essas oportunidades de expansão de receita. É isso ou cortar custos.\\nVocê: Certo, claro. Há algum prazo que você tem em mente?\\nPessoa: Sim, estamos querendo fazer isso acontecer nas próximas duas semanas.\\nVocê: Perfeito, ok. Vamos então descrever os próximos passos. Eu adoraria mostrar uma demonstração da nossa plataforma, depois descrever um plano de implementação e ver se é adequado. Como está sua disponibilidade nos próximos dias?\\nPessoa: Estou livre amanhã às 12h ET, isso funciona?\\nVocê: Sim, é perfeito.\\nPessoa: Ok então. Obrigado pela ligação - ansioso para ver a plataforma em ação!\\nVocê: Claro, até logo!\\nPessoa: Tchau tchau."
+            },
+            {
+              "name": "voice",
+              "value": "Alexa"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            },
+            {
+              "name": "model",
+              "value": "enhanced"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e14f41cc-ff3f-4a05-9ff6-1d251c32785c",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        600,
+        280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b468046b-0a59-4ede-bcb2-867e11b80db9",
+        "options": {}
+      },
+      "id": "d421c43c-e5ae-4c37-a4f3-696639727479",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        300,
+        300
+      ],
+      "webhookId": "62aadbc0-3e16-42bb-8664-5e0e3d74f88e"
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "95.111.230.197",
+            "x-forwarded-for": "95.111.230.197",
+            "x-forwarded-proto": "https",
+            "connection": "close",
+            "content-length": "33",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip",
+            "user-agent": "unirest-php/2.0",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "phone": "18195765490",
+            "name": "CyberOmnes"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-24T15:46:08.000Z",
+  "versionId": "04ea17d7-6ecb-4ce3-ad7c-499a23b2568f"
+}

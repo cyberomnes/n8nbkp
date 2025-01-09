@@ -1,0 +1,92 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-07T16:13:42.250Z",
+  "id": "s3vqWkEKg8quqL6m",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 10",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a1bbaf2a-d2f5-4a2f-b5d1-c52772b92026",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        580,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bland.ai/v1/numbers/get_available_numbers",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMyNTI1MzcsInN1YiI6ImU3MzhhYTU0LTM4YzItNGQ1My04ZWYyLTU4MDg3NTVkNGRiMSIsImlhdCI6MTcyMzAwMjUzN30.cNpeSX51nca47QBPP-o_KDqHgdbjZO_LxaUnrTOhLNQ"
+            },
+            {
+              "name": "baggage",
+              "value": "sentry-environment=production,sentry-public_key=41b99c49dd75fd26651e498f44064991,sentry-trace_id=b4db833cee174142afb293f92ccd4b51,sentry-replay_id=f0fdcf05c0964fa9acd98cb7e09a6720,sentry-sample_rate=0.1,sentry-sampled=false"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "e738aa54-38c2-4d53-8ef2-5808755d4db1"
+            },
+            {
+              "name": "area_code",
+              "value": "819"
+            },
+            {
+              "name": "country_code",
+              "value": "CA"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "20909833-1792-478d-850c-a34a9897287e",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        800,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-07T18:23:51.000Z",
+  "versionId": "aebac51b-2e4a-428f-97bf-4e149bc91915"
+}

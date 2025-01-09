@@ -1,0 +1,74 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-12T17:35:48.801Z",
+  "id": "jaVMsyYtiBAtEQkH",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 32",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "0971ff2b-375d-41a2-b285-56adac392800",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        580,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bland.ai/v1/convo_pathway/3aa320a4-ca4e-4598-9dfe-1e328e875350",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"name\": \"Myleda OGenio V2\",\n  \"description\": \"Caminho Conversacional Myleda Growth Conference\",\n  \"nodes\": [\n    {\n      \"id\": \"1\",\n      \"data\": {\n        \"name\": \"Início\",\n        \"prompt\": \"Olá! Tudo bem? Sou a Myleda, sua nova amiga virtual. Vamos descobrir como o Gênio IA pode transformar sua comunicação, seja por voz ou texto!\",\n        \"isStart\": true,\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"2\",\n      \"data\": {\n        \"name\": \"Explorar Necessidades\",\n        \"prompt\": \"Como você acha que a inteligência artificial pode dar aquela turbinada no seu negócio?\",\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.5,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"3\",\n      \"data\": {\n        \"name\": \"Apresentar Benefícios\",\n        \"prompt\": \"Com o Gênio IA, você pode automatizar pré-venda, acelerar vendas e oferecer suporte 24 horas por dia. Incrível, né?\",\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.4,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"4\",\n      \"data\": {\n        \"name\": \"Engajamento\",\n        \"prompt\": \"Como você acha que essa eficiência pode impulsionar seu negócio?\",\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.4,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"5\",\n      \"data\": {\n        \"name\": \"Oferecer Agendamento\",\n        \"prompt\": \"Curtiu? Vamos marcar um bate-papo para eu te mostrar como o Gênio IA pode revolucionar o seu atendimento?\",\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"6\",\n      \"data\": {\n        \"name\": \"Coletar Data e Hora\",\n        \"prompt\": \"Ótimo! Qual seria a melhor data e hora para você?\",\n        \"extractVars\": [[\"date_time\", \"string\", \"Data e hora sugeridas\"]],\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"7\",\n      \"data\": {\n        \"name\": \"Verificar Disponibilidade\",\n        \"prompt\": \"Deixe-me verificar os horários disponíveis...\",\n        \"modelOptions\": {\n          \"modelType\": \"webhook\",\n          \"temperature\": 0.2,\n          \"skipUserResponse\": true\n        }\n      },\n      \"type\": \"Webhook\"\n    },\n    {\n      \"id\": \"8\",\n      \"data\": {\n        \"name\": \"Oferecer Horários\",\n        \"prompt\": \"Temos os seguintes horários disponíveis: {{available_times}}. Qual você prefere?\",\n        \"extractVars\": [[\"selected_time\", \"string\", \"Horário escolhido\"]],\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"9\",\n      \"data\": {\n        \"name\": \"Coletar Informações\",\n        \"prompt\": \"Perfeito! Para finalizar, pode me passar seu nome completo e e-mail?\",\n        \"extractVars\": [[\"full_name\", \"string\", \"Nome completo do usuário\"], [\"email\", \"string\", \"E-mail do usuário\"]],\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"Default\"\n    },\n    {\n      \"id\": \"10\",\n      \"data\": {\n        \"name\": \"Confirmar Agendamento\",\n        \"prompt\": \"Agendamento confirmado! Obrigada, {{full_name}}. Mal posso esperar pela nossa conversa!\",\n        \"modelOptions\": {\n          \"modelType\": \"webhook\",\n          \"temperature\": 0.2,\n          \"skipUserResponse\": true\n        }\n      },\n      \"type\": \"Webhook\"\n    },\n    {\n      \"id\": \"11\",\n      \"data\": {\n        \"name\": \"Despedida\",\n        \"prompt\": \"Sem problemas! Se quiser saber mais sobre o Gênio IA, estou à disposição. Foi um prazer falar com você!\",\n        \"modelOptions\": {\n          \"modelType\": \"smart\",\n          \"temperature\": 0.3,\n          \"skipUserResponse\": false,\n          \"block_interruptions\": true\n        }\n      },\n      \"type\": \"End\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"1-2\",\n      \"source\": \"1\",\n      \"target\": \"2\",\n      \"label\": \"Usuário responde\"\n    },\n    {\n      \"id\": \"2-3\",\n      \"source\": \"2\",\n      \"target\": \"3\",\n      \"label\": \"Usuário responde\"\n    },\n    {\n      \"id\": \"3-4\",\n      \"source\": \"3\",\n      \"target\": \"4\",\n      \"label\": \"Usuário responde\"\n    },\n    {\n      \"id\": \"4-5\",\n      \"source\": \"4\",\n      \"target\": \"5\",\n      \"label\": \"Usuário responde\"\n    },\n    {\n      \"id\": \"5-6\",\n      \"source\": \"5\",\n      \"target\": \"6\",\n      \"label\": \"Usuário concorda\"\n    },\n    {\n      \"id\": \"6-7\",\n      \"source\": \"6\",\n      \"target\": \"7\",\n      \"label\": \"Usuário fornece data e hora\"\n    },\n    {\n      \"id\": \"7-8\",\n      \"source\": \"7\",\n      \"target\": \"8\",\n      \"label\": \"Horários disponíveis recebidos\"\n    },\n    {\n      \"id\": \"8-9\",\n      \"source\": \"8\",\n      \"target\": \"9\",\n      \"label\": \"Usuário escolhe horário\"\n    },\n    {\n      \"id\": \"9-10\",\n      \"source\": \"9\",\n      \"target\": \"10\",\n      \"label\": \"Usuário fornece informações\"\n    },\n    {\n      \"id\": \"10-11\",\n      \"source\": \"10\",\n      \"target\": \"11\",\n      \"label\": \"Agendamento confirmado\"\n    },\n    {\n      \"id\": \"5-11\",\n      \"source\": \"5\",\n      \"target\": \"11\",\n      \"label\": \"Usuário recusa\"\n    }\n  ]\n}\n ",
+        "options": {}
+      },
+      "id": "ddd6ec2d-6c33-4850-ab1d-6e0bd89aebc5",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-12T22:17:50.000Z",
+  "versionId": "254ba526-f773-4233-b335-4502958018bf"
+}

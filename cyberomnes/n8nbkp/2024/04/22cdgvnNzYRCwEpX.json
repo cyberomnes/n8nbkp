@@ -1,0 +1,75 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-04-07T01:24:48.227Z",
+  "id": "22cdgvnNzYRCwEpX",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact",
+        "options": {}
+      },
+      "id": "0c5e3f0f-940b-490b-8e04-7024bfbab0a2",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1580,
+        540
+      ],
+      "webhookId": "a68bf7fd-e3f0-4c64-84d3-6ad3abbbdd71"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "106088078908877",
+        "recipientPhoneNumber": "18195765490",
+        "textBody": "=You received a message from : {{ $json.body.name }} <br>\nthe email is :  {{ $json.body.email }}\n<br>\nand the message was:\n {{ $json.body.message }}",
+        "additionalFields": {}
+      },
+      "id": "73a0ab75-fc0d-4c3a-a426-2798dd3c7011",
+      "name": "WhatsApp Business Cloud",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        600
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-04-07T16:55:56.000Z",
+  "versionId": "ba7af0ab-c406-46ce-9ad1-2cec36e99d89"
+}

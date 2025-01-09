@@ -1,0 +1,351 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Twilio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-09T23:53:41.266Z",
+  "id": "Tk5iNZYzxgjbbFie",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 31",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e50f122f-20c6-41e1-b094-8249cccdc2c7",
+        "options": {}
+      },
+      "id": "8706e271-e6d4-4fe4-9250-78123c4a3994",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        500,
+        200
+      ],
+      "webhookId": "e50f122f-20c6-41e1-b094-8249cccdc2c7"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "options": {}
+      },
+      "id": "6812a51e-b554-451c-88b0-245350f023f0",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        720,
+        600
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "+16722022556",
+        "to": "={{ $('Webhook').item.json.body.payload.userFieldsResponses.Phone.value }}",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "id": "518e4c43-df04-41a5-b5c6-be25e440bdeb",
+      "name": "Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        200
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "oqAAXrKq6GfGemRu",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "+551139577770",
+        "to": "={{ $('Webhook').item.json.body.payload.userFieldsResponses.Phone.value }}",
+        "toWhatsapp": true,
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "id": "d2ee95e7-30b7-484d-9132-664375b5af2f",
+      "name": "Twilio1",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        420
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "oqAAXrKq6GfGemRu",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=From the information provided, create a short SMS message to confirm, cancel, or update a meeting with a client. The meeting will be between a Cyberomnes Specialist and the client.\n\nKey Points:\nLanguage Selection: The message should be sent in the client’s language, determined by their country code. Prioritize the local language according to the phone number's country code. If needed, include a reference to the country code's associated language.\nif country code is 55 write in portuguese, if country code is 1 write in english and french. if there is a need to rebook, \nDetails to Include:\n\nClient's Name: {{ $json.body.payload.attendees[0].name }}\nClient's Phone Number: {{ $json.body.payload.userFieldsResponses.Phone.value }}\nClient's Company: {{ $json.body.payload.userFieldsResponses.Comoany.value }}\nVideo Call Link: {{ $json.body.payload.videoCallData.url }}\nExtract the relevant information from the response provided to compose a concise, personalized SMS message.\nif needed to reschedule, https://cal.com/reschedule/{{ $json.body.payload.iCalUID }}?rescheduledBy={{ $json.body.payload.attendees[0].email }}\n\nFull Response:\n{{ $json.body }}\n\n\nwhen formating your response give spaces between the links and format it it nicily as to be easier to read",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "7ba70e04-84fd-4f1d-8152-e5012adcedd6",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        720,
+        200
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "3.135.190.186",
+            "x-forwarded-for": "3.135.190.186",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "2683",
+            "content-type": "application/json",
+            "x-cal-signature-256": "no-secret-provided",
+            "x-vercel-id": "iad1:iad1::tgm2g-1728518425907-0c832bab7a05",
+            "accept": "*/*",
+            "accept-language": "*",
+            "sec-fetch-mode": "cors",
+            "user-agent": "node",
+            "accept-encoding": "br, gzip, deflate",
+            "sentry-trace": "2f4d6c3e097543b5abc6ee270e1d9761-a3063ee605fe9fab",
+            "baggage": "sentry-environment=vercel-production,sentry-release=02f99ff9072ee895b72d1cd5e3a627884b731b40,sentry-public_key=a1ea40f454a84538876a4b18e1c360d4,sentry-trace_id=2f4d6c3e097543b5abc6ee270e1d9761"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "triggerEvent": "BOOKING_CREATED",
+            "createdAt": "2024-10-10T00:00:28.698Z",
+            "payload": {
+              "bookerUrl": "https://cal.com",
+              "type": "60-mins",
+              "title": "60 Mins between CyberOmnes Corp. and Michel Marun",
+              "description": "",
+              "additionalNotes": "",
+              "customInputs": {},
+              "startTime": "2024-10-10T13:00:00Z",
+              "endTime": "2024-10-10T14:00:00Z",
+              "organizer": {
+                "id": 951523,
+                "name": "CyberOmnes Corp.",
+                "email": "cyberomnes@gmail.com",
+                "username": "cyberomnes",
+                "timeZone": "America/Toronto",
+                "language": {
+                  "locale": "en"
+                },
+                "timeFormat": "h:mma",
+                "utcOffset": -240
+              },
+              "responses": {
+                "name": {
+                  "label": "your_name",
+                  "value": "Michel Marun",
+                  "isHidden": false
+                },
+                "email": {
+                  "label": "email_address",
+                  "value": "Cyberomnes@gmail.com",
+                  "isHidden": false
+                },
+                "location": {
+                  "label": "location",
+                  "value": {
+                    "optionValue": "",
+                    "value": "integrations:zoom"
+                  },
+                  "isHidden": false
+                },
+                "title": {
+                  "label": "what_is_this_meeting_about",
+                  "isHidden": true
+                },
+                "notes": {
+                  "label": "additional_notes",
+                  "isHidden": false
+                },
+                "guests": {
+                  "label": "additional_guests",
+                  "value": [],
+                  "isHidden": false
+                },
+                "rescheduleReason": {
+                  "label": "reason_for_reschedule",
+                  "isHidden": false
+                },
+                "Comoany": {
+                  "label": "Company",
+                  "value": "Matr",
+                  "isHidden": false
+                },
+                "Phone": {
+                  "label": "Phone",
+                  "value": "+5545988261106",
+                  "isHidden": false
+                }
+              },
+              "userFieldsResponses": {
+                "Comoany": {
+                  "label": "Company",
+                  "value": "Matr",
+                  "isHidden": false
+                },
+                "Phone": {
+                  "label": "Phone",
+                  "value": "+5545988261106",
+                  "isHidden": false
+                }
+              },
+              "attendees": [
+                {
+                  "email": "Cyberomnes@gmail.com",
+                  "name": "Michel Marun",
+                  "firstName": "",
+                  "lastName": "",
+                  "timeZone": "America/Toronto",
+                  "language": {
+                    "locale": "en"
+                  },
+                  "utcOffset": -240
+                }
+              ],
+              "location": "integrations:zoom",
+              "conferenceCredentialId": 504240,
+              "destinationCalendar": [
+                {
+                  "id": 312879,
+                  "integration": "google_calendar",
+                  "externalId": "cyberomnes@gmail.com",
+                  "primaryEmail": "cyberomnes@gmail.com",
+                  "userId": 951523,
+                  "eventTypeId": null,
+                  "credentialId": 498741
+                }
+              ],
+              "hideCalendarNotes": false,
+              "hideCalendarEventDetails": false,
+              "requiresConfirmation": false,
+              "eventTypeId": 1021819,
+              "seatsShowAttendees": true,
+              "seatsPerTimeSlot": null,
+              "seatsShowAvailabilityCount": true,
+              "schedulingType": null,
+              "iCalUID": "5BqBQGQTyFD7aGoDNbNdWM@Cal.com",
+              "iCalSequence": 0,
+              "oneTimePassword": null,
+              "uid": "5BqBQGQTyFD7aGoDNbNdWM",
+              "conferenceData": {
+                "createRequest": {
+                  "requestId": "8867fe6c-9326-5912-9766-fb3553f58d20"
+                }
+              },
+              "videoCallData": {
+                "type": "zoom_video",
+                "id": "82744922430",
+                "password": "",
+                "url": "https://us02web.zoom.us/j/82744922430"
+              },
+              "appsStatus": [
+                {
+                  "appName": "zoom",
+                  "type": "zoom_video",
+                  "success": 1,
+                  "failures": 0,
+                  "errors": []
+                },
+                {
+                  "appName": "google-calendar",
+                  "type": "google_calendar",
+                  "success": 1,
+                  "failures": 0,
+                  "errors": [],
+                  "warnings": []
+                }
+              ],
+              "eventTitle": "60 Mins",
+              "eventDescription": "",
+              "price": 0,
+              "currency": "usd",
+              "length": 60,
+              "bookingId": 3650349,
+              "metadata": {
+                "videoCallUrl": "https://us02web.zoom.us/j/82744922430"
+              },
+              "status": "ACCEPTED"
+            }
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/e50f122f-20c6-41e1-b094-8249cccdc2c7",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-10-10T00:53:17.000Z",
+  "versionId": "249a1048-d675-4d1d-a180-8446153a9000"
+}

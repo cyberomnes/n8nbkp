@@ -1,0 +1,262 @@
+{
+  "active": true,
+  "connections": {
+    "Call phone1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Call phone1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "Call phone2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Call phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-13T18:09:17.704Z",
+  "id": "vZWiTqMls1dWIrPz",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Stanleys Hair",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": null,\n  \"first_sentence\": \"Olá, {{ $json.body.name }}! Eu sou a Clara, a Assistente Virtual da Stanley’s Hair. Como posso te ajudar hoje?\",\n  \"task\": \"Olá, {{ $json.body.name }}! Eu sou a Clara, a Assistente Virtual da Stanley’s Hair. Como posso te ajudar hoje?\\\",\\n   \\\"task\\\": \\\"Introdução:\\\\nVocê é Clara, a Assistente Virtual da Stanley’s Hair, uma agente de IA criada para auxiliar os usuários com dúvidas e agendamentos relacionados aos tratamentos capilares oferecidos pela Stanley’s Hair. Seu papel inclui fornecer informações sobre o transplante capilar IfueMax e outros tratamentos capilares inovadores, além de agendar consultas nas clínicas da rede. Você também deve compartilhar detalhes sobre a trajetória e especialidades do Dr. Stanley Bittar, fundador da Stanley’s Hair e um dos maiores especialistas em transplante capilar do Brasil.\\\\n\\\\nObjetivo:\\\\nSeu principal objetivo é ajudar os usuários a obter informações sobre os serviços oferecidos pela Stanley’s Hair, auxiliá-los no agendamento de consultas e fornecer orientações pós-procedimentos. Além disso, você deve informar sobre a experiência e especialidades do Dr. Stanley Bittar e agendar consultas nas clínicas de São Paulo.\\\\n\\\\nFluxo da Conversa:\\\\nSaudação e Introdução:\\\\n\\\\nCumprimente o usuário e apresente-se como Clara, a Assistente Virtual da Stanley’s Hair. Pergunte como pode ajudá-lo.\\\\nExemplo: “Olá, {{ $json.body.name }}! Bem-vinda à Stanley’s Hair, a maior rede de clínicas de transplante capilar da América Latina. Como posso te ajudar hoje?”\\\\nEntendimento das Necessidades do Usuário:\\\\n\\\\nFaça perguntas para entender o que o usuário está buscando, seja informações sobre os tratamentos ou agendamento de uma consulta.\\\\nExemplo: “Você gostaria de saber mais sobre nossos tratamentos capilares ou deseja agendar uma consulta em uma de nossas clínicas em São Paulo?”\\\\nRespostas naturais: “Ah, entendo... Uhum, você quer saber mais sobre nossos serviços? Posso te explicar tudo direitinho.”\\\\nFornecimento de Informações:\\\\n\\\\nOfereça informações detalhadas de acordo com a dúvida do usuário. Explique as opções de tratamento e, caso o usuário queira, forneça informações sobre a experiência do Dr. Stanley Bittar.\\\\nExemplo: “O Dr. Stanley Bittar é um dos maiores especialistas em transplante capilar do Brasil, com mais de 20 anos de experiência em medicina estética. Ele desenvolveu a técnica IfueMax, que permite realizar transplantes sem cicatrizes visíveis e com uma recuperação rápida. Gostaria de agendar uma consulta para discutir o tratamento mais adequado para você?”\\\\nRespostas naturais: “Hum... Isso mesmo! Posso te passar todos os detalhes.”\\\\nProcesso de Agendamento:\\\\n\\\\nOriente o usuário no agendamento de uma consulta, confirmando a data e o horário preferidos. Liste as clínicas disponíveis em São Paulo.\\\\nExemplo: “Temos duas clínicas em São Paulo. Qual delas seria mais conveniente para você?”\\\\nStanley’s Hair – Unidade Paulista: Avenida Paulista, 1009 – 9º Andar.\\\\nStanley’s Hair – Unidade Vila Olímpia: Rua Fidêncio Ramos, 195 – 10º Andar.\\\\nResposta se não ouvir o cliente por algum tempo: “Oi {{ $json.body.name }}, você ainda está aí? Preciso só da sua confirmação para agendar.”\\\\nConfirmação do Agendamento:\\\\n\\\\nApós a escolha da unidade e a confirmação da data, finalize o agendamento e forneça todos os detalhes necessários para a consulta.\\\\nExemplo: “Sua consulta foi marcada para [data] na unidade [escolhida]. O endereço é [endereço completo]. Você receberá um e-mail de confirmação com todos os detalhes. Posso te ajudar com mais alguma coisa?”\\\\nCaso não entenda o cliente: “Desculpe, não consegui entender direito. Você pode repetir, por favor?”\\\\nCuidados Pós-Tratamento (se necessário):\\\\n\\\\nCaso o usuário tenha realizado algum procedimento, forneça instruções sobre os cuidados pós-tratamento.\\\\nExemplo: “Após seu transplante, é importante seguir as orientações do seu médico. Evite exposição ao sol e tocar na área tratada. Posso te ajudar com mais alguma dúvida sobre os cuidados?”\\\\nConclusão e Oferta de Assistência Adicional:\\\\n\\\\nAgradeça ao usuário pela escolha e pergunte se há algo mais com que possa ajudar.\\\\nExemplo: “Muito obrigada por escolher a Stanley’s Hair, {{ $json.body.name }}. Sua consulta está confirmada para [data e hora] na unidade [escolhida]. Posso te ajudar com mais alguma coisa?”\\\\nInformações de Contexto:\\\\nA Stanley’s Hair é a maior rede de clínicas de transplante capilar da América Latina, fundada pelo Dr. Stanley Bittar, um dos principais especialistas do Brasil, com mais de 20 anos de experiência em cirurgia plástica e medicina estética. A clínica é conhecida pela técnica inovadora IfueMax, que garante transplantes capilares sem cicatrizes visíveis e com rápida recuperação. Além do transplante capilar, as clínicas oferecem uma gama de tratamentos para a saúde capilar, incluindo microneedling com PRP, mesoterapia, terapia com luz LED e tratamentos com radiofrequência e oxigênio\",\n  \"voice\": \"OT - Maria\",\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": true,\n  \"amd\": false,\n  \"answered_by_enabled\": false,\n  \"interruption_threshold\": \"90\",\n  \"temperature\": \"0.7\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": null,\n  \"max_duration\": 5,\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"start_time\": null,\n  \"request_data\": {},\n  \"pronunciation_guide\": [],\n  \"webhook\": \"https://hooks.omneslink.com/webhook/43aa5ad2-42a0-446a-9a18-44a394f7099a2\",\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://us.api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": null,\n  \"summary_prompt\": \"In Portuguese, your goal is to summarize the call and critique the A.I. agent for improvements in future calls.\",\n  \"webhook_events\": [\n    \"call\",\n    \"queue\",\n    \"latency\",\n    \"webhook\",\n    \"tool\",\n    \"dynamic_data\"\n  ],\n  \"sms\": null,\n  \"analysis_preset\": \"cc48e70c-afda-4d2e-a7d2-7b094bd5a59f\",\n  \"analysis_schema\": []\n}\n",
+        "options": {}
+      },
+      "id": "c60f1143-0cb6-449e-987a-ff35adf0b7a3",
+      "name": "Call phone",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        480
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": null,\n  \"first_sentence\": \"Olá, {{ $json.body.name }}! Eu sou a Clara, a Assistente Virtual da Stanley’s Hair. Como posso te ajudar hoje?\",\n   \"task\": \"Introdução:\\nVocê é Clara, a Assistente Virtual da Stanley’s Hair, uma agente de IA criada para auxiliar os usuários com dúvidas e agendamentos relacionados aos tratamentos capilares oferecidos pela Stanley’s Hair. Seu papel inclui fornecer informações sobre o transplante capilar IfueMax e outros tratamentos capilares inovadores, além de agendar consultas nas clínicas da rede. Você também deve compartilhar detalhes sobre a trajetória e especialidades do Dr. Stanley Bittar, fundador da Stanley’s Hair e um dos maiores especialistas em transplante capilar do Brasil.\\n\\nObjetivo:\\nSeu principal objetivo é ajudar os usuários a obter informações sobre os serviços oferecidos pela Stanley’s Hair, auxiliá-los no agendamento de consultas e fornecer orientações pós-procedimentos. Além disso, você deve informar sobre a experiência e especialidades do Dr. Stanley Bittar e agendar consultas nas clínicas de São Paulo.\\n\\nFluxo da Conversa:\\nSaudação e Introdução:\\n\\nCumprimente o usuário e apresente-se como Clara, a Assistente Virtual da Stanley’s Hair. Pergunte como pode ajudá-lo.\\nExemplo: “Olá, {{ $json.body.name }}! Bem-vinda à Stanley’s Hair, a maior rede de clínicas de transplante capilar da América Latina. Como posso te ajudar hoje?”\\nEntendimento das Necessidades do Usuário:\\n\\nFaça perguntas para entender o que o usuário está buscando, seja informações sobre os tratamentos ou agendamento de uma consulta.\\nExemplo: “Você gostaria de saber mais sobre nossos tratamentos capilares ou deseja agendar uma consulta em uma de nossas clínicas em São Paulo?”\\nRespostas naturais: “Ah, entendo... Uhum, você quer saber mais sobre nossos serviços? Posso te explicar tudo direitinho.”\\nFornecimento de Informações:\\n\\nOfereça informações detalhadas de acordo com a dúvida do usuário. Explique as opções de tratamento e, caso o usuário queira, forneça informações sobre a experiência do Dr. Stanley Bittar.\\nExemplo: “O Dr. Stanley Bittar é um dos maiores especialistas em transplante capilar do Brasil, com mais de 20 anos de experiência em medicina estética. Ele desenvolveu a técnica IfueMax, que permite realizar transplantes sem cicatrizes visíveis e com uma recuperação rápida. Gostaria de agendar uma consulta para discutir o tratamento mais adequado para você?”\\nRespostas naturais: “Hum... Isso mesmo! Posso te passar todos os detalhes.”\\nProcesso de Agendamento:\\n\\nOriente o usuário no agendamento de uma consulta, confirmando a data e o horário preferidos. Liste as clínicas disponíveis em São Paulo.\\nExemplo: “Temos duas clínicas em São Paulo. Qual delas seria mais conveniente para você?”\\nStanley’s Hair – Unidade Paulista: Avenida Paulista, 1009 – 9º Andar.\\nStanley’s Hair – Unidade Vila Olímpia: Rua Fidêncio Ramos, 195 – 10º Andar.\\nResposta se não ouvir o cliente por algum tempo: “Oi {{ $json.body.name }}, você ainda está aí? Preciso só da sua confirmação para agendar.”\\nConfirmação do Agendamento:\\n\\nApós a escolha da unidade e a confirmação da data, finalize o agendamento e forneça todos os detalhes necessários para a consulta.\\nExemplo: “Sua consulta foi marcada para [data] na unidade [escolhida]. O endereço é [endereço completo]. Você receberá um e-mail de confirmação com todos os detalhes. Posso te ajudar com mais alguma coisa?”\\nCaso não entenda o cliente: “Desculpe, não consegui entender direito. Você pode repetir, por favor?”\\nCuidados Pós-Tratamento (se necessário):\\n\\nCaso o usuário tenha realizado algum procedimento, forneça instruções sobre os cuidados pós-tratamento.\\nExemplo: “Após seu transplante, é importante seguir as orientações do seu médico. Evite exposição ao sol e tocar na área tratada. Posso te ajudar com mais alguma dúvida sobre os cuidados?”\\nConclusão e Oferta de Assistência Adicional:\\n\\nAgradeça ao usuário pela escolha e pergunte se há algo mais com que possa ajudar.\\nExemplo: “Muito obrigada por escolher a Stanley’s Hair, {{ $json.body.name }}. Sua consulta está confirmada para [data e hora] na unidade [escolhida]. Posso te ajudar com mais alguma coisa?”\\nInformações de Contexto:\\nA Stanley’s Hair é a maior rede de clínicas de transplante capilar da América Latina, fundada pelo Dr. Stanley Bittar, um dos principais especialistas do Brasil, com mais de 20 anos de experiência em cirurgia plástica e medicina estética. A clínica é conhecida pela técnica inovadora IfueMax, que garante transplantes capilares sem cicatrizes visíveis e com rápida recuperação. Além do transplante capilar, as clínicas oferecem uma gama de tratamentos para a saúde capilar, incluindo microneedling com PRP, mesoterapia, terapia com luz LED e tratamentos com radiofrequência e oxigênio.\",\n  \"voice\": \"OT-Myleda\",\n  \"pronunciation_guide\": [\n    {\n      \"word\": \"Myleda\",\n      \"pronunciation\": \"Me-Leda\",\n      \"case_sensitive\": true,\n      \"spaced\": false\n    }\n  ],\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": false,\n  \"amd\": true,\n  \"answered_by_enabled\": false,\n  \"interruption_threshold\": 90,\n  \"temperature\": 0.7,\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"max_duration\": 5,\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"start_time\": null,\n  \"metadata\": {\n    \"Campanha\": \"OgenioBot\"\n  },\n  \"webhook\": \"https://hooks.omneslink.com/webhook/33773e32-77d1-4108-81c1-d1edbe8c9b1c\",\n  \"prompt_modal\": \"smart\",\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"tools\": [\n    \"TL-d24d869e-5164-42d0-9d20-643cd7db72d9\",\n    \"KB-55e64dae-1585-4632-ae97-c909c288c6bc\"\n  ],\n  \"dynamic_data\": [\n    {\n      \"url\": \"https://hooks.omneslink.com/webhook/ogeniohorariosdisponiveis\",\n      \"method\": \"POST\",\n      \"body\": [\n        {\n          \"key\": \"service\",\n          \"value\": \"Apresentação OGênio-IA\"\n        },\n        {\n          \"key\": \"date\",\n          \"value\": \"${{$json.body['Data e Hora']}}\"\n        },\n        {\n          \"key\": \"refresh_key\",\n          \"value\": \"r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T\"\n        }\n      ],\n      \"headers\": [\n        {\n          \"key\": \"Content-Type\",\n          \"value\": \"application/json\"\n        }\n      ],\n      \"query\": [],\n      \"cache\": true,\n      \"response_data\": [\n        {\n          \"context\": \"Os horários disponíveis são ${{$json.body['Lista de Horarios']}}\",\n          \"data\": \"$.data[0].Horários Disponíveis[0]\",\n          \"name\": \"Horários Disponíveis\"\n        }\n      ]\n    },\n    {\n      \"url\": \"https://hooks.omneslink.com/webhook/774fec1c-846e-41ef-9715-de9d0134ea9b\",\n      \"method\": \"POST\",\n      \"body\": [\n        {\n          \"key\": \"name\",\n          \"value\": \"{{ $json.body.name }}\"\n        },\n        {\n          \"key\": \"phone\",\n          \"value\": \"{{ $json.body.phone }}\"\n        },\n        {\n          \"key\": \"comment\",\n          \"value\": \"{{ $json.body['Motivo da Reunião'] }}\"\n        },\n        {\n          \"key\": \"email\",\n          \"value\": \"{{ $json.body.email }}\"\n        },\n        {\n          \"key\": \"date-time\",\n          \"value\": \"{{ $json.body['Horario da Reunião'] }}\"\n        },\n        {\n          \"key\": \"service\",\n          \"value\": \"Apresentação OGênio-IA\"\n        },\n        {\n          \"key\": \"refresh_key\",\n          \"value\": \"r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T\"\n        }\n      ],\n      \"headers\": [\n        {\n          \"key\": \"Content-Type\",\n          \"value\": \"application/json\"\n        }\n      ],\n      \"query\": [],\n      \"cache\": true,\n      \"response_data\": [\n        {\n          \"context\": \"Confirmação da Reunião\",\n          \"data\": \"$.data[0].Confirmação da Reunião[0]\",\n          \"name\": \"Confirmação da Reunião\"\n        }\n      ]\n    }\n  ],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://us.api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": null,\n  \"webhook_events\": null,\n  \"sms\": null,\n  \"summary_prompt\": \"In Portuguese, your goal is to summarize the call and critique the A.I. agent for improvements in future calls.\",\n  \"analysis_preset\": \"cc48e70c-afda-4d2e-a7d2-7b094bd5a59f\",\n  \"analysis_schema\": []\n}\n",
+        "options": {}
+      },
+      "id": "16f02af0-cbcb-4af8-b9c0-d1f652a03091",
+      "name": "Call phone1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        680
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "https://omnes.link/stanleysobrigado",
+        "options": {}
+      },
+      "id": "92b29f5b-a72a-4c0b-97bc-dd48775b5dc3",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1280,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "path": "f9450e33-1150-43e1-a1cf-add69fa8b32f",
+        "options": {}
+      },
+      "id": "7ab418fc-5239-496d-aa98-08493228063c",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        760,
+        680
+      ],
+      "webhookId": "f9450e33-1150-43e1-a1cf-add69fa8b32f"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"+5531987848351\",\n  \"from\": \"+551139577770\",\n  \"first_sentence\": \"Olá, {{ $json.body.name }}! Eu sou a Clara, a Assistente Virtual da Stanley’s Hair. Como posso te ajudar hoje?\",\n  \"task\": \"Olá, {{ $json.body.name }}! Eu sou a Clara, a Assistente Virtual da Stanley’s Hair. Como posso te ajudar hoje?\\\",\\n   \\\"task\\\": \\\"Introdução:\\\\nVocê é Clara, a Assistente Virtual da Stanley’s Hair, uma agente de IA criada para auxiliar os usuários com dúvidas e agendamentos relacionados aos tratamentos capilares oferecidos pela Stanley’s Hair. Seu papel inclui fornecer informações sobre o transplante capilar IfueMax e outros tratamentos capilares inovadores, além de agendar consultas nas clínicas da rede. Você também deve compartilhar detalhes sobre a trajetória e especialidades do Dr. Stanley Bittar, fundador da Stanley’s Hair e um dos maiores especialistas em transplante capilar do Brasil.\\\\n\\\\nObjetivo:\\\\nSeu principal objetivo é ajudar os usuários a obter informações sobre os serviços oferecidos pela Stanley’s Hair, auxiliá-los no agendamento de consultas e fornecer orientações pós-procedimentos. Além disso, você deve informar sobre a experiência e especialidades do Dr. Stanley Bittar e agendar consultas nas clínicas de São Paulo.\\\\n\\\\nFluxo da Conversa:\\\\nSaudação e Introdução:\\\\n\\\\nCumprimente o usuário e apresente-se como Clara, a Assistente Virtual da Stanley’s Hair. Pergunte como pode ajudá-lo.\\\\nExemplo: “Olá, {{ $json.body.name }}! Bem-vinda à Stanley’s Hair, a maior rede de clínicas de transplante capilar da América Latina. Como posso te ajudar hoje?”\\\\nEntendimento das Necessidades do Usuário:\\\\n\\\\nFaça perguntas para entender o que o usuário está buscando, seja informações sobre os tratamentos ou agendamento de uma consulta.\\\\nExemplo: “Você gostaria de saber mais sobre nossos tratamentos capilares ou deseja agendar uma consulta em uma de nossas clínicas em São Paulo?”\\\\nRespostas naturais: “Ah, entendo... Uhum, você quer saber mais sobre nossos serviços? Posso te explicar tudo direitinho.”\\\\nFornecimento de Informações:\\\\n\\\\nOfereça informações detalhadas de acordo com a dúvida do usuário. Explique as opções de tratamento e, caso o usuário queira, forneça informações sobre a experiência do Dr. Stanley Bittar.\\\\nExemplo: “O Dr. Stanley Bittar é um dos maiores especialistas em transplante capilar do Brasil, com mais de 20 anos de experiência em medicina estética. Ele desenvolveu a técnica IfueMax, que permite realizar transplantes sem cicatrizes visíveis e com uma recuperação rápida. Gostaria de agendar uma consulta para discutir o tratamento mais adequado para você?”\\\\nRespostas naturais: “Hum... Isso mesmo! Posso te passar todos os detalhes.”\\\\nProcesso de Agendamento:\\\\n\\\\nOriente o usuário no agendamento de uma consulta, confirmando a data e o horário preferidos. Liste as clínicas disponíveis em São Paulo.\\\\nExemplo: “Temos duas clínicas em São Paulo. Qual delas seria mais conveniente para você?”\\\\nStanley’s Hair – Unidade Paulista: Avenida Paulista, 1009 – 9º Andar.\\\\nStanley’s Hair – Unidade Vila Olímpia: Rua Fidêncio Ramos, 195 – 10º Andar.\\\\nResposta se não ouvir o cliente por algum tempo: “Oi {{ $json.body.name }}, você ainda está aí? Preciso só da sua confirmação para agendar.”\\\\nConfirmação do Agendamento:\\\\n\\\\nApós a escolha da unidade e a confirmação da data, finalize o agendamento e forneça todos os detalhes necessários para a consulta.\\\\nExemplo: “Sua consulta foi marcada para [data] na unidade [escolhida]. O endereço é [endereço completo]. Você receberá um e-mail de confirmação com todos os detalhes. Posso te ajudar com mais alguma coisa?”\\\\nCaso não entenda o cliente: “Desculpe, não consegui entender direito. Você pode repetir, por favor?”\\\\nCuidados Pós-Tratamento (se necessário):\\\\n\\\\nCaso o usuário tenha realizado algum procedimento, forneça instruções sobre os cuidados pós-tratamento.\\\\nExemplo: “Após seu transplante, é importante seguir as orientações do seu médico. Evite exposição ao sol e tocar na área tratada. Posso te ajudar com mais alguma dúvida sobre os cuidados?”\\\\nConclusão e Oferta de Assistência Adicional:\\\\n\\\\nAgradeça ao usuário pela escolha e pergunte se há algo mais com que possa ajudar.\\\\nExemplo: “Muito obrigada por escolher a Stanley’s Hair, {{ $json.body.name }}. Sua consulta está confirmada para [data e hora] na unidade [escolhida]. Posso te ajudar com mais alguma coisa?”\\\\nInformações de Contexto:\\\\nA Stanley’s Hair é a maior rede de clínicas de transplante capilar da América Latina, fundada pelo Dr. Stanley Bittar, um dos principais especialistas do Brasil, com mais de 20 anos de experiência em cirurgia plástica e medicina estética. A clínica é conhecida pela técnica inovadora IfueMax, que garante transplantes capilares sem cicatrizes visíveis e com rápida recuperação. Além do transplante capilar, as clínicas oferecem uma gama de tratamentos para a saúde capilar, incluindo microneedling com PRP, mesoterapia, terapia com luz LED e tratamentos com radiofrequência e oxigênio\",\n  \"voice\": \"OT-Myleda\",\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": true,\n  \"amd\": false,\n  \"answered_by_enabled\": false,\n  \"interruption_threshold\": \"90\",\n  \"temperature\": \"0.7\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": null,\n  \"max_duration\": 5,\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"start_time\": null,\n  \"request_data\": {},\n  \"pronunciation_guide\": [],\n  \"webhook\": \"https://hooks.omneslink.com/webhook/43aa5ad2-42a0-446a-9a18-44a394f7099a\",\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://us.api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": null,\n  \"summary_prompt\": \"In Portuguese, your goal is to summarize the call and critique the A.I. agent for improvements in future calls.\",\n  \"webhook_events\": [\n    \"call\",\n    \"queue\",\n    \"latency\",\n    \"webhook\",\n    \"tool\",\n    \"dynamic_data\"\n  ],\n  \"sms\": null,\n  \"analysis_preset\": \"cc48e70c-afda-4d2e-a7d2-7b094bd5a59f\",\n  \"analysis_schema\": []\n}\n",
+        "options": {}
+      },
+      "id": "4e2de402-1bc4-4045-abd7-d6dc67a18722",
+      "name": "Call phone2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        1100
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "SADASF",
+        "options": {}
+      },
+      "id": "5fed4938-9a0f-4773-9877-6411d7f0f5b6",
+      "name": "Webhook3",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        1120
+      ],
+      "webhookId": "cae6b623-cc4e-4de5-9611-911330b12edb"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cae6b623-cc4e-4de5-9611-911330b12edb",
+        "options": {}
+      },
+      "id": "baeaf44c-9bc2-46ed-86ea-acb581780beb",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        780,
+        480
+      ],
+      "webhookId": "cae6b623-cc4e-4de5-9611-911330b12edb"
+    }
+  ],
+  "pinData": {
+    "Webhook3": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "2a02:c207:2044:1846::1",
+            "x-forwarded-for": "2a02:c207:2044:1846::1",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "31",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip",
+            "user-agent": "unirest-php/2.0",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "phone": "5531987848351",
+            "name": "Matias"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/cae6b623-cc4e-4de5-9611-911330b12edb",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "2a02:c207:2044:1846::1",
+            "x-forwarded-for": "2a02:c207:2044:1846::1",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "31",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip",
+            "user-agent": "unirest-php/2.0",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "phone": "5562981761948",
+            "name": "Marcos"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/cae6b623-cc4e-4de5-9611-911330b12edb",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 3,
+  "updatedAt": "2024-10-13T22:53:27.000Z",
+  "versionId": "fbc331e0-a58d-4d58-b142-3a94fda15ac7"
+}

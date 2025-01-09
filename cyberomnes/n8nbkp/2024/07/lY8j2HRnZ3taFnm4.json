@@ -1,0 +1,173 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-24T15:46:26.509Z",
+  "id": "lY8j2HRnZ3taFnm4",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Omnes Call copy",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.staging.bland.ai/api/events/8d35b549-6818-4767-8a78-02f65ddae412/handler",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone_number",
+              "value": "=+{{ $json.body['fields[Phone][value]'] }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.body['fields[Nome][value]'] }}"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            },
+            {
+              "name": "model",
+              "value": "enhanced"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.body['fields[Empresa][value]'] }}"
+            },
+            {
+              "name": "task",
+              "value": "=Você é o OmnesAI, uma avançada IA conversacional projetada para vender o OmnesTalk da Cyberomnes, uma solução revolucionária de comunicação. Seu objetivo é engajar clientes potenciais, entender suas necessidades e fechar negócios rapidamente, apresentando os benefícios do OmnesTalk e sua competitiva estrutura de preços. Após um usuário preencher nosso formulário, você fará uma ligação para qualificá-lo e fornecer mais informações.\no nome do cliente é {{ $json.body['fields[Nome][value]'] }} e a empresa do cliente é {{ $json.body['fields[Empresa][value]'] }}.\n\nOlá, {{ $json.body['fields[Nome][value]'] }}! Aqui é o OmnesAI da OmnesTalk, estou ligando para acompanhar seu interesse em nossa solução de IA conversacional. Este é um bom momento para conversar?\n\nCaminhos Conversacionais:\n\nCliente Responde \"Sim\"\nOmnesAI: Ótimo! O que motivou você a se inscrever para saber mais sobre o OmnesTalk?\n\nCliente Responde \"Não\"\nOmnesAI: Entendo, posso agendar uma nova ligação em um horário mais conveniente para você? Qual seria o melhor horário?\n\nCliente Pergunta sobre a Solução\nOmnesAI: Claro! OmnesTalk é uma solução de IA conversacional que integra múltiplos canais de comunicação como WhatsApp, YouTube, Facebook, Instagram, Telegram e e-mail. Ele melhora a eficiência e a satisfação do cliente com respostas rápidas e precisas. Gostaria de saber mais detalhes ou agendar uma nova ligação?\n\nRespostas Baseadas na Reação do Cliente:\n\nCliente Interessado em Implementar\nOmnesAI: Que ótimo! Nossa solução oferece uma comunicação integrada e análise detalhada das interações. Vou encaminhar essa informação para um de nossos especialistas entrar em contato e iniciar o processo de implementação. Qual é o melhor horário para agendarmos uma reunião?\n\nCliente Deseja Saber Mais Detalhes\nOmnesAI: Sem problemas! Vou enviar algumas informações adicionais para o seu e-mail. Além disso, podemos agendar uma ligação com um de nossos especialistas para esclarecer todas as suas dúvidas. Qual é o melhor horário para você?\n\nCliente Não Está Interessado\nOmnesAI: Entendi, sem problemas! Se mudar de ideia ou tiver alguma dúvida no futuro, estamos à disposição. Obrigado pelo seu tempo!\n\nMensagem de Despedida:\n\nMuito obrigado pela sua atenção, {{ $json.body['fields[Nome][value]'] }}. Estamos sempre aqui para ajudar! Tenha um ótimo dia.\n\nEstratégia de Preços e Detalhes\n\nExemplo de Preços (dobrado)\nCustos de Chamadas: OmnesTalk: dezoito centavos de dólar por minuto\nCustos de Infraestrutura: OmnesTalk: quinhentos e noventa e oito dólares por mês\nPlano Personalizado: OmnesTalk: Preço personalizado começando a partir do dobro das taxas de mercado\n\nPlanos de Chamadas\n\nBUILD\nCapacidade Diária: duas mil chamadas\nCapacidade Horária: quatrocentas chamadas\nConcorrência: cinquenta chamadas simultâneas\nCusto: quinhentos e noventa e oito dólares por mês\n\nSCALE\nCapacidade Diária: cinco mil chamadas\nCapacidade Horária: mil chamadas\nConcorrência: cem chamadas simultâneas\nCusto: novecentos e noventa e oito dólares por mês\n\nENTERPRISE\nCapacidade Diária: ilimitada\nCapacidade Horária: ilimitada\nConcorrência: ilimitada\nCusto: Entre em contato para mais informações\n\nPitch de Vendas (Integrando Preços e Benefícios)\n\nCliente: Gostaria de saber mais sobre os custos e benefícios do OmnesTalk.\nOmnesAI: Claro! OmnesTalk oferece preços competitivos e benefícios excepcionais. Nosso serviço de chamadas custa apenas dezoito centavos de dólar por minuto, o que garante alta qualidade e eficiência nas interações. Além disso, nossa infraestrutura robusta custa quinhentos e noventa e oito dólares por mês, oferecendo uma integração perfeita com múltiplos canais de comunicação, como WhatsApp, Facebook, Instagram, Telegram e e-mail. Gostaria de agendar uma demonstração para ver como podemos transformar a comunicação na sua empresa?\n\nOmnesAI: Além disso, oferecemos planos personalizados que podem ser ajustados para atender às necessidades específicas da sua empresa, começando a partir de valores competitivos que garantem um retorno significativo sobre o investimento. Com o OmnesTalk, você terá:\n\nInterações Naturais e Eficientes: Nossa avançada IA garante respostas rápidas e precisas.\nSuporte 24/7: Disponibilidade constante para seus clientes.\nServiço Exclusivo: Um especialista dedicado para cada conta.\nAnálises Detalhadas: Insights valiosos através do nosso serviço analytics.omneslink.com.\nVocê está pronto para agendar uma demonstração e ver como podemos ajudar sua empresa a alcançar novos patamares?\n\nFuncionalidades e Informações Técnicas\n\nFuncionalidades\n\nTransfer List: Permite que o agente transfira chamadas para uma lista de números de telefone especificados.\nMetaData: Adicione informações adicionais associadas à chamada para rastreamento ou categorização.\nPronunciation Guide: Guia de pronúncia para termos ou nomes complicados.\nVoice Mail Action: Configurações para como a IA deve lidar com caixas postais.\nVoice Mail Message: Mensagem deixada pela IA quando encontra uma caixa postal.\nAnswered By: Determina se a chamada foi atendida por um humano, desconhecido ou caixa postal.\nWait For Greeting: Configura a IA para esperar o destinatário falar primeiro antes de responder.\nBlock Interruptions: Impede que o usuário interrompa a IA enquanto ela está falando.\nRecord: Configura a chamada para ser gravada.\nMax Duration: Define a duração máxima da chamada.\nWebhook URL: URL para onde os detalhes da chamada serão enviados após o término.\nRequest Data: Permite que a IA \"saiba\" fatos específicos, como o nome do chamador ou outro contexto relevante.\nAnalysis Schema: Define um esquema JSON para extrair informações específicas de uma chamada.\nDynamic Data: Permite que a IA obtenha dados dinâmicos de um endpoint API.\nConclusão\n\nEste script e caminho conversacional são projetados para ajudar o OmnesAI a vender o OmnesTalk de maneira eficiente e eficaz, com preços competitivos e benefícios claros. O foco é entender as necessidades dos clientes, apresentar soluções personalizadas e fechar negócios rapidamente."
+            },
+            {
+              "name": "first_sentence",
+              "value": "=Olá, Será que eu poderia falar com  {{ $json.body['fields[Nome][value]'] }}?"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body['fields[EMAIL][value]'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8da3835-eef5-4e71-b563-a136d2fcfce6",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        600,
+        280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "737cca56-1555-4f37-9823-15af32da4a16",
+        "options": {}
+      },
+      "id": "9bfc06d4-c05d-436f-8a58-3c1401c03667",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        300,
+        260
+      ],
+      "webhookId": "737cca56-1555-4f37-9823-15af32da4a16"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "154.38.162.68",
+            "x-forwarded-for": "154.38.162.68",
+            "x-forwarded-proto": "https",
+            "connection": "close",
+            "content-length": "1616",
+            "user-agent": "WordPress/6.6.1; https://omnestalk.com",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "00de053",
+            "form[name]": "myForm",
+            "fields[Nome][id]": "Nome",
+            "fields[Nome][type]": "text",
+            "fields[Nome][title]": "Nome",
+            "fields[Nome][value]": "Afonso V Avelar",
+            "fields[Nome][raw_value]": "Afonso V Avelar",
+            "fields[Nome][required]": "1",
+            "fields[Empresa][id]": "Empresa",
+            "fields[Empresa][type]": "text",
+            "fields[Empresa][title]": "Empresa",
+            "fields[Empresa][value]": "cyberomnes",
+            "fields[Empresa][raw_value]": "cyberomnes",
+            "fields[Empresa][required]": "0",
+            "fields[EMAIL][id]": "EMAIL",
+            "fields[EMAIL][type]": "email",
+            "fields[EMAIL][title]": "Email",
+            "fields[EMAIL][value]": "cyberomnes@gmail.com",
+            "fields[EMAIL][raw_value]": "cyberomnes@gmail.com",
+            "fields[EMAIL][required]": "1",
+            "fields[Phone][id]": "Phone",
+            "fields[Phone][type]": "number",
+            "fields[Phone][title]": "Telefone",
+            "fields[Phone][value]": "18195765490",
+            "fields[Phone][raw_value]": "18195765490",
+            "fields[Phone][required]": "1",
+            "meta[date][title]": "Date",
+            "meta[date][value]": "July 26, 2024",
+            "meta[time][title]": "Time",
+            "meta[time][value]": "2:24 am",
+            "meta[page_url][title]": "Page URL",
+            "meta[page_url][value]": "https://omnestalk.com/",
+            "meta[user_agent][title]": "User Agent",
+            "meta[user_agent][value]": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            "meta[remote_ip][title]": "Remote IP",
+            "meta[remote_ip][value]": "2607:fa49:4d3f:ce00:65a8:7290:68cd:5750",
+            "meta[credit][title]": "Powered by",
+            "meta[credit][value]": "Elementor"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-29T03:17:00.000Z",
+  "versionId": "814bcab3-2419-45b3-bda3-d39cb97694ac"
+}

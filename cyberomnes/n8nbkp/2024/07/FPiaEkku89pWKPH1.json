@@ -1,0 +1,238 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-23T00:10:24.726Z",
+  "id": "FPiaEkku89pWKPH1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "098c6790-a9fa-4885-a1a9-7e89b17028b9",
+        "options": {}
+      },
+      "id": "8de5fdde-1eb4-4a76-8a62-d225eed5b625",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        140
+      ],
+      "webhookId": "098c6790-a9fa-4885-a1a9-7e89b17028b9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://allmybots.com/webhook/whatsapp-workflow/783.535.91173.1721768504",
+        "sendBody": true,
+        "contentType": "raw",
+        "body": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "40d97b8b-0ffe-41f9-8172-bb0b4c12fe50",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        960,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnesmail.com/api/index.php/lists/gz56905j6v6e0/subscribers",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "FNAME",
+              "value": "={{ $json.FNAME }}"
+            },
+            {
+              "name": "=EMAIL",
+              "value": "={{ $json.EMAIL }}"
+            },
+            {
+              "name": "EMPRESA",
+              "value": "={{ $json.EMPRESA }}"
+            },
+            {
+              "name": "PHONEWHATSAPP",
+              "value": "={{ $json.PHONEWHATSAPP }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "id": "ba6db124-0326-4503-a094-8e494eb769b1",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        880,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dpSyEMVvGq5Bb1ta",
+          "name": "Omnesmail"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f392bce1-398c-4575-bd24-3051e84f3fb6",
+              "name": "FNAME",
+              "value": "={{ $json.body['fields[field_9a055ae][value]'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e2901daf-2910-4bd1-8c02-a1b35567d018",
+              "name": "EMAIL",
+              "value": "={{ $json.body['fields[EMAIL][value]'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b9a25115-8e7f-45e2-b75d-d92eea2b1860",
+              "name": "EMPRESA",
+              "value": "={{ $json.body['fields[Empresa][value]'] }}",
+              "type": "string"
+            },
+            {
+              "id": "4928fa64-d31d-49c9-993a-68587eb35760",
+              "name": "PHONEWHATSAPP",
+              "value": "={{ $json.body['fields[PHONEWHATSAPP][value]'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "300034b6-674a-4173-a477-556939ba22dc",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        620,
+        340
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "154.38.162.68",
+            "x-forwarded-for": "154.38.162.68",
+            "x-forwarded-proto": "https",
+            "connection": "close",
+            "content-length": "1757",
+            "user-agent": "WordPress/6.6.1; https://omnestalk.com",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "form[id]": "00de053",
+            "form[name]": "myForm",
+            "fields[field_9a055ae][id]": "field_9a055ae",
+            "fields[field_9a055ae][type]": "text",
+            "fields[field_9a055ae][title]": "Name",
+            "fields[field_9a055ae][value]": "Afonso V Avelar",
+            "fields[field_9a055ae][raw_value]": "Afonso V Avelar",
+            "fields[field_9a055ae][required]": "1",
+            "fields[Empresa][id]": "Empresa",
+            "fields[Empresa][type]": "text",
+            "fields[Empresa][title]": "Empresa",
+            "fields[Empresa][value]": "Cyberomnes",
+            "fields[Empresa][raw_value]": "Cyberomnes",
+            "fields[Empresa][required]": "0",
+            "fields[EMAIL][id]": "EMAIL",
+            "fields[EMAIL][type]": "email",
+            "fields[EMAIL][title]": "Email",
+            "fields[EMAIL][value]": "cyberom.nes@gmail.com",
+            "fields[EMAIL][raw_value]": "cyberom.nes@gmail.com",
+            "fields[EMAIL][required]": "1",
+            "fields[PHONEWHATSAPP][id]": "PHONEWHATSAPP",
+            "fields[PHONEWHATSAPP][type]": "number",
+            "fields[PHONEWHATSAPP][title]": "Telefone/Whatsapp",
+            "fields[PHONEWHATSAPP][value]": "18195765490",
+            "fields[PHONEWHATSAPP][raw_value]": "18195765490",
+            "fields[PHONEWHATSAPP][required]": "1",
+            "meta[date][title]": "Date",
+            "meta[date][value]": "July 23, 2024",
+            "meta[time][title]": "Time",
+            "meta[time][value]": "8:27 pm",
+            "meta[page_url][title]": "Page URL",
+            "meta[page_url][value]": "https://omnestalk.com/homebr/",
+            "meta[user_agent][title]": "User Agent",
+            "meta[user_agent][value]": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            "meta[remote_ip][title]": "Remote IP",
+            "meta[remote_ip][value]": "2607:fa49:4d3f:ce00:e452:4c2c:8fdb:6324",
+            "meta[credit][title]": "Powered by",
+            "meta[credit][value]": "Elementor"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-23T21:33:53.000Z",
+  "versionId": "904309a6-25c6-4ef6-8aaa-c9631ea22096"
+}

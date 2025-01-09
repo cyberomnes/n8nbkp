@@ -1,0 +1,70 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-01T18:17:21.833Z",
+  "id": "lVcmrYJJlWkYTXz8",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 8",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "73fcd5c2-1ec5-4a3f-bf19-a462fcd462ba",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        600,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.bland.ai/v1/billing",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a0a208ed-e112-4da0-9bc7-1296b07a626f",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        820,
+        340
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-01T18:18:51.000Z",
+  "versionId": "164c5957-cb03-44b4-b2d5-267b51f98553"
+}

@@ -1,0 +1,291 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format response": {
+      "main": [
+        [
+          {
+            "node": "Stringify Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract start, end and name": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter only confirmed and with set time": {
+      "main": [
+        [
+          {
+            "node": "Extract start, end and name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Format response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Filter only confirmed and with set time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stringify Response": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2024-08-12T18:47:03.934Z",
+  "id": "4CBy63y83CXc4raH",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "booking",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "25160445-9838-46cb-aae8-00c28eefd348",
+        "options": {}
+      },
+      "id": "af6a645b-d6bc-4a21-aecc-c8d2ecec3cfd",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1100,
+        400
+      ],
+      "webhookId": "25160445-9838-46cb-aae8-00c28eefd348"
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "avelarafonso@gmail.com",
+          "mode": "list",
+          "cachedResultName": "avelarafonso@gmail.com"
+        },
+        "timeMin": "={{ $now.minus(1, 'day').toISO() }}",
+        "timeMax": "={{ $now.plus(1, 'month').toISO() }}",
+        "options": {}
+      },
+      "id": "4ec02256-b5d7-4464-82ee-06b9d303c3d6",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        400
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "akguFeu0y70N22uG",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "concatenateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "response",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "sort",
+        "options": {}
+      },
+      "id": "1b692759-883b-4f78-bc01-d83de6d38d07",
+      "name": "Format response",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        2247,
+        400
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "response",
+              "value": "={{ JSON.stringify($json.response) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d22ace5b-147e-4687-b37e-fea76e28cfe6",
+      "name": "Stringify Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2467,
+        400
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "start",
+              "value": "={{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.summary }}"
+            },
+            {
+              "name": "sort",
+              "value": "={{ $json.start.dateTime }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8d35e24-ef86-46bb-bc1c-a0b16cdc7f94",
+      "name": "Extract start, end and name",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1787,
+        400
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "confirmed"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.start.dateTime }}",
+              "operation": "notEqual",
+              "value2": "={{ undefined }}"
+            }
+          ]
+        }
+      },
+      "id": "b518e36d-bd94-4696-a481-904c678c64c9",
+      "name": "Filter only confirmed and with set time",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        1567,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Wrap the result in `response` object and return ",
+        "height": 220.42397542781927,
+        "width": 444.4130232558142
+      },
+      "id": "65489239-4c11-4a4a-ad15-72e4e703ad84",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2200,
+        340
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "sort"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1dd668c3-5858-4249-83c1-fb912e6bb122",
+      "name": "Sort",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        2007,
+        400
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "name": "Calendar_Availability",
+        "description": "Call this tool to get my calendar availability as stringified JSON array.",
+        "workflowId": "={{ $workflow.id }}"
+      },
+      "id": "36f7fdf1-1b79-4198-a8b6-d8baf9121288",
+      "name": "Workflow Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        800,
+        480
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-15T16:28:13.000Z",
+  "versionId": "a944978a-5211-4638-97e2-a0c352fdcc6b"
+}

@@ -1,0 +1,72 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-27T00:51:12.631Z",
+  "id": "uy1K5ETOE32nmvL1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "email omnestalk",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eaeb9ceb-2bbe-4b94-ac91-69c1234b575a",
+        "options": {}
+      },
+      "id": "3735f1d9-de93-4969-b031-1b7d31e35874",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        580,
+        300
+      ],
+      "webhookId": "eaeb9ceb-2bbe-4b94-ac91-69c1234b575a"
+    },
+    {
+      "parameters": {
+        "fromEmail": "Omnetalk@themktfactory.com",
+        "options": {}
+      },
+      "id": "193f09eb-f7f7-452c-9704-490002ed1add",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        800,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "44Hvq4AUVsg57hR5",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-07-27T00:51:12.631Z",
+  "versionId": "11b21c00-25cc-4400-9e89-ef7d0950bdc9"
+}

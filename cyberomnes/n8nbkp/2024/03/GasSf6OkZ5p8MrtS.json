@@ -1,0 +1,341 @@
+{
+  "active": false,
+  "connections": {
+    "Trigger posting manually": {
+      "main": [
+        [
+          {
+            "node": "Configure your influencer profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify tweet constraints": {
+      "main": [
+        [
+          {
+            "node": "Configure your influencer profile",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Post tweet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule posting every 6 hours": {
+      "main": [
+        [
+          {
+            "node": "Configure your influencer profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configure your influencer profile": {
+      "main": [
+        [
+          {
+            "node": "Generate tweet content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate tweet content": {
+      "main": [
+        [
+          {
+            "node": "Verify tweet constraints",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-08T00:56:11.880Z",
+  "id": "GasSf6OkZ5p8MrtS",
+  "meta": null,
+  "name": "twitter bot",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Scheduled posting \nWrite a tweet every 6 hours and randomize the minutes that it's posted at to make it seem natural.\n",
+        "height": 265,
+        "width": 389
+      },
+      "id": "4bec0899-88c4-4ae0-a2e0-2522e665e54d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        460,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.message.content.tweet }}",
+        "additionalFields": {}
+      },
+      "id": "033bc01e-48ca-495d-bd62-0e08700dde61",
+      "name": "Post tweet",
+      "type": "n8n-nodes-base.twitter",
+      "position": [
+        2480,
+        580
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6,
+              "triggerAtMinute": "={{ Math.floor(Math.random() * 60) }}"
+            }
+          ]
+        }
+      },
+      "id": "1522af56-89ff-481b-8959-8552a02ca164",
+      "name": "Schedule posting every 6 hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        680,
+        560
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "c733795b-725c-42cd-a3ad-f5798d004f81",
+      "name": "Trigger posting manually",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        680,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Configure influencer profile \nSet your target niche, writing style, and inspiration.\n",
+        "height": 265,
+        "width": 389
+      },
+      "id": "6f2980b0-10ee-420a-b9c2-35785c6e9855",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        900,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Generate tweet\nGenerate a potentially viral tweet based on your configuration.",
+        "height": 265,
+        "width": 389
+      },
+      "id": "03da0489-7417-4982-957b-0ea24933b757",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1340,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Validate tweet\nIf the generated tweet does not meet length constraints, regenerate it.",
+        "height": 265,
+        "width": 389
+      },
+      "id": "dd84bb6f-9a8f-4949-ad1f-bf76c2642d18",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1780,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Post the tweet\nPost the tweet to your X account.",
+        "height": 265,
+        "width": 389
+      },
+      "id": "e4af27bd-2a3b-4af3-b4ca-7aa7aacef9a9",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2220,
+        460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "0a6ebbb6-4b14-4c7e-9390-215e32921663",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $json.message.content.tweet.length }}",
+              "rightValue": 280
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e5a016ac-2701-4971-9e0b-d4aca0367aa2",
+      "name": "Verify tweet constraints",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        2020,
+        560
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "## On-demand posting \nWrite a tweet on demand, when you manually run your workflow.\n",
+        "height": 265,
+        "width": 389
+      },
+      "id": "391960f7-21d4-40b7-9d54-5168ecf83549",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        460,
+        780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "45268b04-68a1-420f-9ad2-950844d16af1",
+              "name": "niche",
+              "type": "string",
+              "value": "In the rapidly evolving world of technology, CyberOmnes stands at the forefront, guided by an AI uniquely trained to delve into IT innovations, AI breakthroughs, and cybersecurity essentials. Our AI curator sifts through the vast digital expanse to bring you the most relevant, cutting-edge information, transforming complex topics into accessible insights. It tweets about the latest developments, the brightest minds in technology, and the pivotal discoveries shaping our future. But it's not just about sharing knowledge; it's about sparking conversation. By weaving in thematic questions and thought-provoking prompts, our AI invites you to engage with the ideas transforming our world. This AI doesn't just relay information; it's designed to learn from your interactions, tailoring content to reflect the evolving interests of our community. Join CyberOmnes in exploring the digital frontier, where AI meets human curiosity, and together, we unravel the mysteries of tomorrow's technology. you love sharing accomplishemnts that Cyberomnes has achieved"
+            },
+            {
+              "id": "d95f4a1c-ab1c-4eca-8732-3d7a087f82d8",
+              "name": "style",
+              "type": "string",
+              "value": "All of your tweets are very personal. "
+            },
+            {
+              "id": "1ee088f7-7021-48c0-bcb7-d1011eb0db3d",
+              "name": "inspiration",
+              "type": "string",
+              "value": "Your inspiration draws from the forefront of technological innovation, cybersecurity breakthroughs, and artificial intelligence insights. You delve into resources like 'The Singularity is Near' by Ray Kurzweil, exploring the future of AI and human enhancement; 'Ghost in the Wires' by Kevin Mitnick, unraveling the mysteries of cybersecurity; 'Life 3.0' by Max Tegmark, contemplating the ethical implications of artificial intelligence; and 'Tools and Weapons' by Brad Smith and Carol Ann Browne, which discusses the challenges at the intersection of technology, privacy, and security. These works, along with the latest articles from leading tech journals like Wired, MIT Technology Review, and Ars Technica, shape the essence of your tweets. By integrating cutting-edge research, expert analysis, and visionary perspectives, you craft content that not only informs but also engages and provokes thought among your followers on the evolving landscape of technology."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f5f03b3d-9780-492d-b3c2-d192c4459f66",
+      "name": "Configure your influencer profile",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1120,
+        560
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4-turbo-preview",
+          "cachedResultName": "GPT-4-TURBO-PREVIEW"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a successful modern Twitter influencer. Your tweets always go viral. ",
+              "role": "system"
+            },
+            {
+              "content": "=You have a specific writing style: {{ $json.style }}",
+              "role": "system"
+            },
+            {
+              "content": "=You follow the principles described in your inspiration sources closely and you write your tweets based on that: {{ $json.inspiration }}",
+              "role": "system"
+            },
+            {
+              "content": "=You have a very specific niche: {{ $json.niche }}",
+              "role": "system"
+            },
+            {
+              "content": "=Answer with the viral tweet and nothing else as a response. Keep the tweet within 280 characters. Current date and time are {{DateTime.now()}}. Add hashtags and emojis where relevant.",
+              "role": "system"
+            },
+            {
+              "content": "Write a tweet that is certain to go viral. Take your time in writing it. Think. Use the vast knowledge you have."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "3519bf4c-1525-4718-aa9c-825730a1655f",
+      "name": "Generate tweet content",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        1440,
+        560
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-08T00:56:17.000Z",
+  "versionId": "96e89270-de40-4220-9d6b-bd78a0c73628"
+}

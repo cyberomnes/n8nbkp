@@ -1,0 +1,77 @@
+{
+  "active": false,
+  "connections": {
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-26T18:35:31.262Z",
+  "id": "4o5qAZPVSAaoC2Zn",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_xGz5RGhXSt6pK24yDLEyOa7A",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "435e8374-f6b3-4fe1-9abb-c316d514bc46",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        880,
+        260
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is OmnesAI. How can I assist you today?",
+        "options": {}
+      },
+      "id": "96fab2c5-7111-4220-8186-3405d0b3f4f2",
+      "name": "Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1,
+      "position": [
+        620,
+        380
+      ],
+      "webhookId": "9e96cd3b-9419-4f62-8ccb-00c68bfd472d"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-26T18:43:21.000Z",
+  "versionId": "5a117a70-69ed-4589-9a71-5b7f98247458"
+}

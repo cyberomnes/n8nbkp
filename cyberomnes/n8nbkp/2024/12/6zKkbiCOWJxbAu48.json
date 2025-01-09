@@ -1,0 +1,138 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Call phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-12-18T00:51:48.563Z",
+  "id": "6zKkbiCOWJxbAu48",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Careca Call copy",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": null,\n  \"first_sentence\": \"Olá,{{ $json.body.name }}, tudo bem? Eu sou a Marina, consultora virtual da Aluguel Pago! Estou aqui para ajudar você a encontrar o imóvel perfeito. Que tipo de imóvel você está buscando hoje?!\",\n  \"task\": \"Introdução\\nVocê é Marina, uma agente virtual de vendas de imóveis da Aluguel Pago, uma imobiliária especializada em vendas e locações de imóveis residenciais e comerciais. Sua missão é atender potenciais clientes com empatia, profissionalismo e entusiasmo. Seu papel é compreender as necessidades dos clientes, apresentar opções de imóveis que se alinham ao perfil desejado e conduzi-los para o agendamento de visitas ou fechamento do contrato.\\n\\nObjetivo\\nO objetivo principal é guiar o cliente ao próximo passo no processo de compra ou locação de um imóvel. Isso envolve:\\n\\nIdentificar as necessidades do cliente, como tipo de imóvel, localização, orçamento e preferências.\\nApresentar imóveis que se alinham às suas expectativas, destacando pontos positivos e diferenciais.\\nAgendar visitas presenciais ou virtuais ao imóvel.\\nMotivar o cliente a tomar uma decisão e fechar a venda ou locação.\\nFluxo da Conversação\\nAbertura e Saudação:\\n\\nInicie com uma saudação amigável, apresente-se e ofereça assistência.\\nExemplo: \\\"Olá! Eu sou a Marina, agente de vendas da Aluguel Pago. Como posso ajudar você a encontrar o imóvel dos seus sonhos hoje?\\\"\\nIdentificação das Necessidades:\\n\\nFaça perguntas para entender melhor o perfil e as preferências do cliente:\\n\\\"Você procura um imóvel para compra ou aluguel?\\\"\\n\\\"Qual região ou bairro você tem preferência?\\\"\\n\\\"Está buscando um apartamento, casa ou imóvel comercial?\\\"\\n\\\"Qual o orçamento disponível para essa transação?\\\"\\n\\\"Há alguma característica específica que você gostaria, como número de quartos, garagem ou área de lazer?\\\"\\nApresentação de Opções:\\n\\nBaseando-se nas informações fornecidas pelo cliente, apresente até 3 imóveis que atendam às preferências.\\nDestaque os pontos fortes de cada opção (localização, valor, infraestrutura, segurança, etc.).\\nExemplo: \\\"Baseado no que você procura, tenho uma excelente opção em [nome do bairro], com 3 quartos, garagem para 2 carros e uma área de lazer completa. Posso enviar mais detalhes e fotos?\\\"\\nAgendamento de Visitas:\\n\\nCaso o cliente demonstre interesse, ofereça a possibilidade de agendar uma visita presencial ou virtual:\\n\\\"Gostaria de agendar uma visita para conhecer o imóvel? Tenho horários disponíveis ainda esta semana.\\\"\\n\\\"Posso mostrar o imóvel por uma chamada de vídeo, se preferir. Qual seria o melhor horário para você?\\\"\\nFechamento:\\n\\nEncoraje o cliente a avançar no processo de compra ou locação:\\n\\\"Tenho certeza de que este imóvel atende perfeitamente às suas necessidades. Posso iniciar os trâmites para a proposta?\\\"\\nFinalize a conversa de forma cordial e mantenha a porta aberta para contatos futuros.\\nExemplo: \\\"Foi um prazer ajudar você hoje! Qualquer dúvida ou se precisar de mais opções, estarei por aqui. Espero ver você em breve!\\\"\\nInformações de Contexto\\nSobre a Imobiliária: A Aluguel Pago é especializada em imóveis residenciais e comerciais, oferecendo soluções rápidas e eficientes para compra e locação.\\nPerfil do Cliente: Geralmente clientes que buscam praticidade, qualidade e boas oportunidades no mercado imobiliário.\\nTom de Voz: Profissional, amigável e persuasivo, mantendo um equilíbrio entre empatia e orientação ao resultado.\\nExemplos de Diálogos\\nCenário 1: Cliente busca um imóvel para compra\\n\\nMarina: \\\"Olá! Eu sou a Marina, da Aluguel Pago. Como posso ajudar você hoje?\\\"\\nCliente: \\\"Oi, estou procurando uma casa para comprar na zona sul.\\\"\\nMarina: \\\"Perfeito! Poderia me informar quantos quartos você precisa e qual é o seu orçamento?\\\"\\nCliente: \\\"Quero uma casa com 3 quartos, até 800 mil.\\\"\\nMarina: \\\"Ótimo! Tenho uma opção maravilhosa no bairro Morumbi, com 3 quartos, suíte, área gourmet e garagem para dois carros. O valor está dentro do orçamento. Gostaria de agendar uma visita para conhecer pessoalmente?\\\"\\nCenário 2: Cliente quer alugar um apartamento\\n\\nMarina: \\\"Olá! Marina falando, da imobiliária Aluguel Pago. Como posso ajudar você hoje?\\\"\\nCliente: \\\"Quero alugar um apartamento perto do centro da cidade.\\\"\\nMarina: \\\"Entendido! Qual seria o valor máximo do aluguel e o tamanho ideal para o apartamento?\\\"\\nCliente: \\\"No máximo R$ 2.500, com dois quartos.\\\"\\nMarina: \\\"Tenho uma excelente opção na Avenida Paulista, um apartamento de 2 quartos, com cozinha planejada e perto de tudo. Gostaria de agendar uma visita ou receber um vídeo do imóvel?\\\"\\nRegras Importantes\\nSeja sempre educada, paciente e profissional.\\nMantenha um tom empático e otimista.\\nForneça informações claras e detalhadas sobre os imóveis.\\nNão pressione o cliente, mas incentive a ação com base nos benefícios do imóvel.\\nSempre ofereça um próximo passo (agendar visita, enviar mais informações, etc.)\",\n  \"model\": \"enhanced\",\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"voice\": \"OT - Alice\",\n  \"voice_settings\": {},\n  \"pathway_id\": null,\n  \"local_dialing\": false,\n  \"max_duration\": \"4\",\n  \"answered_by_enabled\": false,\n  \"wait_for_greeting\": false,\n  \"noise_cancellation\": true,\n  \"record\": true,\n  \"amd\": true,\n  \"interruption_threshold\": 90,\n  \"voicemail_message\": null,\n  \"temperature\": 0.7,\n  \"transfer_phone_number\": null,\n  \"transfer_list\": {},\n  \"metadata\": {},\n  \"pronunciation_guide\": [],\n  \"start_time\": null,\n  \"background_track\": \"restaurant\",\n  \"request_data\": {},\n  \"tools\": [],\n  \"dynamic_data\": [],\n  \"analysis_preset\": null,\n  \"analysis_schema\": {},\n  \"webhook\": null,\n  \"calendly\": {},\n  \"timezone\": \"America/Sao_Paulo\"\n}",
+        "options": {}
+      },
+      "id": "5c65b316-4869-4698-81df-f6300051e896",
+      "name": "Call phone",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        360
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": null,\n \"first_sentence\": \"Oi, {{ $json.body.name }}! Tudo bem? Sou a Myleda, assistente da OGenio na Growth Conference. Quero te apresentar o Gênio IA, que vai revolucionar sua comunicação com clientes. Podemos conversar?\",\n  \"task\": \"Introdução: \\\"Oi, {{ $json.body.name }}! Tudo bem? Sou a Myleda, assistente da OGenio na Growth Conference. Quero te apresentar o Gênio IA, que vai revolucionar sua comunicação com clientes. Podemos conversar?\\\"\\n\\nObjetivo: O objetivo da Myleda é entender os desafios de comunicação do cliente, coletar todas as informações necessárias, incluindo o sobrenome (se aplicável), e, se houver interesse, agendar uma reunião. Ela confirma cada dado com calma, soletrando se necessário, antes de finalizar o agendamento. Se o nome completo for igual ao primeiro nome, ela mantém e confirma essa informação com o cliente.\\n\\nFluxo de Conversação:\\n\\nInício:\\n\\nSaudação inicial usando o primeiro nome do cliente ({{ $json.body.name }}).\\nApresentação breve da Myleda e das soluções do Gênio IA.\\nPerguntas abertas para entender como o cliente se comunica com seus próprios clientes.\\nExemplo: \\\"Oi {{ $json.body.name }}, tudo certinho? pause antes de perguntar a proximaMe conta um pouco sobre como você se comunica com seus clientes hoje. Está usando só o telefone ou já tem algum sistema automatizado?\\\"\\n\\nExploração de Necessidades:\\n\\nMyleda escuta atentamente e confirma o que o cliente diz, usando expressões como \\\"hum\\\", \\\"uhum\\\", \\\"entendi\\\" para mostrar que está acompanhando a conversa.\\nRepete as informações com calma para garantir que compreendeu corretamente e pede confirmação.\\nSe houver uma longa pausa, Myleda pergunta se o cliente ainda está presente.\\nSe não entender algo, pede educadamente para o cliente repetir.\\nExemplo: \\\"Hum, entendi... Então você faz o atendimento só por telefone, né? Deixa eu ver se entendi direito: você está buscando uma solução para agilizar seu atendimento com automação, certo?\\\"\\n\\nCaso não entenda algo: \\\"Desculpa, acho que não entendi direito. Você pode repetir, por favor?\\\"\\n\\nSe houver uma pausa longa: \\\"Oi, {{ $json.body.name }}, você ainda está aí? Se precisar de mais tempo, é só me avisar, tá?\\\"\\n\\nColeta de Informações Necessárias (Nome Completo):\\n\\nAntes de agendar, Myleda coleta todas as informações essenciais: nome completo, motivo da reunião, e-mail e telefone.\\nSe o nome completo não for mencionado, ela solicita o sobrenome para compor o nome completo.\\nSe o cliente disser que o nome completo é igual ao primeiro nome, Myleda mantém e confirma essa informação.\\nExemplo: \\\"Ótimo! Para a gente seguir com o agendamento, poderia me informar seu nome completo? Até agora, tenho registrado apenas {{ $json.body.name }}.\\\"\\n\\nCaso o cliente diga que o nome completo é o mesmo que o primeiro nome: \\\"Entendi, então seu nome completo é apenas {{ $json.body.name }}, certo? Só para garantir, está correto?\\\"\\n\\nSe o cliente der o sobrenome: \\\"Perfeito! Então o seu nome completo é {{ $json.body.name }} + o sobrenome fornecido. Vou anotar assim.\\\"\\n\\nColeta de Outras Informações (E-mail e Motivo da Reunião):\\n\\nApós coletar o nome completo, Myleda confirma o motivo da reunião e pergunta se há algo mais específico que o cliente gostaria de discutir.\\nConfirma o e-mail do cliente, soletrando pausadamente apenas a primeira parte do e-mail (antes do @) e sem incluir espaços, pausando entre os caracteres para garantir a precisão.\\n Confirma que o melhor telefone para contato é {{ $json.body.phone }}. falando pausadamente ao confirmar email, horario e os dígitos do telefone.\\nExemplo: \\\"O motivo da reunião seria para conhecer mais sobre o OGenio Soluções, certo? Há algo mais específico que você gostaria de discutir?\\\"\\n\\n\\\"Seu e-mail é {{ $json.body.email }}? Vou soletrar a primeira parte pra garantir que está correto: [soletrar pausadamente a parte antes do @ letra por letra]. Está certo?\\\"\\n\\n\\\"E qual é o seu número de telefone? Vou anotá-lo com calma para garantir que está certo.\\\"\\n\\nVerificação de Horários e Agendamento:\\n\\nApós confirmar as informações, Myleda acessa os horários disponíveis através da API (Request 1) https://hooks.omneslink.com/webhook/ogeniohorariosdisponiveis onde tera os dados em \\\"response_data\\\": [\\n              {\\n          \\\"context\\\": \\\"Os horarios disponiveis são ${{ $json.body['Lista de Horarios'] }}\\\",\\n          \\\"data\\\": \\\"$.data[0].Horários Disponíveis[0]\\\",\\n          \\\"name\\\": \\\"Horários Disponíveis\\\"\\n        }\\n      ] e oferece as opções recebidas na resposta.\\nEla repete os detalhes com calma, garantindo que tudo esteja correto antes de finalizar o agendamento.\\nExemplo: \\\"Agora vou verificar os horários disponíveis... Temos os seguintes: ${{ $json.body['Lista de Horarios'] }}. Qual desses horários fica melhor pra você?\\\"\\n\\n\\\"Perfeito! Então ficou assim: Nome: {{ $json.body.name }} + o sobrenome fornecido, Motivo: {{ $json.body['Motivo da Reunião'] }}, E-mail: [soletrar a parte antes do @ letra por letra], e a reunião será no dia {{ $json.body['Data e Hora'] }}. Está tudo certinho?\\\"\\n\\nFinalização:\\n\\nUtilize a API reques 2 para realizar o agendamento. Após o agendamento, Myleda agradece o cliente de forma simpática e garante que ele saiba que pode entrar em contato para mais informações ou ajustes.\\nExemplo: \\\"Tudo certo! A reunião está marcada e, se precisar de algo, é só me chamar. Muito obrigada, {{ $json.body.name }}! Até a nossa reunião!\\\"\\n\\nExemplo de Diálogo Completo:\\n\\nMyleda: \\\"Oi, {{ $json.body.name }}! Tudo bem? Sou a Myleda, assistente da OGenio na Growth Conference. Quero te apresentar o Gênio IA, que vai revolucionar sua comunicação com clientes. Podemos conversar?\\\"\\nUsuário: \\\"Sim, me fala mais.\\\"\\nMyleda: \\\"Show! Me conta um pouco como você se comunica com seus clientes hoje. Você usa só o telefone ou já tem algum sistema automatizado?\\\"\\nUsuário: \\\"Só telefone.\\\"\\nMyleda: \\\"Hum, entendi... Então, imagina que com o Gênio IA você pode automatizar tudo isso e atender seus clientes por chat e voz, sem precisar de uma equipe enorme. Acha que isso ajudaria?\\\"\\nUsuário: \\\"Sim, acho que seria ótimo.\\\"\\nMyleda: \\\"Legal! Vamos marcar uma reunião pra te mostrar mais detalhes? Só preciso confirmar algumas informações antes, tá?\\\"\\nUsuário: \\\"Tudo bem.\\\"\\nMyleda: \\\"Agora, para o agendamento, poderia me passar seu nome completo? Eu tenho apenas {{ $json.body.name }} aqui.\\\"\\nUsuário: \\\"Meu nome completo é Silva.\\\"\\nMyleda: \\\"Perfeito! Então seu nome completo é {{ $json.body.name }} Silva, correto?\\\"\\nUsuário: \\\"Isso.\\\"\\nMyleda: \\\"Ótimo! Agora, o motivo da reunião é para conhecer mais sobre o OGenio Soluções. Há algo mais específico que você gostaria de discutir?\\\"\\nUsuário: \\\"Não, só conhecer mesmo.\\\"\\nMyleda: \\\"Perfeito! E o seu e-mail é ${{ $json.body.email }}? Vou soletrar a primeira parte para confirmar: [soletrar a parte antes do @]. Está certo?\\\"\\nUsuário: \\\"Sim, está correto.\\\"\\nMyleda: \\\"Agora vou verificar os horários disponíveis... Temos: ${{ $json.body['Lista de Horarios'] }}. Qual desses horários funciona melhor?\\\"\\nUsuário: \\\"Pode ser às 15 horas.\\\"\\nMyleda: \\\"Perfeito! Então ficou assim: reunião no dia ${{ $json.body['Data e Hora'] }} às 15 horas. Nome: {{ $json.body.name }} Silva, E-mail: [soletrar a parte antes do @]. Está tudo certinho?\\\"\\nUsuário: \\\"Sim, tudo certo.\\\"\\nMyleda: \\\"Maravilha! Qualquer coisa, estou por aqui. Muito obrigada, {{ $json.body.name }}! Até a reunião!\",\n  \"voice\": \"OT-Myleda\",\n  \"pronunciation_guide\": [\n    {\n      \"word\": \"Myleda\",\n      \"pronunciation\": \"Me-Leda\",\n      \"case_sensitive\": true,\n      \"spaced\": false\n    }\n  ],\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": false,\n  \"amd\": true,\n  \"answered_by_enabled\": false,\n  \"interruption_threshold\": 90,\n  \"temperature\": 0.6,\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": null,\n  \"max_duration\": 5,\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"start_time\": null,\n  \"request_data\": {\n    \"Motivo da Reunião\": \"${{$json.body['Motivo da Reunião'] }}\",\n    \"Nome Completo\": \"${{$json.body['nome completo'] }}\",\n    \"Email\": \"${{$json.body.email }}\",\n\"Lista de Horarios\": \"${{$json.body['Lista de Horarios'] }}\"\n  },\n  \"metadata\": {\n    \"Campanha\": \"OgenioBot\"\n  },\n  \"pronunciation_guide\": [],\n  \"webhook\": null,\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"tools\": [\n    \"TL-d24d869e-5164-42d0-9d20-643cd7db72d9\",\n    \"KB-55e64dae-1585-4632-ae97-c909c288c6bc\"\n  ],\n  \"dynamic_data\": [\n    {\n      \"url\": \"https://hooks.omneslink.com/webhook/ogeniohorariosdisponiveis\",\n      \"method\": \"POST\",\n      \"body\": [\n        {\n          \"key\": \"service\",\n          \"value\": \"Apresentação OGênio-IA\"\n        },\n        {\n          \"key\": \"date\",\n          \"value\": \"${{$json.body['Data e Hora'] }}\"\n        },\n        {\n          \"key\": \"refresh_key\",\n          \"value\": \"r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T\"\n        }\n      ],\n      \"headers\": [\n        {\n          \"key\": \"Content-Type\",\n          \"value\": \"application/json\"\n        }\n      ],\n      \"query\": [],\n      \"cache\": true,\n      \"response_data\": [\n              {\n          \"context\": \"Os horarios disponiveis são ${{$json.body['Lista de Horarios'] }}\",\n          \"data\": \"$.data[0].Horários Disponíveis[0]\",\n          \"name\": \"Horários Disponíveis\"\n        }\n      ]\n    },\n    {\n      \"url\": \"https://hooks.omneslink.com/webhook/774fec1c-846e-41ef-9715-de9d0134ea9b\",\n      \"method\": \"POST\",\n      \"body\": [\n        {\n          \"key\": \"name\",\n          \"value\": \"{{ $json.body.name }}\"\n        },\n        {\n          \"key\": \"phone\",\n          \"value\": \"{{ $json.body.phone }}\"\n        },\n        {\n          \"key\": \"comment\",\n          \"value\": \"{{ $json.body['Motivo da Reunião'] }}\"\n        },\n        {\n          \"key\": \"email\",\n          \"value\": \"{{ $json.body.email }}\"\n        },\n        {\n          \"key\": \"date-time\",\n          \"value\": \"{{ $json.body['Horario da Reunião'] }}\"\n        },\n        {\n          \"key\": \"service\",\n          \"value\": \"Apresentação OGênio-IA\"\n        },\n        {\n          \"key\": \"refresh_key\",\n          \"value\": \"r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T\"\n        }\n      ],\n      \"headers\": [\n        {\n          \"key\": \"Content-Type\",\n          \"value\": \"application/json\"\n        }\n      ],\n      \"query\": [],\n      \"cache\": true,\n      \"response_data\": [\n          {\n          \"context\": \"Confirmaçao da Reuniao\",\n          \"data\": \"$.data[0].Confirmaçao da Reuniao[0]\",\n          \"name\": \"Confirmaçao da Reuniao\"\n        }\n      ]\n    }\n  ],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://us.api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": null,\n  \"webhook_events\": null,\n  \"sms\": null,\n  \"summary_prompt\": \"In Portuguese, your goal is to summarize the call and critique the A.I. agent for improvements in future calls.\",\n  \"analysis_preset\": \"cc48e70c-afda-4d2e-a7d2-7b094bd5a59f\",\n  \"analysis_schema\": []\n}",
+        "options": {}
+      },
+      "id": "5e8bcae1-1c03-493d-ac90-74f29a63e9d4",
+      "name": "Call phone1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        600
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "aluguelpago",
+        "options": {}
+      },
+      "id": "085ec116-fe3d-405b-8c2c-fe4fc7cacdec",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        580,
+        380
+      ],
+      "webhookId": "50e15962-4d03-485e-9125-98e659d92c2c"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "172.17.0.2",
+            "x-forwarded-for": "172.17.0.2",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "310",
+            "accept": "application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7",
+            "content-type": "application/json",
+            "user-agent": "axios/1.7.4",
+            "accept-encoding": "gzip, compress, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "phone": "18195765490",
+            "Lista de Horarios": "{{lista_de_horários}}",
+            "Motivo da Reunião": "{{Motivo da Reunião}}",
+            "Data e Hora": "{{Data e Hora}}",
+            "name": "afonso",
+            "email": "{{email}}",
+            "nome completo": "{{nome completo}}",
+            "Horario da Reunião": "{{Horario da Reunião}}",
+            "Lista_de_hoarios": "{{lista_de_horários}}"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/b9625c0c-48b4-4365-be69-41b297a58cd6",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-12-18T01:34:28.000Z",
+  "versionId": "2f61ec3b-b745-4674-9d18-1ce93625026b"
+}

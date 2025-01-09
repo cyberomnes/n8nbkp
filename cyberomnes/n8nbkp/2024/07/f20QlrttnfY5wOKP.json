@@ -1,0 +1,40 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-07-29T21:09:43.606Z",
+  "id": "f20QlrttnfY5wOKP",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Send Calls Dash",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "4c199f95-1aed-4b50-8eeb-58089ddadc52",
+        "options": {}
+      },
+      "id": "4345f0c0-8589-418e-8562-fa6d16a0824c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        340
+      ],
+      "webhookId": "4c199f95-1aed-4b50-8eeb-58089ddadc52"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-29T21:10:13.000Z",
+  "versionId": "fd21993c-7fc3-48b5-9ca0-fa2a631c255e"
+}

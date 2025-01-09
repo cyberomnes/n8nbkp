@@ -1,0 +1,43 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-12-27T19:55:10.840Z",
+  "id": "TzlQ10pAkooTQvsB",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "twillio try",
+  "nodes": [
+    {
+      "parameters": {
+        "multipleMethods": true,
+        "httpMethod": [
+          "POST"
+        ],
+        "path": "b3562ee0-0576-4ff5-a8b4-6b055613b57b",
+        "options": {}
+      },
+      "id": "d3bc8cbc-bb20-41dc-b0d4-b7128afc74e1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        540
+      ],
+      "webhookId": "b3562ee0-0576-4ff5-a8b4-6b055613b57b"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-12-27T20:06:06.000Z",
+  "versionId": "66dd5962-71b4-4dee-b6c0-3d425627ede3"
+}

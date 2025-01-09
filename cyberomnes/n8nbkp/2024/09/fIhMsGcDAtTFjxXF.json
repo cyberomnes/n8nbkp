@@ -1,0 +1,606 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create OLINK audio link -1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create OLINK audio link -1": {
+      "main": [
+        [
+          {
+            "node": "Create OLINK audio link -2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create OLINK audio link -2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-23T18:30:49.661Z",
+  "id": "fIhMsGcDAtTFjxXF",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Omnes Receptionist",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "f250f709-52bc-4f0a-97e3-a9d90826b86c",
+        "options": {}
+      },
+      "id": "baaca29b-ab40-455c-a5e5-e93ea346cc15",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        480
+      ],
+      "webhookId": "f250f709-52bc-4f0a-97e3-a9d90826b86c"
+    },
+    {
+      "parameters": {
+        "path": "e79c0d21-c645-426e-b5f2-42167124dc9f",
+        "options": {}
+      },
+      "id": "112a8973-1af4-44e1-a011-358222576beb",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1400,
+        760
+      ],
+      "webhookId": "e79c0d21-c645-426e-b5f2-42167124dc9f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4cf7e7a9-ec5d-488d-9980-4ee1652e0dd3",
+              "name": "Metadados",
+              "value": "={{ $json.body.metadata }}",
+              "type": "string"
+            },
+            {
+              "id": "217f15b7-051e-4af8-b60b-ff24b860c195",
+              "name": "Summario",
+              "value": "={{ $json.body.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "c89d59af-c4ca-4f4e-b955-d36e6bc1e52c",
+              "name": "Criada em",
+              "value": "={{ $json.body.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "b38da8db-2654-4244-93be-95317b38786e",
+              "name": "Ligação feita para",
+              "value": "={{ $json.body.to }}",
+              "type": "string"
+            },
+            {
+              "id": "b8f1fa18-a820-483b-8e64-1dfe2ad21bda",
+              "name": "Duração da ligação",
+              "value": "={{ $json.body.call_length }}",
+              "type": "string"
+            },
+            {
+              "id": "08ffe32f-667b-448e-b9eb-bf6f60305e19",
+              "name": "Duração corrigida",
+              "value": "={{ $json.body.corrected_duration }}",
+              "type": "string"
+            },
+            {
+              "id": "02613367-e446-47bc-9506-3a0ddded4d97",
+              "name": "ID da ligação",
+              "value": "={{ $json.body.variables.call_id }}",
+              "type": "string"
+            },
+            {
+              "id": "4a731266-efb1-4681-94d6-03a5f34c0316",
+              "name": "Transcrição",
+              "value": "={{ $json.body.concatenated_transcript }}",
+              "type": "string"
+            },
+            {
+              "id": "a807e67d-e26d-402c-be1c-4987ec219105",
+              "name": "Finalizada em",
+              "value": "={{ $json.body.end_at }}",
+              "type": "string"
+            },
+            {
+              "id": "416b9be9-fadf-4887-bec4-3538294c8ce3",
+              "name": "Custo da Ligação",
+              "value": "={{ $json.body.price *12.222222222222223 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "46dc5415-ad49-49af-8bf0-f9d552bd6fcb",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        680,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {}
+      },
+      "id": "d5f75a7a-8df3-4b0e-b4a0-6893c37f0d46",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appH34zFc4eyhpxkA",
+          "mode": "list",
+          "cachedResultName": "Calls",
+          "cachedResultUrl": "https://airtable.com/appH34zFc4eyhpxkA"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblrTbQQsApWcqb71",
+          "mode": "list",
+          "cachedResultName": "Imported table",
+          "cachedResultUrl": "https://airtable.com/appH34zFc4eyhpxkA/tblrTbQQsApWcqb71"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID da ligação": "={{ $json['ID da ligação'] }}",
+            "Gravação": "=https://omnes.link/{{$json.data.url}}",
+            "Metadados": "={{ $json.Metadados }}",
+            "Summario": "={{ $json.Summario }}",
+            "Criada em": "={{ $json['Criada em'] }}",
+            "Ligação feita para": "={{ $json['Ligação feita para'] }}",
+            "Duração da ligação": "={{ $json['Duração da ligação'] }}",
+            "Duração corrigida": "={{ $json['Duração corrigida'] }}",
+            "Finalizada em": "={{ $json['Finalizada em'] }}",
+            "Custo da Ligação": "={{ $json['Custo da Ligação'] }}",
+            "Transcrição concatenada": "={{ $json.Transcrição }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID da ligação",
+              "displayName": "ID da ligação",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gravação",
+              "displayName": "Gravação",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Metadados",
+              "displayName": "Metadados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Summario",
+              "displayName": "Summario",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Criada em",
+              "displayName": "Criada em",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ligação feita para",
+              "displayName": "Ligação feita para",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duração da ligação",
+              "displayName": "Duração da ligação",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duração corrigida",
+              "displayName": "Duração corrigida",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Transcrição concatenada",
+              "displayName": "Transcrição concatenada",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Trancrição ",
+              "displayName": "Trancrição ",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Finalizada em",
+              "displayName": "Finalizada em",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Custo da Ligação",
+              "displayName": "Custo da Ligação",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fd33a6e1-b1f7-4bb3-bfd8-caf0950737d9",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        860
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "irJb9676vNew9XaX",
+          "name": "OTFunnelTech Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "ed0eb04f-c35f-4e12-8f24-1df977a80a24",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        940,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3a1cef3a-ba7d-42d2-9060-623aa123df3b",
+      "name": "Convert to File1",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1020,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnes.link/api/links",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a3b9d2b62ca1a29e8e1c4af6cf4d9802"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "location_url",
+              "value": "={{ $json.body.recording_url }}"
+            },
+            {
+              "name": "cloaking_is_enabled",
+              "value": "true"
+            },
+            {
+              "name": "cloaking_title",
+              "value": "Gravações OmnesTalk FunnelTech"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c03c681b-3d5c-485d-92ed-fefc0ede0093",
+      "name": "Create OLINK audio link -1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1560,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://omnes.link/api/links/{{$json.data.id}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a3b9d2b62ca1a29e8e1c4af6cf4d9802"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "631d1a49-c552-41f0-baeb-2b2b75729057",
+      "name": "Create OLINK audio link -2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1760,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6de9ba00-6c4d-4d58-81bf-ed120019830f",
+      "name": "Convert to File2",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2020,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "50234ce0-640c-4fdc-a9f7-c4bf1805b5e6",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1860,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4cf7e7a9-ec5d-488d-9980-4ee1652e0dd3",
+              "name": "Metadados",
+              "value": "={{ $json.body.metadata }}",
+              "type": "string"
+            },
+            {
+              "id": "217f15b7-051e-4af8-b60b-ff24b860c195",
+              "name": "Summario",
+              "value": "={{ $json.body.summary }}",
+              "type": "string"
+            },
+            {
+              "id": "c89d59af-c4ca-4f4e-b955-d36e6bc1e52c",
+              "name": "Criada em",
+              "value": "={{ $json.body.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "b38da8db-2654-4244-93be-95317b38786e",
+              "name": "Ligação feita para",
+              "value": "={{ $json.body.to }}",
+              "type": "string"
+            },
+            {
+              "id": "b8f1fa18-a820-483b-8e64-1dfe2ad21bda",
+              "name": "Duração da ligação",
+              "value": "={{ $json.body.call_length }}",
+              "type": "string"
+            },
+            {
+              "id": "08ffe32f-667b-448e-b9eb-bf6f60305e19",
+              "name": "Duração corrigida",
+              "value": "={{ $json.body.corrected_duration }}",
+              "type": "string"
+            },
+            {
+              "id": "02613367-e446-47bc-9506-3a0ddded4d97",
+              "name": "ID da ligação",
+              "value": "={{ $json.body.variables.call_id }}",
+              "type": "string"
+            },
+            {
+              "id": "4a731266-efb1-4681-94d6-03a5f34c0316",
+              "name": "Transcrição",
+              "value": "={{ $json.body.concatenated_transcript }}",
+              "type": "string"
+            },
+            {
+              "id": "a807e67d-e26d-402c-be1c-4987ec219105",
+              "name": "Finalizada em",
+              "value": "={{ $json.body.end_at }}",
+              "type": "string"
+            },
+            {
+              "id": "416b9be9-fadf-4887-bec4-3538294c8ce3",
+              "name": "Custo da Ligação",
+              "value": "={{ $json.body.price *7 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8853482f-e5fb-407c-a9bb-5658db1b0b34",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1580,
+        500
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2024-09-28T23:16:31.000Z",
+  "versionId": "825cebaa-768b-471f-a698-09f210b9484b"
+}

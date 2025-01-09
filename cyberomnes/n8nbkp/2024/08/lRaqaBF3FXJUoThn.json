@@ -1,0 +1,271 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-12T14:01:33.074Z",
+  "id": "lRaqaBF3FXJUoThn",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "SendCalls",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b82cc1de-7c65-4f11-82a3-ae7d247fb2b3",
+        "options": {}
+      },
+      "id": "1601f6b0-9746-416e-9ae1-a57958bbb65c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1580,
+        560
+      ],
+      "webhookId": "b82cc1de-7c65-4f11-82a3-ae7d247fb2b3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bland.ai/api/events/0e0ad442-cafe-4dc0-80c9-09b0ba6ff799/handler",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69 -d {"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone_number",
+              "value": "={{ $json.body.phone_number }}"
+            },
+            {
+              "name": "from",
+              "value": "null"
+            },
+            {
+              "name": "task",
+              "value": "={{ $json.body.keInstruction }}"
+            },
+            {
+              "name": "model",
+              "value": "enhanced"
+            },
+            {
+              "name": "language",
+              "value": "={{ $json.body.language }}"
+            },
+            {
+              "name": "voice",
+              "value": "={{ $json.body.Voice }}"
+            },
+            {
+              "name": "voice_settings",
+              "value": "={}"
+            },
+            {
+              "name": "pathway_id",
+              "value": "null"
+            },
+            {
+              "name": "local_dialing",
+              "value": "false"
+            },
+            {
+              "name": "max_duration",
+              "value": "={{ $json.body['max duration'] }}"
+            },
+            {
+              "name": "answered_by_enabled",
+              "value": "={{ $json.body['Respondido por'] }}"
+            },
+            {
+              "name": "wait_for_greeting",
+              "value": "={{ $json.body['Aguarde a saudação'] }}"
+            },
+            {
+              "name": "record",
+              "value": "={{ $json.body.Registro }}"
+            },
+            {
+              "name": "amd",
+              "value": "={{ $json.body.AMD }}"
+            },
+            {
+              "name": "interruption_threshold",
+              "value": "={{ $json.body['Interrupções de bloqueio'] }}"
+            },
+            {
+              "name": "voicemail_message",
+              "value": "={{ $json.body['Answering machine message'] }}"
+            },
+            {
+              "name": "temperature",
+              "value": "={{ $json.body.Temp }}"
+            },
+            {
+              "name": "transfer_phone_number",
+              "value": "={{ $json.body.Transfernumber }}"
+            },
+            {
+              "name": "transfer_list",
+              "value": "={ \"{{ $json.body['Transfer list name'] }}\":\"{{ $json.body['Transferlist number'] }}\"}"
+            },
+            {
+              "name": "metadata",
+              "value": "={\" {{ $json.body['Metadata key'] }}:\" {{ $json.body['Metadata value'] }}\"}"
+            },
+            {
+              "name": "pronunciation_guide",
+              "value": "={\"word\":\" {{ $json.body['Pronunciation Word'] }}\"\" \"pronunciation\": {{ $json.body['Pronunciation '] }}\"  \"case_sensitive\": false,\n      \"spaced\": false}"
+            },
+            {
+              "name": "start_time",
+              "value": "null"
+            },
+            {
+              "name": "request_data",
+              "value": "={{ $json.body.requestdata }}"
+            },
+            {
+              "name": "tools",
+              "value": "[]"
+            },
+            {
+              "name": "dynamic_data",
+              "value": "[]"
+            },
+            {
+              "name": "analysis_schema",
+              "value": "={{ $json.body.Analisys }}"
+            },
+            {
+              "name": "webhook",
+              "value": "={{ $json.body.wbhook }}"
+            },
+            {
+              "name": "calendly"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d9a4b98c-76b8-4008-93fb-66f7179a46af",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1800,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7e778d1f-de39-48e2-98b9-f0286ce72c2f",
+              "name": " ",
+              "value": "=",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d1a2cad1-ad52-46fa-8cc5-25117f6b7082",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1600,
+        260
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "154.38.162.68",
+            "x-forwarded-for": "154.38.162.68",
+            "x-forwarded-proto": "https",
+            "connection": "close",
+            "content-length": "1063",
+            "user-agent": "WordPress/6.6.1; https://the.omnestalk.com",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "phone_number": "${b5-2}",
+            "language": "${b5-5}",
+            "keInstruction": "${b5-8}",
+            "Temp": "${b5-9}",
+            "Voice": "${b5-10}",
+            "Interuption": "${b5-14}",
+            "Transfernumber": "${b5-17}",
+            "transferlist": "${b5-21}",
+            "metadata": "${b5-22}",
+            "pronunciation guide": "${b5-23}",
+            "Action answering machine": "${b5-25}",
+            "Answering machine message": "${b5-24}",
+            "Respondido por": "${b5-28}",
+            "Aguarde a saudação": "${b5-36}",
+            "Interrupções de bloqueio": "${b5-33}",
+            "Registro": "${b5-30}",
+            "AMD": "${b5-10.b5-11}",
+            "max duration": "${b5-14.b5-15}",
+            "wbhook": "${b5-14.b5-16}",
+            "requestdata": "${b5-17.b5-18}",
+            "Analisys": "${b5-17.b5-20}",
+            "Transfer list name": "${b5-33.b5-35}",
+            "Transferlist number": "${b5-30.b5-31}",
+            "Metadata key": "${b5-30.b5-32}",
+            "Metadata value": "${b5-14}",
+            "Pronunciation Word": "${b5-17.b5-19}",
+            "Pronunciation ": "${b5-17.b5-20}",
+            "Pronunciation options ": "${b5-17}",
+            "Request data key": "${b5-33.b5-34}",
+            "Request data": "${b5-33.b5-35}",
+            "Request data Key": "${b5-30.b5-31}",
+            "Request data value": "${b5-30.b5-32}",
+            "entry_id": "test"
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-13T17:36:03.000Z",
+  "versionId": "64794bfb-8a6c-40cb-9f1e-b5c94b4a9ca4"
+}

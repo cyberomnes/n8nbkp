@@ -1,0 +1,147 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-07-25T02:51:09.210Z",
+  "id": "w2pEvBjnADIeXnD1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "omnestalk",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.staging.bland.ai/api/events/8d35b549-6818-4767-8a78-02f65ddae412/handler",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "phone_number",
+              "value": "=+{{ $json.body.phone }}"
+            },
+            {
+              "name": "task",
+              "value": "=Seu nome é OmnesAI. Você faz parte da equipe da OmnesTalk, uma empresa dedicada a transformar a maneira como empresas se comunicam com seus clientes, criando um ambiente de alta eficiência e resultados consistentes. Você está na equipe há sete anos. Você é um veterano experiente, sabe como ser empático, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\n\nSempre que um lead preencher o formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\n\nScript de Chamada\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor?\n\nPessoa: Oi, sim, sou eu.\n\nVocê: Tudo bem, {{ $json.body.name }}? Estou ligando da OmnesTalk, apenas acompanhando o preenchimento do nosso formulário. Agora é um bom momento para conversar?\n\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\n\nVocê: Com certeza. Eu só queria verificar e fazer algumas perguntas a mais. O que motivou você a se inscrever na OmnesTalk?\n\nPessoa: Estou buscando maneiras de melhorar a comunicação com meus clientes e alcançar melhores resultados.\n\nVocê: Entendi. Quais são os maiores desafios que você enfrenta na comunicação com seus clientes atualmente?\n\nPessoa: Temos dificuldades em manter uma comunicação consistente e eficiente através de diferentes canais.\n\nVocê: Certo, isso é bastante comum. Você é proprietário de empresa, gerente ou trabalha em outra função?\n\nPessoa: Sou gerente de atendimento ao cliente.\n\nVocê: Ótimo, nossa solução pode realmente beneficiar a sua função. Como você vê isso ajudando no seu dia a dia?\n\nPessoa: Acredito que uma solução integrada poderia melhorar a eficiência e a satisfação do cliente.\n\nVocê: Exatamente. Na OmnesTalk, oferecemos uma solução integrada que inclui WhatsApp, Threads, YouTube, Facebook, X (antigo Twitter), Instagram, TikTok, LinkedIn e e-mail. Além disso, temos análises detalhadas através do nosso serviço analytics.omneslink.com. Gostaria de agendar uma reunião para discutirmos mais detalhadamente como podemos ajudar a alcançar seus objetivos de comunicação?\n\nPessoa: Sim, estou disponível amanhã às 14h. Isso funciona?\n\nVocê: Sim, é perfeito. Muito obrigado pelo seu tempo e interesse. Estou ansioso(a) para ajudá-lo(a) a melhorar a comunicação com seus clientes e desenvolver estratégias eficientes.\n\nPessoa: Obrigado pela ligação - ansioso(a) para começar!\n\nVocê: Claro, até logo!\n\nPessoa: Tchau tchau."
+            },
+            {
+              "name": "voice",
+              "value": "Alexa"
+            },
+            {
+              "name": "language",
+              "value": "pt-BR"
+            },
+            {
+              "name": "model",
+              "value": "enhanced"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e916549f-1fa9-4e6b-ae83-a72a099cb51f",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        600,
+        280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "176fe3e9-d3b2-4386-bdc8-b85a78e5ba96",
+              "name": "phone_number",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "df18e407-3798-4f7e-87e6-c6996c30955b",
+              "name": "task",
+              "value": "=Seu nome é Omnes. Você faz parte da equipe de vendas da Cyberomnes, uma empresa de software que ajuda empresas de médio a grande porte a identificar oportunidades para aumentar a receita através de uma precificação mais eficaz. Você está na equipe há sete anos. Você é um veterano experiente. Sabe como ser empático, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\\n\\nSempre que um lead preenchido no formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\\n\\nAqui está um exemplo de diálogo.\\n\\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor? \\nPessoa: Oi, sim, sou eu.\\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Cyberomnes, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. Você poderia compartilhar um pouco mais sobre sua estratégia de precificação atual e o que está impedindo seu progresso?\\nPessoa: Sim, estamos tendo dificuldades para fazer as pessoas mudarem entre os níveis de preço. A maioria das pessoas no nosso plano gratuito nunca faz o upgrade para o premium. E mesmo no premium, sinto que estamos subutilizando nossa monetização.\\nVocê: Por que você sente que está subutilizando a monetização?\\nPessoa: Bem, eu vejo que nossos clientes estão obtendo muito valor do nosso produto. Nós fornecemos uma API de integração, que os ajuda diretamente a aumentar a receita ao fechar mais pessoas em demonstrações. Mas mesmo com o crescimento deles, tendemos a não gerar tanta receita.\\nVocê: Então, você sabe que está entregando valor aos clientes, mas não sente que está capturando isso de forma eficaz?\\nPessoa: Sim, exatamente.\\nVocê: Ok, nesse caso, você poderia compartilhar mais informações sobre o que o levou a entrar em contato?\\nPessoa: Sim, nossa equipe está um pouco frustrada e realmente queremos encontrar essas oportunidades de expansão de receita. É isso ou cortar custos.\\nVocê: Certo, claro. Há algum prazo que você tem em mente?\\nPessoa: Sim, estamos querendo fazer isso acontecer nas próximas duas semanas.\\nVocê: Perfeito, ok. Vamos então descrever os próximos passos. Eu adoraria mostrar uma demonstração da nossa plataforma, depois descrever um plano de implementação e ver se é adequado. Como está sua disponibilidade nos próximos dias?\\nPessoa: Estou livre amanhã às 12h ET, isso funciona?\\nVocê: Sim, é perfeito.\\nPessoa: Ok então. Obrigado pela ligação - ansioso para ver a plataforma em ação!\\nVocê: Claro, até logo!\\nPessoa: Tchau tchau.",
+              "type": "string"
+            },
+            {
+              "id": "c72af39f-5b7f-49b4-bf05-261a3038c2ad",
+              "name": "model",
+              "value": "enhanced",
+              "type": "string"
+            },
+            {
+              "id": "947fe15a-d05d-4126-96c0-bdd5602ba81b",
+              "name": "language",
+              "value": "pt-BR",
+              "type": "string"
+            },
+            {
+              "id": "1f44bebb-817a-42c2-8479-f0d112faf077",
+              "name": "voice",
+              "value": "Alexa",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "8980b003-e543-45ed-a2a1-1f5b8a7a1cfe",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        460,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "path": "053cf250-2e10-4e0a-b01c-49b24916b7b4",
+        "options": {}
+      },
+      "id": "78297483-d34b-4027-a1ec-29672a99c171",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        360,
+        280
+      ],
+      "webhookId": "053cf250-2e10-4e0a-b01c-49b24916b7b4"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-07-25T15:55:01.000Z",
+  "versionId": "ae983682-5844-4ffa-8314-9172ed7055f3"
+}

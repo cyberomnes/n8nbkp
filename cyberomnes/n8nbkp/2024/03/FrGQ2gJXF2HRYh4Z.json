@@ -1,0 +1,64 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2024-03-03T17:49:31.948Z",
+  "id": "FrGQ2gJXF2HRYh4Z",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "5d4d1305-d004-465f-8612-925c5c034a90",
+        "formTitle": "OmnesCards",
+        "formDescription": "OmnesCards NFC ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "TAG ID ",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "respondWithOptions": {
+            "values": {
+              "respondWith": "redirect",
+              "redirectUrl": "https://omnes.link"
+            }
+          }
+        }
+      },
+      "id": "3330b9f4-66e9-4b1c-ad0b-15b13f018fff",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ],
+      "webhookId": "5d4d1305-d004-465f-8612-925c5c034a90"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2024-03-03T17:53:09.000Z",
+  "versionId": "056d35e4-1b0c-4260-b3be-d4b849a53a2e"
+}

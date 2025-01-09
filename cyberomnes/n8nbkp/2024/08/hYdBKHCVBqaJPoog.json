@@ -1,0 +1,78 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-22T01:13:18.836Z",
+  "id": "hYdBKHCVBqaJPoog",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 21",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "f22511a3-5e39-456d-a942-6c8c871be920",
+        "options": {}
+      },
+      "id": "586a71d4-b213-4219-92da-1bcd3f10bf09",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1280,
+        540
+      ],
+      "webhookId": "f22511a3-5e39-456d-a942-6c8c871be920"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bland.ai/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"phone_number\": \"<phone>\",    \n  \"webhook\": \"<webh>\",\n  \"language\": \"<language>\",\n   \n    \"voicemail_message\": \"<v_message>\",\n      \"voicemail_action\": \"leave_message\",\n\n      \"retry\": {\n    \"wait\": 10,\n    \"voicemail_action\": \"leave_message\",\n    \"voicemail_message\": \"<v_message>\"\n},\n\n  \"task\": <string>,\n  \"record\": <recordcall>,\n  \"wait_for_greeting\": <waitforgreeting?>,\n       \"answered_by_enabled\": true,\n    \n   \"model\": \"<modelAI>\",\n       \"summary_prompt\": <Summaryprompt>,\n  \"analysis_prompt\": <analysisprompt>,\n   \"transfer_phone_number\": \"<tphone>\",\n      \"voice\": \"<voice>\",\n    \"analysis_schema\": {\n  \"email_address\": \"email\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n   \"Payment_amount\": \"number\",\n   \"proposalcontent\": \"string\",\n   \"company_name\": \"string\",\n  \"wants_to_book_appointment\": \"boolean\",\n   \"salestransaction\": \"boolean\",\n   \"productname\": \"string\",\n  \"appointment_start_time\": \"YYYY-MM-DD HH:MM:SS\",\n   \"appointment_end_time\": \"YYYY-MM-DD HH:MM:SS\"\n},\n      \"interruption_threshold\": <int-thresh>,\n       \"voice_settings\": {\n    \"quality\": <V1quality>,\n    \"stability\": <V2stability>,\n    \"speed\": <speed>\n  },\n  \"from\":<from-num>,\n  \"max_duration\": <duration>,\n        \"dynamic_data\": [\n        {\n          \"url\": \"https://api.cal.com/v1/availability\",\n          \"method\": \"GET\",\n          \"cache\": false,\n          \"headers\": {\n            \"Content-Type\": \"application/json\"\n          },\n          \"query\": {\n            \"username\": \"<available_username>\",\n            \"dateFrom\": \"tomorrowDate\",\n            \"dateTo\": \"dayAfterTomorrowDate\",\n            \"eventTypeId\": <eventid>,\n            \"apiKey\": \"<cal_apikey>\"\n          },\n      \"response_data\": [\n            {\n              \"name\": \"available_slots\",\n              \"data\": \"$.dateRanges[*].start\"\n           }\n          ]\n        }\n      ]\n    }\n     ",
+        "options": {}
+      },
+      "id": "679543ce-4f7b-4075-8213-b45f48982b41",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1460,
+        540
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-22T01:13:28.000Z",
+  "versionId": "bb3c9d34-d03d-48f5-9cf5-8dfee59f2a0e"
+}

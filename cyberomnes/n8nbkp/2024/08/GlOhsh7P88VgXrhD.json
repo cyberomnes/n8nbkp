@@ -1,0 +1,40 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-08-14T15:24:40.000Z",
+  "id": "GlOhsh7P88VgXrhD",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ApiOmnesHooks",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "574b5c93-6365-4e5d-9d1a-44ab2873e5c6",
+        "options": {}
+      },
+      "id": "bbad7cc5-8545-440e-93b8-def078adb4b5",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1580,
+        540
+      ],
+      "webhookId": "574b5c93-6365-4e5d-9d1a-44ab2873e5c6"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-08-14T15:28:35.000Z",
+  "versionId": "45dcece5-2213-4fc7-89d8-708ee38a2fbd"
+}

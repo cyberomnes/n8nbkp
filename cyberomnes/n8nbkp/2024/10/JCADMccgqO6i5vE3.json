@@ -1,0 +1,40 @@
+{
+  "active": true,
+  "connections": {},
+  "createdAt": "2024-10-13T22:49:43.996Z",
+  "id": "JCADMccgqO6i5vE3",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 34",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "43aa5ad2-42a0-446a-9a18-44a394f7099a2",
+        "options": {}
+      },
+      "id": "982e508e-7006-4b93-9e24-09ad01a3c335",
+      "name": "Webhook2",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        840,
+        500
+      ],
+      "webhookId": "43aa5ad2-42a0-446a-9a18-44a394f7099a"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-10-13T23:01:43.000Z",
+  "versionId": "ecf5e104-f5d5-460f-b342-dcc26348d68a"
+}

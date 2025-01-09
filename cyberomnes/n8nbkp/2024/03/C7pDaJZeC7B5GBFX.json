@@ -1,0 +1,115 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create URL string",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create URL string": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-27T12:18:29.477Z",
+  "id": "C7pDaJZeC7B5GBFX",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "6f7b288e-1efe-4504-a6fd-660931327269",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "7168e4d2-7a89-445f-90eb-90eb5f4863ec",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        520,
+        520
+      ],
+      "webhookId": "6f7b288e-1efe-4504-a6fd-660931327269",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=The URL of the Google search query for the term \"{{$node[\"Webhook\"].json[\"query\"][\"first_name\"]}} {{$node[\"Webhook\"].json[\"query\"][\"last_name\"]}}\" is: {{$json[\"product\"]}}",
+        "options": {}
+      },
+      "id": "a3a0dafa-e76c-4033-b4c6-16dcad43a4a5",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        960,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "product",
+              "value": "=https://www.google.com/search?q={{$json[\"query\"][\"first_name\"]}}+{{$json[\"query\"][\"last_name\"]}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ac989153-3d39-4e82-b27e-6d56f6285492",
+      "name": "Create URL string",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        740,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### How to use it\n1. Execute the workflow so that the webhook starts listening\n2. Make a test request by pasting, **in a new browser tab**, the test URL from the `Webhook` node and appending the following test at the end `?first_name=bob&last_name=dylan`\n\nYou will receive the following output in the new tab `The URL of the Google search query for the term \"bob dylan\" is: https://www.google.com/search?q=bob+dylan`\n\n",
+        "height": 220,
+        "width": 600
+      },
+      "id": "f8f2cf15-7a12-41c2-8470-20d32304c945",
+      "name": "Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        500,
+        680
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-27T12:18:29.477Z",
+  "versionId": "ca67bfc5-f501-41d6-9c67-0394898ce064"
+}

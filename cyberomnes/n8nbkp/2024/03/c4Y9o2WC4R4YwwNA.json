@@ -1,0 +1,140 @@
+{
+  "active": false,
+  "connections": {
+    "Omnescards Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-07T00:15:41.852Z",
+  "id": "c4Y9o2WC4R4YwwNA",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Omnescards whatsapp",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "5d4d1305-d004-465f-8612-925c5c034a90",
+        "formTitle": "OmnesCards",
+        "formDescription": "OmnesCards NFC ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "password",
+              "fieldType": "password",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "TAG ID ",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "313a5b14-7de3-4b2a-9703-5aab8ea1638c",
+      "name": "Omnescards Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        640,
+        300
+      ],
+      "webhookId": "ae0a6557-1a08-44ff-8277-9c531e97e2ce"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnes.link/admin-api/users",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a7336902c39758973c4434c1abf9aaff"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "=email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "=password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "c77e1e17-7898-4260-9f49-c16797eeee77",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        860,
+        300
+      ],
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {
+    "Omnescards Trigger": [
+      {
+        "json": {
+          "name": "John Doe",
+          "email": "john@example.com",
+          "password": "My123password"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-03-03T17:54:11.064Z",
+      "updatedAt": "2024-03-03T17:54:11.064Z",
+      "id": "5zo3zMYMC8sR65Tg",
+      "name": "OmnesCards"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2024-03-07T00:15:41.852Z",
+  "versionId": "2565741f-5eb9-4e60-b29b-64f7ce72d57c"
+}

@@ -1,0 +1,1171 @@
+{
+  "active": true,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Disponibilidade sem data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Disponibilidade com Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disponibilidade sem data": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disponibilidade com Data": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Datas Disponiveis": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Classify appointment",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat OpenAI1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is appointment request": {
+      "main": [
+        [
+          {
+            "node": "Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Classify appointment",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Filter only confirmed and with set time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format response": {
+      "main": [
+        [
+          {
+            "node": "Stringify Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract start, end and name": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter only confirmed and with set time": {
+      "main": [
+        [
+          {
+            "node": "Extract start, end and name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Format response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify appointment": {
+      "main": [
+        [
+          {
+            "node": "Is appointment request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-11T00:09:00.222Z",
+  "id": "xZDWU1sGK3UyuSPj",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "OgenioBot",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "15020384-5c38-4ec3-8aea-78bd840ddff9",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1800,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55df851a-4c6b-4a25-a270-8f33d1e8a223",
+              "name": "body.service",
+              "value": "Apresentação OGênio-IA",
+              "type": "string"
+            },
+            {
+              "id": "af9ad9eb-b5cc-45de-9a92-b14eae01a2a2",
+              "name": "body['Lista de Horarios']",
+              "value": "={{ $json.body['Lista de Horarios'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5dd92f94-002c-4816-b306-025ef1e61f57",
+              "name": "body.refresh_key",
+              "value": "={{ $json.body.refresh_key }}",
+              "type": "string"
+            },
+            {
+              "id": "9206d583-5987-4325-b762-4ffec00f495e",
+              "name": "body.date",
+              "value": "={{ $json.body.date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "headers.referer, headers.origin",
+        "options": {}
+      },
+      "id": "15e827fc-e4c1-4d9e-8a28-141edcb8ae61",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        520,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a31ee81-374c-4759-a3ac-6d2fe8716829",
+              "leftValue": "={{ $json.body.date }}",
+              "rightValue": "{{Data e Hora}}",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "c832eafd-587b-42cd-be3b-d7fc89e539ec",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        780,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://integracao.ogeniobot.com.br/webhook/78c1740b-11b0-4df5-bcad-e73ceabeef68 ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "date",
+              "value": "="
+            },
+            {
+              "name": "service",
+              "value": "Apresentação OGênio-IA"
+            },
+            {
+              "name": "refresh_key",
+              "value": "r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "17dca863-fd92-43ad-bcc9-f8bf55855739",
+      "name": "Disponibilidade sem data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://integracao.ogeniobot.com.br/webhook/f4ca4398-4b8c-436d-af00-b34f11b2f7b1 ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "date",
+              "value": "={{ $json.body.date }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.body.service }}"
+            },
+            {
+              "name": "refresh_key",
+              "value": "={{ $json.body.refresh_key }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eb327f71-74b4-4fac-ace3-4b55a45737f6",
+      "name": "Disponibilidade com Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://integracao.ogeniobot.com.br/webhook/f4ca4398-4b8c-436d-af00-b34f11b2f7b1 ",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "Name",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "=Phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "comment",
+              "value": "={{ $json.body.comment }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.body.email }}"
+            },
+            {
+              "name": "date-time",
+              "value": "={{ $json.body[\"date-time\"] }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.body.service }}"
+            },
+            {
+              "name": "refresh_key",
+              "value": "=r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "09ea5b21-5525-4964-bf64-692be3940256",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        720
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "include": "except",
+        "excludeFields": "headers.referer, headers.origin",
+        "options": {}
+      },
+      "id": "9787eaf6-3e5d-449f-9e53-9c0a816f6dfc",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        840,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Verificar datas disoniveis",
+        "height": 370.80751620732724,
+        "width": 1599.03568959192
+      },
+      "id": "849872d7-b9e5-4a8b-96ed-ca32ccb6c340",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Agendar",
+        "height": 254.1905923479547,
+        "width": 1074.2595322247425
+      },
+      "id": "303c80f0-c940-4f0f-8b4e-ba4dfa15f9ab",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        440,
+        655.3310353374411
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.omneslink.com/webhook/b9625c0c-48b4-4365-be69-41b297a58cd6",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=phone",
+              "value": "={{ $json.body.phone }}"
+            },
+            {
+              "name": "Lista de Horarios",
+              "value": "={{ $json['lista_de_horários'] }}"
+            },
+            {
+              "name": "Motivo da Reunião",
+              "value": "={{ $json['Motivo da Reunião'] }}"
+            },
+            {
+              "name": "Data e Hora",
+              "value": "={{ $json['Data e Hora'] }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.body.name }}"
+            },
+            {
+              "name": "email",
+              "value": "{{email}}"
+            },
+            {
+              "name": "nome completo",
+              "value": "{{nome completo}}"
+            },
+            {
+              "name": "Horario da Reunião",
+              "value": "{{Horario da Reunião}}"
+            },
+            {
+              "name": "Lista_de_hoarios",
+              "value": "{{lista_de_horários}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f9912aff-8252-41c3-bdf4-8a77c0e02425",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3d640c8e-e0d1-4bb3-8839-ba7936fe496f",
+              "name": "lista_de_horários",
+              "value": "{{lista_de_horários}}",
+              "type": "string"
+            },
+            {
+              "id": "44697b8a-55cf-4316-8a9e-ab89a15a9005",
+              "name": "Motivo da Reunião",
+              "value": "{{Motivo da Reunião}}",
+              "type": "string"
+            },
+            {
+              "id": "e0743934-bb2a-4bf9-9a5c-c405f30ea524",
+              "name": "Data e Hora",
+              "value": "{{Data e Hora}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "76a9898b-a411-401f-8ae1-23f82e4a0d2f",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        660,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.chatvolt.ai/datastores/cm01cbain000f22ih3d9hrizz",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 046b68ef-d90a-461e-ad49-24f37e2f3f18"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9ccd301-4041-4d0f-95e3-13c200e7d41a",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        1500
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "774fec1c-846e-41ef-9715-de9d0134ea9b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "08f7fdb1-9a80-4d7c-a4de-a0b54fd757fb",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        580,
+        720
+      ],
+      "webhookId": "774fec1c-846e-41ef-9715-de9d0134ea9b"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ogeniocall",
+        "options": {}
+      },
+      "id": "658433f3-a6c8-4ee6-a944-29fcb5c2cc04",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        400,
+        1000
+      ],
+      "webhookId": "cbee6294-cc26-4815-b656-9994972aaa01"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ogeniohorariosdisponiveis",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2a6bf4c7-fe9f-45c1-9d15-b4d579988c50",
+      "name": "Webhook Datas Disponiveis",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        300,
+        160
+      ],
+      "webhookId": "466939bb-574f-4054-a14f-24ffe952401a"
+    },
+    {
+      "parameters": {
+        "path": "66ef72fd-cd9a-421d-912c-d601cc78bbdc",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "174853b1-3a2d-478c-9e12-7277c7fd3545",
+      "name": "Webhook3",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        1500
+      ],
+      "webhookId": "66ef72fd-cd9a-421d-912c-d601cc78bbdc"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "a36b277c-15d8-47f7-8401-064bc834779b",
+      "name": "Chat OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -220,
+        2180
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Calendar_Availability",
+        "description": "Call this tool to get my calendar availability as stringified JSON array.",
+        "workflowId": "={{ $workflow.id }}"
+      },
+      "id": "63968396-3f05-4678-b43f-92b9149ac82a",
+      "name": "Workflow Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        640,
+        2200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "6e851429-b096-4f86-8def-13e350041e60",
+      "name": "Chat OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        480,
+        2199
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.is_appointment }}",
+              "value2": "true"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.is_appointment }}",
+              "value2": true
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "8f55915d-e435-47b0-8ee6-3e40ee2090e9",
+      "name": "Is appointment request",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        160,
+        2000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"is_appointment\": {\n      \"type\": \"boolean\"\n    }\n  }\n}"
+      },
+      "id": "d3570d61-44d5-4a3f-a4ce-bf3ebbafe481",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -60,
+        2180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "text": "=Sender:\\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\\nEmail Text: {{ $('Gmail Trigger').item.json.snippet }}",
+        "options": {
+          "systemMessage": "=You are an email scheduling assistant. Based on the received email, check my availability and propose an appropriate response. \nAim to get a specific time, rather than just a day. When checking my availability, make sure that there's enough time in between meetings.\nIf I'm not available, ALWAYS propose a new time based on my availability. When proposing a new time, always leave 15 minutes buffer from previous meeting.\nToday date and time is: {{ $now.toISO() }}."
+        }
+      },
+      "id": "e531bf44-72d1-4fd7-9d39-07aa38adcfdd",
+      "name": "Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        460,
+        1979
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "your_email@gmail.com",
+          "cachedResultName": "your_email@gmail.com"
+        },
+        "returnAll": true,
+        "options": {
+          "timeMin": "={{ $now.minus(1, 'day').toISO() }}",
+          "timeMax": "={{ $now.plus(1, 'month').toISO() }}",
+          "singleEvents": true
+        }
+      },
+      "id": "92811d66-f8e9-4233-899d-fc481cc82a35",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "position": [
+        -300,
+        2521
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "akguFeu0y70N22uG",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "82f9bcc9-7ece-4ee3-b3da-3b442d3699b0",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -520,
+        2521
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "concatenateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "response",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "sort",
+        "options": {}
+      },
+      "id": "ab6904cf-0ee4-4794-9d84-7270f14de20f",
+      "name": "Format response",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        580,
+        2521
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "response",
+              "value": "={{ JSON.stringify($json.response) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3ce4f19-f370-4bba-aa3a-3e0c765374a7",
+      "name": "Stringify Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        800,
+        2521
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "start",
+              "value": "={{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.summary }}"
+            },
+            {
+              "name": "sort",
+              "value": "={{ $json.start.dateTime }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "286210cc-75b3-470f-b4a3-fe3310402b89",
+      "name": "Extract start, end and name",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        120,
+        2521
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "confirmed"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.start.dateTime }}",
+              "operation": "notEqual",
+              "value2": "={{ undefined }}"
+            }
+          ]
+        }
+      },
+      "id": "b9a5e96f-7c8a-4d04-8ea1-01130a144b64",
+      "name": "Filter only confirmed and with set time",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        -100,
+        2521
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "sort"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e31c279a-36cb-4b11-a502-66700c342d2c",
+      "name": "Sort",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        340,
+        2521
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "prompt": "=Please evaluate the following transcript to determine if it suggests scheduling a meeting or a call:\n {{ $json.body.transcripts }}\n\nIndicate your assessment by responding with \"true\" if it suggests a meeting or call, or \"false\" otherwise. Use lowercase for your response.\n"
+      },
+      "id": "1d9a8dea-ee0c-4acc-aa17-00752b38340e",
+      "name": "Classify appointment",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -220,
+        2000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Check if incoming email is about appointment\nWe use LLM to check subject and body of the email and determine if it's an appointment request. ",
+        "height": 410.24791575252334,
+        "width": 616.8060552874073
+      },
+      "id": "8f5c443a-6996-449e-8f14-7e39ad780b34",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        1900
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Get calendar availability and compose a response\nMake sure to update the Workflow ID if you are running this as 2 workflows",
+        "height": 241.70645019745504,
+        "width": 676.1951194231482
+      },
+      "id": "3ed56029-6588-4768-b8b4-5e0aaeecb4ac",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        400,
+        1900
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "33773e32-77d1-4108-81c1-d1edbe8c9b1c2",
+        "options": {}
+      },
+      "id": "5abb0bf8-a16b-4a16-9dd6-061446d79134",
+      "name": "Webhook2",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        1540
+      ],
+      "webhookId": "33773e32-77d1-4108-81c1-d1edbe8c9b1c"
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "2607:fa49:4d3f:ce00:85ce:2ff8:b00a:c631",
+            "x-forwarded-for": "2607:fa49:4d3f:ce00:85ce:2ff8:b00a:c631",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "259",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+            "accept": "application/json, text/plain, */*",
+            "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+            "content-type": "application/json",
+            "sec-ch-ua-mobile": "?0",
+            "origin": "https://app.bland.ai",
+            "sec-fetch-site": "cross-site",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-dest": "empty",
+            "referer": "https://app.bland.ai/",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9,pt;q=0.8",
+            "priority": "u=1, i"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "name": "{{ $json.body.name }}",
+            "phone": "{{ $json.body.telefone}}",
+            "comment": "{{Motivo da Reunião}}",
+            "email": "{{email}}",
+            "date-time": "{{Horario Reuniao}}",
+            "service": "Apresentação OGênio-IA",
+            "refresh_key": "r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/774fec1c-846e-41ef-9715-de9d0134ea9b",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook Datas Disponiveis": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "2607:fa49:4d3f:ce00:85ce:2ff8:b00a:c631",
+            "x-forwarded-for": "2607:fa49:4d3f:ce00:85ce:2ff8:b00a:c631",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "220",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+            "accept": "application/json, text/plain, */*",
+            "sec-ch-ua": "\"Google Chrome\";v=\"129\", \"Not=A?Brand\";v=\"8\", \"Chromium\";v=\"129\"",
+            "content-type": "application/json",
+            "sec-ch-ua-mobile": "?0",
+            "origin": "https://app.bland.ai",
+            "sec-fetch-site": "cross-site",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-dest": "empty",
+            "referer": "https://app.bland.ai/",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9,pt;q=0.8",
+            "priority": "u=1, i"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "service": "Apresentação OGênio-IA",
+            "date": "{{Data e Hora}}",
+            "Lista de Horarios": "{{lista_de_horários}}",
+            "Motivo da Reunião": "{{Motivo da Reunião}}",
+            "refresh_key": "r1/7f43d59dc01kuHTmDbIDZHdOFZra_1Bl0YPX1ea6d2d7T"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/466939bb-574f-4054-a14f-24ffe952401a",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 5,
+  "updatedAt": "2024-10-13T21:33:37.000Z",
+  "versionId": "848bd897-b085-4b36-8b49-4af40e4d05a5"
+}

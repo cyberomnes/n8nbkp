@@ -294,7 +294,7 @@
     },
     {
       "parameters": {
-        "content": "## Subworkflow",
+        "content": "",
         "height": 731.7039821513649,
         "width": 1910.7813046051347,
         "color": 6
@@ -630,23 +630,7 @@
     },
     {
       "parameters": {
-        "content": "## Backup to GitHub \nThis workflow will backup all instance workflows to GitHub every 24 hours.\n\nThe files are saved into folders using `YYYY/MM/` for the directory path and `ID.json` for the filename.\n\nThe Repo Owner, Repo Name and Main folder are set using the **Variables** feature but can be replaced with the `Config` node in the subworkflow. \n\nThe workflow runs calls itself to help reduce memory usage, Once the workflow has completed it will send an optional notification to Slack.\n\n### Time to Run\nTested with 1423 workflows on `1.44.1` it took under 30 minutes for the first run and under 12 minutes once the initial run is complete.",
-        "height": 417,
-        "width": 385,
-        "color": 4
-      },
-      "id": "9e2412f6-df25-4c12-8faf-0200558b537c",
-      "name": "Sticky Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        380,
-        240
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## Main workflow loop",
+        "content": "",
         "height": 416.1856906618075,
         "width": 1272.6408145680155,
         "color": 7
@@ -710,11 +694,13 @@
         "select": "channel",
         "channelId": {
           "__rl": true,
-          "mode": "name",
-          "value": "#notifications"
+          "value": "#hooksnotififications",
+          "mode": "name"
         },
         "text": "=✅ Backup has completed - {{ $('n8n').all().length }} workflows have been processed.",
-        "otherOptions": {}
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
       },
       "id": "c831a0eb-95e1-46b3-bbf8-5d5bd928ca0a",
       "name": "Completed Notification",
@@ -846,6 +832,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-09T16:58:42.000Z",
-  "versionId": "0dc1f029-c74b-429c-a285-da384302e58e"
+  "updatedAt": "2025-01-09T17:07:23.000Z",
+  "versionId": "5a5ffa24-a837-421e-8909-ab54e293b863"
 }

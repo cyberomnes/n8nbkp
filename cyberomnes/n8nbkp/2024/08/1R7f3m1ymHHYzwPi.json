@@ -1,0 +1,551 @@
+{
+  "active": false,
+  "connections": {
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Format response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Classify appointment",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat OpenAI1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format response": {
+      "main": [
+        [
+          {
+            "node": "Stringify Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Filter only confirmed and with set time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is appointment request": {
+      "main": [
+        [
+          {
+            "node": "Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Classify appointment",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract start, end and name": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter only confirmed and with set time": {
+      "main": [
+        [
+          {
+            "node": "Extract start, end and name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify appointment": {
+      "main": [
+        [
+          {
+            "node": "Is appointment request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Mark as read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-14T13:40:02.956Z",
+  "id": "1R7f3m1ymHHYzwPi",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 14",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "d9cbc97e-0b08-45e6-8d6d-678b48dfb58c",
+      "name": "Chat OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1040,
+        620
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Calendar_Availability",
+        "description": "Call this tool to get my calendar availability as stringified JSON array.",
+        "workflowId": "={{ $workflow.id }}"
+      },
+      "id": "8cf67bec-1bbf-4d8a-8354-95220fde58d7",
+      "name": "Workflow Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1900,
+        640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "51b1b9be-10db-4985-b8e2-fb21f4db5986",
+      "name": "Chat OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1740,
+        639
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Check if incoming email is about appointment\nWe use LLM to check subject and body of the email and determine if it's an appointment request. ",
+        "height": 410.24791575252334,
+        "width": 616.8060552874073
+      },
+      "id": "1117dcc2-af07-4556-9b30-43e8694d8cf9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        780,
+        340
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Get calendar availability and compose a response\nMake sure to update the Workflow ID if you are running this as 2 workflows",
+        "height": 241.70645019745504,
+        "width": 676.1951194231482
+      },
+      "id": "6eebc3a6-5c24-4601-9f96-815ed876c1d2",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1660,
+        340
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "your_email@gmail.com",
+          "cachedResultName": "your_email@gmail.com"
+        },
+        "returnAll": true,
+        "options": {
+          "timeMin": "={{ $now.minus(1, 'day').toISO() }}",
+          "timeMax": "={{ $now.plus(1, 'month').toISO() }}",
+          "singleEvents": true
+        }
+      },
+      "id": "1e3cbc26-5c1c-4499-8a23-832b817fc257",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "position": [
+        1000,
+        1000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "2ad4049e-31e3-4466-9990-38981b91ffc4",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        780,
+        1000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "concatenateItems",
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "response",
+        "include": "allFieldsExcept",
+        "fieldsToExclude": "sort",
+        "options": {}
+      },
+      "id": "39f2bb8f-a350-49ac-a8a9-4e95142e8d5b",
+      "name": "Format response",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        1880,
+        1000
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "response",
+              "value": "={{ JSON.stringify($json.response) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "617c891f-c9e4-447a-b7a2-1b15c2b15e89",
+      "name": "Stringify Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2100,
+        1000
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "start",
+              "value": "={{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.summary }}"
+            },
+            {
+              "name": "sort",
+              "value": "={{ $json.start.dateTime }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3fe2927-032c-4f37-b194-a9f70800dfd2",
+      "name": "Extract start, end and name",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1420,
+        1000
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "confirmed"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.start.dateTime }}",
+              "operation": "notEqual",
+              "value2": "={{ undefined }}"
+            }
+          ]
+        }
+      },
+      "id": "5d58cab8-11f8-493a-b75a-6494dc7039f9",
+      "name": "Filter only confirmed and with set time",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        1200,
+        1000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.is_appointment }}",
+              "value2": "true"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.is_appointment }}",
+              "value2": true
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "b46732ec-cef2-4e34-b4a6-502e5295eb99",
+      "name": "Is appointment request",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1420,
+        440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"is_appointment\": {\n      \"type\": \"boolean\"\n    }\n  }\n}"
+      },
+      "id": "0be8a500-a05a-496d-a564-c4e25187566b",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1200,
+        620
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Get all query google events for the next month and extract relevant data",
+        "height": 224.60561166142082,
+        "width": 810.4923211935056
+      },
+      "id": "f1cac6dc-3448-4387-a457-925381a66ee8",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        960,
+        939
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Wrap the result in `response` object and return ",
+        "height": 220.42397542781927,
+        "width": 444.4130232558142
+      },
+      "id": "cf78a0c8-6f80-4093-ab09-92a68809a9cd",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1833,
+        940
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "sort",
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "sort"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "966a6da4-f410-4204-a726-e7638eebaaaf",
+      "name": "Sort",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        1640,
+        1000
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}"
+      },
+      "id": "4fd8bf0f-ee1a-4b96-bea9-b053bf279466",
+      "name": "Mark as read",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        2160,
+        619
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "replyToSenderOnly": true
+        }
+      },
+      "id": "3a074d29-faaf-4d72-96ec-ca6c51e0fc58",
+      "name": "Send Reply",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        2160,
+        419
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "r2eWisM8HAUWlfAB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "prompt": "=Please evaluate the following email to determine if it suggests scheduling a meeting or a call:\nSubject: {{ encodeURI($json.Subject) }}\nSnippet: {{ encodeURI($json.snippet) }}\nIndicate your assessment by responding with \"true\" if it suggests a meeting or call, or \"false\" otherwise. Use lowercase for your response.\n"
+      },
+      "id": "a6036fc5-9b55-48ce-aae7-5a8ed53d784e",
+      "name": "Classify appointment",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        1040,
+        440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "text": "=Sender: {{ $('Gmail Trigger').item.json.From }}\\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\\nEmail Text: {{ $('Gmail Trigger').item.json.snippet }}",
+        "options": {
+          "systemMessage": "=You are an email scheduling assistant. Based on the received email, check my availability and propose an appropriate response. \nAim to get a specific time, rather than just a day. When checking my availability, make sure that there's enough time in between meetings.\nIf I'm not available, ALWAYS propose a new time based on my availability. When proposing a new time, always leave 15 minutes buffer from previous meeting.\nToday date and time is: {{ $now.toISO() }}."
+        }
+      },
+      "id": "1d58729c-e254-46a0-aa51-6115bd2e7112",
+      "name": "Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1720,
+        419
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-14T14:06:00.000Z",
+  "versionId": "aa683683-43dd-40e4-924a-fee1b4049079"
+}

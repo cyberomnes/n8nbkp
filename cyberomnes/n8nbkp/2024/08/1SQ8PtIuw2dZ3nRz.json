@@ -1,0 +1,81 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-08-09T04:19:24.045Z",
+  "id": "1SQ8PtIuw2dZ3nRz",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 13",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c62e17fe-6eb5-469d-b374-ed22573497a3",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        580,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "cyberomnes@gmail.com",
+          "mode": "list",
+          "cachedResultName": "cyberomnes@gmail.com"
+        },
+        "timeMin": "2024-08-01T00:00:00",
+        "timeMax": "2024-08-31T00:00:00",
+        "options": {
+          "outputFormat": "availability",
+          "timezone": {
+            "mode": "list",
+            "value": ""
+          }
+        }
+      },
+      "id": "d30b98ed-6c3f-4e0c-9185-18155c650afa",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "akguFeu0y70N22uG",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-09T04:22:05.000Z",
+  "versionId": "1f7cc1c0-1207-4906-9a66-f6d67771f848"
+}

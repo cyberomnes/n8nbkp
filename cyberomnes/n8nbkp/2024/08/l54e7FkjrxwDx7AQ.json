@@ -1,0 +1,40 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2024-08-26T18:18:07.903Z",
+  "id": "l54e7FkjrxwDx7AQ",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 22",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "FunnelTechFireFestival",
+        "options": {}
+      },
+      "id": "b2436807-3cf1-4e5a-83c6-e1d0f9f26c87",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        580,
+        300
+      ],
+      "webhookId": "909c2028-0580-4241-9840-1dc4dfa1c59d"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-31T03:56:07.000Z",
+  "versionId": "9b8e1cba-2ff4-4a67-82a4-88779bc87a1e"
+}

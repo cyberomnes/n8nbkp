@@ -107,15 +107,15 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": " const mapping = {\n    \"Anna\": \"Alexa\",\n    \"Lucas\": \"97b35d65-bd6a-4fef-b780-0db7416a7a7d\",\n    \"Alice\": \"OT - Maria\"\n  };\n\n$json.body.voz = mapping[$json.body.voz];\n\nconsole.log($json);\nreturn $json\n"
+        "jsCode": " const mapping = {\n    \"Anna\": \"7d95b95c-7c9f-4e81-9c67-d3174a6d8075\",\n    \"Lucas\": \"97b35d65-bd6a-4fef-b780-0db7416a7a7d\",\n    \"Alice\": \"a5cdfd7b-e999-4a7e-8a7c-d75b23357493\"\n  };\n\n$json.body.voz = mapping[$json.body.voz];\n\nconsole.log($json);\nreturn $json\n"
       },
       "id": "d2767588-7df8-46b8-be15-607f05592bda",
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        680,
-        200
+        700,
+        320
       ]
     },
     {
@@ -206,6 +206,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-10-01T17:35:06.000Z",
-  "versionId": "e300485b-86ef-4760-bafa-6b592f56cee4"
+  "updatedAt": "2025-03-05T17:01:49.000Z",
+  "versionId": "896dc491-a7f1-4b04-809f-e0d1d5856049"
 }

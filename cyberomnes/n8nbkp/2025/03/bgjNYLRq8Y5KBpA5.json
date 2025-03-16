@@ -1,0 +1,3843 @@
+{
+  "active": true,
+  "connections": {
+    "🧠Save Memories": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory Tool Router": {
+      "main": [
+        [
+          {
+            "node": "Save Long Term Memories",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve Long Term Memories",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve Long Term Memories2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Retrieve Long Term Memories3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prepare Telegram Message",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prepare Gmail Message",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Gmail Message": {
+      "main": [
+        [
+          {
+            "node": "Email Workflow Stats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔎Retrieve Memories": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Long Term Memories": {
+      "main": [
+        [
+          {
+            "node": "Saved response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Telegram Message": {
+      "main": [
+        [
+          {
+            "node": "Send Success Message to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤯Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📫Send Memories to Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Long Term Memories": {
+      "main": [
+        [
+          {
+            "node": "Respond with long term memories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Long Term Memories2": {
+      "main": [
+        [
+          {
+            "node": "Prepare Telegram Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Long Term Memories3": {
+      "main": [
+        [
+          {
+            "node": "Prepare Gmail Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📤Send Memories to Telegram": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Memory Tool Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ⓜ️ When chat message received": {
+      "main": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 AI Agent w/Long Term Memory": {
+      "main": [
+        []
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Split Out Message Parts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Audio URL": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video URL": {
+      "main": [
+        [
+          {
+            "node": "Download Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image URL": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Video Explainer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capture Frames": {
+      "main": [
+        [
+          {
+            "node": "Split Out Frames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out Frames": {
+      "main": [
+        [
+          {
+            "node": "Convert to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Video": {
+      "main": [
+        [
+          {
+            "node": "Capture Frames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to Binary": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Binary Frames",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Binary Frames": {
+      "main": [
+        [
+          {
+            "node": "Video Explainer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Audio Transcriber",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Image Explainer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Image Explainer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User's Message": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out Message Parts": {
+      "main": [
+        [
+          {
+            "node": "Redirect Message Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redirect Message Types": {
+      "main": [
+        [
+          {
+            "node": "Get Audio URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Video URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Image URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Text": {
+      "main": [
+        [
+          {
+            "node": "Text Summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to User": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video Explainer": {
+      "main": [
+        [
+          {
+            "node": "Get User's Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User's Message1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio Transcriber": {
+      "main": [
+        [
+          {
+            "node": "Get User's Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Business Cloud1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Split Out Message Parts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split Out Message Parts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fal Flux": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Sec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image Result URL": {
+      "main": [
+        [
+          {
+            "node": "Download Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 Sec": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed?": {
+      "main": [
+        [
+          {
+            "node": "Get Image Result URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 3 Sec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Fal Flux",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image1": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Summarizer": {
+      "main": [
+        [
+          {
+            "node": "Get User's Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "image generation tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image Explainer": {
+      "main": [
+        [
+          {
+            "node": "Get User's Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status1": {
+      "main": [
+        [
+          {
+            "node": "Completed?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completed?1": {
+      "main": [
+        [
+          {
+            "node": "Get video Result URL1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 7 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "kling-video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "video generation tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get video Result URL1": {
+      "main": [
+        [
+          {
+            "node": "Download video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download video": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "kling-video": {
+      "main": [
+        [
+          {
+            "node": "Wait 7 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Wait 7 min": {
+      "main": [
+        [
+          {
+            "node": "Check Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Summarizer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📤Send Memories to Telegram1": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📫Send Memories to Gmail1": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠Save Memories1": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔎Retrieve Memories1": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤯Window Buffer Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 AI Agent w/Long Term Memory1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📤Send Memories to Telegram2": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📫Send Memories to Gmail2": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠Save Memories2": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔎Retrieve Memories2": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤯Window Buffer Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 AI Agent w/Long Term Memory2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 AI Agent w/Long Term Memory2": {
+      "main": [
+        [
+          {
+            "node": "Respond to User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Business Cloud2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Business Cloud": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-16T02:29:04.446Z",
+  "id": "bgjNYLRq8Y5KBpA5",
+  "meta": {
+    "templateId": "3025",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🧠 Empower Your AI Chatbot with Long-Term Memory and Dynamic Tool Routing",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "d5947a9d-bad4-4db7-8cdb-dc277928565a",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        580,
+        1260
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={\n  \"date\": \"{{ $now }}\",\n  \"memory\": \"{{ $json.query }}\"\n},\n"
+            }
+          ]
+        }
+      },
+      "id": "c9e9715d-c691-4516-9e0c-cf393a18d814",
+      "name": "Save Long Term Memories",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        1280,
+        1260
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6b7e85d8-379b-4a0f-9799-9193a29f0447",
+              "name": "response",
+              "type": "string",
+              "value": "Memory saved"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "306272bf-e264-4cfb-b8b6-8c0af1de3f14",
+      "name": "Saved response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1460,
+        1260
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6b7e85d8-379b-4a0f-9799-9193a29f0447",
+              "name": "response",
+              "type": "string",
+              "value": "={{ $json.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "152b6922-8600-4fdb-8372-3b0102a7b73a",
+      "name": "Respond with long term memories",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1460,
+        1560
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+      },
+      "id": "147ddd8d-6e42-44c0-95ca-9ab791f9452f",
+      "name": "Retrieve Long Term Memories3",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        1280,
+        2240
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=n8n User Memories\n{{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "e3f1172b-ce33-4cce-8126-88e19afc53c6",
+      "name": "Send Success Message to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1800,
+        1860
+      ],
+      "webhookId": "3ba1ee6d-1648-4421-823b-e68ae14d769b",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "J0vkmUGcfSmfTOtI",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $env.EMAIL_ADDRESS_JOE }}",
+        "subject": "n8n User Memories",
+        "message": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a77e8f01-889f-44b5-b4e1-493a97aa028c",
+      "name": "Email Workflow Stats",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        1800,
+        2240
+      ],
+      "webhookId": "d9ef6f36-941f-4110-9b3e-9e54d9bc9581",
+      "typeVersion": 2.1,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "r2eWisM8HAUWlfAB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "2481fe73-9ef8-4e95-b7e5-38634b55837c",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1580,
+        2000
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "9a45e091-c91c-4505-a8df-7a2e1d079200",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1580,
+        2380
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_telegram",
+        "description": "Call this tool to send memories to Telegram",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_telegram"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "6d12369e-38de-44c1-b764-64d6d9a79a25",
+      "name": "📤Send Memories to Telegram",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1620,
+        840
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_gmail",
+        "description": "Call this tool to send memories to Gmail",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_gmail"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "f1d0b366-70d5-4da3-937b-ea08afd364e4",
+      "name": "📫Send Memories to Gmail",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1880,
+        840
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "save_long_term_memory",
+        "description": "Call this tool to save long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=save_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "25d99971-263a-44ef-abb0-b517743f72eb",
+      "name": "🧠Save Memories",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1100,
+        840
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "retrieve_long_term_memory",
+        "description": "Call this tool to retrieve long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=retrieve_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "0c9738d3-176a-4074-8340-ecfa3d9f9f7d",
+      "name": "🔎Retrieve Memories",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1360,
+        840
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "id": "7967ec27-432e-4d35-b7e0-89eb84120754",
+      "name": "🤯Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        780,
+        840
+      ],
+      "typeVersion": 1.3,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are a highly capable and intelligent assistant designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\n\n\n\n\n\n"
+        }
+      },
+      "id": "5f24781e-4f9a-4e33-8d33-ce281f7bcc46",
+      "name": "🧠 AI Agent w/Long Term Memory",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1200,
+        420
+      ],
+      "typeVersion": 1.7,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "ad644413-6587-415f-b7be-d58c05b94138",
+      "name": "🤖OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        520,
+        840
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "076b0856-5ba4-498e-b279-21cf042f7f07",
+      "name": "Ⓜ️ When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        640,
+        420
+      ],
+      "webhookId": "2060403b-3fea-4fdf-a6d7-693bc477baaf",
+      "typeVersion": 1.1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Format this content into a simple unformatted list that can be sent to Telegram: {{ $json.content }}.  Avoid any preamble or further explanation."
+      },
+      "id": "fcf5872c-fcdc-445e-b095-f9cef14453b8",
+      "name": "Prepare Telegram Message",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        1460,
+        1860
+      ],
+      "typeVersion": 1.5
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Format this content into a simple and modern HTML table that is max 800px wide that can be used as the content for an email: {{ $json.content }}.  Avoid any preamble or further explanation.  Remove all ``` and ```html from response."
+      },
+      "id": "c1d05bb9-390b-43aa-820d-45115df07f5c",
+      "name": "Prepare Gmail Message",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        1460,
+        2240
+      ],
+      "typeVersion": 1.5
+    },
+    {
+      "parameters": {
+        "content": "## 1️⃣ Save Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "98aa87af-8329-4af6-85da-fc97cb4ed9c3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1020,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+      },
+      "id": "677f62ba-b009-48da-988e-e58d5063d005",
+      "name": "Retrieve Long Term Memories",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        1280,
+        1560
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "save_memory"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "1️⃣ Save"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "86d44336-bab7-422f-9266-fcb513252d19",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "retrieve_memory"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": " 2️⃣Retrieve "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "29f37628-6381-46af-babb-74bf00b4a849",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "send_memories_to_telegram"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": " 3️⃣Telegram"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "fdb7c8aa-4108-43f6-8f6b-71cd8f383d2a",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "send_memories_to_gmail"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "4️⃣Gmail"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1c732f83-fb09-4a51-8aea-0f9d29d1cdfe",
+      "name": "Memory Tool Router",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        900,
+        1240
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "content": "## 3️⃣ Send Memories to Telegram",
+        "height": 280,
+        "color": 6
+      },
+      "id": "79de3862-b15a-4380-ab27-cfde66e8bb95",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1540,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## 4️⃣ Send Memories to Gmail",
+        "height": 280,
+        "color": 6
+      },
+      "id": "03df9947-9354-4f21-8b8a-fed130dcfc6a",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1800,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## 2️⃣ Retrieve Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "9e8ee085-ec68-4f64-9098-877e166b1c37",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1280,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Short Term Chat Memory",
+        "height": 280,
+        "color": 3
+      },
+      "id": "9c3d6609-cc4a-4bf5-b914-ee57e085cecd",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        700,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Cloud LLM",
+        "height": 280,
+        "color": 5
+      },
+      "id": "97f47b93-c1e1-4230-b84c-3b99aa140d55",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        440,
+        720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# 🧠 AI Agent Chatbot With Long Term Memory Tools",
+        "height": 840,
+        "width": 1740
+      },
+      "id": "4758ad55-d5f2-4a87-a05a-be465d803ca1",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🛠️ Agentic Long Term Memory Management Tool Options",
+        "height": 400,
+        "width": 1100,
+        "color": 7
+      },
+      "id": "eb74a05d-7f34-4ba0-ae98-c22bb3637c6b",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        980,
+        640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 👍Try Me!",
+        "height": 240,
+        "width": 300,
+        "color": 4
+      },
+      "id": "d9d251d2-172b-4a8e-bec3-bf8f297628c6",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        540,
+        360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 1️⃣ Save Long Term Memories Tool",
+        "height": 280,
+        "width": 560,
+        "color": 4
+      },
+      "id": "90554969-0b73-4d4d-87f2-37645b9f7f08",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        1180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 2️⃣ Retrieve Long Term Memories Tool",
+        "height": 280,
+        "width": 560,
+        "color": 4
+      },
+      "id": "34cbb84d-48a5-480f-a7c3-81bbef24194a",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        1480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 3️⃣ Send Memories to Telegram Tool",
+        "height": 360,
+        "width": 840,
+        "color": 6
+      },
+      "id": "dc23d68e-0f93-495a-aaa0-e4bb6f18870d",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        1780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+      },
+      "id": "0ed43ec0-a39c-4323-9851-988e774302d7",
+      "name": "Retrieve Long Term Memories2",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        1280,
+        1860
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 4️⃣ Send Memories to Gmail Tool",
+        "height": 360,
+        "width": 840,
+        "color": 6
+      },
+      "id": "17d2cef6-765c-4fb4-8af0-1ebc868f6669",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1180,
+        2160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Memory Tool Router",
+        "height": 380,
+        "width": 300,
+        "color": 2
+      },
+      "id": "03977fa0-a4cd-4cfe-8967-d6a5e3227200",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        800,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Receive Memory Tool Instructions from Agent",
+        "height": 380,
+        "width": 260,
+        "color": 7
+      },
+      "id": "994b124c-4f5b-44c6-845e-9886d7b5f07d",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        500,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🛠️ Long Term Memory Tool Kit",
+        "height": 1440,
+        "width": 920,
+        "color": 7
+      },
+      "id": "7c400ccf-af37-4b5a-8dfe-431a7d52286b",
+      "name": "Sticky Note15",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1140,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Enhance Your AI Workflow with Long-Term Memory and Dynamic Tool Routing\n\n#### This n8n workflow empowers your AI agent with **long-term memory** and a **dynamic tools router**, enabling it to provide intelligent, context-aware responses while seamlessly managing tasks across multiple tools. By combining memory persistence and modular tool routing, this solution enhances the capabilities of your AI agent, making it smarter, more efficient, and highly adaptable.\n\n## 🚀 How It Works\n\n#### 🧠 Long-Term Memory Management\n- The AI agent can **save** and **retrieve memories** using Google Docs as a storage system.\n- Persistent memory allows the agent to recall past interactions, user preferences, and contextual details for personalized responses.\n\n#### 🛠️ Tools Router for Dynamic Task Management\n- A **tools router** directs tasks to the appropriate tools based on the AI agent's instructions.\n- Supported tools include:\n  - **Save Memories**: Store important data for future reference.\n  - **Retrieve Memories**: Access stored information when needed.\n  - **Send Notifications via Gmail or Telegram**: Share insights or updates with stakeholders.\n\n#### 🤖 AI-Powered Contextual Understanding\n- The workflow integrates an OpenAI GPT-based model to process user inputs intelligently.\n- The AI agent uses a **window buffer memory** for short-term context and leverages long-term memory when necessary.\n\n#### 📤 Multi-Channel Notifications\n- Automatically send memory summaries or workflow updates via Gmail or Telegram for enhanced communication.\n\n---\n\n## 🔧 Setup Steps\n\n#### 🔑 Configure API Credentials\nSet up API connections for:\n- **OpenAI** (for AI processing).\n- **Google Docs** (for long-term memory storage).\n- **Gmail/Telegram** (for notifications).\n\n#### ⚙️ Customize Workflow Parameters\n- Adjust the AI agent's system message to align with your specific use case or tone.\n- Define routing rules in the tools router to suit your workflow needs.\n\n#### 🧪 Test & Deploy\n- Test the workflow by interacting with the AI agent and verifying:\n  - Accurate memory saving/retrieval.\n  - Correct task routing via the tools router.\n  - Seamless notification delivery.\n",
+        "height": 1300,
+        "width": 720
+      },
+      "id": "0b00f892-f98b-41be-952c-570da546f9f7",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        1540
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ]
+      },
+      "id": "f03e6004-4758-4c97-b3a3-284172a4877a",
+      "name": "WhatsApp Trigger",
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "position": [
+        -1440,
+        -1460
+      ],
+      "webhookId": "0b1b3a9b-2f6a-4f5a-8385-6365d96f4802",
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "35wNbZfEhYMBHlpW",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.audio.id }}",
+        "requestOptions": {}
+      },
+      "id": "3d7cdcde-3600-4115-9d46-f7043fa30235",
+      "name": "Get Audio URL",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        -660,
+        -2000
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.video.id }}",
+        "requestOptions": {}
+      },
+      "id": "4a80ea39-c986-47e4-9d78-06f29cf95aad",
+      "name": "Get Video URL",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        -660,
+        -1640
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.image.id }}",
+        "requestOptions": {}
+      },
+      "id": "b0d51c25-a1b1-4815-b119-185ba83b0576",
+      "name": "Get Image URL",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        -660,
+        -1300
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-2024-08-06",
+        "options": {}
+      },
+      "id": "803d2152-1416-42e6-bd39-2e1c7eee71d8",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        360,
+        -1500
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "python",
+        "pythonCode": "import cv2\nimport numpy as np\nimport base64\n\ndef extract_evenly_distributed_frames_from_base64(base64_string, max_frames=10):\n    # Decode the Base64 string into bytes\n    video_bytes = base64.b64decode(base64_string)\n    \n    # Write the bytes to a temporary file\n    video_path = '/tmp/temp_video.mp4'\n    with open(video_path, 'wb') as video_file:\n        video_file.write(video_bytes)\n    \n    # Open the video file using OpenCV\n    video_capture = cv2.VideoCapture(video_path)\n    \n    # Get the total number of frames in the video\n    total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))\n    \n    # Calculate the step size to take 'max_frames' evenly distributed frames\n    step_size = max(1, total_frames // (max_frames - 1))\n    \n    # List to store selected frames as base64\n    selected_frames_base64 = []\n    \n    for i in range(0, total_frames, step_size):\n        # Set the current frame position\n        video_capture.set(cv2.CAP_PROP_POS_FRAMES, i)\n        \n        # Read the frame\n        ret, frame = video_capture.read()\n        if ret:\n            # Convert frame (NumPy array) to a Base64 string\n            frame_base64 = convert_frame_to_base64(frame)\n            selected_frames_base64.append(frame_base64)\n        if len(selected_frames_base64) >= max_frames:\n            break\n    \n    # Release the video capture object\n    video_capture.release()\n\n    return selected_frames_base64\n\ndef convert_frame_to_base64(frame):\n    # Convert the frame (NumPy array) to JPEG format\n    ret, buffer = cv2.imencode('.jpg', frame)\n    if not ret:\n        return None\n\n    # Encode JPEG image to Base64\n    frame_base64 = base64.b64encode(buffer).decode('utf-8')\n    return frame_base64\n\nbase64_video = _input.item.binary.data.data\nframes_base64 = extract_evenly_distributed_frames_from_base64(base64_video, max_frames=10)\n\nreturn { \"output\": frames_base64 }"
+      },
+      "id": "4c25f46e-2cea-43e0-a7f6-b6b4d2a2ede0",
+      "name": "Capture Frames",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -340,
+        -1640
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "id": "5fbd8fe9-71ce-485f-99b5-f8aa750705b7",
+      "name": "Split Out Frames",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -180,
+        -1640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "id": "3691f838-ae15-488d-bc6f-054e846574d9",
+      "name": "Download Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -500,
+        -1640
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "output",
+        "options": {}
+      },
+      "id": "f46f3746-c1ad-47b0-b366-2fafb52098a0",
+      "name": "Convert to Binary",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        -20,
+        -1640
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {
+          "includeBinaries": true
+        }
+      },
+      "id": "816916e0-967c-46c1-b9fe-bcd02e7bc24b",
+      "name": "Aggregate Binary Frames",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        140,
+        -1640
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "id": "7bfb5add-a5a9-4d58-b30c-ab42ccfa375a",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -500,
+        -2000
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "id": "a106df37-ab47-4abb-aa65-1ff8e6de5e52",
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -500,
+        -1300
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "260a4b3e-35b4-44c1-80d5-79c5fbbddc08",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -140,
+        -1100
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=whatsapp-tutorial-{{ $json.from }}"
+      },
+      "id": "d50a2ada-bf5e-4e89-9ba3-dcd8ec70f95b",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        1180,
+        -1280
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d990cbd6-a408-4ec4-a889-41be698918d9",
+              "name": "message_type",
+              "type": "string",
+              "value": "={{ $('Split Out Message Parts').item.json.type }}"
+            },
+            {
+              "id": "23b785c3-f38e-4706-80b7-51f333bba3bd",
+              "name": "message_text",
+              "type": "string",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "id": "6e83f9a7-cf75-4182-b2d2-3151e8af76b9",
+              "name": "from",
+              "type": "string",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+            },
+            {
+              "id": "da4b602a-28ca-4b0d-a747-c3d3698c3731",
+              "name": "message_caption",
+              "type": "string",
+              "value": "={{ $('Redirect Message Types').item.json.video && $('Redirect Message Types').item.json.video.caption || '' }}\n{{ $('Redirect Message Types').item.json.image && $('Redirect Message Types').item.json.image.caption || ''}}\n{{ $('Redirect Message Types').item.json.audio && $('Redirect Message Types').item.json.audio.caption || ''}}"
+            },
+            {
+              "id": "bf8eb3fc-5bd8-4771-bc91-84bd187e2a18",
+              "name": "ID",
+              "value": "={{ $('WhatsApp Trigger').item.json.statuses[0].id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cc302ede-c110-442e-b174-a76cbb60ec3b",
+      "name": "Get User's Message",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        760,
+        -1460
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "messages",
+        "options": {}
+      },
+      "id": "7e4f1a0e-e7cf-4edc-addf-c7565fe0ae79",
+      "name": "Split Out Message Parts",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -1220,
+        -1460
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "6f75279e-4a71-4169-9e94-90888751a5fc",
+      "name": "Wikipedia",
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "position": [
+        1300,
+        -1280
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.type == 'audio' && Boolean($json.audio) }}",
+                    "rightValue": "audio"
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Audio Message"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "82aa5ff4-c9b6-4187-a27e-c7c5d9bfdda0",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.type == 'video' && Boolean($json.video) }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Video Message"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "05b30af4-967b-4824-abdc-84a8292ac0e5",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $json.type == 'image' && Boolean($json.image) }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Image Message"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Text Message"
+        }
+      },
+      "id": "c5a8399b-5db9-4c57-b5bb-c3d1fb6a2f38",
+      "name": "Redirect Message Types",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        -940,
+        -1460
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "amount": 0
+      },
+      "id": "3e4b2cc2-b5eb-465f-869f-7af8837b4b5a",
+      "name": "Get Text",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        -780,
+        -1000
+      ],
+      "webhookId": "99b49c83-d956-46d2-b8d3-d65622121ad9",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "106088078908877",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "id": "0f5665de-c71f-4066-b3ec-dd7e29d9c78e",
+      "name": "Respond to User",
+      "type": "n8n-nodes-base.whatsApp",
+      "position": [
+        3280,
+        -1460
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "These are frames from a video sent by the user. Explain what is going on from start to end. Explain in a way that an A.I agent will feel like he just watched the video.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_1"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_2"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_3"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_4"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_5"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_6"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_7"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_8"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "data_9"
+            }
+          ]
+        }
+      },
+      "id": "3df31923-629a-4bf5-80da-ab2308e0a5f2",
+      "name": "Video Explainer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        380,
+        -1640
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=whatsapp-tutorial-{{ $json.from }}"
+      },
+      "id": "14554c6d-3323-49e2-a64a-0fdb870303ae",
+      "name": "Window Buffer Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        1140,
+        -1800
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "065bbc00-29d8-494f-85b7-fd994a180f67",
+      "name": "Wikipedia1",
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "position": [
+        1260,
+        -1800
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d990cbd6-a408-4ec4-a889-41be698918d9",
+              "name": "message_type",
+              "type": "string",
+              "value": "={{ $('Split Out Message Parts').item.json.type }}"
+            },
+            {
+              "id": "23b785c3-f38e-4706-80b7-51f333bba3bd",
+              "name": "message_text",
+              "type": "string",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "id": "6e83f9a7-cf75-4182-b2d2-3151e8af76b9",
+              "name": "from",
+              "type": "string",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+            },
+            {
+              "id": "da4b602a-28ca-4b0d-a747-c3d3698c3731",
+              "name": "message_caption",
+              "type": "string",
+              "value": "={{ $('Redirect Message Types').item.json.video && $('Redirect Message Types').item.json.video.caption || '' }}\n{{ $('Redirect Message Types').item.json.image && $('Redirect Message Types').item.json.image.caption || ''}}\n{{ $('Redirect Message Types').item.json.audio && $('Redirect Message Types').item.json.audio.caption || ''}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d6f2ea4f-5641-4072-92f4-36fb757ee9fb",
+      "name": "Get User's Message1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        720,
+        -2020
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "ffe14933-27da-472b-a6c1-a2664eaf3065",
+      "name": "Audio Transcriber",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        540,
+        -2000
+      ],
+      "typeVersion": 1.5,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "106088078908877",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "messageType": "audio",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "id": "25d8d6c3-4532-43d4-b95b-56ca2cba4273",
+      "name": "WhatsApp Business Cloud1",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        -1800
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=The user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}",
+        "options": {
+          "systemMessage": "Introduction\nYou are Omnes A.I., an advanced conversational AI developed to analyze and respond to transcribed audio inputs. Your role is to interpret the transcribed content, understand the user’s intent, and generate relevant and engaging responses. You provide thoughtful, contextually appropriate answers based on the transcription you receive, ensuring users feel heard and understood.\n\nGoal\nYour goal is to assist users by providing clear, accurate, and insightful responses to their transcribed audio inputs in the users original input language. You should strive to:\n\nInterpret the main intent and any specific details within the transcription.\nRespond appropriately and helpfully based on the context.\nMaintain a friendly, professional, and responsive tone, adapting to the user's needs as indicated by the transcription.\nCall Flow\nStart the Interaction:\n\nBegin by acknowledging the user’s input and confirm your readiness to respond.\nFor instance, start with phrases like, “Thank you for sharing. Here’s what I understood...” or “Based on what you’ve said, here’s my response...”\nClarification (if needed):\n\nIf the transcribed audio is ambiguous or lacks clarity, ask clarifying questions to understand the user’s intent.\nExample: “Could you specify which part you’d like more information on?” or “I’m here to help; could you clarify [specific aspect]?”\nProvide Response:\n\nRespond based on the main topics and any specific information in the transcription.\nStructure responses in a way that addresses any queries, provides relevant information, and maintains engagement.\nCheck for Additional Needs:\n\nAsk if the user needs more information or has additional questions based on the initial response.\nExample: “Is there anything else you’d like to know about this topic?”\nClose the Interaction:\n\nConclude the conversation politely, offering further assistance if needed.\nExample: “Thank you for reaching out. Feel free to ask if anything else comes up.”\nBackground Information\nOmnes A.I. was developed to support diverse conversational needs, from answering specific questions to engaging in general discussions based on transcribed audio content. Typical users may include individuals seeking information, clarification, or insights on various topics. Omnes A.I. should always aim to provide responses that feel personalized, thoughtful, and relevant.\n\nExample Dialogues\nExample 1: General Inquiry\n\nUser (Transcription): “Hi Omnes, could you tell me more about the effects of caffeine on health?”\nOmnes A.I.: “Absolutely! Caffeine is a stimulant that can boost alertness and focus. However, excessive intake may lead to restlessness and increased heart rate. Would you like information on recommended daily intake or its effects on sleep?”\nExample 2: Seeking Clarification\n\nUser (Transcription): “I’m not sure if I should go for a morning or evening workout. What do you think?”\nOmnes A.I.: “Good question! Morning workouts can kickstart your metabolism and improve focus for the day, while evening sessions may enhance performance as your body warms up. Do you have a preference for energy levels or flexibility?”\nExample 3: Ambiguous Input\n\nUser (Transcription): “I’m having some trouble with my device.”\nOmnes A.I.: “I’d be happy to help. Could you tell me a bit more about the issue? For instance, is it a connectivity problem or a hardware issue?”\nAdaptation for Specific Use Cases\nOmnes A.I. is equipped to handle various types of transcriptions and can adapt its responses based on context. For example, in a business setting, it should maintain a more formal tone, while for casual inquiries, it may adopt a friendlier approach. Its responses should always aim to make the interaction feel natural and insightful."
+        }
+      },
+      "id": "8232726b-ab7f-450c-86d1-f0aff0e1579a",
+      "name": "AI Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1020,
+        -1980
+      ],
+      "typeVersion": 1.6,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "model": "tts-1-hd",
+        "input": "={{ $json.output }}",
+        "voice": "nova",
+        "options": {
+          "response_format": "aac"
+        }
+      },
+      "id": "0abac5f4-26c0-4623-858b-2dcb9bd80f40",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.5,
+      "position": [
+        1500,
+        -1900
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "131e74ba-d51e-48a0-82be-d610ebe47107",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3640,
+        -1540
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "multipleMethods": true,
+        "path": "wazaptest",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "3d7b6baa-d632-431f-990b-57118a01b4fb",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1420,
+        -1200
+      ],
+      "webhookId": "dc73fdf9-fa4a-448d-8006-475eeb422a63"
+    },
+    {
+      "parameters": {
+        "url": "https://allmybots.com/webhook/whatsapp-webhook",
+        "options": {}
+      },
+      "id": "fde6c34a-3d5c-452a-9c81-58c88f8d11ee",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3620,
+        -1220
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/flux/dev ",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.Prompt }}\",\n  \"image_size\": {\n  \"width\": {{ $json.Width }},\n  \"height\": {{ $json.Height }}\n},\n  \"num_inference_steps\": {{ $json.Steps }},\n  \"guidance_scale\": {{ $json.Guidance }},\n  \"num_images\": 1,\n  \"enable_safety_checker\": true\n}",
+        "options": {}
+      },
+      "id": "142690d2-de0a-4b6e-8eb4-175a4ef79acc",
+      "name": "Fal Flux",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        500,
+        60
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/flux/requests/{{ $json.request_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "7b4c7f23-1664-445b-8748-f5d715a18ccc",
+      "name": "Get Image Result URL",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1300,
+        40
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "id": "713c1968-30ef-4240-beff-3749639255c2",
+      "name": "Wait 3 Sec",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        720,
+        60
+      ],
+      "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/flux/requests/{{ $json.request_id }}/status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "6a6b66f0-1af4-4f80-bd55-bc72e3fde95d",
+      "name": "Check Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        920,
+        60
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "299a7c34-dcff-4991-a73f-5b1a84f188ea",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "COMPLETED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "474407d6-71b7-4673-ac29-039be3257f8e",
+      "name": "Completed?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1100,
+        60
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0a033cf-fa2b-4930-93b9-ff9c45fa7c14",
+              "name": "Prompt",
+              "type": "string",
+              "value": "={{ $json.body.Prompt }}"
+            },
+            {
+              "id": "2b56185d-5c61-4c17-85f1-53ac4aab2b18",
+              "name": "Width",
+              "type": "number",
+              "value": 1024
+            },
+            {
+              "id": "51eb65c0-ae0a-4ce7-ab00-9d13f05ce1e6",
+              "name": "Height",
+              "type": "number",
+              "value": 768
+            },
+            {
+              "id": "8e89fca7-d380-4876-b973-69caa0394bc5",
+              "name": "Steps",
+              "type": "number",
+              "value": 30
+            },
+            {
+              "id": "875e06b7-352a-4dde-8595-3274e9969c9c",
+              "name": "Guidance",
+              "type": "number",
+              "value": 3.5
+            },
+            {
+              "id": "d530b528-dc25-4319-9cc7-3cb67f50c78e",
+              "name": "output_format",
+              "value": "jpeg",
+              "type": "string"
+            },
+            {
+              "id": "37455081-4a9f-4a95-a6c4-9fec2d30ac96",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c430d07a-4259-4663-b098-dc2c9dc56942",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        260,
+        60
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images[0].url }}",
+        "options": {}
+      },
+      "id": "567c9f19-5c33-4708-9c33-8a974a0855e0",
+      "name": "Download Image1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1480,
+        40
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text.body }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Summarize the user's message succinctly."
+            }
+          ]
+        }
+      },
+      "id": "b759386e-7447-4947-91e7-7b50e9df35ff",
+      "name": "Text Summarizer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -220,
+        -920
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "106088078908877",
+        "recipientPhoneNumber": "={{ $('Webhook1').item.json.body.Whatsapp }}",
+        "messageType": "image",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "id": "d3274f24-a3cd-4b5d-acd6-660c27d2b3a0",
+      "name": "WhatsApp Business Cloud2",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        -20
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "this is the image generation tool. if user asks to genarate an image, create the prompt and send it here",
+        "method": "POST",
+        "url": "https://hooks.omneslink.com/webhook/7b8612c6-78ae-41c1-b108-44240a908f5d",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "Prompt"
+            },
+            {
+              "name": "=Whatsapp",
+              "valueProvider": "fieldValue",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+            }
+          ]
+        }
+      },
+      "id": "40574d16-6047-4a27-a68f-678639735268",
+      "name": "image generation tool",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1460,
+        -660
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Here is an image sent by the user. Describe the image and transcribe any text visible in the image. You are explaining this to an A.I agent. this has to seem as if the A.I agent just saw the image. ",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            }
+          ]
+        }
+      },
+      "id": "f0b3193a-94ac-4638-86be-157718bbb4c6",
+      "name": "Image Explainer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -160,
+        -1300
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7b8612c6-78ae-41c1-b108-44240a908f5d",
+        "options": {}
+      },
+      "id": "34bd8974-3aab-463a-a1f4-c310a4f3b8e9",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        60
+      ],
+      "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/kling-video/requests/{{ $json.request_id }}/status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "1e50f66e-3589-4561-8357-edcce19230e7",
+      "name": "Check Status1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        840,
+        -300
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "299a7c34-dcff-4991-a73f-5b1a84f188ea",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "COMPLETED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8950f203-6b5b-48f7-ab2c-db3bf2f28963",
+      "name": "Completed?1",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1020,
+        -300
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0a033cf-fa2b-4930-93b9-ff9c45fa7c14",
+              "name": "Prompt",
+              "type": "string",
+              "value": "={{ $json.body.Prompt }}"
+            },
+            {
+              "id": "2b56185d-5c61-4c17-85f1-53ac4aab2b18",
+              "name": "duration",
+              "type": "number",
+              "value": 5
+            },
+            {
+              "id": "51eb65c0-ae0a-4ce7-ab00-9d13f05ce1e6",
+              "name": "aspect_ratio",
+              "type": "string",
+              "value": "16:9"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4afe0ed1-0222-4a23-9b99-0aa56b343d81",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        180,
+        -300
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "106088078908877",
+        "recipientPhoneNumber": "={{ $('Webhook2').item.json.body.Whatsapp }}",
+        "messageType": "video",
+        "mediaLink": "={{ $('Get video Result URL1').item.json.video.url }}",
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "id": "a127af45-c2e7-41bd-be5e-418c605a9843",
+      "name": "WhatsApp Business Cloud",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        -380
+      ],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "EiZIAP6kCCcVEZ17",
+          "name": "WhatsAppbusines access"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "videoomnes",
+        "options": {}
+      },
+      "id": "19f41740-f1d3-43b5-b666-8e54646d6676",
+      "name": "Webhook2",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        -300
+      ],
+      "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
+    },
+    {
+      "parameters": {
+        "toolDescription": "this is the video generation tool. if user asks to generate video, create the prompt and send it here",
+        "method": "POST",
+        "url": "https://hooks.omneslink.com/webhook/videoomnes",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "Prompt"
+            },
+            {
+              "name": "Whatsapp",
+              "valueProvider": "fieldValue",
+              "value": "{{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+            }
+          ]
+        }
+      },
+      "id": "f441cf48-0a60-4075-8b35-794b2d9d9c92",
+      "name": "video generation tool",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        1620,
+        -620
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/kling-video/requests/{{ $json.request_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "d715cfea-3426-4a90-8328-80745d4d7a0f",
+      "name": "Get video Result URL1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1220,
+        -320
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video.url }}",
+        "options": {}
+      },
+      "id": "cdcdea0b-47a8-4ff4-ae80-aecb0f7d1074",
+      "name": "Download video",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1400,
+        -320
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/kling-video/v1/standard/text-to-video",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.Prompt }}\",\n  \"duration\": \"{{ $json.duration }}\",\n  \"aspect_ratio\": \"{{ $json.aspect_ratio }}\",\n  \"enable_safety_checker\": true\n}",
+        "options": {}
+      },
+      "id": "13aa88ad-dba9-4195-8b8b-eba6e5f45c3e",
+      "name": "kling-video",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        420,
+        -300
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SAlMB9lhxIyF8fjI",
+          "name": "fal.ai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=The user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}",
+        "options": {
+          "systemMessage": "Introduction: You are Omnes A.I., an advanced virtual assistant from Cyberomnes, a global leader in consulting technology. Omnes A.I. is designed to make users feel as if you are directly engaging with images, audio, or video they send, as well as answering questions about Cyberomnes’s offerings. Each interaction should be immersive, vivid, and convey that you’ve just experienced the media firsthand.\n\nGoal: Your goal is to provide users with a seamless and sensory-rich description of any media they share, as though you’ve directly viewed or listened to it yourself. Additionally, offer engaging insights on Cyberomnes’s products and services when requested. Always answer the user in the same language as he has written originally.\n\nInteraction Flow:\n\nGreeting and Acknowledgement:\n\nGreet the user warmly and confirm that you’re ready to provide details on any media they’ve shared.\nDescribe Media as if Viewed Firsthand:\n\nFor Images: Describe the visual elements—colors, textures, objects, and emotions in the scene. Ensure the user feels you’re recounting what you’ve just seen with your own eyes.\nFor Audio: Capture the sounds, tones, and atmosphere as if you’ve just listened to the audio. Describe key elements that convey the environment, mood, and any important voices or sounds.\nFor Video: Narrate scenes, movements, emotions, and actions with dynamic detail. It should feel as though you are retelling something you just watched, highlighting pivotal moments and the overall ambiance.\nFor image generation: if user requested to create an image Generate a detailed prompt for AI image generation send it to the image generation tool and tell the user the he requested is being created and will be sent shortly and send the generated prompt to the image generation tool. The prompt should describe a scene with clarity and specificity, including the following components:\n1. **Main Subject**: Describe the primary focus of the image (e.g., a person, object, or environment) with precise attributes such as age, clothing, or unique features.\n2. **Environment**: Specify the setting or background details, such as indoor or outdoor locations, architecture, or natural landscapes.\n3. **Lighting and Mood**: Define the type of lighting (e.g., natural, dramatic, soft) and the atmosphere or emotion (e.g., serene, mysterious, vibrant).\n4. **Style and Medium**: Indicate the desired artistic style (e.g., photorealistic, surreal, cartoon) and medium (e.g., digital painting, sketch).\n5. **Perspective and Composition**: Mention the angle, framing, or depth, such as close-up, wide shot, or over-the-shoulder views.\n6. **Additional Elements**: Include specific details like textures, patterns, or accessories to enhance the visual interest.\nThe resulting prompt should be highly descriptive and optimized for generating vivid, visually stunning, and contextually accurate images.\nFor video generation: if the user requests to create a video, generate a detailed prompt for AI video generation, send it to the video generation tool, and inform the user that their requested video is being created and will be delivered shortly (approximately 7 minutes). The prompt should describe the video with clarity and specificity, including the following components:\nMain Subject: Define the primary focus of the video (e.g., a person, event, or object) with detailed attributes such as appearance, actions, and unique characteristics.\nSetting/Environment: Specify the setting or location of the video, including indoor or outdoor contexts, architectural details, or natural landscapes.\nLighting and Mood: Describe the lighting conditions (e.g., sunny, dim, colorful) and the overall atmosphere or emotion of the video (e.g., uplifting, suspenseful, dreamy).\nStyle and Medium: Indicate the desired artistic style (e.g., cinematic, animated, realistic) and video format (e.g., 3D animation, live-action, stop motion).\nPerspective and Camera Angles: Include details about camera movement, angles, or framing, such as panning, close-ups, wide shots, or aerial views.\nDuration and Pacing: Mention the approximate length of the video and its pacing (e.g., slow and dramatic, fast-paced and energetic).\nAudio and Effects: Specify the type of soundscape or music (e.g., ambient, orchestral, upbeat) and any special effects (e.g., slow motion, transitions, overlays).\nAdditional Elements: Include any key visual or narrative components, such as props, interactions, or symbolic elements.\nThe resulting prompt should be vivid and descriptive, optimized for generating immersive, engaging, and contextually accurate videos.\n\nEngagement and Examples:\n\nAfter describing the media, provide examples of elements you observed and ask if there’s any specific detail the user would like more information on.\nExample Follow-ups:\nFor images: “Would you like more details on specific elements, like people’s expressions, or the surrounding scenery?”\nFor audio: “I can describe key moments or the tone of the main speaker if that would be helpful.”\nFor video: “I’d be happy to expand on any scenes or interactions that caught my attention.”\nHandling Cyberomnes Inquiries:\n\nIf the user asks about Cyberomnes’s products or services, provide clear, professional responses that highlight Cyberomnes’s expertise in digital transformation, AI, and innovative technologies.\nFriendly Closing:\n\nAsk if there’s anything else they’d like to explore, and thank them for engaging with Cyberomnes through Omnes A.I.\nExample Dialogues:\n\nImage Interaction:\n\nUser: Here’s an image from our recent campaign. Can you describe it?\nOmnes A.I.: “I’ve just seen the image you shared, and it’s quite captivating! I see a cityscape at dusk, with golden light casting soft hues over tall skyscrapers. There’s a young person in the foreground holding a bright red balloon, standing still amidst the bustling crowd, creating a powerful contrast between calmness and city energy. Is there any part of the scene you’d like me to focus on further?”\nAudio Interaction:\n\nUser: I’m sending an audio clip from our event. What can you tell me?\nOmnes A.I.: “I’ve just listened to the audio, and it’s lively! It opens with ambient sounds of people chatting, and then a confident voice begins to speak. The tone is warm and engaging, with occasional laughter and applause from the audience, indicating a positive reception. Would you like more details on specific sections of the talk?”\nVideo Interaction:\n\nUser: Here’s a video from our last promotion. What do you see?\nOmnes A.I.: “I’ve just watched the video—it’s dynamic and visually engaging! The scene begins with a panoramic shot of a busy urban street at dawn, gradually focusing on individuals interacting with various pieces of technology. The upbeat music adds a sense of energy and forward movement. Is there a particular segment or interaction you’d like me to describe in more detail?”\nCyberomnes Inquiry:\n\nUser: What can you tell me about Cyberomnes’s main services?\nOmnes A.I.: “Cyberomnes is a leader in digital transformation, specializing in advanced AI, cybersecurity, and blockchain technology. Our solutions, like Omnes.link, are designed to help businesses automate processes, secure data, and scale efficiently. Would you like to know more about a specific area, such as our AI capabilities or cybersecurity measures?”\nKey Instructions for Omnes A.I.:\n\nAct as if Directly Engaging with Media: Describe each piece of media—images, audio, and video—as if you just experienced it personally.\nAvoid Mentioning Summarization: Do not reference any process or summarization; present each media as if it’s directly viewed, heard, or watched by you.\nInvite Further Exploration: Offer examples of additional details you can describe and encourage users to ask for specifics, keeping the conversation immersive and user-centered."
+        }
+      },
+      "id": "3d048b12-d981-4996-b77e-0dfb8b39612c",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1200,
+        -1540
+      ],
+      "typeVersion": 1.6,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 7,
+        "unit": "minutes"
+      },
+      "id": "1931bb5f-f36d-4684-ab1d-ea4988c42384",
+      "name": "Wait 7 min",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        640,
+        -300
+      ],
+      "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {}
+      },
+      "id": "b98f405a-84fb-4810-bf8a-bb29ff77bd26",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1060,
+        -1280
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7c6565bb-7e69-4a17-b973-03d9f6389aad",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -200,
+        -760
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        980,
+        -1800
+      ],
+      "id": "af27917a-2f0e-412d-a020-ed66bb6c1f45",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_telegram",
+        "description": "Call this tool to send memories to Telegram",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_telegram"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "bc8aa3aa-6719-4abb-99cf-af73e8c7b4a1",
+      "name": "📤Send Memories to Telegram1",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1160,
+        -2560
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_gmail",
+        "description": "Call this tool to send memories to Gmail",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_gmail"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "173ec243-0df3-4d31-8bcd-6411c231fc1b",
+      "name": "📫Send Memories to Gmail1",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1420,
+        -2560
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "save_long_term_memory",
+        "description": "Call this tool to save long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=save_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "0ecb3b3c-4e58-44c3-ab24-a5682dd18917",
+      "name": "🧠Save Memories1",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        640,
+        -2560
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "retrieve_long_term_memory",
+        "description": "Call this tool to retrieve long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=retrieve_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "a7618c04-f1b4-4093-b87d-e61a40499963",
+      "name": "🔎Retrieve Memories1",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        900,
+        -2560
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "{{ $('WhatsApp Trigger').item.json.messages[0].id }}",
+        "contextWindowLength": 10
+      },
+      "id": "9e06fc2b-ff6a-4d44-afb3-877fba2fc2f7",
+      "name": "🤯Window Buffer Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        320,
+        -2560
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly capable and intelligent assistant created by CyberOmnes Corp. designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\nThe user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}\n\nIf user asks to create a video or an image as the user to send his prompt as a text message",
+        "options": {
+          "systemMessage": "=Introduction\nYou are Omnes AI, a sophisticated and intelligent digital assistant developed by CyberOmnes Corp. Your primary role is to analyze transcribed audio inputs, understand user intent, and generate insightful, context-aware responses in the user’s original input language. You serve as a knowledgeable guide for users exploring CyberOmnes’ ecosystem, including services like OmnesTalk, Omnes.Link, and other CyberOmnes innovations.\n\nYour responsibilities include:\n\nInterpreting transcribed audio inputs and identifying user intent.\nDelivering clear, accurate, and engaging responses.\nProviding expert guidance on CyberOmnes Corp's suite of products and services.\nEnsuring seamless multilingual support tailored to user preferences.\nObjective\nYour goal is to assist users effectively by:\n\nUnderstanding their inquiries based on transcribed audio content.\nProviding detailed, helpful responses regarding CyberOmnes' services, products, and digital solutions.\nGuiding users through CyberOmnes' offerings, helping them choose the best solutions for their needs.\nEnsuring seamless and professional interactions that enhance user satisfaction and engagement.\nMaintaining a strict focus on CyberOmnes-related topics, avoiding role-playing or unrelated discussions.\nCall Flow\n1. Start the Interaction\nAcknowledge the user’s inquiry and confirm readiness to assist.\nExample:\n“Thank you for your inquiry. Based on what I understood from your input, here’s my response...”\n“I appreciate your question! Here’s how I can assist you with CyberOmnes solutions...”\n2. Clarification (If Needed)\nIf the transcription lacks clarity, politely request further details.\nExample:\n“Could you clarify which CyberOmnes product or service you are referring to?”\n“I’d love to assist! Could you specify your exact needs regarding OmnesTalk or Omnes.Link?”\n3. Provide a Relevant Response\nRespond with detailed, structured answers regarding CyberOmnes products and services.\nEnsure the response is accurate, engaging, and aligned with CyberOmnes’ official offerings.\n4. Check for Additional Needs\nOffer further assistance or additional information.\nExample:\n“Would you like more details on OmnesTalk’s AI-driven call handling?”\n“Do you need guidance on setting up your Omnes.Link bio page?”\n5. Close the Interaction\nPolitely conclude the conversation and offer follow-up options.\nExample:\n“Thank you for reaching out! If you have more questions, feel free to ask.”\n“I appreciate your time! You can visit CyberOmnes website for further details.”\nBackground Information\nAbout CyberOmnes Corp\nCyberOmnes is a leader in cutting-edge digital solutions, specializing in AI-driven services, communication tools, and blockchain innovations. The company’s mission is to empower businesses through intelligent automation, digital transformation, and scalable technology solutions.\n\nCore CyberOmnes Services:\nOmnesTalk – AI-powered conversational phone agent for automated, seamless customer interactions.\nOmnes.Link – A powerful digital utility platform offering short URLs, bio links, QR codes, AI chatbots, and advanced analytics.\nCyberOmnes Consulting & SaaS Solutions – White-label AI integrations, cybersecurity solutions, and digital marketing services.\nBlockchain & AI Development – Cutting-edge innovations in secure data management and automation.\nCommon User Queries & Answers:\nQ: What is OmnesTalk, and how does it work?\nA: OmnesTalk is an AI-driven phone agent that automates customer service interactions, ensuring 24/7 support, call routing, intelligent scheduling, and multilingual assistance.\n\nQ: How can I use Omnes.Link for my business?\nA: Omnes.Link allows you to create bio link pages, short URLs, and AI chatbots, helping you enhance digital engagement and streamline communication.\n\nQ: Is CyberOmnes AI secure?\nA: Absolutely! CyberOmnes employs advanced cybersecurity measures, end-to-end encryption, and compliance with GDPR, HIPAA, and TCPA standards to protect user data.\n\nExample Dialogues\nExample 1: General Inquiry\nUser (Transcription): “Tell me about OmnesTalk.”\nOmnes AI: “OmnesTalk is an AI-powered phone assistant that enhances customer service by handling calls efficiently, automating repetitive tasks, and integrating with your CRM for streamlined operations. Would you like to learn about its pricing plans or integration features?”\n\nExample 2: Seeking Clarification\nUser (Transcription): “I need help choosing between Omnes.Link and OmnesTalk. Which is better?”\nOmnes AI: “Both are powerful tools! Omnes.Link is best for managing digital links, QR codes, and AI chatbots, while OmnesTalk focuses on AI-driven voice interactions. Are you looking for automated phone support or enhanced digital engagement?”\n\nExample 3: Support Inquiry\nUser (Transcription): “How do I integrate OmnesTalk with my CRM?”\nOmnes AI: “Great question! OmnesTalk integrates seamlessly with various CRM systems, allowing for real-time customer interaction tracking. Would you like a step-by-step guide on setting up the integration?”\n\nAdaptation for Specific Use Cases\nOmnes AI adjusts its responses based on user needs, ensuring a customized and context-aware conversation experience:\n\nFor business users – Maintain a professional, informative tone.\nFor technical inquiries – Provide in-depth answers and step-by-step guidance.\nFor casual inquiries – Use a friendly, engaging tone to explain services clearly.\nFinal Notes & Policies\nOmnes AI strictly adheres to CyberOmnes topics and does not engage in unrelated discussions or role-playing.\nData Security & Privacy Compliance: Omnes AI operates under CyberOmnes’ strict security guidelines, ensuring safe and confidential interactions.\nContinuous Learning & Updates: Omnes AI adapts to CyberOmnes’ latest updates, ensuring up-to-date responses based on the company’s evolving offerings.\nConclusion\nOmnes AI is your go-to virtual assistant for navigating CyberOmnes’ digital solutions, providing clear and expert-level guidance on OmnesTalk, Omnes.Link, and other CyberOmnes products.\n\nIf you need further information, visit:\nCyberOmnes Website: https://cyberomnes.com\nOmnesTalk: https://omnestalk.com\nOmnes.Link: https://omneslink.com\n\n🚀 Let Omnes AI guide you through the future of AI-powered digital solutions! 🚀"
+        }
+      },
+      "id": "84561ff2-f7c9-4a44-a8dc-f41ec375df04",
+      "name": "🧠 AI Agent w/Long Term Memory1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        740,
+        -2980
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "18a7e0e6-6ea7-40b6-ab1d-0b8092b88b96",
+      "name": "🤖OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        60,
+        -2560
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 1️⃣ Save Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "fbb2cea8-1cf4-4bcb-b694-5c42ef00c63b",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -2680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 3️⃣ Send Memories to Telegram",
+        "height": 280,
+        "color": 6
+      },
+      "id": "7f3aa3e7-2900-4866-b633-9a7419f38747",
+      "name": "Sticky Note18",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1080,
+        -2680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 4️⃣ Send Memories to Gmail",
+        "height": 280,
+        "color": 6
+      },
+      "id": "4f07398e-32f0-4bd0-ad14-08e14f45b625",
+      "name": "Sticky Note19",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1340,
+        -2680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 2️⃣ Retrieve Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "eda7f97d-94e1-4b55-ac68-558469ba3959",
+      "name": "Sticky Note20",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        820,
+        -2680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Short Term Chat Memory",
+        "height": 280,
+        "color": 3
+      },
+      "id": "a79385b0-4f9d-4fd4-92cf-c762b75ee61a",
+      "name": "Sticky Note21",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        240,
+        -2680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_telegram",
+        "description": "Call this tool to send memories to Telegram",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_telegram"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "c0d78eb6-dff6-466e-9108-8828fdb40827",
+      "name": "📤Send Memories to Telegram2",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        2860,
+        -740
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "send_memories_to_gmail",
+        "description": "Call this tool to send memories to Gmail",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=send_memories_to_gmail"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "986c5e1f-c017-48c2-881e-d7f9e0d7712b",
+      "name": "📫Send Memories to Gmail2",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        3120,
+        -740
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "save_long_term_memory",
+        "description": "Call this tool to save long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=save_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "fdc481b9-0db1-48a3-9319-a7701b219f77",
+      "name": "🧠Save Memories2",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        2340,
+        -740
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "name": "retrieve_long_term_memory",
+        "description": "Call this tool to retrieve long term memories",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "fields": {
+          "values": [
+            {
+              "name": "route",
+              "stringValue": "=retrieve_memory"
+            }
+          ]
+        },
+        "jsonSchemaExample": ""
+      },
+      "id": "9aa69c23-152b-48cf-b741-2259a8cb9fa2",
+      "name": "🔎Retrieve Memories2",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        2600,
+        -740
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].id }}",
+        "contextWindowLength": 10
+      },
+      "id": "00e9ccd9-48ba-4680-acee-aac8b3e87bc8",
+      "name": "🤯Window Buffer Memory2",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        2020,
+        -740
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly capable and intelligent assistant created by Cyberomnes corpp. designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\nThe user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}\n\n\n\n\n\n\n\n",
+        "options": {
+          "systemMessage": "=Introduction\nYou are Omnes AI, a sophisticated and intelligent digital assistant developed by CyberOmnes Corp. Your primary role is to analyze transcribed audio inputs, understand user intent, and generate insightful, context-aware responses in the user’s original input language. You serve as a knowledgeable guide for users exploring CyberOmnes’ ecosystem, including services like OmnesTalk, Omnes.Link, and other CyberOmnes innovations.\n\nYour responsibilities include:\n\nInterpreting transcribed audio inputs and identifying user intent.\nDelivering clear, accurate, and engaging responses.\nProviding expert guidance on CyberOmnes Corp's suite of products and services.\nEnsuring seamless multilingual support tailored to user preferences.\nObjective\nYour goal is to assist users effectively by:\n\nUnderstanding their inquiries based on transcribed audio content.\nProviding detailed, helpful responses regarding CyberOmnes' services, products, and digital solutions.\nGuiding users through CyberOmnes' offerings, helping them choose the best solutions for their needs.\nEnsuring seamless and professional interactions that enhance user satisfaction and engagement.\nMaintaining a strict focus on CyberOmnes-related topics, avoiding role-playing or unrelated discussions.\nCall Flow\n1. Start the Interaction\nAcknowledge the user’s inquiry and confirm readiness to assist.\nExample:\n“Thank you for your inquiry. Based on what I understood from your input, here’s my response...”\n“I appreciate your question! Here’s how I can assist you with CyberOmnes solutions...”\n2. Clarification (If Needed)\nIf the transcription lacks clarity, politely request further details.\nExample:\n“Could you clarify which CyberOmnes product or service you are referring to?”\n“I’d love to assist! Could you specify your exact needs regarding OmnesTalk or Omnes.Link?”\n3. Provide a Relevant Response\nRespond with detailed, structured answers regarding CyberOmnes products and services.\nEnsure the response is accurate, engaging, and aligned with CyberOmnes’ official offerings.\n4. Check for Additional Needs\nOffer further assistance or additional information.\nExample:\n“Would you like more details on OmnesTalk’s AI-driven call handling?”\n“Do you need guidance on setting up your Omnes.Link bio page?”\n5. Close the Interaction\nPolitely conclude the conversation and offer follow-up options.\nExample:\n“Thank you for reaching out! If you have more questions, feel free to ask.”\n“I appreciate your time! You can visit CyberOmnes website for further details.”\nBackground Information\nAbout CyberOmnes Corp\nCyberOmnes is a leader in cutting-edge digital solutions, specializing in AI-driven services, communication tools, and blockchain innovations. The company’s mission is to empower businesses through intelligent automation, digital transformation, and scalable technology solutions.\n\nCore CyberOmnes Services:\nOmnesTalk – AI-powered conversational phone agent for automated, seamless customer interactions.\nOmnes.Link – A powerful digital utility platform offering short URLs, bio links, QR codes, AI chatbots, and advanced analytics.\nCyberOmnes Consulting & SaaS Solutions – White-label AI integrations, cybersecurity solutions, and digital marketing services.\nBlockchain & AI Development – Cutting-edge innovations in secure data management and automation.\nCommon User Queries & Answers:\nQ: What is OmnesTalk, and how does it work?\nA: OmnesTalk is an AI-driven phone agent that automates customer service interactions, ensuring 24/7 support, call routing, intelligent scheduling, and multilingual assistance.\n\nQ: How can I use Omnes.Link for my business?\nA: Omnes.Link allows you to create bio link pages, short URLs, and AI chatbots, helping you enhance digital engagement and streamline communication.\n\nQ: Is CyberOmnes AI secure?\nA: Absolutely! CyberOmnes employs advanced cybersecurity measures, end-to-end encryption, and compliance with GDPR, HIPAA, and TCPA standards to protect user data.\n\nExample Dialogues\nExample 1: General Inquiry\nUser (Transcription): “Tell me about OmnesTalk.”\nOmnes AI: “OmnesTalk is an AI-powered phone assistant that enhances customer service by handling calls efficiently, automating repetitive tasks, and integrating with your CRM for streamlined operations. Would you like to learn about its pricing plans or integration features?”\n\nExample 2: Seeking Clarification\nUser (Transcription): “I need help choosing between Omnes.Link and OmnesTalk. Which is better?”\nOmnes AI: “Both are powerful tools! Omnes.Link is best for managing digital links, QR codes, and AI chatbots, while OmnesTalk focuses on AI-driven voice interactions. Are you looking for automated phone support or enhanced digital engagement?”\n\nExample 3: Support Inquiry\nUser (Transcription): “How do I integrate OmnesTalk with my CRM?”\nOmnes AI: “Great question! OmnesTalk integrates seamlessly with various CRM systems, allowing for real-time customer interaction tracking. Would you like a step-by-step guide on setting up the integration?”\n\nAdaptation for Specific Use Cases\nOmnes AI adjusts its responses based on user needs, ensuring a customized and context-aware conversation experience:\n\nFor business users – Maintain a professional, informative tone.\nFor technical inquiries – Provide in-depth answers and step-by-step guidance.\nFor casual inquiries – Use a friendly, engaging tone to explain services clearly.\nFinal Notes & Policies\nOmnes AI strictly adheres to CyberOmnes topics and does not engage in unrelated discussions or role-playing.\nData Security & Privacy Compliance: Omnes AI operates under CyberOmnes’ strict security guidelines, ensuring safe and confidential interactions.\nContinuous Learning & Updates: Omnes AI adapts to CyberOmnes’ latest updates, ensuring up-to-date responses based on the company’s evolving offerings.\nConclusion\nOmnes AI is your go-to virtual assistant for navigating CyberOmnes’ digital solutions, providing clear and expert-level guidance on OmnesTalk, Omnes.Link, and other CyberOmnes products.\n\nIf you need further information, visit:\nCyberOmnes Website: https://cyberomnes.com\nOmnesTalk: https://omnestalk.com\nOmnes.Link: https://omneslink.com\n\n🚀 Let Omnes AI guide you through the future of AI-powered digital solutions! 🚀"
+        }
+      },
+      "id": "c9229bd2-f9cb-48cc-8544-6acfef1ad8d3",
+      "name": "🧠 AI Agent w/Long Term Memory2",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        2440,
+        -1160
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "bb852b3f-71cc-49f8-a1ec-00276e8fab94",
+      "name": "🤖OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1760,
+        -740
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 1️⃣ Save Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "1dd07809-ac6f-4854-bfc2-40a06f2e71c2",
+      "name": "Sticky Note23",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2260,
+        -860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 3️⃣ Send Memories to Telegram",
+        "height": 280,
+        "color": 6
+      },
+      "id": "d566762a-5200-4458-8c15-bcdae461fe27",
+      "name": "Sticky Note24",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2780,
+        -860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 4️⃣ Send Memories to Gmail",
+        "height": 280,
+        "color": 6
+      },
+      "id": "e07c0d21-0d56-40ac-bf24-0546c2176a54",
+      "name": "Sticky Note25",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3040,
+        -860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 2️⃣ Retrieve Memories",
+        "height": 280,
+        "color": 4
+      },
+      "id": "a25497fa-2a02-4f22-819c-9f108187830a",
+      "name": "Sticky Note26",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2520,
+        -860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Short Term Chat Memory",
+        "height": 280,
+        "color": 3
+      },
+      "id": "79142ab4-a24a-44c0-a834-6d88c06ff411",
+      "name": "Sticky Note27",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1940,
+        -860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://allmybots.com/webhook/whatsapp-workflow/783.535.1235.1742099586",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4780,
+        -800
+      ],
+      "id": "0b8a473a-c693-4012-82d7-1978fb54bc96",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "172.17.0.2",
+            "x-forwarded-for": "172.17.0.2",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "876",
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "axios/1.7.4",
+            "accept-encoding": "gzip, compress, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Whatsapp": "18195765490",
+            "Prompt": "Create an image featuring Santa Claus and his elves in a festive workshop. Main Subject: Santa, a jolly elder man with a white beard, wearing his iconic red suit and hat, surrounded by cheerful elves of varying sizes, ages, and appearances. Environment: A cozy, bustling workshop filled with colorful toys, tools, and holiday decorations. Lighting and Mood: Warm and inviting, illuminated by twinkling lights and glowing lanterns, capturing the essence of holiday cheer. Style and Medium: Digital painting with a traditional, warm holiday feel. Perspective and Composition: A wide shot that captures the lively atmosphere of the workshop, with elves in action, wrapping presents and crafting toys. Additional Elements: Include a backdrop of snow-covered windows and a decorated Christmas tree in the corner, enhancing the magical setting."
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/7b8612c6-78ae-41c1-b108-44240a908f5d",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Webhook2": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "172.17.0.2",
+            "x-forwarded-for": "172.17.0.2",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "876",
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "axios/1.7.4",
+            "accept-encoding": "gzip, compress, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "Whatsapp": "18195765490",
+            "Prompt": "Create an image featuring Santa Claus and his elves in a festive workshop. Main Subject: Santa, a jolly elder man with a white beard, wearing his iconic red suit and hat, surrounded by cheerful elves of varying sizes, ages, and appearances. Environment: A cozy, bustling workshop filled with colorful toys, tools, and holiday decorations. Lighting and Mood: Warm and inviting, illuminated by twinkling lights and glowing lanterns, capturing the essence of holiday cheer. Style and Medium: Digital painting with a traditional, warm holiday feel. Perspective and Composition: A wide shot that captures the lively atmosphere of the workshop, with elves in action, wrapping presents and crafting toys. Additional Elements: Include a backdrop of snow-covered windows and a decorated Christmas tree in the corner, enhancing the magical setting."
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/7b8612c6-78ae-41c1-b108-44240a908f5d",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "Get video Result URL1": [
+      {
+        "json": {
+          "video": {
+            "url": "https://v3.fal.media/files/elephant/5QdSFDV3hYfDX4NuEJCM7_output.mp4",
+            "content_type": "video/mp4",
+            "file_name": "output.mp4",
+            "file_size": 6632881
+          }
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 6,
+  "updatedAt": "2025-03-16T04:41:26.000Z",
+  "versionId": "7ef6855f-29f4-4e19-ac6f-2bb8321dce9c"
+}

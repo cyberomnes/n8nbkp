@@ -187,17 +187,6 @@
         ]
       ]
     },
-    "When Executed by Another Workflow": {
-      "main": [
-        [
-          {
-            "node": "Memory Tool Router",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Ⓜ️ When chat message received": {
       "main": [
         [
@@ -735,7 +724,7 @@
         ],
         [
           {
-            "node": "Wait 7 min",
+            "node": "Wait 30 sec",
             "type": "main",
             "index": 0
           }
@@ -784,7 +773,7 @@
       "main": [
         [
           {
-            "node": "Download video",
+            "node": "Edit Fields2",
             "type": "main",
             "index": 0
           }
@@ -795,7 +784,7 @@
       "main": [
         [
           {
-            "node": "WhatsApp Business Cloud",
+            "node": "Change MIME type",
             "type": "main",
             "index": 0
           }
@@ -806,7 +795,7 @@
       "main": [
         [
           {
-            "node": "Wait 7 min",
+            "node": "Wait 30 sec",
             "type": "main",
             "index": 0
           }
@@ -816,17 +805,6 @@
     "AI Agent": {
       "main": [
         []
-      ]
-    },
-    "Wait 7 min": {
-      "main": [
-        [
-          {
-            "node": "Check Status1",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "OpenAI Chat Model5": {
@@ -1018,20 +996,52 @@
     },
     "WhatsApp Business Cloud2": {
       "main": [
+        []
+      ]
+    },
+    "WhatsApp Business Cloud": {
+      "main": [
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
         [
           {
-            "node": "HTTP Request1",
+            "node": "Memory Tool Router",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "WhatsApp Business Cloud": {
+    "Wait 30 sec": {
       "main": [
         [
           {
-            "node": "HTTP Request1",
+            "node": "Check Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Download video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change MIME type": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
             "type": "main",
             "index": 0
           }
@@ -1049,21 +1059,8 @@
   "nodes": [
     {
       "parameters": {
-        "inputSource": "passthrough"
-      },
-      "id": "d5947a9d-bad4-4db7-8cdb-dc277928565a",
-      "name": "When Executed by Another Workflow",
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "position": [
-        580,
-        1260
-      ],
-      "typeVersion": 1.1
-    },
-    {
-      "parameters": {
         "operation": "update",
-        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc",
+        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/",
         "actionsUi": {
           "actionFields": [
             {
@@ -1137,7 +1134,7 @@
     {
       "parameters": {
         "operation": "get",
-        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
       },
       "id": "147ddd8d-6e42-44c0-95ca-9ab791f9452f",
       "name": "Retrieve Long Term Memories3",
@@ -1181,7 +1178,7 @@
     },
     {
       "parameters": {
-        "sendTo": "={{ $env.EMAIL_ADDRESS_JOE }}",
+        "sendTo": "=cyberomnes@gmail.com",
         "subject": "n8n User Memories",
         "message": "={{ $json.text }}",
         "options": {
@@ -1343,11 +1340,6 @@
       "parameters": {
         "name": "retrieve_long_term_memory",
         "description": "Call this tool to retrieve long term memories",
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
-        },
         "fields": {
           "values": [
             {
@@ -1392,8 +1384,8 @@
       "name": "🧠 AI Agent w/Long Term Memory",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1200,
-        420
+        1260,
+        400
       ],
       "typeVersion": 1.7,
       "disabled": true
@@ -1486,7 +1478,7 @@
     {
       "parameters": {
         "operation": "get",
-        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
       },
       "id": "677f62ba-b009-48da-988e-e58d5063d005",
       "name": "Retrieve Long Term Memories",
@@ -1515,7 +1507,6 @@
                   "caseSensitive": true,
                   "typeValidation": "strict"
                 },
-                "combinator": "and",
                 "conditions": [
                   {
                     "operator": {
@@ -1523,9 +1514,11 @@
                       "operation": "equals"
                     },
                     "leftValue": "={{ $json.route }}",
-                    "rightValue": "save_memory"
+                    "rightValue": "save_memory",
+                    "id": "cc5f3146-8789-4717-b241-7b83965b0cf6"
                   }
-                ]
+                ],
+                "combinator": "and"
               },
               "renameOutput": true,
               "outputKey": "1️⃣ Save"
@@ -1796,7 +1789,7 @@
     {
       "parameters": {
         "operation": "get",
-        "documentURL": "1YFTbVGlnpdYF5FuA6grfyvzmcdjcPviClAqbJ5HJIlc"
+        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
       },
       "id": "0ed43ec0-a39c-4323-9851-988e774302d7",
       "name": "Retrieve Long Term Memories2",
@@ -3003,18 +2996,6 @@
               "name": "Prompt",
               "type": "string",
               "value": "={{ $json.body.Prompt }}"
-            },
-            {
-              "id": "2b56185d-5c61-4c17-85f1-53ac4aab2b18",
-              "name": "duration",
-              "type": "number",
-              "value": 5
-            },
-            {
-              "id": "51eb65c0-ae0a-4ce7-ab00-9d13f05ce1e6",
-              "name": "aspect_ratio",
-              "type": "string",
-              "value": "16:9"
             }
           ]
         },
@@ -3035,7 +3016,7 @@
         "phoneNumberId": "106088078908877",
         "recipientPhoneNumber": "={{ $('Webhook2').item.json.body.Whatsapp }}",
         "messageType": "video",
-        "mediaLink": "={{ $('Get video Result URL1').item.json.video.url }}",
+        "mediaPath": "useMedian8n",
         "additionalFields": {},
         "requestOptions": {}
       },
@@ -3044,7 +3025,7 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        1700,
+        2120,
         -380
       ],
       "credentials": {
@@ -3084,7 +3065,7 @@
             {
               "name": "Whatsapp",
               "valueProvider": "fieldValue",
-              "value": "{{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
             }
           ]
         }
@@ -3123,13 +3104,19 @@
     {
       "parameters": {
         "url": "={{ $json.video.url }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
         "options": {}
       },
       "id": "cdcdea0b-47a8-4ff4-ae80-aecb0f7d1074",
       "name": "Download video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1400,
+        1640,
         -320
       ],
       "typeVersion": 4.2
@@ -3137,12 +3124,12 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://queue.fal.run/fal-ai/kling-video/v1/standard/text-to-video",
+        "url": "https://queue.fal.run/fal-ai/ltx-video",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"prompt\": \"{{ $json.Prompt }}\",\n  \"duration\": \"{{ $json.duration }}\",\n  \"aspect_ratio\": \"{{ $json.aspect_ratio }}\",\n  \"enable_safety_checker\": true\n}",
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.Prompt }}\",\n   \"negative_prompt\": \"low quality, worst quality, deformed, distorted, disfigured, text, motion smear, motion artifacts, fused fingers, bad anatomy, weird hand, ugly\",\n\"num_inference_steps\": 50,\n    \"guidance_scale\": 5\n}",
         "options": {}
       },
       "id": "13aa88ad-dba9-4195-8b8b-eba6e5f45c3e",
@@ -3177,21 +3164,6 @@
       ],
       "typeVersion": 1.6,
       "disabled": true
-    },
-    {
-      "parameters": {
-        "amount": 7,
-        "unit": "minutes"
-      },
-      "id": "1931bb5f-f36d-4684-ab1d-ea4988c42384",
-      "name": "Wait 7 min",
-      "type": "n8n-nodes-base.wait",
-      "position": [
-        640,
-        -300
-      ],
-      "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
-      "typeVersion": 1.1
     },
     {
       "parameters": {
@@ -3264,8 +3236,8 @@
         "description": "Call this tool to send memories to Telegram",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "={{ $workflow.id }}",
+          "mode": "id"
         },
         "fields": {
           "values": [
@@ -3292,8 +3264,8 @@
         "description": "Call this tool to send memories to Gmail",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "={{ $workflow.id }}",
+          "mode": "id"
         },
         "fields": {
           "values": [
@@ -3320,8 +3292,8 @@
         "description": "Call this tool to save long term memories",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "={{ $workflow.id }}",
+          "mode": "id"
         },
         "fields": {
           "values": [
@@ -3348,8 +3320,8 @@
         "description": "Call this tool to retrieve long term memories",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "={{ $workflow.id }}",
+          "mode": "id"
         },
         "fields": {
           "values": [
@@ -3373,7 +3345,7 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "{{ $('WhatsApp Trigger').item.json.messages[0].id }}",
+        "sessionKey": "{{ $('WhatsApp Trigger').item.json.messages }}",
         "contextWindowLength": 10
       },
       "id": "9e06fc2b-ff6a-4d44-afb3-877fba2fc2f7",
@@ -3508,8 +3480,9 @@
         "description": "Call this tool to send memories to Telegram",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "5ldxoaVOeQfVeoug",
+          "mode": "list",
+          "cachedResultName": "Long-Term Memory and Dynamic Tool Routing"
         },
         "fields": {
           "values": [
@@ -3536,8 +3509,9 @@
         "description": "Call this tool to send memories to Gmail",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "5ldxoaVOeQfVeoug",
+          "mode": "list",
+          "cachedResultName": "Long-Term Memory and Dynamic Tool Routing"
         },
         "fields": {
           "values": [
@@ -3564,8 +3538,9 @@
         "description": "Call this tool to save long term memories",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "5ldxoaVOeQfVeoug",
+          "mode": "list",
+          "cachedResultName": "Long-Term Memory and Dynamic Tool Routing"
         },
         "fields": {
           "values": [
@@ -3592,8 +3567,9 @@
         "description": "Call this tool to retrieve long term memories",
         "workflowId": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
+          "value": "5ldxoaVOeQfVeoug",
+          "mode": "list",
+          "cachedResultName": "Long-Term Memory and Dynamic Tool Routing"
         },
         "fields": {
           "values": [
@@ -3625,7 +3601,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
         2020,
-        -740
+        -800
       ],
       "typeVersion": 1.3
     },
@@ -3641,8 +3617,8 @@
       "name": "🧠 AI Agent w/Long Term Memory2",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        2440,
-        -1160
+        2340,
+        -1240
       ],
       "typeVersion": 1.7
     },
@@ -3758,11 +3734,81 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4780,
+        5220,
         -800
       ],
       "id": "0b8a473a-c693-4012-82d7-1978fb54bc96",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "d5947a9d-bad4-4db7-8cdb-dc277928565a",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        580,
+        1260
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "id": "1931bb5f-f36d-4684-ab1d-ea4988c42384",
+      "name": "Wait 30 sec",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        640,
+        -300
+      ],
+      "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "593aac48-e043-4bc6-81f4-1d20b23333ad",
+              "name": "video.url",
+              "value": "={{ $json.video.url }}",
+              "type": "string"
+            },
+            {
+              "id": "57df6c59-dc4f-4b54-98cd-c98500ffa6ba",
+              "name": "video.content_type",
+              "value": "=video/mp4",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1480,
+        -360
+      ],
+      "id": "741b94e5-64ee-4e52-a1b8-2afeb9ec86d5",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const newMimeType = 'video/mp4'; // set your desired MIME type\n\nitems.forEach(item => {\n  if (item.binary && item.binary.data) {\n    // Only change the MIME type, keeping everything else untouched.\n    item.binary.data.mimeType = newMimeType;\n  }\n});\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1880,
+        -360
+      ],
+      "id": "cee84a55-d54c-46ef-b1b4-21d50a74277c",
+      "name": "Change MIME type"
     }
   ],
   "pinData": {
@@ -3792,41 +3838,16 @@
         }
       }
     ],
-    "Webhook2": [
-      {
-        "json": {
-          "headers": {
-            "host": "hooks.omneslink.com",
-            "x-real-ip": "172.17.0.2",
-            "x-forwarded-for": "172.17.0.2",
-            "x-forwarded-proto": "https",
-            "connection": "upgrade",
-            "content-length": "876",
-            "accept": "application/json, text/plain, */*",
-            "content-type": "application/json",
-            "user-agent": "axios/1.7.4",
-            "accept-encoding": "gzip, compress, deflate, br"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "Whatsapp": "18195765490",
-            "Prompt": "Create an image featuring Santa Claus and his elves in a festive workshop. Main Subject: Santa, a jolly elder man with a white beard, wearing his iconic red suit and hat, surrounded by cheerful elves of varying sizes, ages, and appearances. Environment: A cozy, bustling workshop filled with colorful toys, tools, and holiday decorations. Lighting and Mood: Warm and inviting, illuminated by twinkling lights and glowing lanterns, capturing the essence of holiday cheer. Style and Medium: Digital painting with a traditional, warm holiday feel. Perspective and Composition: A wide shot that captures the lively atmosphere of the workshop, with elves in action, wrapping presents and crafting toys. Additional Elements: Include a backdrop of snow-covered windows and a decorated Christmas tree in the corner, enhancing the magical setting."
-          },
-          "webhookUrl": "https://hooks.omneslink.com/webhook/7b8612c6-78ae-41c1-b108-44240a908f5d",
-          "executionMode": "production"
-        }
-      }
-    ],
     "Get video Result URL1": [
       {
         "json": {
           "video": {
-            "url": "https://v3.fal.media/files/elephant/5QdSFDV3hYfDX4NuEJCM7_output.mp4",
-            "content_type": "video/mp4",
-            "file_name": "output.mp4",
-            "file_size": 6632881
-          }
+            "url": "https://v3.fal.media/files/penguin/X8oTfjZQdy_Uh8-M_anWK_tmpns16i5qb.mp4",
+            "content_type": "application/octet-stream",
+            "file_name": "tmpns16i5qb.mp4",
+            "file_size": 7962265
+          },
+          "seed": 836167005
         }
       }
     ]
@@ -3838,6 +3859,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 6,
-  "updatedAt": "2025-03-16T04:41:26.000Z",
-  "versionId": "7ef6855f-29f4-4e19-ac6f-2bb8321dce9c"
+  "updatedAt": "2025-03-16T18:50:43.000Z",
+  "versionId": "34b2ddd7-b082-49ef-b821-579195cca19f"
 }

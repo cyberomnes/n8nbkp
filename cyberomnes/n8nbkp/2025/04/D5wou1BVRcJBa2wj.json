@@ -1,0 +1,711 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Existing Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Existing Session": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prepare Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Intent": {
+      "main": [
+        [
+          {
+            "node": "Check Availability",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Find Booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cancel Booking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Availability": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Booking": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Booking": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancel Booking": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reschedule Booking": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Session": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Data": {
+      "main": [
+        [
+          {
+            "node": "Set API Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set API Key": {
+      "main": [
+        [
+          {
+            "node": "Route by Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Response": {
+      "main": [
+        [
+          {
+            "node": "Update Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Prepare Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-04-13T20:20:33.716Z",
+  "id": "D5wou1BVRcJBa2wj",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 40",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bland-ai-calcom",
+        "options": {}
+      },
+      "id": "c31be201-5453-4bf7-b045-e337bd5c8fae",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1460,
+        420
+      ],
+      "webhookId": "bland-ai-calcom"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "applFv6ule6N8oKq8",
+          "mode": "list",
+          "cachedResultName": "Omnestalk Bookings",
+          "cachedResultUrl": "https://airtable.com/applFv6ule6N8oKq8"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblryqQiD4b1YmloK",
+          "mode": "list",
+          "cachedResultName": "CAL Booking",
+          "cachedResultUrl": "https://airtable.com/applFv6ule6N8oKq8/tblryqQiD4b1YmloK"
+        },
+        "filterByFormula": "={session_id}=\"{{$json.body.sessionId}}\"",
+        "returnAll": false,
+        "limit": 1,
+        "options": {}
+      },
+      "id": "3b557132-1aec-41c1-a945-8434ea6109b1",
+      "name": "Get Existing Session",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -1240,
+        580
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "7RhdGYdHRTn3u1hU",
+          "name": "OmnesTalk Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "cab6d58b-e101-43d7-821b-2249921cdca2",
+      "name": "Route by Intent",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cal.com/v2/slots/available?apiKey={{$node[\"Set API Key\"].json[\"apiKey\"]}}&eventTypeId=648297&startTime={{$json.startDate}}&endTime={{$json.endDate}}",
+        "options": {}
+      },
+      "id": "323b72e6-5769-41a2-971b-8a3f62c9fae0",
+      "name": "Check Availability",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -580,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cal.com/v2/bookings?apiKey={{$node[\"Set API Key\"].json[\"apiKey\"]}}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"eventTypeId\": 648297,\n  \"start\": \"{{$json.appointmentTime}}\",\n  \"attendee\": {\n    \"name\": \"{{$json.userName}}\",\n    \"email\": \"{{$json.userEmail}}\",\n    \"timeZone\": \"Europe/London\"\n  },\n  \"bookingFieldsResponses\": {\n    \"title\": \"{{$json.appointmentReason}}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "9d364e00-59db-4eda-9973-ee911580e2c3",
+      "name": "Create Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -580,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cal.com/v2/bookings?apiKey={{$node[\"Set API Key\"].json[\"apiKey\"]}}&status=upcoming&attendeeEmail={{$json.userEmail}}",
+        "options": {}
+      },
+      "id": "976a577b-49ea-437d-bfea-c6dffd9207ac",
+      "name": "Find Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -580,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cal.com/v2/bookings/{{$json.bookingUid}}/cancel?apiKey={{$node[\"Set API Key\"].json[\"apiKey\"]}}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"cancellationReason\": \"{{$json.cancellationReason}}\"\n}",
+        "options": {}
+      },
+      "id": "b3eade84-5ac7-422a-874a-56851d4a9ec5",
+      "name": "Cancel Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -580,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cal.com/v2/bookings/{{$json.bookingUid}}/reschedule?apiKey={{$node[\"Set API Key\"].json[\"apiKey\"]}}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"start\": \"{{$json.newTime}}\",\n  \"reschedulingReason\": \"{{$json.reason}}\"\n}",
+        "options": {}
+      },
+      "id": "0b507e9e-6edd-460b-a9ce-fdc102582651",
+      "name": "Reschedule Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -580,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "applFv6ule6N8oKq8",
+          "mode": "list",
+          "cachedResultName": "Omnestalk Bookings",
+          "cachedResultUrl": "https://airtable.com/applFv6ule6N8oKq8"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblryqQiD4b1YmloK",
+          "mode": "list",
+          "cachedResultName": "CAL Booking",
+          "cachedResultUrl": "https://airtable.com/applFv6ule6N8oKq8/tblryqQiD4b1YmloK"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{$node[\"Webhook\"].json[\"body\"][\"sessionId\"]}}",
+            "chat_messages": "={{\nJSON.stringify(\n  ($node[\"Get Existing Session\"].json[\"chat_messages\"] ? JSON.parse($node[\"Get Existing Session\"].json[\"chat_messages\"]) : [])\n  .concat(\n    { \"role\": \"human\", \"message\": $node[\"Webhook\"].json[\"body\"][\"message\"] },\n    { \"role\": \"assistant\", \"message\": $node[\"Generate Response\"].json[\"text\"] }\n  )\n)\n}}",
+            "customer_name": "={{$node[\"Prepare Data\"].json[\"userName\"] || $node[\"Get Existing Session\"].json[\"customer_name\"] || ''}}",
+            "customer_email": "={{$node[\"Prepare Data\"].json[\"userEmail\"] || $node[\"Get Existing Session\"].json[\"customer_email\"] || ''}}",
+            "appointment_id": "={{$json.intent === 'BOOK_APPOINTMENT' && $json.success ? $json.bookingId : $node[\"Get Existing Session\"].json[\"appointment_id\"] || ''}}",
+            "last_message_at": "={{$now.toISO()}}",
+            "customer_summary": "={{$node[\"Get Existing Session\"].json[\"customer_summary\"] || ''}}",
+            "status": "ACTIVE",
+            "followup_count": 0,
+            "twilio_service_number": 0
+          },
+          "matchingColumns": [
+            "session_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customer_name",
+              "displayName": "customer_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customer_email",
+              "displayName": "customer_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "customer_summary",
+              "displayName": "customer_summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "chat_messages",
+              "displayName": "chat_messages",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "appointment_id",
+              "displayName": "appointment_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "last_message_at",
+              "displayName": "last_message_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scheduled_at",
+              "displayName": "scheduled_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "followup_count",
+              "displayName": "followup_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "last_followup_at",
+              "displayName": "last_followup_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "twilio_service_number",
+              "displayName": "twilio_service_number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "f4c5c2f0-c0fb-45a8-962b-a9a3679ced12",
+      "name": "Update Session",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        60,
+        520
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "7RhdGYdHRTn3u1hU",
+          "name": "OmnesTalk Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the intent detection result\nconst intentText = $input.item.json.text;\nlet parsedIntent;\n\ntry {\n  parsedIntent = JSON.parse(intentText);\n} catch (e) {\n  // If parsing fails, set a default intent\n  parsedIntent = {\n    intent: \"OTHER\",\n    date: null,\n    time: null,\n    email: null,\n    name: null,\n    reason: null\n  };\n}\n\n// Get user data from the webhook or from the parsed intent\nconst webhookBody = $node[\"Webhook\"].json.body;\nconst sessionData = $node[\"Get Existing Session\"].json;\n\n// Prepare data for the next nodes\nreturn {\n  parsedIntent,\n  intent: parsedIntent.intent,\n  userEmail: webhookBody.userEmail || parsedIntent.email || sessionData.customer_email || \"\",\n  userName: webhookBody.userName || parsedIntent.name || sessionData.customer_name || \"\",\n  sessionId: webhookBody.sessionId || \"\",\n  // For CHECK_AVAILABILITY\n  startDate: parsedIntent.date ? new Date(parsedIntent.date).toISOString() : new Date().toISOString(),\n  endDate: parsedIntent.date ? new Date(new Date(parsedIntent.date).setDate(new Date(parsedIntent.date).getDate() + 7)).toISOString() : new Date(new Date().setDate(new Date().getDate() + 7)).toISOString(),\n  // For BOOK_APPOINTMENT\n  appointmentTime: parsedIntent.date && parsedIntent.time ? new Date(`${parsedIntent.date}T${parsedIntent.time}`).toISOString() : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),\n  appointmentReason: parsedIntent.reason || \"General appointment\",\n  // For CANCEL_APPOINTMENT\n  bookingUid: sessionData.appointment_id || \"\",\n  cancellationReason: \"Cancelled via phone assistant\",\n  // For RESCHEDULE_APPOINTMENT\n  newTime: parsedIntent.date && parsedIntent.time ? new Date(`${parsedIntent.date}T${parsedIntent.time}`).toISOString() : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),\n  reason: \"Rescheduled via phone assistant\"\n};"
+      },
+      "id": "9eb53112-7516-4535-b7e0-605896fa8d26",
+      "name": "Prepare Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -1020,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Set your Cal.com API key\nreturn {\n  apiKey: \"cal_live_8f0429f51125c4ff72f3669938ef5550\"\n};"
+      },
+      "id": "a307c325-2c11-4680-ad80-a49d12998d2b",
+      "name": "Set API Key",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all the data for the response\nconst webhookBody = $node[\"Webhook\"].json.body;\nconst intentData = $node[\"Prepare Data\"].json;\nconst responseText = $input.item.json.text;\n\n// Determine which action result to include based on the intent\nlet actionResult, bookingId, bookingTime, success;\n\nswitch (intentData.intent) {\n  case \"CHECK_AVAILABILITY\":\n    actionResult = $node[\"Check Availability\"].json;\n    success = actionResult && actionResult.slots && actionResult.slots.length > 0;\n    break;\n  case \"BOOK_APPOINTMENT\":\n    actionResult = $node[\"Create Booking\"].json;\n    bookingId = actionResult && actionResult.uid ? actionResult.uid : null;\n    bookingTime = actionResult && actionResult.startTime ? actionResult.startTime : null;\n    success = !!bookingId;\n    break;\n  case \"FIND_APPOINTMENT\":\n    actionResult = $node[\"Find Booking\"].json;\n    success = actionResult && actionResult.bookings && actionResult.bookings.length > 0;\n    break;\n  case \"CANCEL_APPOINTMENT\":\n    actionResult = $node[\"Cancel Booking\"].json;\n    success = actionResult && actionResult.success;\n    break;\n  case \"RESCHEDULE_APPOINTMENT\":\n    actionResult = $node[\"Reschedule Booking\"].json;\n    success = actionResult && actionResult.success;\n    break;\n  default:\n    actionResult = {};\n    success = false;\n}\n\nreturn {\n  aiResponse: responseText,\n  intent: intentData.intent,\n  success: success,\n  bookingId: bookingId,\n  bookingTime: bookingTime,\n  actionResult: JSON.stringify(actionResult)\n};"
+      },
+      "id": "c6ff67d4-ff61-4b34-bed2-2f64af0684fa",
+      "name": "Prepare Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $node[\"Prepare Response\"].json }}",
+        "options": {}
+      },
+      "id": "c986a87b-fd9d-4600-a31b-b9962c24f2ee",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an appointment scheduling assistant for a company. Analyze the following message and determine the user's intent regarding appointments.\n\nUser message: {{ $('Webhook').item.json.body.message }}\n\nClassify the intent into one of these categories:\n1. CHECK_AVAILABILITY - User wants to know available appointment times\n2. BOOK_APPOINTMENT - User wants to book a new appointment\n3. FIND_APPOINTMENT - User wants to find information about their existing appointment\n4. CANCEL_APPOINTMENT - User wants to cancel their appointment\n5. RESCHEDULE_APPOINTMENT - User wants to reschedule their appointment\n6. OTHER - User's intent is not related to appointments or is unclear\n\nAlso extract any relevant information such as:\n- Preferred date and time for appointment\n- Email address (if mentioned)\n- Name (if mentioned)\n- Reason for appointment (if mentioned)\n\nReturn the response as a JSON object with the following structure:\n{\n  \"intent\": \"INTENT_CATEGORY\",\n  \"date\": \"extracted date or null\",\n  \"time\": \"extracted time or null\",\n  \"email\": \"extracted email or null\",\n  \"name\": \"extracted name or null\",\n  \"reason\": \"extracted reason or null\"\n}",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1160,
+        120
+      ],
+      "id": "f2ecaa8a-f2fd-4372-8516-315a47b9f2d7",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an AI assistant helping with appointment scheduling. Generate a friendly, conversational response to the user based on their intent and the result of the action taken.\n\nUser's original message: \"{{$node[\"Webhook\"].json[\"body\"][\"message\"]}}\"\nUser's intent: {{$json.intent}}\nAction result: {{$json.actionResult}}\n\nIf there was an error or the action couldn't be completed, explain what went wrong and suggest next steps.\nIf the action was successful, confirm what was done and provide any relevant details.\n\nKeep your response concise and natural-sounding, as if you're having a conversation.",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -420,
+        520
+      ],
+      "id": "2725dba9-5b6d-47ff-9d61-53b937c07fbf",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "hooks.omneslink.com",
+            "x-real-ip": "172.69.58.42",
+            "x-forwarded-for": "2a06:98c0:3600::103, 172.69.58.42",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "content-length": "176",
+            "cf-ray": "92fdd0d073105eec-ORD",
+            "cf-ew-via": "15",
+            "content-type": "application/json",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "accept-encoding": "gzip, br",
+            "accept-language": "*",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "bland.ai",
+            "x-datadog-origin": "rum",
+            "cf-connecting-ip": "2a06:98c0:3600::103",
+            "sec-fetch-mode": "cors",
+            "user-agent": "Bland/1.0",
+            "accept": "*/*"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": "{{input.Message}}",
+            "userEmail": "{{input.UserEmail}}",
+            "userName": "{{input.UserName}}",
+            "phoneNumber": "{{call.from}}",
+            "sessionId": "{{call.from}}"
+          },
+          "webhookUrl": "https://hooks.omneslink.com/webhook/bland-ai-calcom",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-04-13T21:15:13.000Z",
+  "versionId": "ff1cd060-d97c-4951-9470-30af853ccd78"
+}

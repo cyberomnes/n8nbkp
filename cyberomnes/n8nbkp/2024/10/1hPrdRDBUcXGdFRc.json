@@ -161,6 +161,7 @@
   },
   "createdAt": "2024-10-10T01:01:15.556Z",
   "id": "1hPrdRDBUcXGdFRc",
+  "isArchived": false,
   "meta": {
     "templateId": "2006",
     "templateCredsSetupCompleted": true

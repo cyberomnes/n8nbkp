@@ -103,6 +103,7 @@
   },
   "createdAt": "2024-08-15T17:42:42.767Z",
   "id": "UYsd221dhXhlgLOY",
+  "isArchived": false,
   "meta": null,
   "name": "My workflow 16",
   "nodes": [

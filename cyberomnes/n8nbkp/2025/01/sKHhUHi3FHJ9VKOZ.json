@@ -826,6 +826,15 @@
   "repo_owner": "cyberomnes",
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {},
+  "shared": [
+    {
+      "createdAt": "2025-01-09T15:09:40.755Z",
+      "updatedAt": "2025-01-09T15:09:40.755Z",
+      "role": "workflow:owner",
+      "workflowId": "sKHhUHi3FHJ9VKOZ",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": []

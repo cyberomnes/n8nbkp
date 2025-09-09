@@ -1378,6 +1378,15 @@
   "repo_owner": "cyberomnes",
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": null,
+  "shared": [
+    {
+      "createdAt": "2025-01-19T22:29:38.031Z",
+      "updatedAt": "2025-01-19T22:29:38.031Z",
+      "role": "workflow:owner",
+      "workflowId": "84XoRzsJHfU8NmlM",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,

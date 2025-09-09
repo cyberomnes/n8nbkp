@@ -1,0 +1,342 @@
+{
+  "active": false,
+  "connections": {
+    "Log Conversation": {
+      "main": [
+        [
+          {
+            "node": "Check for Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Speech Input": {
+      "main": [
+        [
+          {
+            "node": "OpenAI GPT-4o Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Initial Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twilio Voice Webhook": {
+      "main": [
+        [
+          {
+            "node": "Check Speech Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Appointment": {
+      "main": [
+        [
+          {
+            "node": "Save Appointment Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "OpenAI GPT-4o Response": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs Text-to-Speech",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Audio to Storage": {
+      "main": [
+        [
+          {
+            "node": "Twilio TwiML Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs Text-to-Speech": {
+      "main": [
+        [
+          {
+            "node": "Upload Audio to Storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-08T15:28:25.443Z",
+  "id": "C1IlIEaCQOjuxydd",
+  "isArchived": false,
+  "meta": {
+    "templateId": "6309"
+  },
+  "name": "Create Multilingual Voice Calling Bot with GPT-4o, ElevenLabs & Twilio",
+  "nodes": [
+    {
+      "id": "webhook-start",
+      "name": "Twilio Voice Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        380,
+        240
+      ],
+      "webhookId": "voice-webhook-start",
+      "parameters": {
+        "path": "voice-webhook",
+        "options": {},
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "check-speech-input",
+      "name": "Check Speech Input",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        600,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "={{ $json.SpeechResult }}",
+            "operation": "exists",
+            "caseSensitive": true
+          }
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "openai-gpt",
+      "name": "OpenAI GPT-4o Response",
+      "type": "n8n-nodes-base.openAi",
+      "position": [
+        820,
+        140
+      ],
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "maxTokens": 150,
+          "temperature": 0.7
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a helpful AI assistant for a service business. You can help customers:\n1. Schedule appointments (collect name, phone, preferred date/time, service type)\n2. Order pizza (collect size, toppings, address, phone)\n3. Book other services (collect relevant details)\n\nAlways be polite, concise, and gather necessary information step by step. Keep responses under 100 words for voice calls. End with a clear question or next step."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.SpeechResult || 'Hello, how can I help you today?' }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "elevenlabs-tts",
+      "name": "ElevenLabs Text-to-Speech",
+      "type": "n8n-nodes-base.elevenLabs",
+      "position": [
+        1040,
+        140
+      ],
+      "parameters": {
+        "text": "={{ $json.choices[0].message.content }}",
+        "model_id": "eleven_monolingual_v1",
+        "voice_id": "21m00Tcm4TlvDq8ikWAM",
+        "voice_settings": {
+          "style": 0,
+          "stability": 0.75,
+          "similarity_boost": 0.75,
+          "use_speaker_boost": true
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "upload-audio",
+      "name": "Upload Audio to Storage",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1260,
+        140
+      ],
+      "parameters": {
+        "operation": "upload",
+        "additionalFields": {
+          "fileName": "response.mp3",
+          "contentType": "audio/mpeg"
+        },
+        "binaryPropertyName": "data"
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "twilio-response",
+      "name": "Twilio TwiML Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1480,
+        140
+      ],
+      "parameters": {
+        "twiml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Play>{{ $json.audio_url }}</Play>\n  <Gather input=\"speech\" timeout=\"10\" speechTimeout=\"auto\" action=\"{{ $node.webhook.getWebhookUrl() }}\" method=\"POST\">\n    <Say voice=\"alice\">Please speak after the tone.</Say>\n  </Gather>\n  <Say voice=\"alice\">I didn't hear anything. Goodbye!</Say>\n  <Hangup/>\n</Response>"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "initial-greeting",
+      "name": "Initial Greeting",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        820,
+        340
+      ],
+      "parameters": {
+        "twiml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"alice\">Hello! I'm your AI assistant. I can help you schedule appointments, order pizza, or book services. How can I help you today?</Say>\n  <Gather input=\"speech\" timeout=\"10\" speechTimeout=\"auto\" action=\"{{ $node['Twilio Voice Webhook'].getWebhookUrl() }}\" method=\"POST\">\n    <Say voice=\"alice\">Please speak after the tone.</Say>\n  </Gather>\n  <Say voice=\"alice\">I didn't hear anything. Please call back. Goodbye!</Say>\n  <Hangup/>\n</Response>"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "log-conversation",
+      "name": "Log Conversation",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1040,
+        340
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "call_sid": "={{ $json.CallSid }}",
+            "caller_id": "={{ $json.From }}",
+            "timestamp": "={{ $now }}",
+            "ai_response": "={{ $json.choices[0].message.content }}",
+            "speech_input": "={{ $json.SpeechResult }}"
+          },
+          "mappingMode": "defineBelow"
+        },
+        "options": {},
+        "operation": "append",
+        "sheetName": "Call_Logs",
+        "documentId": "your-google-sheet-id"
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CqeDats5NxVhwTdH",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "check-appointment",
+      "name": "Check for Appointment",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1260,
+        340
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "={{ $json.choices[0].message.content.toLowerCase() }}",
+            "operation": "contains",
+            "rightValue": "appointment",
+            "caseSensitive": false
+          }
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "save-appointment",
+      "name": "Save Appointment Request",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1480,
+        440
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "status": "pending",
+            "call_sid": "={{ $json.CallSid }}",
+            "caller_id": "={{ $json.From }}",
+            "timestamp": "={{ $now }}",
+            "request_details": "={{ $json.SpeechResult }}"
+          },
+          "mappingMode": "defineBelow"
+        },
+        "operation": "append",
+        "sheetName": "Appointments",
+        "documentId": "your-appointments-sheet-id"
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CqeDats5NxVhwTdH",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 3
+    }
+  ],
+  "pinData": null,
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": null,
+  "shared": [
+    {
+      "createdAt": "2025-09-08T15:28:25.467Z",
+      "updatedAt": "2025-09-08T15:28:25.467Z",
+      "role": "workflow:owner",
+      "workflowId": "C1IlIEaCQOjuxydd",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-08T15:28:25.443Z",
+  "versionId": "800023cb-93c5-46ad-9596-1371bfce731c"
+}

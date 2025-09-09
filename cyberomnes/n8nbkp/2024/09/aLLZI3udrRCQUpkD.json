@@ -115,6 +115,15 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "createdAt": "2024-09-24T18:10:57.996Z",
+      "updatedAt": "2024-09-24T18:10:57.996Z",
+      "role": "workflow:owner",
+      "workflowId": "aLLZI3udrRCQUpkD",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
   "staticData": {
     "node:Cal Trigger": {
       "webhookId": "abd7deb1-e081-47d5-b7e8-9dc86e8d106e"

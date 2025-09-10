@@ -1,0 +1,91 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate speech from speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-09T15:17:19.970Z",
+  "id": "Lx7E6qWE8kWSpWMh",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 42",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ot23",
+        "responseMode": "streaming",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fedc5d61-834d-446d-a6e6-f24d1625e7e2",
+      "name": "Webhook",
+      "webhookId": "627c0ab0-eb10-43d9-abf0-61bc41de8e8a"
+    },
+    {
+      "parameters": {
+        "operation": "speech-to-speech",
+        "voice_id": {
+          "__rl": true,
+          "value": "YGd5m2fM40Lz6Jc2HMQZ",
+          "mode": "list",
+          "cachedResultName": "Carlos"
+        },
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -48
+      ],
+      "id": "bf292427-ee16-4a54-89fd-286db83785d0",
+      "name": "Generate speech from speech",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "fI1S8gQ5qfh8rPKP",
+          "name": "ElevenLabs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-09T15:17:19.982Z",
+      "updatedAt": "2025-09-09T15:17:19.982Z",
+      "role": "workflow:owner",
+      "workflowId": "Lx7E6qWE8kWSpWMh",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-09T23:49:11.000Z",
+  "versionId": "4807d473-f9e8-4aab-a377-f0fe9c2259f3"
+}

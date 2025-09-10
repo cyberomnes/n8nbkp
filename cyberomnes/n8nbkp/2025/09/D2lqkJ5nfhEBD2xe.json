@@ -1,0 +1,81 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-09T23:45:14.279Z",
+  "id": "D2lqkJ5nfhEBD2xe",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 43",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "580539f1-7675-4c94-94a0-109bb79a702a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://api.bland.ai/v1/sip?phone_number=+551139577770",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "89d2d786-344c-48ac-9bd1-d430481251db",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "jwdhBrr52G4lNHH6",
+          "name": "Unnamed credential"
+        },
+        "httpHeaderAuth": {
+          "id": "C8g5ht4UZRKmFSff",
+          "name": "AICALL"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-09T23:45:14.331Z",
+      "updatedAt": "2025-09-09T23:45:14.331Z",
+      "role": "workflow:owner",
+      "workflowId": "D2lqkJ5nfhEBD2xe",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-09-09T23:47:03.000Z",
+  "versionId": "1df0521a-73e4-4aff-ad43-f22fee5bab77"
+}

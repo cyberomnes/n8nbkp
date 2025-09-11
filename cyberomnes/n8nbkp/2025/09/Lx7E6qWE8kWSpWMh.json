@@ -5,8 +5,19 @@
       "main": [
         [
           {
-            "node": "Generate speech from speech",
+            "node": "AI Agent",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -40,28 +51,44 @@
     },
     {
       "parameters": {
-        "operation": "speech-to-speech",
-        "voice_id": {
-          "__rl": true,
-          "value": "YGd5m2fM40Lz6Jc2HMQZ",
-          "mode": "list",
-          "cachedResultName": "Carlos"
-        },
-        "additionalFields": {},
-        "requestOptions": {}
+        "promptType": "define",
+        "text": "Hi",
+        "options": {
+          "systemMessage": "You are a helpful assistant, wait for the user to talk and answer him",
+          "enableStreaming": true
+        }
       },
-      "type": "n8n-nodes-elevenlabs.elevenLabs",
-      "typeVersion": 1,
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
       "position": [
-        464,
-        -48
+        368,
+        -32
       ],
-      "id": "bf292427-ee16-4a54-89fd-286db83785d0",
-      "name": "Generate speech from speech",
+      "id": "70aef19f-f566-4628-8705-6f17fb21761d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini-realtime-preview",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini-realtime-preview"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        192
+      ],
+      "id": "093c39ec-d361-4e08-bf88-f26db725bd69",
+      "name": "OpenAI Chat Model",
       "credentials": {
-        "elevenLabsApi": {
-          "id": "fI1S8gQ5qfh8rPKP",
-          "name": "ElevenLabs account"
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
         }
       }
     }
@@ -86,6 +113,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-09-09T23:49:11.000Z",
-  "versionId": "4807d473-f9e8-4aab-a377-f0fe9c2259f3"
+  "updatedAt": "2025-09-10T16:10:12.000Z",
+  "versionId": "491fb7d2-1811-4f86-87ba-7e5007116bd1"
 }

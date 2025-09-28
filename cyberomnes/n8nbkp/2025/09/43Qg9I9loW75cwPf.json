@@ -1,0 +1,85 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-28T00:07:16.843Z",
+  "id": "43Qg9I9loW75cwPf",
+  "isArchived": false,
+  "meta": null,
+  "name": "zapotalk",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zap",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "02ea649f-798f-4c32-9890-6fc518f1c12c",
+      "name": "Webhook",
+      "webhookId": "2a32712d-7c1e-43c9-b147-4b4d5987b3ec"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n    <Dial>\n        <Sip>sip:+551139577770@sip.rtc.elevenlabs.io:5060;transport=tcp</Sip>\n    </Dial>\n</Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "content-Type",
+                "value": "application/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        256,
+        0
+      ],
+      "id": "e230aa5a-353e-44e5-91b6-39e387c3c85a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-09-28T00:07:16.849Z",
+      "updatedAt": "2025-09-28T00:07:16.849Z",
+      "role": "workflow:owner",
+      "workflowId": "43Qg9I9loW75cwPf",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-28T00:15:22.000Z",
+  "versionId": "d570e250-5c5b-48f3-9d7f-eca04df887d9"
+}

@@ -1,0 +1,107 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook /twilio/voice/wa": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build TwiML": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-06T17:26:04.673Z",
+  "id": "BKeVdi3dhhMKzFnA",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 44",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "twilio/voice/wa",
+        "authentication": "basicAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "51731643-db64-4627-a9bd-836a78499578",
+      "name": "Webhook /twilio/voice/wa",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        800,
+        160
+      ],
+      "webhookId": "5abae99b-9e57-42c3-967b-ee23644c2063",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "jwdhBrr52G4lNHH6",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "          // Extract fields from Webhook payload\n          const body = $json.body || {};\n          const query = $json.query || {};\n          const headers = ($json.headers || {});\n\n          // Candidates for destination from Twilio request\n          const candidates = [\n            body.To,\n            body.Called,\n            query.To,\n            query.Called,\n            headers['x-target-number'],\n            body['SipHeader_X-Target-Number'],\n            body['SipHeader_X_Target_Number'],\n            body['SipHeader_Target'],\n            body.to,\n            body.to_number\n          ].filter(Boolean);\n\n          function extractE164(s) {\n            if (!s) return null;\n            let str = String(s);\n            try { str = decodeURIComponent(str); } catch (e) {}\n            const m = str.match(/\\+?\\d{6,15}/);\n            if (!m) return null;\n            const n = m[0];\n            return n.startsWith('+') ? n : '+' + n;\n          }\n\n          let dest = null;\n          for (const c of candidates) {\n            dest = extractE164(c);\n            if (dest) break;\n          }\n\n          // Configure your WhatsApp sender here or via env var WA_SENDER\n          const WA_SENDER = $env.WA_SENDER || 'whatsapp:+16722022556';\n\n          let twiml;\n          if (!dest) {\n            twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Say voice=\"alice\">Destination number missing.</Say>\n</Response>`;\n          } else {\n            twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Dial callerId=\"${WA_SENDER}\">\n    <WhatsApp>${dest}</WhatsApp>\n  </Dial>\n</Response>`;\n          }\n\n          return [{ json: { twiml, dest, received: { body, query, headers } } }];\n"
+      },
+      "id": "c047675b-cfe0-41f0-a15a-af21594f9598",
+      "name": "Build TwiML",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a9d07220-5ea9-4122-b435-e4508472284b",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        160
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-06T17:26:04.687Z",
+      "updatedAt": "2025-10-06T17:26:04.687Z",
+      "role": "workflow:owner",
+      "workflowId": "BKeVdi3dhhMKzFnA",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-06T17:29:33.000Z",
+  "versionId": "ce4087ac-946f-4773-b48e-1daf32143c2c"
+}

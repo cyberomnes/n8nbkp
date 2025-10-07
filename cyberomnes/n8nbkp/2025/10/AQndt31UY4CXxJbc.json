@@ -1,0 +1,109 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook /twilio/voice/wa": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (text)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build TwiML (text)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-07T00:32:19.676Z",
+  "id": "AQndt31UY4CXxJbc",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 45",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "twilio/voice/wa",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "523b4a84-5462-41a8-a3e3-2c691e1860be",
+      "name": "Webhook /twilio/voice/wa",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        672,
+        352
+      ],
+      "webhookId": "b3cd7089-b4fa-4b01-a757-b5f931d64e60"
+    },
+    {
+      "parameters": {
+        "functionCode": "  const body = $json.body || {};\n  const query = $json.query || {};\n  const headers = ($json.headers || {});\n  const candidates = [\n    body.To, body.Called,\n    query.To, query.Called,\n    headers['x-target-number'],\n    body['SipHeader_X-Target-Number'],\n    body['SipHeader_X_Target_Number'],\n    body['SipHeader_Target'],\n    body.to, body.to_number\n  ].filter(Boolean);\n  function extractE164(s) {\n    if (!s) return null;\n    let str = String(s);\n    try { str = decodeURIComponent(str); } catch (e) {}\n    const m = str.match(/\\+?\\d{6,15}/);\n    if (!m) return null;\n    const n = m[0];\n    return n.startsWith('+') ? n : '+' + n;\n  }\n  let dest = null;\n  for (const c of candidates) { dest = extractE164(c); if (dest) break; }\n  const WA_SENDER = $env.WA_SENDER || 'whatsapp:+551139577770';\n  let twiml;\n  if (!dest) {\n    twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response><Say voice=\"alice\">Destination number missing.</Say></Response>`;\n  } else {\n    twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Dial callerId=\"${WA_SENDER}\">\n    <WhatsApp>${dest}</WhatsApp>\n  </Dial>\n</Response>`;\n  }\n  return [{ json: { twiml } }];\n"
+      },
+      "id": "b72914d8-6316-48ab-96a5-acca0b808675",
+      "name": "Build TwiML (text)",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        960,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{$json.twiml}}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "787c015d-cd1e-41a7-9183-0ce03f91d5e2",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        352
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-07T00:32:19.681Z",
+      "updatedAt": "2025-10-07T00:32:19.681Z",
+      "role": "workflow:owner",
+      "workflowId": "AQndt31UY4CXxJbc",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-07T01:37:07.000Z",
+  "versionId": "011e4e84-49ca-4741-b852-9180962e138a"
+}

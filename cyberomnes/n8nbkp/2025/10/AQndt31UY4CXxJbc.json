@@ -1,22 +1,191 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
-    "Webhook /twilio/voice/wa": {
+    "Build TwiML (voice)": {
       "main": [
         [
           {
-            "node": "Build TwiML (text)",
+            "node": "Respond (voice TwiML)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Build TwiML (text)": {
+    "Webhook /twilio/msg/wa": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify": {
+      "main": [
+        [
+          {
+            "node": "IF audio?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF image?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF call-permission accepted?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OpenAI Chat (from text)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF audio?": {
+      "main": [
+        [
+          {
+            "node": "Download media (audio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media (audio)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Transcribe (audio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Transcribe (audio)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat (from transcript)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat (from transcript)": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (message)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF image?": {
+      "main": [
+        [
+          {
+            "node": "Download media (image)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media (image)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Vision (from image)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Vision (from image)": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (message)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat (from text)": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (message)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF call-permission accepted?": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs → start call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs → start call": {
+      "main": [
+        [
+          {
+            "node": "Compose accept reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compose accept reply": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (message)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build TwiML (message)": {
+      "main": [
+        [
+          {
+            "node": "Respond (message TwiML)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook /twilio/voice/wa1": {
+      "main": [
+        [
+          {
+            "node": "Build TwiML (voice)",
             "type": "main",
             "index": 0
           }
@@ -28,36 +197,19 @@
   "id": "AQndt31UY4CXxJbc",
   "isArchived": false,
   "meta": null,
-  "name": "My workflow 45",
+  "name": "zapcallotalk",
   "nodes": [
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "twilio/voice/wa",
-        "responseMode": "responseNode",
-        "options": {}
+        "functionCode": "          const body = $json.body || {};\n          const query = $json.query || {};\n          const headers = ($json.headers || {});\n          const candidates = [\n            body.To, body.Called, query.To, query.Called,\n            headers['x-target-number'],\n            body['SipHeader_X-Target-Number'],\n            body['SipHeader_X_Target_Number'],\n            body['SipHeader_Target'],\n            body.to, body.to_number\n          ].filter(Boolean);\n          function e164(s){ if(!s) return null; const m=String(s).match(/\\+?\\d{6,15}/); return m ? (m[0].startsWith('+')?m[0]:'+'+m[0]) : null; }\n          let dest=null; for(const c of candidates){ dest=e164(c); if(dest) break; }\n          const WA_SENDER = $env.WA_SENDER || 'whatsapp:+551139577770';\n          const twiml = dest\n            ? `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Dial callerId=\"${WA_SENDER}\">\n    <WhatsApp>${dest}</WhatsApp>\n  </Dial>\n</Response>`\n            : `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response><Say voice=\"alice\">Destino ausente.</Say></Response>`;\n          return [{ json: { twiml } }];\n"
       },
-      "id": "523b4a84-5462-41a8-a3e3-2c691e1860be",
-      "name": "Webhook /twilio/voice/wa",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        672,
-        352
-      ],
-      "webhookId": "b3cd7089-b4fa-4b01-a757-b5f931d64e60"
-    },
-    {
-      "parameters": {
-        "functionCode": "  const body = $json.body || {};\n  const query = $json.query || {};\n  const headers = ($json.headers || {});\n  const candidates = [\n    body.To, body.Called,\n    query.To, query.Called,\n    headers['x-target-number'],\n    body['SipHeader_X-Target-Number'],\n    body['SipHeader_X_Target_Number'],\n    body['SipHeader_Target'],\n    body.to, body.to_number\n  ].filter(Boolean);\n  function extractE164(s) {\n    if (!s) return null;\n    let str = String(s);\n    try { str = decodeURIComponent(str); } catch (e) {}\n    const m = str.match(/\\+?\\d{6,15}/);\n    if (!m) return null;\n    const n = m[0];\n    return n.startsWith('+') ? n : '+' + n;\n  }\n  let dest = null;\n  for (const c of candidates) { dest = extractE164(c); if (dest) break; }\n  const WA_SENDER = $env.WA_SENDER || 'whatsapp:+551139577770';\n  let twiml;\n  if (!dest) {\n    twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response><Say voice=\"alice\">Destination number missing.</Say></Response>`;\n  } else {\n    twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Dial callerId=\"${WA_SENDER}\">\n    <WhatsApp>${dest}</WhatsApp>\n  </Dial>\n</Response>`;\n  }\n  return [{ json: { twiml } }];\n"
-      },
-      "id": "b72914d8-6316-48ab-96a5-acca0b808675",
-      "name": "Build TwiML (text)",
+      "id": "d2c6d29c-8162-4c19-bad0-5c05c6fde253",
+      "name": "Build TwiML (voice)",
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        960,
-        352
+        1344,
+        112
       ]
     },
     {
@@ -75,14 +227,358 @@
           }
         }
       },
-      "id": "787c015d-cd1e-41a7-9183-0ce03f91d5e2",
-      "name": "Respond to Webhook",
+      "id": "8d57b6f4-0cc0-4041-a017-acf0a25f14c7",
+      "name": "Respond (voice TwiML)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        1232,
-        352
+        1600,
+        112
       ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "twilio/msg/wa",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "29296a4c-b776-4a11-93bb-4aceb4da8ace",
+      "name": "Webhook /twilio/msg/wa",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        416
+      ],
+      "webhookId": "7192f75c-a9ab-461f-a6b1-bd501f44360a"
+    },
+    {
+      "parameters": {
+        "functionCode": "const b = $json.body || {};\nconst msg = {\n  from: b.From,\n  to: b.To,\n  body: (b.Body || '').trim(),\n  numMedia: parseInt(b.NumMedia || '0', 10),\n  mediaUrl0: b.MediaUrl0,\n  mediaType0: b.MediaContentType0,\n  messageType: b.MessageType || '',\n  buttonText: b.ButtonText || '',\n  buttonPayload: (b.ButtonPayload || '').toLowerCase(),\n  profileName: b.ProfileName || '',\n  waId: b.WaId || ''\n};\nlet kind = 'text';\nif ((msg.messageType || '').toLowerCase() === 'interactive') {\n  kind = 'interactive';\n} else if (msg.numMedia > 0) {\n  if ((msg.mediaType0 || '').startsWith('audio/')) kind = 'audio';\n  else if ((msg.mediaType0 || '').startsWith('image/')) kind = 'image';\n  else kind = 'media';\n}\nlet callPermission = 'none';\nif (kind === 'interactive' && msg.body === 'VOICE_CALL_REQUEST') {\n  if (msg.buttonPayload.includes('accept')) callPermission = 'accepted';\n  else if (msg.buttonPayload.includes('reject') || msg.buttonPayload.includes('decline')) callPermission = 'rejected';\n}\nreturn [{ json: { msg, kind, callPermission } }];\n"
+      },
+      "id": "dfe684b0-1d63-4508-82a1-b9e49fed8f99",
+      "name": "Classify",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.kind}}",
+              "operation": "contains",
+              "value2": "audio"
+            }
+          ]
+        }
+      },
+      "id": "18d58983-faab-4644-97d0-c32d7e95fed8",
+      "name": "IF audio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.kind}}",
+              "operation": "contains",
+              "value2": "image"
+            }
+          ]
+        }
+      },
+      "id": "df72a1ee-2ac3-48b6-b76e-9a310616827a",
+      "name": "IF image?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.callPermission}}",
+              "operation": "contains",
+              "value2": "accepted"
+            }
+          ]
+        }
+      },
+      "id": "0a00a714-5350-4c4a-b047-430821d46db9",
+      "name": "IF call-permission accepted?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{$json.msg.mediaUrl0}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "twilioApi",
+        "options": {}
+      },
+      "id": "51cae94b-8673-4978-9ed0-f6d6c9ad09f0",
+      "name": "Download media (audio)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1856,
+        224
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "jwdhBrr52G4lNHH6",
+          "name": "Unnamed credential"
+        },
+        "twilioApi": {
+          "id": "oqAAXrKq6GfGemRu",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {}
+      },
+      "id": "610638af-7729-4f92-b5b1-b057c34c9c2a",
+      "name": "OpenAI Transcribe (audio)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        224
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dpSyEMVvGq5Bb1ta",
+          "name": "Omnesmail"
+        },
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {}
+      },
+      "id": "42440a28-396d-4b40-9ca3-854b08f83ba9",
+      "name": "OpenAI Chat (from transcript)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2384,
+        224
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dpSyEMVvGq5Bb1ta",
+          "name": "Omnesmail"
+        },
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$json.msg.mediaUrl0}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "twilioApi",
+        "options": {}
+      },
+      "id": "8be69e4a-9a02-4463-95cb-53f36f05fa28",
+      "name": "Download media (image)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1872,
+        576
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "jwdhBrr52G4lNHH6",
+          "name": "Unnamed credential"
+        },
+        "twilioApi": {
+          "id": "oqAAXrKq6GfGemRu",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {}
+      },
+      "id": "21bf6e85-c920-4fea-8fc8-b251ad6ce21a",
+      "name": "OpenAI Vision (from image)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        464
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dpSyEMVvGq5Bb1ta",
+          "name": "Omnesmail"
+        },
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {}
+      },
+      "id": "790124ab-13be-43e4-b82e-3be6d0928a62",
+      "name": "OpenAI Chat (from text)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1872,
+        416
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dpSyEMVvGq5Bb1ta",
+          "name": "Omnesmail"
+        },
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.elevenlabs.io/v1/convai/sip-trunk/outbound-call",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "elevenLabsApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "f271043b-d8f7-4081-9838-2abeaafcc827",
+      "name": "ElevenLabs → start call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1856,
+        720
+      ],
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "fI1S8gQ5qfh8rPKP",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "return [{ json: { reply: 'Permissão recebida. Vamos ligar para você agora.' } }];"
+      },
+      "id": "14c154a7-3de1-455a-9cff-177c762fbade",
+      "name": "Compose accept reply",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "          let reply = $json.reply;\n          if (!reply && $json.choices && $json.choices[0] && $json.choices[0].message) {\n            reply = $json.choices[0].message.content;\n          }\n          if (!reply && $json.text) reply = $json.text;\n          if (!reply) reply = 'Ok.';\n          const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');\n          const twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response><Message>${esc(reply)}</Message></Response>`;\n          return [{ json: { twiml } }];\n"
+      },
+      "id": "8d3bd08d-b205-4791-a8cc-edc17376ae37",
+      "name": "Build TwiML (message)",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{$json.twiml}}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              }
+            ]
+          }
+        }
+      },
+      "id": "cb0d4ef5-0da3-443a-a6a5-6f19d3afbea8",
+      "name": "Respond (message TwiML)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "twilio/voice/wa",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "fa8a63b1-d2e7-42db-b40c-068f58bbf3b6",
+      "name": "Webhook /twilio/voice/wa1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        112
+      ],
+      "webhookId": "f67bf32b-b23f-48d8-ac96-508d11be20e2"
     }
   ],
   "pinData": {},
@@ -103,7 +599,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 1,
-  "updatedAt": "2025-10-07T01:37:07.000Z",
-  "versionId": "011e4e84-49ca-4741-b852-9180962e138a"
+  "triggerCount": 2,
+  "updatedAt": "2025-10-07T21:05:12.000Z",
+  "versionId": "795a7368-c311-43fa-b246-2502ebc0924e"
 }

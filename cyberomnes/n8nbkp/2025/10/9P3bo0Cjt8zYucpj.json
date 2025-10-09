@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Webhook /twilio/voice/wa": {
       "main": [
@@ -1488,6 +1488,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-10-08T00:21:48.000Z",
+  "updatedAt": "2025-10-09T02:32:45.000Z",
   "versionId": "3c9ccfa3-fa60-4f9a-a42a-bfa80e15821e"
 }

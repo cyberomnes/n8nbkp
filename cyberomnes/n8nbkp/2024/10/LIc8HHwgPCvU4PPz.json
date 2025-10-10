@@ -650,14 +650,15 @@
       "parameters": {
         "updates": [
           "messages"
-        ]
+        ],
+        "options": {}
       },
       "id": "38ffe41a-ecdf-4bb4-bd55-51998abab0f5",
       "name": "WhatsApp Trigger",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "position": [
-        980,
-        580
+        992,
+        592
       ],
       "webhookId": "0b1b3a9b-2f6a-4f5a-8385-6365d96f4802",
       "typeVersion": 1,
@@ -672,21 +673,21 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.audio.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.audio.id }}"
       },
       "id": "a35ac268-eff0-46cd-ac4e-c9b047a3f893",
       "name": "Get Audio URL",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
         1760,
-        40
+        48
       ],
       "typeVersion": 1,
+      "webhookId": "8d551d1b-4133-47ac-8828-cc4d4925d860",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -694,8 +695,7 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.video.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.video.id }}"
       },
       "id": "a3be543c-949c-4443-bf82-e0d00419ae23",
       "name": "Get Video URL",
@@ -705,10 +705,11 @@
         400
       ],
       "typeVersion": 1,
+      "webhookId": "6d99fea6-5a8e-41b0-a9a7-a8b63fa52a66",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -716,21 +717,21 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.image.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.image.id }}"
       },
       "id": "dd3cd0e7-0d1e-40cf-8120-aba0d1646d6d",
       "name": "Get Image URL",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
         1760,
-        740
+        752
       ],
       "typeVersion": 1,
+      "webhookId": "1701117b-a71e-43c4-9db4-ddf83bdb95d7",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -743,8 +744,8 @@
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        2780,
-        540
+        2784,
+        544
       ],
       "typeVersion": 1,
       "credentials": {
@@ -848,7 +849,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "position": [
         1920,
-        40
+        48
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -870,7 +871,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "position": [
         1920,
-        740
+        752
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -889,8 +890,8 @@
       "name": "OpenAI Chat Model1",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        2280,
-        940
+        2288,
+        944
       ],
       "typeVersion": 1,
       "credentials": {
@@ -909,7 +910,7 @@
       "name": "OpenAI Chat Model2",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        2220,
+        2224,
         1280
       ],
       "typeVersion": 1,
@@ -929,8 +930,8 @@
       "name": "OpenAI Chat Model3",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        3480,
-        760
+        3488,
+        768
       ],
       "typeVersion": 1,
       "credentials": {
@@ -950,7 +951,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
         3600,
-        760
+        768
       ],
       "typeVersion": 1.2
     },
@@ -990,8 +991,8 @@
       "name": "Get User's Message",
       "type": "n8n-nodes-base.set",
       "position": [
-        3180,
-        580
+        3184,
+        592
       ],
       "typeVersion": 3.4
     },
@@ -1005,7 +1006,7 @@
       "type": "n8n-nodes-base.splitOut",
       "position": [
         1200,
-        580
+        592
       ],
       "typeVersion": 1
     },
@@ -1015,8 +1016,8 @@
       "name": "Wikipedia",
       "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
       "position": [
-        3720,
-        760
+        3728,
+        768
       ],
       "typeVersion": 1
     },
@@ -1109,8 +1110,8 @@
       "name": "Redirect Message Types",
       "type": "n8n-nodes-base.switch",
       "position": [
-        1480,
-        580
+        1488,
+        592
       ],
       "typeVersion": 3.2
     },
@@ -1122,7 +1123,7 @@
       "name": "Get Text",
       "type": "n8n-nodes-base.wait",
       "position": [
-        1640,
+        1648,
         1040
       ],
       "webhookId": "99b49c83-d956-46d2-b8d3-d65622121ad9",
@@ -1131,24 +1132,24 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
         "textBody": "={{ $json.output }}",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "89df6f6c-2d91-4c14-a51a-4be29b1018ec",
       "name": "Respond to User",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        5700,
-        580
+        5712,
+        592
       ],
       "typeVersion": 1,
+      "webhookId": "99647487-24e9-482d-b51f-81dc9110a5ba",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1228,7 +1229,7 @@
       "name": "OpenAI Chat Model4",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        3420,
+        3424,
         240
       ],
       "typeVersion": 1,
@@ -1248,7 +1249,7 @@
       "name": "Window Buffer Memory1",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        3560,
+        3568,
         240
       ],
       "typeVersion": 1.2
@@ -1300,8 +1301,8 @@
       "name": "Get User's Message1",
       "type": "n8n-nodes-base.set",
       "position": [
-        3140,
-        20
+        3152,
+        32
       ],
       "typeVersion": 3.4
     },
@@ -1316,7 +1317,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "position": [
         2960,
-        40
+        48
       ],
       "typeVersion": 1.5,
       "credentials": {
@@ -1329,25 +1330,25 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
         "messageType": "audio",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "581d8ee2-86b3-4d9b-b9a7-62bab8363a37",
       "name": "WhatsApp Business Cloud1",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        4260,
+        4272,
         240
       ],
+      "webhookId": "ccde8bf3-3d48-4bc8-8a4f-c1bd7f4474a8",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1364,7 +1365,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
         3440,
-        60
+        64
       ],
       "typeVersion": 1.6
     },
@@ -1384,7 +1385,7 @@
       "typeVersion": 1.5,
       "position": [
         3920,
-        140
+        144
       ],
       "credentials": {
         "openAiApi": {
@@ -1403,8 +1404,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        6060,
-        500
+        6064,
+        512
       ],
       "disabled": true
     },
@@ -1420,8 +1421,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        1000,
-        840
+        1008,
+        848
       ],
       "webhookId": "dc73fdf9-fa4a-448d-8006-475eeb422a63",
       "disabled": true
@@ -1436,8 +1437,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        6040,
-        820
+        6048,
+        832
       ],
       "disabled": true
     },
@@ -1456,8 +1457,8 @@
       "name": "Fal Flux",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2920,
-        2100
+        2928,
+        2112
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -1478,7 +1479,7 @@
       "name": "Get Image Result URL",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3720,
+        3728,
         2080
       ],
       "typeVersion": 4.2,
@@ -1497,8 +1498,8 @@
       "name": "Wait 3 Sec",
       "type": "n8n-nodes-base.wait",
       "position": [
-        3140,
-        2100
+        3152,
+        2112
       ],
       "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
       "typeVersion": 1.1
@@ -1514,8 +1515,8 @@
       "name": "Check Status",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3340,
-        2100
+        3344,
+        2112
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -1555,7 +1556,7 @@
       "type": "n8n-nodes-base.if",
       "position": [
         3520,
-        2100
+        2112
       ],
       "typeVersion": 2.2
     },
@@ -1613,8 +1614,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        2680,
-        2100
+        2688,
+        2112
       ],
       "typeVersion": 3.4
     },
@@ -1627,7 +1628,7 @@
       "name": "Download Image1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3900,
+        3904,
         2080
       ],
       "typeVersion": 4.2
@@ -1648,7 +1649,7 @@
       "name": "Text Summarizer",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "position": [
-        2200,
+        2208,
         1120
       ],
       "typeVersion": 1.4
@@ -1656,25 +1657,25 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('Webhook1').item.json.body.Whatsapp }}",
         "messageType": "image",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "256f34d3-c2fe-4772-aa42-e5f35ee7e731",
       "name": "WhatsApp Business Cloud2",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        4200,
-        2020
+        4208,
+        2032
       ],
+      "webhookId": "1d95c9f4-c2ce-4e85-b2e2-8074d9e4e783",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1703,7 +1704,7 @@
       "typeVersion": 1.1,
       "position": [
         3680,
-        980
+        992
       ]
     },
     {
@@ -1723,8 +1724,8 @@
       "name": "Image Explainer",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "position": [
-        2260,
-        740
+        2272,
+        752
       ],
       "typeVersion": 1.4
     },
@@ -1739,8 +1740,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        2380,
-        2100
+        2384,
+        2112
       ],
       "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
     },
@@ -1755,8 +1756,8 @@
       "name": "Check Status1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3260,
-        1740
+        3264,
+        1744
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -1796,7 +1797,7 @@
       "type": "n8n-nodes-base.if",
       "position": [
         3440,
-        1740
+        1744
       ],
       "typeVersion": 2.2
     },
@@ -1830,33 +1831,33 @@
       "name": "Edit Fields1",
       "type": "n8n-nodes-base.set",
       "position": [
-        2600,
-        1740
+        2608,
+        1744
       ],
       "typeVersion": 3.4
     },
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('Webhook2').item.json.body.Whatsapp }}",
         "messageType": "video",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "2a7b4345-25d1-4879-a9e0-2484d8e746c0",
       "name": "WhatsApp Business Cloud",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        4120,
-        1660
+        4128,
+        1664
       ],
+      "webhookId": "eb9b9437-3f1d-4988-959d-15acdaf04038",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1871,8 +1872,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        2300,
-        1740
+        2304,
+        1744
       ],
       "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
     },
@@ -1900,8 +1901,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
       "position": [
-        3980,
-        1020
+        3984,
+        1024
       ]
     },
     {
@@ -1915,8 +1916,8 @@
       "name": "Get video Result URL1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3640,
-        1720
+        3648,
+        1728
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -1935,8 +1936,8 @@
       "name": "Download video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        3820,
-        1720
+        3824,
+        1728
       ],
       "typeVersion": 4.2
     },
@@ -1955,8 +1956,8 @@
       "name": "kling-video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        2840,
-        1740
+        2848,
+        1744
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -1978,8 +1979,8 @@
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        3500,
-        580
+        3504,
+        592
       ],
       "typeVersion": 1.6
     },
@@ -1992,8 +1993,8 @@
       "name": "Wait 7 min",
       "type": "n8n-nodes-base.wait",
       "position": [
-        3060,
-        1740
+        3072,
+        1744
       ],
       "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
       "typeVersion": 1.1
@@ -2081,6 +2082,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 4,
-  "updatedAt": "2025-01-20T00:32:17.000Z",
-  "versionId": "993862fb-397b-46b1-a7cb-953340cc23af"
+  "updatedAt": "2025-10-09T16:55:57.000Z",
+  "versionId": "de0381d0-4a28-4eeb-9d2b-549a9b43262b"
 }

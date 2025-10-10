@@ -1,213 +1,16 @@
 {
   "active": true,
   "connections": {
-    "🧠Save Memories": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Memory Tool Router": {
-      "main": [
-        [
-          {
-            "node": "Save Long Term Memories",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Retrieve Long Term Memories",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Retrieve Long Term Memories2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Retrieve Long Term Memories3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model2": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Prepare Telegram Message",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model3": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Prepare Gmail Message",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare Gmail Message": {
-      "main": [
-        [
-          {
-            "node": "Email Workflow Stats",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🔎Retrieve Memories": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🤖OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Save Long Term Memories": {
-      "main": [
-        [
-          {
-            "node": "Saved response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare Telegram Message": {
-      "main": [
-        [
-          {
-            "node": "Send Success Message to Telegram",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🤯Window Buffer Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📫Send Memories to Gmail": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Retrieve Long Term Memories": {
-      "main": [
-        [
-          {
-            "node": "Respond with long term memories",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Retrieve Long Term Memories2": {
-      "main": [
-        [
-          {
-            "node": "Prepare Telegram Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Retrieve Long Term Memories3": {
-      "main": [
-        [
-          {
-            "node": "Prepare Gmail Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📤Send Memories to Telegram": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Ⓜ️ When chat message received": {
-      "main": [
-        [
-          {
-            "node": "🧠 AI Agent w/Long Term Memory",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🧠 AI Agent w/Long Term Memory": {
-      "main": [
-        []
-      ]
-    },
     "WhatsApp Trigger": {
       "main": [
         [
           {
             "node": "Split Out Message Parts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -440,23 +243,7 @@
     },
     "Respond to User": {
       "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Video Explainer": {
@@ -521,18 +308,7 @@
     },
     "WhatsApp Business Cloud1": {
       "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "AI Agent1": {
@@ -545,24 +321,6 @@
         [
           {
             "node": "WhatsApp Business Cloud1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Split Out Message Parts",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Split Out Message Parts",
             "type": "main",
             "index": 0
           }
@@ -1004,17 +762,6 @@
         []
       ]
     },
-    "When Executed by Another Workflow": {
-      "main": [
-        [
-          {
-            "node": "Memory Tool Router",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Wait 30 sec": {
       "main": [
         [
@@ -1060,851 +807,24 @@
   "nodes": [
     {
       "parameters": {
-        "operation": "update",
-        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/",
-        "actionsUi": {
-          "actionFields": [
-            {
-              "action": "insert",
-              "text": "={\n  \"date\": \"{{ $now }}\",\n  \"memory\": \"{{ $json.query }}\"\n},\n"
-            }
-          ]
-        }
-      },
-      "id": "c9e9715d-c691-4516-9e0c-cf393a18d814",
-      "name": "Save Long Term Memories",
-      "type": "n8n-nodes-base.googleDocs",
-      "position": [
-        1280,
-        1260
-      ],
-      "typeVersion": 2,
-      "credentials": {
-        "googleDocsOAuth2Api": {
-          "id": "56gnhI57vyuxKzsW",
-          "name": "Google Docs account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "6b7e85d8-379b-4a0f-9799-9193a29f0447",
-              "name": "response",
-              "type": "string",
-              "value": "Memory saved"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "306272bf-e264-4cfb-b8b6-8c0af1de3f14",
-      "name": "Saved response",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        1460,
-        1260
-      ],
-      "typeVersion": 3.4
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "6b7e85d8-379b-4a0f-9799-9193a29f0447",
-              "name": "response",
-              "type": "string",
-              "value": "={{ $json.content }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "152b6922-8600-4fdb-8372-3b0102a7b73a",
-      "name": "Respond with long term memories",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        1460,
-        1560
-      ],
-      "typeVersion": 3.4
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
-      },
-      "id": "147ddd8d-6e42-44c0-95ca-9ab791f9452f",
-      "name": "Retrieve Long Term Memories3",
-      "type": "n8n-nodes-base.googleDocs",
-      "position": [
-        1280,
-        2240
-      ],
-      "typeVersion": 2,
-      "credentials": {
-        "googleDocsOAuth2Api": {
-          "id": "56gnhI57vyuxKzsW",
-          "name": "Google Docs account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
-        "text": "=n8n User Memories\n{{ $json.text }}",
-        "additionalFields": {
-          "appendAttribution": false,
-          "parse_mode": "HTML"
-        }
-      },
-      "id": "e3f1172b-ce33-4cce-8126-88e19afc53c6",
-      "name": "Send Success Message to Telegram",
-      "type": "n8n-nodes-base.telegram",
-      "position": [
-        1800,
-        1860
-      ],
-      "webhookId": "3ba1ee6d-1648-4421-823b-e68ae14d769b",
-      "typeVersion": 1.2,
-      "credentials": {
-        "telegramApi": {
-          "id": "J0vkmUGcfSmfTOtI",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "=cyberomnes@gmail.com",
-        "subject": "n8n User Memories",
-        "message": "={{ $json.text }}",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "id": "a77e8f01-889f-44b5-b4e1-493a97aa028c",
-      "name": "Email Workflow Stats",
-      "type": "n8n-nodes-base.gmail",
-      "position": [
-        1800,
-        2240
-      ],
-      "webhookId": "d9ef6f36-941f-4110-9b3e-9e54d9bc9581",
-      "typeVersion": 2.1,
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "r2eWisM8HAUWlfAB",
-          "name": "Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "id": "2481fe73-9ef8-4e95-b7e5-38634b55837c",
-      "name": "OpenAI Chat Model2",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "position": [
-        1580,
-        2000
-      ],
-      "typeVersion": 1.2,
-      "credentials": {
-        "openAiApi": {
-          "id": "hIbzO0TgpkKLndpi",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "id": "9a45e091-c91c-4505-a8df-7a2e1d079200",
-      "name": "OpenAI Chat Model3",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "position": [
-        1580,
-        2380
-      ],
-      "typeVersion": 1.2,
-      "credentials": {
-        "openAiApi": {
-          "id": "hIbzO0TgpkKLndpi",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "name": "send_memories_to_telegram",
-        "description": "Call this tool to send memories to Telegram",
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
-        },
-        "fields": {
-          "values": [
-            {
-              "name": "route",
-              "stringValue": "=send_memories_to_telegram"
-            }
-          ]
-        },
-        "jsonSchemaExample": ""
-      },
-      "id": "6d12369e-38de-44c1-b764-64d6d9a79a25",
-      "name": "📤Send Memories to Telegram",
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "position": [
-        1620,
-        840
-      ],
-      "typeVersion": 1.2,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "name": "send_memories_to_gmail",
-        "description": "Call this tool to send memories to Gmail",
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
-        },
-        "fields": {
-          "values": [
-            {
-              "name": "route",
-              "stringValue": "=send_memories_to_gmail"
-            }
-          ]
-        },
-        "jsonSchemaExample": ""
-      },
-      "id": "f1d0b366-70d5-4da3-937b-ea08afd364e4",
-      "name": "📫Send Memories to Gmail",
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "position": [
-        1880,
-        840
-      ],
-      "typeVersion": 1.2,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "name": "save_long_term_memory",
-        "description": "Call this tool to save long term memories",
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "={{ $workflow.id }}"
-        },
-        "fields": {
-          "values": [
-            {
-              "name": "route",
-              "stringValue": "=save_memory"
-            }
-          ]
-        },
-        "jsonSchemaExample": ""
-      },
-      "id": "25d99971-263a-44ef-abb0-b517743f72eb",
-      "name": "🧠Save Memories",
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "position": [
-        1100,
-        840
-      ],
-      "typeVersion": 1.2,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "name": "retrieve_long_term_memory",
-        "description": "Call this tool to retrieve long term memories",
-        "fields": {
-          "values": [
-            {
-              "name": "route",
-              "stringValue": "=retrieve_memory"
-            }
-          ]
-        },
-        "jsonSchemaExample": ""
-      },
-      "id": "0c9738d3-176a-4074-8340-ecfa3d9f9f7d",
-      "name": "🔎Retrieve Memories",
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "position": [
-        1360,
-        840
-      ],
-      "typeVersion": 1.2,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "contextWindowLength": 10
-      },
-      "id": "7967ec27-432e-4d35-b7e0-89eb84120754",
-      "name": "🤯Window Buffer Memory",
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "position": [
-        780,
-        840
-      ],
-      "typeVersion": 1.3,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "options": {
-          "systemMessage": "=You are a highly capable and intelligent assistant designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\n\n\n\n\n\n"
-        }
-      },
-      "id": "5f24781e-4f9a-4e33-8d33-ce281f7bcc46",
-      "name": "🧠 AI Agent w/Long Term Memory",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "position": [
-        1260,
-        400
-      ],
-      "typeVersion": 1.7,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "id": "ad644413-6587-415f-b7be-d58c05b94138",
-      "name": "🤖OpenAI Chat Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "position": [
-        520,
-        840
-      ],
-      "typeVersion": 1.2,
-      "credentials": {
-        "openAiApi": {
-          "id": "hIbzO0TgpkKLndpi",
-          "name": "OpenAi account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "076b0856-5ba4-498e-b279-21cf042f7f07",
-      "name": "Ⓜ️ When chat message received",
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "position": [
-        640,
-        420
-      ],
-      "webhookId": "2060403b-3fea-4fdf-a6d7-693bc477baaf",
-      "typeVersion": 1.1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Format this content into a simple unformatted list that can be sent to Telegram: {{ $json.content }}.  Avoid any preamble or further explanation."
-      },
-      "id": "fcf5872c-fcdc-445e-b095-f9cef14453b8",
-      "name": "Prepare Telegram Message",
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "position": [
-        1460,
-        1860
-      ],
-      "typeVersion": 1.5
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Format this content into a simple and modern HTML table that is max 800px wide that can be used as the content for an email: {{ $json.content }}.  Avoid any preamble or further explanation.  Remove all ``` and ```html from response."
-      },
-      "id": "c1d05bb9-390b-43aa-820d-45115df07f5c",
-      "name": "Prepare Gmail Message",
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "position": [
-        1460,
-        2240
-      ],
-      "typeVersion": 1.5
-    },
-    {
-      "parameters": {
-        "content": "## 1️⃣ Save Memories",
-        "height": 280,
-        "color": 4
-      },
-      "id": "98aa87af-8329-4af6-85da-fc97cb4ed9c3",
-      "name": "Sticky Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1020,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
-      },
-      "id": "677f62ba-b009-48da-988e-e58d5063d005",
-      "name": "Retrieve Long Term Memories",
-      "type": "n8n-nodes-base.googleDocs",
-      "position": [
-        1280,
-        1560
-      ],
-      "typeVersion": 2,
-      "credentials": {
-        "googleDocsOAuth2Api": {
-          "id": "56gnhI57vyuxKzsW",
-          "name": "Google Docs account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "version": 2,
-                  "leftValue": "",
-                  "caseSensitive": true,
-                  "typeValidation": "strict"
-                },
-                "conditions": [
-                  {
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "save_memory",
-                    "id": "cc5f3146-8789-4717-b241-7b83965b0cf6"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "1️⃣ Save"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "version": 2,
-                  "leftValue": "",
-                  "caseSensitive": true,
-                  "typeValidation": "strict"
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "86d44336-bab7-422f-9266-fcb513252d19",
-                    "operator": {
-                      "name": "filter.operator.equals",
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "retrieve_memory"
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": " 2️⃣Retrieve "
-            },
-            {
-              "conditions": {
-                "options": {
-                  "version": 2,
-                  "leftValue": "",
-                  "caseSensitive": true,
-                  "typeValidation": "strict"
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "29f37628-6381-46af-babb-74bf00b4a849",
-                    "operator": {
-                      "name": "filter.operator.equals",
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "send_memories_to_telegram"
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": " 3️⃣Telegram"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "version": 2,
-                  "leftValue": "",
-                  "caseSensitive": true,
-                  "typeValidation": "strict"
-                },
-                "combinator": "and",
-                "conditions": [
-                  {
-                    "id": "fdb7c8aa-4108-43f6-8f6b-71cd8f383d2a",
-                    "operator": {
-                      "name": "filter.operator.equals",
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "leftValue": "={{ $json.route }}",
-                    "rightValue": "send_memories_to_gmail"
-                  }
-                ]
-              },
-              "renameOutput": true,
-              "outputKey": "4️⃣Gmail"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "1c732f83-fb09-4a51-8aea-0f9d29d1cdfe",
-      "name": "Memory Tool Router",
-      "type": "n8n-nodes-base.switch",
-      "position": [
-        900,
-        1240
-      ],
-      "typeVersion": 3.2
-    },
-    {
-      "parameters": {
-        "content": "## 3️⃣ Send Memories to Telegram",
-        "height": 280,
-        "color": 6
-      },
-      "id": "79de3862-b15a-4380-ab27-cfde66e8bb95",
-      "name": "Sticky Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1540,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "## 4️⃣ Send Memories to Gmail",
-        "height": 280,
-        "color": 6
-      },
-      "id": "03df9947-9354-4f21-8b8a-fed130dcfc6a",
-      "name": "Sticky Note2",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1800,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "## 2️⃣ Retrieve Memories",
-        "height": 280,
-        "color": 4
-      },
-      "id": "9e8ee085-ec68-4f64-9098-877e166b1c37",
-      "name": "Sticky Note3",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1280,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "## Short Term Chat Memory",
-        "height": 280,
-        "color": 3
-      },
-      "id": "9c3d6609-cc4a-4bf5-b914-ee57e085cecd",
-      "name": "Sticky Note4",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        700,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "## Cloud LLM",
-        "height": 280,
-        "color": 5
-      },
-      "id": "97f47b93-c1e1-4230-b84c-3b99aa140d55",
-      "name": "Sticky Note5",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        440,
-        720
-      ],
-      "typeVersion": 1,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "content": "# 🧠 AI Agent Chatbot With Long Term Memory Tools",
-        "height": 840,
-        "width": 1740
-      },
-      "id": "4758ad55-d5f2-4a87-a05a-be465d803ca1",
-      "name": "Sticky Note6",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        380,
-        240
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 🛠️ Agentic Long Term Memory Management Tool Options",
-        "height": 400,
-        "width": 1100,
-        "color": 7
-      },
-      "id": "eb74a05d-7f34-4ba0-ae98-c22bb3637c6b",
-      "name": "Sticky Note7",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        980,
-        640
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 👍Try Me!",
-        "height": 240,
-        "width": 300,
-        "color": 4
-      },
-      "id": "d9d251d2-172b-4a8e-bec3-bf8f297628c6",
-      "name": "Sticky Note8",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        540,
-        360
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 1️⃣ Save Long Term Memories Tool",
-        "height": 280,
-        "width": 560,
-        "color": 4
-      },
-      "id": "90554969-0b73-4d4d-87f2-37645b9f7f08",
-      "name": "Sticky Note9",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1180,
-        1180
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 2️⃣ Retrieve Long Term Memories Tool",
-        "height": 280,
-        "width": 560,
-        "color": 4
-      },
-      "id": "34cbb84d-48a5-480f-a7c3-81bbef24194a",
-      "name": "Sticky Note10",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1180,
-        1480
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 3️⃣ Send Memories to Telegram Tool",
-        "height": 360,
-        "width": 840,
-        "color": 6
-      },
-      "id": "dc23d68e-0f93-495a-aaa0-e4bb6f18870d",
-      "name": "Sticky Note11",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1180,
-        1780
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "documentURL": "https://docs.google.com/document/d/1yBmdEbnsyJmL1pwpygiQnLCPFQfKni8X4mbMX_onHK8/"
-      },
-      "id": "0ed43ec0-a39c-4323-9851-988e774302d7",
-      "name": "Retrieve Long Term Memories2",
-      "type": "n8n-nodes-base.googleDocs",
-      "position": [
-        1280,
-        1860
-      ],
-      "typeVersion": 2,
-      "credentials": {
-        "googleDocsOAuth2Api": {
-          "id": "56gnhI57vyuxKzsW",
-          "name": "Google Docs account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## 4️⃣ Send Memories to Gmail Tool",
-        "height": 360,
-        "width": 840,
-        "color": 6
-      },
-      "id": "17d2cef6-765c-4fb4-8af0-1ebc868f6669",
-      "name": "Sticky Note12",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1180,
-        2160
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## Memory Tool Router",
-        "height": 380,
-        "width": 300,
-        "color": 2
-      },
-      "id": "03977fa0-a4cd-4cfe-8967-d6a5e3227200",
-      "name": "Sticky Note13",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        800,
-        1120
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## Receive Memory Tool Instructions from Agent",
-        "height": 380,
-        "width": 260,
-        "color": 7
-      },
-      "id": "994b124c-4f5b-44c6-845e-9886d7b5f07d",
-      "name": "Sticky Note14",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        500,
-        1120
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## 🛠️ Long Term Memory Tool Kit",
-        "height": 1440,
-        "width": 920,
-        "color": 7
-      },
-      "id": "7c400ccf-af37-4b5a-8dfe-431a7d52286b",
-      "name": "Sticky Note15",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1140,
-        1120
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## Enhance Your AI Workflow with Long-Term Memory and Dynamic Tool Routing\n\n#### This n8n workflow empowers your AI agent with **long-term memory** and a **dynamic tools router**, enabling it to provide intelligent, context-aware responses while seamlessly managing tasks across multiple tools. By combining memory persistence and modular tool routing, this solution enhances the capabilities of your AI agent, making it smarter, more efficient, and highly adaptable.\n\n## 🚀 How It Works\n\n#### 🧠 Long-Term Memory Management\n- The AI agent can **save** and **retrieve memories** using Google Docs as a storage system.\n- Persistent memory allows the agent to recall past interactions, user preferences, and contextual details for personalized responses.\n\n#### 🛠️ Tools Router for Dynamic Task Management\n- A **tools router** directs tasks to the appropriate tools based on the AI agent's instructions.\n- Supported tools include:\n  - **Save Memories**: Store important data for future reference.\n  - **Retrieve Memories**: Access stored information when needed.\n  - **Send Notifications via Gmail or Telegram**: Share insights or updates with stakeholders.\n\n#### 🤖 AI-Powered Contextual Understanding\n- The workflow integrates an OpenAI GPT-based model to process user inputs intelligently.\n- The AI agent uses a **window buffer memory** for short-term context and leverages long-term memory when necessary.\n\n#### 📤 Multi-Channel Notifications\n- Automatically send memory summaries or workflow updates via Gmail or Telegram for enhanced communication.\n\n---\n\n## 🔧 Setup Steps\n\n#### 🔑 Configure API Credentials\nSet up API connections for:\n- **OpenAI** (for AI processing).\n- **Google Docs** (for long-term memory storage).\n- **Gmail/Telegram** (for notifications).\n\n#### ⚙️ Customize Workflow Parameters\n- Adjust the AI agent's system message to align with your specific use case or tone.\n- Define routing rules in the tools router to suit your workflow needs.\n\n#### 🧪 Test & Deploy\n- Test the workflow by interacting with the AI agent and verifying:\n  - Accurate memory saving/retrieval.\n  - Correct task routing via the tools router.\n  - Seamless notification delivery.\n",
-        "height": 1300,
-        "width": 720
-      },
-      "id": "0b00f892-f98b-41be-952c-570da546f9f7",
-      "name": "Sticky Note16",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        380,
-        1540
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "updates": [
           "messages"
-        ]
+        ],
+        "options": {}
       },
       "id": "f03e6004-4758-4c97-b3a3-284172a4877a",
       "name": "WhatsApp Trigger",
       "type": "n8n-nodes-base.whatsAppTrigger",
       "position": [
         -1440,
-        -1460
+        -1456
       ],
       "webhookId": "0b1b3a9b-2f6a-4f5a-8385-6365d96f4802",
       "typeVersion": 1,
       "credentials": {
         "whatsAppTriggerApi": {
-          "id": "35wNbZfEhYMBHlpW",
-          "name": "WhatsApp OAuth account"
+          "id": "aKq1xXs034GUo8wp",
+          "name": "WhatsApp OAuth account 2"
         }
       }
     },
@@ -1912,21 +832,21 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.audio.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.audio.id }}"
       },
       "id": "3d7cdcde-3600-4115-9d46-f7043fa30235",
       "name": "Get Audio URL",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        -660,
+        -656,
         -2000
       ],
       "typeVersion": 1,
+      "webhookId": "8f59e0aa-cb55-4169-8bf6-040df26b8159",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1934,21 +854,21 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.video.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.video.id }}"
       },
       "id": "4a80ea39-c986-47e4-9d78-06f29cf95aad",
       "name": "Get Video URL",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        -660,
-        -1640
+        -656,
+        -1648
       ],
       "typeVersion": 1,
+      "webhookId": "d0fb2bcf-4c1f-40b4-be4e-c3af44f9b1aa",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1956,21 +876,21 @@
       "parameters": {
         "resource": "media",
         "operation": "mediaUrlGet",
-        "mediaGetId": "={{ $json.image.id }}",
-        "requestOptions": {}
+        "mediaGetId": "={{ $json.image.id }}"
       },
       "id": "b0d51c25-a1b1-4815-b119-185ba83b0576",
       "name": "Get Image URL",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
-        -660,
-        -1300
+        -656,
+        -1296
       ],
       "typeVersion": 1,
+      "webhookId": "f4d0f1b3-04e2-4788-8902-26a61cca1718",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -1983,8 +903,8 @@
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        360,
-        -1500
+        368,
+        -1504
       ],
       "typeVersion": 1,
       "credentials": {
@@ -2004,8 +924,8 @@
       "name": "Capture Frames",
       "type": "n8n-nodes-base.code",
       "position": [
-        -340,
-        -1640
+        -336,
+        -1648
       ],
       "typeVersion": 2
     },
@@ -2018,8 +938,8 @@
       "name": "Split Out Frames",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -180,
-        -1640
+        -176,
+        -1648
       ],
       "typeVersion": 1
     },
@@ -2034,14 +954,14 @@
       "name": "Download Video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -500,
-        -1640
+        -496,
+        -1648
       ],
       "typeVersion": 4.2,
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2055,8 +975,8 @@
       "name": "Convert to Binary",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
-        -20,
-        -1640
+        -16,
+        -1648
       ],
       "typeVersion": 1.1
     },
@@ -2071,8 +991,8 @@
       "name": "Aggregate Binary Frames",
       "type": "n8n-nodes-base.aggregate",
       "position": [
-        140,
-        -1640
+        144,
+        -1648
       ],
       "typeVersion": 1
     },
@@ -2087,14 +1007,14 @@
       "name": "Download Audio",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -500,
+        -496,
         -2000
       ],
       "typeVersion": 4.2,
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2109,14 +1029,14 @@
       "name": "Download Image",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        -500,
-        -1300
+        -496,
+        -1296
       ],
       "typeVersion": 4.2,
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2128,8 +1048,8 @@
       "name": "OpenAI Chat Model1",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        -140,
-        -1100
+        -144,
+        -1104
       ],
       "typeVersion": 1,
       "credentials": {
@@ -2148,7 +1068,7 @@
       "name": "Window Buffer Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        1180,
+        1184,
         -1280
       ],
       "typeVersion": 1.2,
@@ -2196,8 +1116,8 @@
       "name": "Get User's Message",
       "type": "n8n-nodes-base.set",
       "position": [
-        760,
-        -1460
+        768,
+        -1456
       ],
       "typeVersion": 3.4
     },
@@ -2210,8 +1130,8 @@
       "name": "Split Out Message Parts",
       "type": "n8n-nodes-base.splitOut",
       "position": [
-        -1220,
-        -1460
+        -1216,
+        -1456
       ],
       "typeVersion": 1
     },
@@ -2221,7 +1141,7 @@
       "name": "Wikipedia",
       "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
       "position": [
-        1300,
+        1312,
         -1280
       ],
       "typeVersion": 1,
@@ -2316,8 +1236,8 @@
       "name": "Redirect Message Types",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -940,
-        -1460
+        -944,
+        -1456
       ],
       "typeVersion": 3.2
     },
@@ -2329,8 +1249,8 @@
       "name": "Get Text",
       "type": "n8n-nodes-base.wait",
       "position": [
-        -780,
-        -1000
+        -784,
+        -1008
       ],
       "webhookId": "99b49c83-d956-46d2-b8d3-d65622121ad9",
       "typeVersion": 1.1
@@ -2338,24 +1258,24 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
         "textBody": "={{ $json.output }}",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "0f5665de-c71f-4066-b3ec-dd7e29d9c78e",
       "name": "Respond to User",
       "type": "n8n-nodes-base.whatsApp",
       "position": [
         3280,
-        -1460
+        -1456
       ],
       "typeVersion": 1,
+      "webhookId": "74f6feb8-0511-4d00-89ad-b1a8e49596e1",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2421,8 +1341,8 @@
       "name": "Video Explainer",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "position": [
-        380,
-        -1640
+        384,
+        -1648
       ],
       "typeVersion": 1.4
     },
@@ -2435,8 +1355,8 @@
       "name": "Window Buffer Memory1",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        1140,
-        -1800
+        1152,
+        -1808
       ],
       "typeVersion": 1.2,
       "disabled": true
@@ -2447,8 +1367,8 @@
       "name": "Wikipedia1",
       "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
       "position": [
-        1260,
-        -1800
+        1264,
+        -1808
       ],
       "typeVersion": 1
     },
@@ -2489,7 +1409,7 @@
       "type": "n8n-nodes-base.set",
       "position": [
         720,
-        -2020
+        -2016
       ],
       "typeVersion": 3.4
     },
@@ -2503,7 +1423,7 @@
       "name": "Audio Transcriber",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "position": [
-        540,
+        544,
         -2000
       ],
       "typeVersion": 1.5,
@@ -2517,12 +1437,11 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
         "messageType": "audio",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "25d8d6c3-4532-43d4-b95b-56ca2cba4273",
       "name": "WhatsApp Business Cloud1",
@@ -2530,12 +1449,13 @@
       "typeVersion": 1,
       "position": [
         1840,
-        -1800
+        -1808
       ],
+      "webhookId": "5a211ece-7aae-4f0c-a3f8-58bfcf74d0a7",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2551,8 +1471,8 @@
       "name": "AI Agent1",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1020,
-        -1980
+        1024,
+        -1984
       ],
       "typeVersion": 1.6,
       "disabled": true
@@ -2572,8 +1492,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.5,
       "position": [
-        1500,
-        -1900
+        1504,
+        -1904
       ],
       "credentials": {
         "openAiApi": {
@@ -2581,53 +1501,6 @@
           "name": "OpenAi account"
         }
       }
-    },
-    {
-      "parameters": {
-        "respondWith": "allIncomingItems",
-        "options": {}
-      },
-      "id": "131e74ba-d51e-48a0-82be-d610ebe47107",
-      "name": "Respond to Webhook",
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.1,
-      "position": [
-        3640,
-        -1540
-      ],
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "multipleMethods": true,
-        "path": "wazaptest",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "id": "3d7b6baa-d632-431f-990b-57118a01b4fb",
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        -1420,
-        -1200
-      ],
-      "webhookId": "dc73fdf9-fa4a-448d-8006-475eeb422a63"
-    },
-    {
-      "parameters": {
-        "url": "https://allmybots.com/webhook/whatsapp-webhook",
-        "options": {}
-      },
-      "id": "fde6c34a-3d5c-452a-9c81-58c88f8d11ee",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3620,
-        -1220
-      ],
-      "disabled": true
     },
     {
       "parameters": {
@@ -2644,8 +1517,8 @@
       "name": "Fal Flux",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        500,
-        60
+        512,
+        64
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -2666,8 +1539,8 @@
       "name": "Get Image Result URL",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1300,
-        40
+        1312,
+        48
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -2686,7 +1559,7 @@
       "type": "n8n-nodes-base.wait",
       "position": [
         720,
-        60
+        64
       ],
       "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
       "typeVersion": 1.1
@@ -2702,8 +1575,8 @@
       "name": "Check Status",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        920,
-        60
+        928,
+        64
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -2742,8 +1615,8 @@
       "name": "Completed?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1100,
-        60
+        1104,
+        64
       ],
       "typeVersion": 2.2
     },
@@ -2801,8 +1674,8 @@
       "name": "Edit Fields",
       "type": "n8n-nodes-base.set",
       "position": [
-        260,
-        60
+        272,
+        64
       ],
       "typeVersion": 3.4
     },
@@ -2815,8 +1688,8 @@
       "name": "Download Image1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1480,
-        40
+        1488,
+        48
       ],
       "typeVersion": 4.2
     },
@@ -2836,33 +1709,33 @@
       "name": "Text Summarizer",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "position": [
-        -220,
-        -920
+        -224,
+        -928
       ],
       "typeVersion": 1.4
     },
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('Webhook1').item.json.body.Whatsapp }}",
         "messageType": "image",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "d3274f24-a3cd-4b5d-acd6-660c27d2b3a0",
       "name": "WhatsApp Business Cloud2",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        1780,
-        -20
+        1792,
+        -16
       ],
+      "webhookId": "ee76df59-9c7b-4df9-99c0-2dd5d936080b",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -2890,8 +1763,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
       "position": [
-        1460,
-        -660
+        1472,
+        -656
       ]
     },
     {
@@ -2912,7 +1785,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "position": [
         -160,
-        -1300
+        -1296
       ],
       "typeVersion": 1.4
     },
@@ -2927,8 +1800,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -40,
-        60
+        -48,
+        64
       ],
       "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
     },
@@ -2943,8 +1816,8 @@
       "name": "Check Status1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        840,
-        -300
+        848,
+        -304
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -2983,8 +1856,8 @@
       "name": "Completed?1",
       "type": "n8n-nodes-base.if",
       "position": [
-        1020,
-        -300
+        1024,
+        -304
       ],
       "typeVersion": 2.2
     },
@@ -3006,33 +1879,33 @@
       "name": "Edit Fields1",
       "type": "n8n-nodes-base.set",
       "position": [
-        180,
-        -300
+        192,
+        -304
       ],
       "typeVersion": 3.4
     },
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "106088078908877",
+        "phoneNumberId": "391356080728477",
         "recipientPhoneNumber": "={{ $('Webhook2').item.json.body.Whatsapp }}",
         "messageType": "video",
         "mediaPath": "useMedian8n",
-        "additionalFields": {},
-        "requestOptions": {}
+        "additionalFields": {}
       },
       "id": "a127af45-c2e7-41bd-be5e-418c605a9843",
       "name": "WhatsApp Business Cloud",
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
-        2120,
-        -380
+        2128,
+        -384
       ],
+      "webhookId": "0c18aad1-1f3c-4d11-a279-11ab2ef8c186",
       "credentials": {
         "whatsAppApi": {
-          "id": "EiZIAP6kCCcVEZ17",
-          "name": "WhatsAppbusines access"
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     },
@@ -3047,8 +1920,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -120,
-        -300
+        -128,
+        -304
       ],
       "webhookId": "7b8612c6-78ae-41c1-b108-44240a908f5d"
     },
@@ -3076,8 +1949,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
       "typeVersion": 1.1,
       "position": [
-        1620,
-        -620
+        1632,
+        -624
       ]
     },
     {
@@ -3091,7 +1964,7 @@
       "name": "Get video Result URL1",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1220,
+        1232,
         -320
       ],
       "typeVersion": 4.2,
@@ -3117,7 +1990,7 @@
       "name": "Download video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        1640,
+        1648,
         -320
       ],
       "typeVersion": 4.2
@@ -3137,8 +2010,8 @@
       "name": "kling-video",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        420,
-        -300
+        432,
+        -304
       ],
       "typeVersion": 4.2,
       "credentials": {
@@ -3160,8 +2033,8 @@
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1200,
-        -1540
+        1136,
+        -1584
       ],
       "typeVersion": 1.6,
       "disabled": true
@@ -3175,7 +2048,7 @@
       "name": "OpenAI Chat Model5",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        1060,
+        1072,
         -1280
       ],
       "typeVersion": 1,
@@ -3195,8 +2068,8 @@
       "name": "OpenAI Chat Model6",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        -200,
-        -760
+        -208,
+        -768
       ],
       "typeVersion": 1,
       "credentials": {
@@ -3218,8 +2091,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        980,
-        -1800
+        992,
+        -1808
       ],
       "id": "af27917a-2f0e-412d-a020-ed66bb6c1f45",
       "name": "OpenAI Chat Model4",
@@ -3254,7 +2127,7 @@
       "name": "📤Send Memories to Telegram1",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        1160,
+        1168,
         -2560
       ],
       "typeVersion": 1.2
@@ -3282,7 +2155,7 @@
       "name": "📫Send Memories to Gmail1",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        1420,
+        1424,
         -2560
       ],
       "typeVersion": 1.2
@@ -3338,7 +2211,7 @@
       "name": "🔎Retrieve Memories1",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        900,
+        912,
         -2560
       ],
       "typeVersion": 1.2
@@ -3370,8 +2243,8 @@
       "name": "🧠 AI Agent w/Long Term Memory1",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        740,
-        -2980
+        752,
+        -2976
       ],
       "typeVersion": 1.7
     },
@@ -3389,7 +2262,7 @@
       "name": "🤖OpenAI Chat Model1",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        60,
+        64,
         -2560
       ],
       "typeVersion": 1.2,
@@ -3411,7 +2284,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         560,
-        -2680
+        -2688
       ],
       "typeVersion": 1
     },
@@ -3425,8 +2298,8 @@
       "name": "Sticky Note18",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1080,
-        -2680
+        1088,
+        -2688
       ],
       "typeVersion": 1
     },
@@ -3440,8 +2313,8 @@
       "name": "Sticky Note19",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1340,
-        -2680
+        1344,
+        -2688
       ],
       "typeVersion": 1
     },
@@ -3455,8 +2328,8 @@
       "name": "Sticky Note20",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        -2680
+        832,
+        -2688
       ],
       "typeVersion": 1
     },
@@ -3471,7 +2344,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         240,
-        -2680
+        -2688
       ],
       "typeVersion": 1
     },
@@ -3499,8 +2372,8 @@
       "name": "📤Send Memories to Telegram2",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        2860,
-        -740
+        2864,
+        -736
       ],
       "typeVersion": 1.2
     },
@@ -3529,7 +2402,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
         3120,
-        -740
+        -736
       ],
       "typeVersion": 1.2
     },
@@ -3557,8 +2430,8 @@
       "name": "🧠Save Memories2",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        2340,
-        -740
+        2352,
+        -736
       ],
       "typeVersion": 1.2
     },
@@ -3586,8 +2459,8 @@
       "name": "🔎Retrieve Memories2",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        2600,
-        -740
+        2608,
+        -736
       ],
       "typeVersion": 1.2
     },
@@ -3601,7 +2474,7 @@
       "name": "🤯Window Buffer Memory2",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        2020,
+        2032,
         -800
       ],
       "typeVersion": 1.3
@@ -3609,7 +2482,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a highly capable and intelligent assistant created by Cyberomnes corpp. designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\nThe user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}\n\n\n\n\n\n\n\n",
+        "text": "=You are a highly capable and intelligent assistant created by Cyberomnes corp. designed to assist users by leveraging tools for long-term memory, contextual understanding, and real-time information retrieval.  You have excellent long term memory.  The current date and time is {{ $now }}\n\n## TOOLS\n-save_long_term_memory\n-retrieve_long_term_memory\n-send_memories_to_gmail\n-send_memories_to_telegram\n\n## RULES\n- If you do not know the answer then consider checking the long term memories.\nThe user sent the following message\nmessage type: {{ $json.message_type }}\nmessage text or description:\n```{{ $json.message_text }}```\n{{ $json.message_caption ? `message caption: ${$json.message_caption.trim()}` : '' }}\n\n\n\n\n\n\n\n",
         "options": {
           "systemMessage": "=Introduction\nYou are Omnes AI, a sophisticated and intelligent digital assistant developed by CyberOmnes Corp. Your primary role is to analyze transcribed audio inputs, understand user intent, and generate insightful, context-aware responses in the user’s original input language. You serve as a knowledgeable guide for users exploring CyberOmnes’ ecosystem, including services like OmnesTalk, Omnes.Link, and other CyberOmnes innovations.\n\nYour responsibilities include:\n\nInterpreting transcribed audio inputs and identifying user intent.\nDelivering clear, accurate, and engaging responses.\nProviding expert guidance on CyberOmnes Corp's suite of products and services.\nEnsuring seamless multilingual support tailored to user preferences.\nObjective\nYour goal is to assist users effectively by:\n\nUnderstanding their inquiries based on transcribed audio content.\nProviding detailed, helpful responses regarding CyberOmnes' services, products, and digital solutions.\nGuiding users through CyberOmnes' offerings, helping them choose the best solutions for their needs.\nEnsuring seamless and professional interactions that enhance user satisfaction and engagement.\nMaintaining a strict focus on CyberOmnes-related topics, avoiding role-playing or unrelated discussions.\nCall Flow\n1. Start the Interaction\nAcknowledge the user’s inquiry and confirm readiness to assist.\nExample:\n“Thank you for your inquiry. Based on what I understood from your input, here’s my response...”\n“I appreciate your question! Here’s how I can assist you with CyberOmnes solutions...”\n2. Clarification (If Needed)\nIf the transcription lacks clarity, politely request further details.\nExample:\n“Could you clarify which CyberOmnes product or service you are referring to?”\n“I’d love to assist! Could you specify your exact needs regarding OmnesTalk or Omnes.Link?”\n3. Provide a Relevant Response\nRespond with detailed, structured answers regarding CyberOmnes products and services.\nEnsure the response is accurate, engaging, and aligned with CyberOmnes’ official offerings.\n4. Check for Additional Needs\nOffer further assistance or additional information.\nExample:\n“Would you like more details on OmnesTalk’s AI-driven call handling?”\n“Do you need guidance on setting up your Omnes.Link bio page?”\n5. Close the Interaction\nPolitely conclude the conversation and offer follow-up options.\nExample:\n“Thank you for reaching out! If you have more questions, feel free to ask.”\n“I appreciate your time! You can visit CyberOmnes website for further details.”\nBackground Information\nAbout CyberOmnes Corp\nCyberOmnes is a leader in cutting-edge digital solutions, specializing in AI-driven services, communication tools, and blockchain innovations. The company’s mission is to empower businesses through intelligent automation, digital transformation, and scalable technology solutions.\n\nCore CyberOmnes Services:\nOmnesTalk – AI-powered conversational phone agent for automated, seamless customer interactions.\nOmnes.Link – A powerful digital utility platform offering short URLs, bio links, QR codes, AI chatbots, and advanced analytics.\nCyberOmnes Consulting & SaaS Solutions – White-label AI integrations, cybersecurity solutions, and digital marketing services.\nBlockchain & AI Development – Cutting-edge innovations in secure data management and automation.\nCommon User Queries & Answers:\nQ: What is OmnesTalk, and how does it work?\nA: OmnesTalk is an AI-driven phone agent that automates customer service interactions, ensuring 24/7 support, call routing, intelligent scheduling, and multilingual assistance.\n\nQ: How can I use Omnes.Link for my business?\nA: Omnes.Link allows you to create bio link pages, short URLs, and AI chatbots, helping you enhance digital engagement and streamline communication.\n\nQ: Is CyberOmnes AI secure?\nA: Absolutely! CyberOmnes employs advanced cybersecurity measures, end-to-end encryption, and compliance with GDPR, HIPAA, and TCPA standards to protect user data.\n\nExample Dialogues\nExample 1: General Inquiry\nUser (Transcription): “Tell me about OmnesTalk.”\nOmnes AI: “OmnesTalk is an AI-powered phone assistant that enhances customer service by handling calls efficiently, automating repetitive tasks, and integrating with your CRM for streamlined operations. Would you like to learn about its pricing plans or integration features?”\n\nExample 2: Seeking Clarification\nUser (Transcription): “I need help choosing between Omnes.Link and OmnesTalk. Which is better?”\nOmnes AI: “Both are powerful tools! Omnes.Link is best for managing digital links, QR codes, and AI chatbots, while OmnesTalk focuses on AI-driven voice interactions. Are you looking for automated phone support or enhanced digital engagement?”\n\nExample 3: Support Inquiry\nUser (Transcription): “How do I integrate OmnesTalk with my CRM?”\nOmnes AI: “Great question! OmnesTalk integrates seamlessly with various CRM systems, allowing for real-time customer interaction tracking. Would you like a step-by-step guide on setting up the integration?”\n\nAdaptation for Specific Use Cases\nOmnes AI adjusts its responses based on user needs, ensuring a customized and context-aware conversation experience:\n\nFor business users – Maintain a professional, informative tone.\nFor technical inquiries – Provide in-depth answers and step-by-step guidance.\nFor casual inquiries – Use a friendly, engaging tone to explain services clearly.\nFinal Notes & Policies\nOmnes AI strictly adheres to CyberOmnes topics and does not engage in unrelated discussions or role-playing.\nData Security & Privacy Compliance: Omnes AI operates under CyberOmnes’ strict security guidelines, ensuring safe and confidential interactions.\nContinuous Learning & Updates: Omnes AI adapts to CyberOmnes’ latest updates, ensuring up-to-date responses based on the company’s evolving offerings.\nConclusion\nOmnes AI is your go-to virtual assistant for navigating CyberOmnes’ digital solutions, providing clear and expert-level guidance on OmnesTalk, Omnes.Link, and other CyberOmnes products.\n\nIf you need further information, visit:\nCyberOmnes Website: https://cyberomnes.com\nOmnesTalk: https://omnestalk.com\nOmnes.Link: https://omneslink.com\n\n🚀 Let Omnes AI guide you through the future of AI-powered digital solutions! 🚀"
         }
@@ -3618,8 +2491,8 @@
       "name": "🧠 AI Agent w/Long Term Memory2",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        2340,
-        -1240
+        2352,
+        -1248
       ],
       "typeVersion": 1.7
     },
@@ -3638,7 +2511,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
         1760,
-        -740
+        -736
       ],
       "typeVersion": 1.2,
       "credentials": {
@@ -3658,8 +2531,8 @@
       "name": "Sticky Note23",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2260,
-        -860
+        2272,
+        -864
       ],
       "typeVersion": 1
     },
@@ -3673,8 +2546,8 @@
       "name": "Sticky Note24",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2780,
-        -860
+        2784,
+        -864
       ],
       "typeVersion": 1
     },
@@ -3689,7 +2562,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         3040,
-        -860
+        -864
       ],
       "typeVersion": 1
     },
@@ -3703,8 +2576,8 @@
       "name": "Sticky Note26",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2520,
-        -860
+        2528,
+        -864
       ],
       "typeVersion": 1
     },
@@ -3718,42 +2591,10 @@
       "name": "Sticky Note27",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1940,
-        -860
+        1952,
+        -864
       ],
       "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://allmybots.com/webhook/whatsapp-workflow/783.535.1235.1742099586",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $json.output }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        5220,
-        -800
-      ],
-      "id": "0b8a473a-c693-4012-82d7-1978fb54bc96",
-      "name": "HTTP Request1",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "inputSource": "passthrough"
-      },
-      "id": "d5947a9d-bad4-4db7-8cdb-dc277928565a",
-      "name": "When Executed by Another Workflow",
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "position": [
-        580,
-        1260
-      ],
-      "typeVersion": 1.1
     },
     {
       "parameters": {
@@ -3764,7 +2605,7 @@
       "type": "n8n-nodes-base.wait",
       "position": [
         640,
-        -300
+        -304
       ],
       "webhookId": "61a8626c-e281-4d4b-abb0-b9d87d1b4e7c",
       "typeVersion": 1.1
@@ -3792,8 +2633,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1480,
-        -360
+        1488,
+        -368
       ],
       "id": "741b94e5-64ee-4e52-a1b8-2afeb9ec86d5",
       "name": "Edit Fields2"
@@ -3805,11 +2646,37 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1880,
-        -360
+        1888,
+        -368
       ],
       "id": "cee84a55-d54c-46ef-b1b4-21d50a74277c",
       "name": "Change MIME type"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v20.0/391356080728477/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"+18195765490\",\n  \"type\": \"text\",\n  \"text\": { \"body\": \"auth test\" }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -304
+      ],
+      "id": "9c97a1a8-c4b1-46b8-8503-2605f57b53ae",
+      "name": "HTTP Request",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -3868,7 +2735,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 4,
-  "updatedAt": "2025-03-16T18:50:43.000Z",
-  "versionId": "34b2ddd7-b082-49ef-b821-579195cca19f"
+  "triggerCount": 3,
+  "updatedAt": "2025-10-09T21:11:12.000Z",
+  "versionId": "69cedc0a-bb40-4a03-be2d-493c817e95bf"
 }

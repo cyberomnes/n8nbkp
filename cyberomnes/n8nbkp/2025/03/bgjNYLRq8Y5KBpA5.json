@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "WhatsApp Trigger": {
       "main": [
@@ -305,7 +305,7 @@
       "main": [
         [
           {
-            "node": "Send an SMS/MMS/WhatsApp message3",
+            "node": "Send message",
             "type": "main",
             "index": 0
           }
@@ -785,7 +785,9 @@
         "updates": [
           "messages"
         ],
-        "options": {}
+        "options": {
+          "messageStatusUpdates": []
+        }
       },
       "id": "f03e6004-4758-4c97-b3a3-284172a4877a",
       "name": "WhatsApp Trigger",
@@ -1418,8 +1420,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.5,
       "position": [
-        1504,
-        -1904
+        1344,
+        -2032
       ],
       "credentials": {
         "openAiApi": {
@@ -2599,24 +2601,26 @@
     },
     {
       "parameters": {
-        "from": "+551139577770",
-        "to": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
-        "toWhatsapp": true,
-        "message": "={{ $json.audio.url }}",
-        "options": {}
+        "operation": "send",
+        "phoneNumberId": "391356080728477",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "messageType": "image",
+        "mediaPath": "useMedian8n",
+        "additionalFields": {}
       },
-      "type": "n8n-nodes-base.twilio",
+      "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1,
       "position": [
         1744,
-        -1856
+        -1632
       ],
-      "id": "b6b22e4c-04f6-451d-b460-d66baf8a66d9",
-      "name": "Send an SMS/MMS/WhatsApp message3",
+      "id": "9d284588-5c5b-482a-afcf-a2d3899d8652",
+      "name": "Send message",
+      "webhookId": "72bc7d50-8fbd-49b5-b2ed-c4df39816455",
       "credentials": {
-        "twilioApi": {
-          "id": "oqAAXrKq6GfGemRu",
-          "name": "Twilio account"
+        "whatsAppApi": {
+          "id": "ue9K2V02qqZnKzLq",
+          "name": "WhatsApp account"
         }
       }
     }
@@ -2702,6 +2706,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-10-12T23:35:34.000Z",
-  "versionId": "9cf4d441-529c-456c-a9f5-68105bb03a4a"
+  "updatedAt": "2025-10-13T17:35:53.000Z",
+  "versionId": "200d398f-e0d5-47c5-8adc-f793cfe550ec"
 }

@@ -1,0 +1,303 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent – Draft Acte & Projet": {
+      "main": [
+        [
+          {
+            "node": "Split ACTE / PROJET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split ACTE / PROJET": {
+      "main": [
+        [
+          {
+            "node": "Google Docs – Create (Acte)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs – Create (Acte)": {
+      "main": [
+        [
+          {
+            "node": "Google Docs – Update (Acte)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs – Update (Acte)": {
+      "main": [
+        [
+          {
+            "node": "Export DOCX – Acte",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-12T16:17:18.958Z",
+  "id": "W6BINAazPPoSTBBN",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "notary v2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "allowFileUploads": true
+        }
+      },
+      "id": "114c2091-87e3-418f-a8bd-fbe924300022",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1184,
+        144
+      ],
+      "webhookId": "77f191bd-e014-4c29-94de-5291dc22e70a"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+        "options": {}
+      },
+      "id": "3bd901d5-2859-447c-89e9-aaa5516edc73",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a notarial drafting assistant. You will receive the OCR text of an « offre de prêt » (loan offer) in French. Produce TWO full French documents:\n\n===ACTE===\n<full acte text>\n===PROJET===\n<full projet text>\n\nRules: Quebec notarial style; use only figures from the offer; if missing, write “À compléter par le notaire”. Short paragraphs, clear headings. Output exactly the two sections above, no extra text.\n\nOffer text:\n{{ $('Extract from File').item.json.text }}",
+        "options": {
+          "systemMessage": "You draft Quebec notarial documents in French. Numbers must match the source. Do not invent parties. If data is missing, write 'À compléter par le notaire'. No JSON, no markdown—just the requested plain text sections."
+        }
+      },
+      "id": "d35cb671-eed9-4815-b96e-666add6144ec",
+      "name": "AI Agent – Draft Acte & Projet",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -672,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "id": "6e022c21-0c8b-4e18-ba09-3e1840849743",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -672,
+        320
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "c5699a4e-9610-4fac-8cf7-8b651a0c5730",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "acte_text",
+              "value": "={{ (function(){ const s = $json.output || $json.text || ''; const m = s.match(/===ACTE===\\s*([\\s\\S]*?)\\s*===PROJET===\\s*([\\s\\S]*)/i); return m ? m[1].trim() : ''; })() }}"
+            },
+            {
+              "name": "projet_text",
+              "value": "={{ (function(){ const s = $json.output || $json.text || ''; const m = s.match(/===ACTE===\\s*([\\s\\S]*?)\\s*===PROJET===\\s*([\\s\\S]*)/i); return m ? m[2].trim() : ''; })() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c9b28268-e5e5-4d30-a86f-3d5c11313ed3",
+      "name": "Split ACTE / PROJET",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "folderId": "1zHy9X3dXVh0uHR53EvzMaXi980l-lWmb",
+        "title": "=Acte – {{$now}}"
+      },
+      "id": "b46be99f-7eea-4111-9b64-53d67cfbfe49",
+      "name": "Google Docs – Create (Acte)",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        16
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $node[\"Google Docs – Create (Acte)\"].json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('Split ACTE / PROJET').item.json.acte_text }}"
+            }
+          ]
+        }
+      },
+      "id": "fe778532-f514-4cd2-a57d-0c6ffc55f4dc",
+      "name": "Google Docs – Update (Acte)",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        96,
+        16
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{`https://www.googleapis.com/drive/v3/files/${$node[\"Google Docs – Create (Acte)\"].json.id}/export?mimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document`}}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "options": {}
+      },
+      "id": "72910e9c-9c97-4ab6-9a15-9db5a90f3fcb",
+      "name": "Export DOCX – Acte",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        336,
+        16
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "56gnhI57vyuxKzsW",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-12T16:17:18.968Z",
+      "updatedAt": "2025-11-12T16:17:18.968Z",
+      "role": "workflow:owner",
+      "workflowId": "W6BINAazPPoSTBBN",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-12T16:43:52.000Z",
+  "versionId": "c2578ce6-776f-447d-8b34-f65fe896f03e"
+}

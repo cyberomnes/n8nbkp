@@ -1,0 +1,163 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent – Draft Acte & Projet",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-12T12:56:32.496Z",
+  "id": "ENJOogpYTw34R0yx",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Notary v1",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "allowFileUploads": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -320,
+        0
+      ],
+      "id": "d93890f6-4a77-4f91-8a1b-462dd4eb31f7",
+      "name": "When chat message received",
+      "webhookId": "608c9d0a-8dd5-4222-bc77-09b8bc9f59cd"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "0b0a6d24-2b23-4947-a9bb-5594cf3d2b87",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a notarial drafting assistant. You will receive the OCR text of an « offre de prêt » (loan offer) in French. Produce TWO full French documents in .docx format and provide the download link for them:\n\n1) ACTE HYPOTHÉCAIRE (Québec style): include the recognition of debt, interest, term, payments, designation (lot and civic address if present), mortgage rank, principal and additional hypothec, insurance clause, defaults and creditor rights. Keep formal notarial register language.\n\n2) PROJET/CONVENTION DE PRÊT (terms of the loan): reflect the same amounts, rates, fees and penalties.\n\nUse ONLY the facts in the offer text. Output as plain text in this format:\n===ACTE===\\n<full acte text>\\n===PROJET===\\n<full projet text>\n\nOffer text:\n{{ $('Extract from File').item.json.text }}",
+        "options": {
+          "systemMessage": "You draft Quebec notarial documents in French. Numbers must match the source. Do not invent parties. If data is missing, write 'À compléter par le notaire'. No JSON, no markdown—just the requested plain text sections."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b2d1fb1d-f7c8-4a30-bc21-62005740fa0d",
+      "name": "AI Agent – Draft Acte & Projet"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        192
+      ],
+      "id": "30405f7f-d9a8-44a3-881e-7ecd8cec24e5",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        432,
+        192
+      ],
+      "id": "cea7560c-a98a-492e-85d1-d445038aa9cd",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-12T12:56:32.501Z",
+      "updatedAt": "2025-11-12T12:56:32.501Z",
+      "role": "workflow:owner",
+      "workflowId": "ENJOogpYTw34R0yx",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-12T16:14:09.000Z",
+  "versionId": "1aacc769-5451-4bde-9ca8-8cc97763cb96"
+}

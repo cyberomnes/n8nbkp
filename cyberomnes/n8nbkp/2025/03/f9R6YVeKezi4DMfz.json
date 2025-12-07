@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Every 24hrs": {
       "main": [
@@ -1673,8 +1675,8 @@
   "settings": {},
   "shared": [
     {
-      "createdAt": "2025-03-23T17:45:40.184Z",
       "updatedAt": "2025-03-23T17:45:40.184Z",
+      "createdAt": "2025-03-23T17:45:40.184Z",
       "role": "workflow:owner",
       "workflowId": "f9R6YVeKezi4DMfz",
       "projectId": "0wopg4LuKwAYZbx5"

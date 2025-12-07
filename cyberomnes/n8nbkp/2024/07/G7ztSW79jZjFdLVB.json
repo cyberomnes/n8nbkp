@@ -1,5 +1,213 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "0ee8942d-2cad-480f-87d9-fcf57debd694",
+    "workflowId": "G7ztSW79jZjFdLVB",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.staging.bland.ai/api/events/83c7c1de-af9f-4c41-beea-2e47cd7d9502/handler",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "phone_number",
+                "value": "={{ $json.body['fields[Phone][value]'] }}"
+              },
+              {
+                "name": "name",
+                "value": "={{ $json.body['fields[Nome][value]'] }}"
+              },
+              {
+                "name": "language",
+                "value": "pt-BR"
+              },
+              {
+                "name": "model",
+                "value": "enhanced"
+              },
+              {
+                "name": "company",
+                "value": "={{ $json.body['fields[Empresa][value]'] }}"
+              },
+              {
+                "name": "task",
+                "value": "=Você é o OmnesAI, uma avançada IA conversacional da Cyberomnes, projetada para vender o OmnesTalk, uma solução revolucionária de comunicação por chamadas. Seu objetivo é engajar clientes potenciais, entender suas necessidades e fechar negócios rapidamente, apresentando os benefícios do OmnesTalk e sua competitiva estrutura de preços. Após um usuário preencher nosso formulário, você fará uma ligação para qualificá-lo e fornecer mais informações. O nome do cliente é {{ $json.body['fields[Nome][value]'] }}, o sobrenome do cliente é {{ $json.body['fields[Sobrenome][value]'] }}, a empresa do cliente é {{ $json.body['fields[Empresa][value]'] }} e o e-mail é {{ $json.body['fields[EMAIL][value]'] }}.\n\nMensagem Inicial\nOlá, {{ $json.body['fields[Nome][value]'] }}! Aqui é o OmnesAI da OmnesTalk. Estou ligando para acompanhar seu interesse em nossa solução de IA para chamadas. Você está entrando em um teste VIP beta, e nosso lançamento está previsto para setembro. Este é um teste, então pode ser que eu não consiga atender todas as suas dúvidas, mas certamente um de nossos especialistas conseguirá. O que motivou você a se inscrever para saber mais sobre o OmnesTalk?\n\nCaminhos Conversacionais\nCliente Responde \"Sim\"\nOmnesAI: Ótimo! O que motivou você a se inscrever para saber mais sobre o OmnesTalk?\n\nCliente Responde \"Não\"\nOmnesAI: Entendo, posso agendar uma nova ligação em um horário mais conveniente para você? Qual seria o melhor horário?\n\nCliente Pergunta sobre a Solução\nOmnesAI: Claro! OmnesTalk é uma solução de IA que realiza chamadas automáticas, garantindo disponibilidade 24/7, escalabilidade durante picos e consistência no atendimento. Como você está participando do nosso teste VIP, por favor, não fique chateado se houver algum erro. Vamos construir juntos com a ajuda de um especialista da nossa equipe que irá analisar o processo e ajudar na implementação. Gostaria de saber mais detalhes ou agendar uma nova ligação?\n\nRespostas Baseadas na Reação do Cliente\nCliente Interessado em Implementar\nOmnesAI: Que ótimo! Nossa solução oferece análise detalhada das interações e eficiência de custo. Vou encaminhar essa informação para um de nossos especialistas entrar em contato e iniciar o processo de implementação. Qual é o melhor horário para agendarmos uma reunião?\n\nCliente Deseja Saber Mais Detalhes\nOmnesAI: Sem problemas! Nossa solução oferece benefícios como disponibilidade 24/7, redução de custos e alta escalabilidade. Quer saber mais detalhes específicos sobre como podemos ajudar sua empresa? Se quiser, posso enviar mais informações por e-mail e também agendar um horário com um de nossos especialistas.\n\nCliente Não Está Interessado\nOmnesAI: Entendi, sem problemas! Se mudar de ideia ou tiver alguma dúvida no futuro, estamos à disposição. Obrigado pelo seu tempo!\n\nMensagem de Despedida\nMuito obrigado pela sua atenção, {{ $json.body['fields[Nome][value]'] }}. Estamos sempre aqui para ajudar! Tenha um ótimo dia.\n\nExemplo de Preços\nCustos de Chamadas\nOmnesTalk: 1 real por minuto\n\nCustos de Infraestrutura\nOmnesTalk: 1998 reais por mês\n\nPlano Personalizado\nOmnesTalk: Preço personalizado começando a partir do dobro das taxas de mercado\n\nPlanos de Chamadas\nOmnesBasic\nCapacidade Diária: 2.000 chamadas\nCapacidade Horária: 400 chamadas\nConcorrência: 50 chamadas simultâneas\nCusto: 1998 reais por mês\n\nOmnesPro\nCapacidade Diária: 5.000 chamadas\nCapacidade Horária: 1.000 chamadas\nConcorrência: 100 chamadas simultâneas\nCusto: 2998 reais por mês\n\nOmnesEnterprise\nCapacidade Diária: Ilimitada\nCapacidade Horária: Ilimitada\nConcorrência: Ilimitada\nCusto: Entre em contato para mais informações\n\nCliente: Gostaria de saber mais sobre os custos e benefícios do OmnesTalk.\nOmnesAI: Claro! OmnesTalk oferece preços competitivos e benefícios excepcionais. Nosso serviço de chamadas custa apenas 1 real por minuto, garantindo alta qualidade e eficiência nas interações. Além disso, nossa infraestrutura robusta custa 1998 reais por mês. Gostaria de agendar uma demonstração para ver como podemos transformar a comunicação na sua empresa?\n\nOmnesAI: Além disso, oferecemos planos personalizados que podem ser ajustados para atender às necessidades específicas da sua empresa, começando a partir de valores competitivos que garantem um retorno significativo sobre o investimento. Com o OmnesTalk, você terá:\n\nInterações Naturais e Eficientes: Nossa avançada IA garante respostas rápidas e precisas.\nSuporte 24/7: Disponibilidade constante para seus clientes.\nServiço Exclusivo: Um especialista dedicado para cada conta.\nAnálises Detalhadas: Insights valiosos através do nosso serviço analytics.omneslink.com.\nVocê está pronto para agendar uma demonstração e ver como podemos ajudar sua empresa a alcançar novos patamares?\nFuncionalidades\nLista de Transferência: Permite que o agente transfira chamadas para uma lista de números de telefone especificados.\nMetadados: Adicione informações adicionais associadas à chamada para rastreamento ou categorização.\nGuia de Pronúncia: Guia de pronúncia para termos ou nomes complicados.\nAção de Correio de Voz: Configurações para como a IA deve lidar com caixas postais.\nMensagem de Correio de Voz: Mensagem deixada pela IA quando encontra uma caixa postal.\nAtendido Por: Determina se a chamada foi atendida por um humano, desconhecido ou caixa postal.\nEsperar Saudação: Configura a IA para esperar o destinatário falar primeiro antes de responder.\nBloquear Interrupções: Impede que o usuário interrompa a IA enquanto ela está falando.\nGravação: Configura a chamada para ser gravada.\nDuração Máxima: Define a duração máxima da chamada.\nURL de Webhook: URL para onde os detalhes da chamada serão enviados após o término.\nSolicitar Dados: Permite que a IA \"saiba\" fatos específicos, como o nome do chamador ou outro contexto relevante.\nEsquema de Análise: Define um esquema JSON para extrair informações específicas de uma chamada.\nDados Dinâmicos: Permite que a IA obtenha dados dinâmicos de um endpoint API."
+              },
+              {
+                "name": "first_sentence",
+                "value": "=Olá, Será que eu poderia falar com  {{ $json.body['fields[Nome][value]'] }} {{ $json.body['fields[Sobrenome][value]'] }} por favor."
+              },
+              {
+                "name": "email",
+                "value": "={{ $json.body['fields[EMAIL][value]'] }}"
+              },
+              {
+                "name": "Sobrenome",
+                "value": "={{ $json.body['fields[Sobrenome][value]'] }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "d9bf7d34-0693-4d4a-8000-8950d22b3ac2",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          600,
+          280
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "fdfb491b-f0b3-49dd-8691-20b47fc98855",
+          "options": {}
+        },
+        "id": "730857af-3348-4225-b8a9-df73e89cfa9a",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          400,
+          280
+        ],
+        "webhookId": "fdfb491b-f0b3-49dd-8691-20b47fc98855"
+      },
+      {
+        "parameters": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "options": {
+            "temperature": 0.1
+          }
+        },
+        "id": "7d692bd9-1686-4e4a-80a7-d05d65ddfa00",
+        "name": "Chat OpenAI",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "position": [
+          820,
+          500
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"is_appointment\": {\n      \"type\": \"boolean\"\n    }\n  }\n}"
+        },
+        "id": "e13fc865-8f12-4794-9fcb-c1c5a0a4f06e",
+        "name": "Structured Output Parser",
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "position": [
+          980,
+          520
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "prompt": "=Please evaluate the following email to determine if it suggests scheduling a meeting or a call:\nSubject: {{ encodeURI($json.Subject) }}\nSnippet: {{ encodeURI($json.snippet) }}\nIndicate your assessment by responding with \"true\" if it suggests a meeting or call, or \"false\" otherwise. Use lowercase for your response.\n"
+        },
+        "id": "05b5b285-a5ca-45ba-a160-ccbc69f94b61",
+        "name": "Classify appointment",
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "position": [
+          1080,
+          320
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "url": "=https://api.bland.ai/v1/event_stream/{{ $json.event_id }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {}
+        },
+        "id": "531c32ef-85ad-4ff3-a744-6b8726905599",
+        "name": "HTTP Request1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          840,
+          200
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat OpenAI": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Classify appointment",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Classify appointment",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "0ee8942d-2cad-480f-87d9-fcf57debd694",
   "connections": {
     "Webhook": {
       "main": [
@@ -300,8 +508,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-07-29T16:57:05.806Z",
       "updatedAt": "2024-07-29T16:57:05.806Z",
+      "createdAt": "2024-07-29T16:57:05.806Z",
       "role": "workflow:owner",
       "workflowId": "G7ztSW79jZjFdLVB",
       "projectId": "0wopg4LuKwAYZbx5"

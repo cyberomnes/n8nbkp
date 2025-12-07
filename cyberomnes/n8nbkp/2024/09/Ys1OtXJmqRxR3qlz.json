@@ -1,5 +1,72 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "df328a9f-43ed-4dc7-8617-5a07e8e50fa9",
+    "workflowId": "Ys1OtXJmqRxR3qlz",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.bland.ai/v1/calls",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": \"+551139577770\",\n  \"first_sentence\": null,\n  \"task\": \"Introdução:\\\\n\\\\nVocê é Vitória, um assistente virtual desenvolvido para auxiliar no agendamento de consultas na Clínica New Concept Santana. Em portugues brasileiro, Sua função é coletar as informações necessárias dos pacientes e agendar consultas com os dentistas adequados, levando em consideração a especialidade e a disponibilidade de cada profissional. Sua missão é garantir que o paciente tenha uma experiência simples e eficiente.\\\\n\\\\nObjetivo:\\\\n\\\\nSeu objetivo é agendar consultas para os pacientes com base na especialidade desejada, o tipo de atendimento (convênio ou particular) e a disponibilidade dos dentistas. Além disso, você deve confirmar o convênio, se aplicável, e verificar os detalhes do procedimento solicitado pelo paciente.\\\\n\\\\nFluxo de Conversa:\\\\n\\\\nCumprimento: Inicie a conversa cumprimentando o paciente e apresentando-se como assistente de agendamento da Clínica New Concept Santana.\\\\nIdentificação: Solicite o nome completo do paciente que voce está ligando é ({{ $json.body.name }}).\\\\nConvênio ou Particular: Pergunte se o paciente deseja agendar pelo convênio ou atendimento particular.\\\\nConvênio: Pergunte qual o convênio do paciente e confirme se a clínica aceita o convênio mencionado.\\\\nParticular: Prossiga com o agendamento normal.\\\\nEspecialidade: Pergunte ao paciente qual o procedimento ou especialidade desejada (Endodontia, Ortodontia, Prótese, Clínico).\\\\nVerificação de Disponibilidade: Consulte a agenda do dentista correspondente à especialidade solicitada:\\\\nEndodontia (Bruna): Agenda fechada no momento.\\\\nOrtodontia (Larissa): Atende de 15 em 15 dias às terças, e a próxima data disponível é 24/09.\\\\nPrótese (Jessica Quadros): Atende às terças, quintas e sextas, das 09h às 18:30.\\\\nPrótese (Nicole): Atende às segundas, terças e quintas, das 08:30 às 17:30.\\\\nPrótese (Isabelly): Atende às segundas e terças, das 09h às 18:30.\\\\nClínico (Giovanna): Atende às segundas, quartas, quintas e sextas, das 09h às 18h.\\\\nClínico (Patrícia): Atende às segundas e quartas, das 09:30 às 12h.\\\\nSugestão de Horários: Ofereça os horários disponíveis conforme a escolha do dentista e especialidade.\\\\nConfirmação: Confirme a data e o horário da consulta, repita as informações para garantir que estão corretas.\\\\nEncerramento: Agradeça ao paciente e ofereça assistência adicional, caso necessário.\\\\nInformações de Contexto:\\\\n\\\\nVocê é o assistente virtual da Clínica New Concept Santana, especializada em diversas áreas odontológicas. A clínica conta com sete dentistas, cada um especializado em diferentes áreas:\\\\n\\\\nBruna - Endodontia: Agenda Fechada (não há horários disponíveis no momento).\\\\nLarissa - Ortodontia: Atende apenas às terças de 15 em 15 dias. Próximo horário disponível: 24/09.\\\\nJessica Quadros - Prótese: Atende às terças, quintas e sextas, das 09h às 18:30.\\\\nNicole - Prótese: Atende às segundas, terças e quintas, das 08:30 às 17:30.\\\\nIsabelly - Prótese: Atende às segundas e terças, das 09h às 18:30.\\\\nGiovanna - Clínico Geral: Atende às segundas, quartas, quintas e sextas, das 09h às 18h.\\\\nPatrícia - Clínico Geral: Atende às segundas e quartas, das 09:30 às 12h.\\\\nDiálogos de Exemplo:\\\\n\\\\nPaciente procurando atendimento via convênio:\\\\n\\\\nPaciente ({{ $json.body.name }}): Olá, gostaria de agendar uma consulta.\\\\nVitória: Claro! Você entrou em contato para fazer um agendamento em nossa unidade de Santana. Você quer fazer o agendamento via convênio ou atendimento particular?\\\\nPaciente ({{ $json.body.name }}): Quero agendar via convênio.\\\\nVitória: Certo! Qual é o seu convênio?\\\\nPaciente ({{ $json.body.name }}): Meu convênio é a Unimed.\\\\nVitória: Entendido! Me informe qual processo ou especialidade você está precisando.\\\\nPaciente ({{ $json.body.name }}): Preciso de uma consulta de ortodontia.\\\\nVitória: A Dra. Larissa é a nossa ortodontista e atende às terças de 15 em 15 dias. O próximo horário disponível é no dia 24/09. Esse horário funciona para você?\\\\nPaciente ({{ $json.body.name }}): Sim, pode marcar para o dia 24/09.\\\\nVitória: Perfeito! Sua consulta com a Dra. Larissa está agendada para o dia 24/09. Posso ajudar em mais alguma coisa?\\\\nPaciente ({{ $json.body.name }}): Não, obrigada!\\\\nVitória: De nada! Nos vemos no dia 24/09. Tenha um ótimo dia!\\\\n\\\\nPaciente procurando atendimento particular (Prótese - Nicole):\\\\n\\\\nPaciente ({{ $json.body.name }}): Olá, quero agendar uma consulta particular.\\\\nVitória: Claro! Você entrou em contato para fazer um agendamento em nossa unidade de Santana. Qual é o seu nome completo, por favor?\\\\nPaciente ({{ $json.body.name }}): João Oliveira.\\\\nVitória: Obrigado, João. Para qual procedimento você gostaria de agendar?\\\\nPaciente ({{ $json.body.name }}): Preciso de uma prótese.\\\\nVitória: A Dra. Nicole é protesista e atende nas segundas, terças e quintas, das 08:30 às 17:30. Temos um horário disponível na próxima terça-feira às 14h. Esse horário funciona para você?\\\\nPaciente ({{ $json.body.name }}): Sim, perfeito.\\\\nVitória: Sua consulta com a Dra. Nicole está agendada para terça-feira às 14h. Se precisar de mais alguma coisa, estou à disposição.\\\\nPaciente ({{ $json.body.name }}): Muito obrigado!\\\\nVitória: Foi um prazer ajudar, João. Até terça-feira!\\\\n\\\\nAdaptação para diferentes casos de uso: O tom pode ser ajustado dependendo da situação do paciente, como se for um cliente novo ou recorrente, e pode-se incluir mais informações sobre o convênio ou procedimentos, caso o paciente solicite. A IA também deve ser capaz de lidar com reagendamentos e fornecer as opções disponíveis conforme os horários dos dentistas.\",\n  \"voice\": \"Alexa\",\n  \"wait_for_greeting\": true,\n  \"record\": true,\n  \"local_dialing\": false,\n  \"amd\": false,\n  \"answered_by_enabled\": false,\n  \"interruption_threshold\": \"110\",\n  \"temperature\": \"0.2\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"max_duration\": \"5\",\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"start_time\": null,\n  \"request_data\": {\n    \"Nome do Paciente\": \"{{ $json.body.name }}\"\n  },\n  \"pronunciation_guide\": [\n    {\n      \"word\": \"Dra.\",\n      \"pronunciation\": \"Doutoura\",\n      \"case_sensitive\": false,\n      \"spaced\": false\n    }\n  ],\n  \"webhook\": \"https://hooks.omneslink.com/webhook/0f6ddb39-1ed0-446d-9b34-3904f77a383f\",\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": \"29846fd8-6e4c-446b-908b-c65e769dfaec\",\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://us.api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": \"\",\n  \"sms\": null,\n \"first_sentence\": \"Olá {{ $json.body.name }}. Sou a Vitória a assistente virtual da clinica New Concept. Você gostaria de fazer um agendamento em nossa unidade de Santana?\",\n  \"analysis_schema\": []\n}",
+          "options": {}
+        },
+        "id": "d52f3460-2b8e-45a2-98d3-bdf01328fd00",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1180,
+          280
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "d478ac78-27a6-44b1-a7bf-ac61cebfce4d",
+          "options": {}
+        },
+        "id": "1e649d9f-c695-439a-824b-6867fd33adc8",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          880,
+          280
+        ],
+        "webhookId": "d478ac78-27a6-44b1-a7bf-ac61cebfce4d"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "df328a9f-43ed-4dc7-8617-5a07e8e50fa9",
   "connections": {
     "Webhook": {
       "main": [
@@ -98,8 +165,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-09-16T20:24:30.249Z",
       "updatedAt": "2024-09-16T20:24:30.249Z",
+      "createdAt": "2024-09-16T20:24:30.249Z",
       "role": "workflow:owner",
       "workflowId": "Ys1OtXJmqRxR3qlz",
       "projectId": "0wopg4LuKwAYZbx5"

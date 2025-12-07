@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Candidate Lists": {
       "main": [
@@ -330,8 +332,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-01-09T01:09:52.200Z",
       "updatedAt": "2025-01-09T01:09:52.200Z",
+      "createdAt": "2025-01-09T01:09:52.200Z",
       "role": "workflow:owner",
       "workflowId": "GMdFMwnJEIgSSh0S",
       "projectId": "0wopg4LuKwAYZbx5"

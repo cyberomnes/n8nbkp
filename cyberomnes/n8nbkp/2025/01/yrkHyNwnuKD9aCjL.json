@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Map": {
       "main": [
@@ -268,8 +270,8 @@
   "settings": {},
   "shared": [
     {
-      "createdAt": "2025-01-09T16:12:39.154Z",
       "updatedAt": "2025-01-09T16:12:39.154Z",
+      "createdAt": "2025-01-09T16:12:39.154Z",
       "role": "workflow:owner",
       "workflowId": "yrkHyNwnuKD9aCjL",
       "projectId": "0wopg4LuKwAYZbx5"

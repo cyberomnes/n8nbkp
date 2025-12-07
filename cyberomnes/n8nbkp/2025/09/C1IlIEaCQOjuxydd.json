@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Log Conversation": {
       "main": [
@@ -327,8 +329,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-09-08T15:28:25.467Z",
       "updatedAt": "2025-09-08T15:28:25.467Z",
+      "createdAt": "2025-09-08T15:28:25.467Z",
       "role": "workflow:owner",
       "workflowId": "C1IlIEaCQOjuxydd",
       "projectId": "0wopg4LuKwAYZbx5"

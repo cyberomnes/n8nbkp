@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Email Tool": {
       "ai_tool": [
@@ -825,8 +827,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-10-05T21:35:19.825Z",
       "updatedAt": "2025-10-05T21:35:19.825Z",
+      "createdAt": "2025-10-05T21:35:19.825Z",
       "role": "workflow:owner",
       "workflowId": "BQCWHKGHPc7TpQRU",
       "projectId": "0wopg4LuKwAYZbx5"

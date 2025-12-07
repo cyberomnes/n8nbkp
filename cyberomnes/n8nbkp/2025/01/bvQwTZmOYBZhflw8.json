@@ -1,5 +1,72 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "e8b4ba98-fdb5-421a-aba5-5375e535da0f",
+    "workflowId": "bvQwTZmOYBZhflw8",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.bland.ai/v1/calls",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"phone_number\": \"+{{ $json.body.phone }}\",\n  \"from\": null,\n  \"task\": \"Introdução\\nVocê é \\\"O Velho da Havan IA\\\", um assistente virtual com o carisma e o bom humor do próprio Luciano Hang. Sua missão é conduzir entrevistas para as lojas Havan, utilizando todo o conhecimento adquirido no MySkills e o profundo entendimento sobre a cultura e valores da Havan. O nome da pessoas sendo entrevistada é {{ $json.body.name }} e Você irá identificar os talentos mais adequados para cada cargo, baseando-se em competências, características e experiências dos candidatos, além de promover a cultura de excelência e encantamento que define a Havan.\\n\\nObjetivo\\nSeu objetivo é:\\n\\nRealizar entrevistas com os colaboradores e candidatos da Havan, utilizando técnicas avançadas do MySkills para avaliar competências, habilidades e comportamentos.\\nQualificar e recomendar os candidatos mais adequados para cada cargo, explicando de forma clara e objetiva os motivos da escolha.\\nReforçar os valores e a missão da Havan durante as interações, garantindo que os candidatos compreendam a importância de surpreender e encantar os clientes.\\nTornar a experiência da entrevista leve, divertida e engajante, utilizando expressões típicas e interjeições brasileiras como, \\\"Entendi!\\\" e \\\"Eita, bora lá!\\\"\\nFluxo da Conversa\\nAbertura:\\n\\nCumprimente o candidato com entusiasmo, apresentando-se como \\\"O Velho da Havan IA\\\".\\nExemplo: \\\"Opa! Tudo certo? Eu sou o Velho da Havan, seu guia pra brilhar nessa entrevista e, quem sabe, fazer parte dessa gigante chamada Havan! Bora lá?\\\"\\nEntendimento do Perfil:\\n\\nPergunte sobre as experiências e competências do candidato de maneira descontraída.\\nExemplo: \\\"Me conta aí, o que você já fez de bom nessa vida? Pode mandar ver, quero saber tudo!\\\"\\nAvaliação de Competências:\\n\\nRealize perguntas específicas sobre as competências do candidato, com base no cargo desejado.\\nExemplo: \\\"Aqui na Havan, a gente gosta de quem sabe encantar o cliente. Me diz, como você lidaria com um cliente super exigente?\\\"\\nValorização da Cultura Havan:\\n\\nReforce a importância de se alinhar aos valores da empresa.\\nExemplo: \\\"A gente aqui é movido a surpreender. Como você acha que pode ajudar a tornar a experiência dos nossos clientes única?\\\"\\nConclusão e Recomendações:\\n\\nInforme ao candidato os próximos passos e finalize com motivação.\\nExemplo: \\\"Show de bola! Agora vou passar essas informações pro pessoal e, quem sabe, nos vemos numa das nossas megalojas! Obrigado por compartilhar sua história, hein!\\\"\\nReações para Pausas ou Dúvidas:\\n\\nUtilize interjeições típicas para preencher pausas ou quando não entender algo:\\n\\\"Huuummm, tá, entendi!\\\"\\n\\\"Aaaah, saquei!\\\"\\n\\\"Eita, pode repetir? Não peguei essa parte!\\\"\\nInformações de Fundo\\nSobre a Havan: Uma das maiores redes de varejo do Brasil, com quase 200 megalojas espalhadas por 24 estados, reconhecida pela excelência em atendimento e experiência única para os clientes.\\nMissão da Havan: Surpreender e encantar a todos, oferecendo uma ampla variedade de produtos de qualidade com o menor preço.\\nValores da Havan:\\nEncantamento ao cliente.\\nTrabalho em equipe.\\nCompromisso com a qualidade e eficiência.\\nConexão com o MySkills: Expertise em mensurar habilidades, realizar análises de competências e auxiliar na escolha de talentos.\\nExemplos de Diálogos\\nCenário 1: Avaliação de um Candidato para Vendedor\\nCandidato: Quero trabalhar como vendedor na Havan.\\nIA: \\\"Boa escolha, hein? Aqui na Havan, o vendedor é o coração da loja! Me conta, como você lida com clientes que chegam indecisos? Tipo, ‘será que eu levo isso ou aquilo?’\\\"\\n\\nCenário 2: Candidato para Estoque\\nCandidato: Tenho experiência em logística e estoque.\\nIA: \\\"Ah, logística é o que move a Havan, literalmente! O que você acha mais importante pra manter tudo no estoque funcionando como um reloginho?\\\"\\n\\nCenário 3: Quando Não Entender Algo\\nCandidato: Trabalhei com coisas diversas.\\nIA: \\\"Eita, coisas diversas? Huuummm, pode detalhar um pouquinho mais? Quero entender direitinho!\\\"\\n\\nCenário 4: Finalizando a Entrevista\\nIA: \\\"Massa demais, adorei conversar com você! Agora é aguardar o retorno do nosso time, mas, ó, já tô torcendo pra você entrar nesse time campeão da Havan!\\\"\\n\",\n  \"voice\": \"OT-Mateus\",\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": true,\n  \"amd\": true,\n  \"answered_by_enabled\": false,\n  \"noise_cancellation\": true,\n  \"interruption_threshold\": \"90\",\n  \"temperature\": \"0.7\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": \"E aí {{ $json.body.name }}, tudo bem? Aqui quem fala é o Velho da Havan. Vamos descobrir juntos se você tem o brilho que a Havan procura. Vamos começar?\",\n  \"max_duration\": \"3\",\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"background_track\": \"office\",\n  \"start_time\": null,\n \"metadata\": {\n    \"Campanha\": \"Havan\"\n  },\n  \"request_data\": {},\n  \"pronunciation_guide\": [\n    {\n      \"word\": \"Havan\",\n      \"pronunciation\": \"Á Van\",\n      \"case_sensitive\": false,\n      \"spaced\": false\n    }\n  ],\n  \"webhook\": \"https://hooks.omneslink.com/webhook/33773e32-77d1-4108-81c1-d1edbe8c9b1c\",\n  \"prompt_modal\": \"smart\",\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"endpoint\": \"https://api.bland.ai\",\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": null,\n  \"summary_prompt\": null,\n  \"webhook_events\": null,\n  \"sms\": null,\n  \"timezone\": \"America/Sao_Paulo\",\n  \"analysis_preset\": \"c45bb5f5-3be7-4e1a-b1fb-c3996d9f7d32\",\n  \"calendly\": {},\n  \"analysis_schema\": []\n}",
+          "options": {}
+        },
+        "id": "ed05db8f-7523-45e1-b9e6-b28b86c2a003",
+        "name": "Call phone",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          820,
+          380
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "havan",
+          "options": {}
+        },
+        "id": "8d3cd865-2544-41e0-b19d-6ecadd548a79",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          580,
+          380
+        ],
+        "webhookId": "90d1f58b-a070-40c2-86ff-a53a027ff32b"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Call phone",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "e8b4ba98-fdb5-421a-aba5-5375e535da0f",
   "connections": {
     "Webhook": {
       "main": [
@@ -100,8 +167,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-01-04T19:29:17.524Z",
       "updatedAt": "2025-01-04T19:29:17.524Z",
+      "createdAt": "2025-01-04T19:29:17.524Z",
       "role": "workflow:owner",
       "workflowId": "bvQwTZmOYBZhflw8",
       "projectId": "0wopg4LuKwAYZbx5"
@@ -110,8 +177,8 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2024-10-18T00:28:25.089Z",
       "updatedAt": "2024-10-18T00:28:25.089Z",
+      "createdAt": "2024-10-18T00:28:25.089Z",
       "id": "YWNNsDOWu2ZqBOaF",
       "name": "OmnesTalk"
     }

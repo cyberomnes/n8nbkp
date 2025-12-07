@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "AI Agent": {
       "main": [
@@ -290,8 +292,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-11-12T12:39:20.282Z",
       "updatedAt": "2025-11-12T12:39:20.282Z",
+      "createdAt": "2025-11-12T12:39:20.282Z",
       "role": "workflow:owner",
       "workflowId": "UjMSyW81xPng8dyz",
       "projectId": "0wopg4LuKwAYZbx5"

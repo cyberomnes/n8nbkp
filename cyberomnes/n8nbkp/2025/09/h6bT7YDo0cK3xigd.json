@@ -1,5 +1,222 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "aa9f40ab-8325-402e-ba41-d19836b19969",
+    "workflowId": "h6bT7YDo0cK3xigd",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "twilio/wa-voice",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "id": "2f7c5812-1754-4ac7-9ef4-37c84cdb0ebc",
+        "name": "Webhook GET (WA Voice)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          400,
+          304
+        ],
+        "webhookId": "webhook-test"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "twilio/wa-voice",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "id": "502311f2-b066-42a8-90ae-ca0461857455",
+        "name": "Webhook POST (WA Voice)",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          400,
+          512
+        ],
+        "webhookId": "webhook-test"
+      },
+      {
+        "parameters": {
+          "functionCode": "function getMode() {\n  // Look for ?mode=... in multiple places (GET/POST)\n  const q = ($json.query || {});\n  if (q.mode) return String(q.mode).toLowerCase();\n  if ($query && $query.mode) return String($query.mode).toLowerCase();\n  if ($json.mode) return String($json.mode).toLowerCase();\n  return '';\n}\nconst mode = getMode();\nconst blandWebhook = 'https://us.api.bland.ai/incoming?record=true&encrypted_key=29846fd8-6e4c-446b-908b-c65e769dfaec&user_id=e738aa54-38c2-4d53-8ef2-5808755d4db1&placement_group=blandshared&region=dc5';\n// Twilio sends x-www-form-urlencoded body; n8n parses to $json.body\nconst form = $json.body || {};\nreturn [{ mode, blandWebhook, form }];"
+        },
+        "id": "b354db2a-df4e-43bf-80b0-a28664478e07",
+        "name": "Decide + Prep Form",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          656,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "boolean": [
+              {
+                "value1": "={{$json.mode === 'debug'}}"
+              }
+            ]
+          }
+        },
+        "id": "63399ffe-20f9-45ee-bd26-ba3747304b3e",
+        "name": "IF Debug?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          880,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "functionCode": "const twiml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n<Response>\\n  <Say>Debug OK. Twilio reached n eight n.</Say>\\n</Response>`;\nreturn [{ twiml }];"
+        },
+        "id": "02bd423b-c69f-4d88-894b-5fca9ab97ac6",
+        "name": "Build TwiML (Debug)",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "requestMethod": "POST",
+          "url": "={{$json.blandWebhook}}",
+          "options": {}
+        },
+        "id": "e3129947-a733-4984-9e7b-50c49aee36f5",
+        "name": "HTTP → Bland (Proxy, POST)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 2,
+        "position": [
+          1088,
+          512
+        ]
+      },
+      {
+        "parameters": {
+          "functionCode": "const twiml = $json.data || '<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><Say>Upstream empty.</Say></Response>';\nreturn [{ twiml }];"
+        },
+        "id": "a37bc41c-d0bb-45e6-b1f8-c450c189e23d",
+        "name": "Wrap Bland TwiML",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          1312,
+          512
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "6ff95bee-04e4-499b-b42a-0f905ed210b5",
+        "name": "HTTP Response (TwiML)",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          1536,
+          400
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook GET (WA Voice)": {
+        "main": [
+          [
+            {
+              "node": "Decide + Prep Form",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook POST (WA Voice)": {
+        "main": [
+          [
+            {
+              "node": "Decide + Prep Form",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Decide + Prep Form": {
+        "main": [
+          [
+            {
+              "node": "IF Debug?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF Debug?": {
+        "main": [
+          [
+            {
+              "node": "Build TwiML (Debug)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "HTTP → Bland (Proxy, POST)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build TwiML (Debug)": {
+        "main": [
+          [
+            {
+              "node": "HTTP Response (TwiML)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP → Bland (Proxy, POST)": {
+        "main": [
+          [
+            {
+              "node": "Wrap Bland TwiML",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wrap Bland TwiML": {
+        "main": [
+          [
+            {
+              "node": "HTTP Response (TwiML)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "aa9f40ab-8325-402e-ba41-d19836b19969",
   "connections": {
     "Webhook GET (WA Voice)": {
       "main": [
@@ -224,8 +441,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-09-09T12:28:21.296Z",
       "updatedAt": "2025-09-09T12:28:21.296Z",
+      "createdAt": "2025-09-09T12:28:21.296Z",
       "role": "workflow:owner",
       "workflowId": "h6bT7YDo0cK3xigd",
       "projectId": "0wopg4LuKwAYZbx5"

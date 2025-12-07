@@ -1,5 +1,171 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "904309a6-25c6-4ef6-8aaa-c9631ea22096",
+    "workflowId": "FPiaEkku89pWKPH1",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "098c6790-a9fa-4885-a1a9-7e89b17028b9",
+          "options": {}
+        },
+        "id": "8de5fdde-1eb4-4a76-8a62-d225eed5b625",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          420,
+          140
+        ],
+        "webhookId": "098c6790-a9fa-4885-a1a9-7e89b17028b9"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://allmybots.com/webhook/whatsapp-workflow/783.535.91173.1721768504",
+          "sendBody": true,
+          "contentType": "raw",
+          "body": "={{ $json.body }}",
+          "options": {}
+        },
+        "id": "40d97b8b-0ffe-41f9-8172-bb0b4c12fe50",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          960,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://omnesmail.com/api/index.php/lists/gz56905j6v6e0/subscribers",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "FNAME",
+                "value": "={{ $json.FNAME }}"
+              },
+              {
+                "name": "=EMAIL",
+                "value": "={{ $json.EMAIL }}"
+              },
+              {
+                "name": "EMPRESA",
+                "value": "={{ $json.EMPRESA }}"
+              },
+              {
+                "name": "PHONEWHATSAPP",
+                "value": "={{ $json.PHONEWHATSAPP }}"
+              }
+            ]
+          },
+          "options": {
+            "response": {
+              "response": {}
+            }
+          }
+        },
+        "id": "ba6db124-0326-4503-a094-8e494eb769b1",
+        "name": "HTTP Request1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          880,
+          300
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "dpSyEMVvGq5Bb1ta",
+            "name": "Omnesmail"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "f392bce1-398c-4575-bd24-3051e84f3fb6",
+                "name": "FNAME",
+                "value": "={{ $json.body['fields[field_9a055ae][value]'] }}",
+                "type": "string"
+              },
+              {
+                "id": "e2901daf-2910-4bd1-8c02-a1b35567d018",
+                "name": "EMAIL",
+                "value": "={{ $json.body['fields[EMAIL][value]'] }}",
+                "type": "string"
+              },
+              {
+                "id": "b9a25115-8e7f-45e2-b75d-d92eea2b1860",
+                "name": "EMPRESA",
+                "value": "={{ $json.body['fields[Empresa][value]'] }}",
+                "type": "string"
+              },
+              {
+                "id": "4928fa64-d31d-49c9-993a-68587eb35760",
+                "name": "PHONEWHATSAPP",
+                "value": "={{ $json.body['fields[PHONEWHATSAPP][value]'] }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "300034b6-674a-4173-a477-556939ba22dc",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.3,
+        "position": [
+          620,
+          340
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "904309a6-25c6-4ef6-8aaa-c9631ea22096",
   "connections": {
     "Webhook": {
       "main": [
@@ -233,8 +399,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-07-23T00:10:24.732Z",
       "updatedAt": "2024-07-23T00:10:24.732Z",
+      "createdAt": "2024-07-23T00:10:24.732Z",
       "role": "workflow:owner",
       "workflowId": "FPiaEkku89pWKPH1",
       "projectId": "0wopg4LuKwAYZbx5"

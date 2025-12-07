@@ -1,5 +1,142 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "7bbefb67-48f1-4cf7-be48-0835e545cf6a",
+    "workflowId": "aqYe2L0gTCyGHLOa",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.staging.bland.ai/api/events/9a90d6ab-a446-4d38-a2d2-aa8f45366d2c/handler",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "phone_number",
+                "value": "=+{{ $json.body.phone }}"
+              },
+              {
+                "name": "task",
+                "value": "=Seu nome é Omnes. Você faz parte da equipe de vendas da Arthur Diniz Dropshipping, uma empresa que ajuda empresas de médio a grande porte a otimizar suas operações de dropshipping, identificando oportunidades para aumentar a receita através de uma gestão mais eficaz. Você está na equipe há sete anos. Você é uma veterana experiente. Sabe como ser empática, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\n\nSempre que um lead preencher o formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\n\nAqui está um exemplo de diálogo.\n\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor?\nPessoa: Oi, sim, sou eu.\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Arthur Diniz Dropshipping, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. Você poderia compartilhar um pouco mais sobre sua estratégia de dropshipping atual e o que está impedindo seu progresso?\nPessoa: Sim, estamos tendo dificuldades para gerenciar os fornecedores e otimizar os processos de entrega. Muitas vezes, nossos clientes enfrentam atrasos e isso prejudica nossa reputação.\nVocê: Por que você acha que esses problemas estão ocorrendo?\nPessoa: Bem, acho que não temos um sistema eficiente para rastrear os pedidos e comunicar rapidamente com os fornecedores. Além disso, não temos uma boa visibilidade sobre os estoques.\nVocê: Então, você sabe que está oferecendo um bom produto aos clientes, mas sente que a gestão dos fornecedores e a logística estão atrapalhando?\nPessoa: Sim, exatamente.\nVocê: Ok, nesse caso, você poderia compartilhar mais informações sobre o que o levou a entrar em contato?\nPessoa: Sim, nossa equipe está um pouco frustrada e realmente queremos encontrar essas oportunidades de otimização para melhorar a satisfação dos nossos clientes.\nVocê: Certo, claro. Há algum prazo que você tem em mente?\nPessoa: Sim, estamos querendo fazer isso acontecer nas próximas três semanas.\nVocê: Perfeito, ok. Vamos então descrever os próximos passos. Eu adoraria mostrar uma demonstração da nossa plataforma de gestão de dropshipping, depois descrever um plano de implementação e ver se é adequado. Como está sua disponibilidade nos próximos dias?\nPessoa: Estou livre amanhã às 14h ET, isso funciona?\nVocê: Sim, é perfeito.\nPessoa: Ok então. Obrigado pela ligação - ansioso para ver a plataforma em ação!\nVocê: Claro, até logo!\nPessoa: Tchau tchau."
+              },
+              {
+                "name": "voice",
+                "value": "June"
+              },
+              {
+                "name": "language",
+                "value": "pt-BR"
+              },
+              {
+                "name": "model",
+                "value": "Enhanced"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "a17efda3-9d1c-4a8c-9d96-991e71079688",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          600,
+          280
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "b468046b-0a59-4ede-bcb2-867e11b80db9",
+          "options": {}
+        },
+        "id": "13e9da29-9ede-4e59-8932-80f758e4d15b",
+        "name": "Webhook1",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          300,
+          300
+        ],
+        "webhookId": "b468046b-0a59-4ede-bcb2-867e11b80db9"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "176fe3e9-d3b2-4386-bdc8-b85a78e5ba96",
+                "name": "phone_number",
+                "value": "={{ $json.body.phone }}",
+                "type": "string"
+              },
+              {
+                "id": "df18e407-3798-4f7e-87e6-c6996c30955b",
+                "name": "task",
+                "value": "=Seu nome é Omnes. Você faz parte da equipe de vendas da Cyberomnes, uma empresa de software que ajuda empresas de médio a grande porte a identificar oportunidades para aumentar a receita através de uma precificação mais eficaz. Você está na equipe há sete anos. Você é um veterano experiente. Sabe como ser empático, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\\n\\nSempre que um lead preenchido no formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\\n\\nAqui está um exemplo de diálogo.\\n\\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor? \\nPessoa: Oi, sim, sou eu.\\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Cyberomnes, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. Você poderia compartilhar um pouco mais sobre sua estratégia de precificação atual e o que está impedindo seu progresso?\\nPessoa: Sim, estamos tendo dificuldades para fazer as pessoas mudarem entre os níveis de preço. A maioria das pessoas no nosso plano gratuito nunca faz o upgrade para o premium. E mesmo no premium, sinto que estamos subutilizando nossa monetização.\\nVocê: Por que você sente que está subutilizando a monetização?\\nPessoa: Bem, eu vejo que nossos clientes estão obtendo muito valor do nosso produto. Nós fornecemos uma API de integração, que os ajuda diretamente a aumentar a receita ao fechar mais pessoas em demonstrações. Mas mesmo com o crescimento deles, tendemos a não gerar tanta receita.\\nVocê: Então, você sabe que está entregando valor aos clientes, mas não sente que está capturando isso de forma eficaz?\\nPessoa: Sim, exatamente.\\nVocê: Ok, nesse caso, você poderia compartilhar mais informações sobre o que o levou a entrar em contato?\\nPessoa: Sim, nossa equipe está um pouco frustrada e realmente queremos encontrar essas oportunidades de expansão de receita. É isso ou cortar custos.\\nVocê: Certo, claro. Há algum prazo que você tem em mente?\\nPessoa: Sim, estamos querendo fazer isso acontecer nas próximas duas semanas.\\nVocê: Perfeito, ok. Vamos então descrever os próximos passos. Eu adoraria mostrar uma demonstração da nossa plataforma, depois descrever um plano de implementação e ver se é adequado. Como está sua disponibilidade nos próximos dias?\\nPessoa: Estou livre amanhã às 12h ET, isso funciona?\\nVocê: Sim, é perfeito.\\nPessoa: Ok então. Obrigado pela ligação - ansioso para ver a plataforma em ação!\\nVocê: Claro, até logo!\\nPessoa: Tchau tchau.",
+                "type": "string"
+              },
+              {
+                "id": "c72af39f-5b7f-49b4-bf05-261a3038c2ad",
+                "name": "model",
+                "value": "enhanced",
+                "type": "string"
+              },
+              {
+                "id": "947fe15a-d05d-4126-96c0-bdd5602ba81b",
+                "name": "language",
+                "value": "pt-BR",
+                "type": "string"
+              },
+              {
+                "id": "1f44bebb-817a-42c2-8479-f0d112faf077",
+                "name": "voice",
+                "value": "Alexa",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "eff2ef1d-2d84-41e4-bd0b-8524ebef1135",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.3,
+        "position": [
+          460,
+          440
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "7bbefb67-48f1-4cf7-be48-0835e545cf6a",
   "connections": {
     "Webhook1": {
       "main": [
@@ -168,8 +305,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-07-22T15:39:55.896Z",
       "updatedAt": "2024-07-22T15:39:55.896Z",
+      "createdAt": "2024-07-22T15:39:55.896Z",
       "role": "workflow:owner",
       "workflowId": "aqYe2L0gTCyGHLOa",
       "projectId": "0wopg4LuKwAYZbx5"

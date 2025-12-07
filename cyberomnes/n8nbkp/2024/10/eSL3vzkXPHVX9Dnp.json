@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Format schema": {
       "main": [
@@ -367,8 +369,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2024-10-10T19:17:22.382Z",
       "updatedAt": "2024-10-10T19:17:22.382Z",
+      "createdAt": "2024-10-10T19:17:22.382Z",
       "role": "workflow:owner",
       "workflowId": "eSL3vzkXPHVX9Dnp",
       "projectId": "0wopg4LuKwAYZbx5"

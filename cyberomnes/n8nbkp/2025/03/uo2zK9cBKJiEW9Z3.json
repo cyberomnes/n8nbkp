@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Send Receipt": {
       "main": [
@@ -745,8 +747,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-03-09T20:21:55.667Z",
       "updatedAt": "2025-03-09T20:21:55.667Z",
+      "createdAt": "2025-03-09T20:21:55.667Z",
       "role": "workflow:owner",
       "workflowId": "uo2zK9cBKJiEW9Z3",
       "projectId": "0wopg4LuKwAYZbx5"

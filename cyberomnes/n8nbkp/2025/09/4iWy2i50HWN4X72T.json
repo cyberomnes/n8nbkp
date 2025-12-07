@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "ai_chat": {
       "ai_languageModel": [
@@ -727,8 +729,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-09-28T17:17:53.534Z",
       "updatedAt": "2025-09-28T17:17:53.534Z",
+      "createdAt": "2025-09-28T17:17:53.534Z",
       "role": "workflow:owner",
       "workflowId": "4iWy2i50HWN4X72T",
       "projectId": "0wopg4LuKwAYZbx5"

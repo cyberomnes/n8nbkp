@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Crawl website": {
       "main": [
@@ -981,8 +983,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-08-31T17:45:51.117Z",
       "updatedAt": "2024-08-31T17:45:51.117Z",
+      "createdAt": "2024-08-31T17:45:51.117Z",
       "role": "workflow:owner",
       "workflowId": "krqFgGONs34iSIRP",
       "projectId": "0wopg4LuKwAYZbx5"

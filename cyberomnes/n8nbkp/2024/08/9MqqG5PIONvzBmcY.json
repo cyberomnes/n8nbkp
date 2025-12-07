@@ -1,5 +1,85 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "9c40278b-f30f-4ce7-b974-e7973ce7c784",
+    "workflowId": "9MqqG5PIONvzBmcY",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "1d292b15-8e5c-4e26-9d9c-dc9e2531874d",
+          "options": {}
+        },
+        "id": "0d08b462-d273-4f5a-939e-592d00d5a121",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          440,
+          300
+        ],
+        "webhookId": "1d292b15-8e5c-4e26-9d9c-dc9e2531874d"
+      },
+      {
+        "parameters": {
+          "respondWith": "allIncomingItems",
+          "options": {}
+        },
+        "id": "79f78469-e260-4704-8ef4-927755b0234d",
+        "name": "Respond to Webhook",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          640,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "options": {}
+        },
+        "id": "b50b9e82-0c10-4cff-9ede-09cdb9fccd4c",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          860,
+          300
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Respond to Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "9c40278b-f30f-4ce7-b974-e7973ce7c784",
   "connections": {
     "Webhook": {
       "main": [
@@ -86,8 +166,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-08-08T03:31:54.465Z",
       "updatedAt": "2024-08-08T03:31:54.465Z",
+      "createdAt": "2024-08-08T03:31:54.465Z",
       "role": "workflow:owner",
       "workflowId": "9MqqG5PIONvzBmcY",
       "projectId": "0wopg4LuKwAYZbx5"

@@ -1,5 +1,81 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "98e160a0-47a3-4f0f-bd6a-664844a72f17",
+    "workflowId": "0MTIiaLLrNPZgWAt",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "https://allmybots.com/api/v1/whatsapp/send",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "apiToken",
+                "value": "8494|zEBqEFsCAoUXhv9cWF969YBxiAXfaT0FiFQWMcov"
+              },
+              {
+                "name": "phone_number_id",
+                "value": "106088078908877"
+              },
+              {
+                "name": "message",
+                "value": "Olá! Eu sou o OmnesAI, enviando uma mensagem especial do Papai Noel via OmnesTalk! 🎅✨ Estou aqui para tirar qualquer dúvida que você tenha. Além disso, posso enviar e receber áudios, imagens, vídeos e as vezes até textos ! 😊  Quer saber mais sobre o OmnesTalk? Acesse agora: https://omnes.link/otalkinfo 🚀"
+              },
+              {
+                "name": "phone_number",
+                "value": "={{ $json.body.to }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "a46a0848-a6a9-478d-abce-35e3c46f6717",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          660,
+          640
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "sms",
+          "options": {}
+        },
+        "id": "16be7e3b-794d-4e6d-8b8d-7c50dd253c4f",
+        "name": "Webhook2",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          460,
+          460
+        ],
+        "webhookId": "e5b207e9-8a70-4217-a6eb-e93a248269fd"
+      }
+    ],
+    "connections": {
+      "Webhook2": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "98e160a0-47a3-4f0f-bd6a-664844a72f17",
   "connections": {
     "Webhook2": {
       "main": [
@@ -146,8 +222,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-12-24T23:16:34.728Z",
       "updatedAt": "2024-12-24T23:16:34.728Z",
+      "createdAt": "2024-12-24T23:16:34.728Z",
       "role": "workflow:owner",
       "workflowId": "0MTIiaLLrNPZgWAt",
       "projectId": "0wopg4LuKwAYZbx5"

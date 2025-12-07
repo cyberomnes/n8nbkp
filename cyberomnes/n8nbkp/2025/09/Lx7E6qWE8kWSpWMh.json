@@ -1,5 +1,101 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "491fb7d2-1811-4f86-87ba-7e5007116bd1",
+    "workflowId": "Lx7E6qWE8kWSpWMh",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "ot23",
+          "responseMode": "streaming",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "fedc5d61-834d-446d-a6e6-f24d1625e7e2",
+        "name": "Webhook",
+        "webhookId": "627c0ab0-eb10-43d9-abf0-61bc41de8e8a"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "Hi",
+          "options": {
+            "systemMessage": "You are a helpful assistant, wait for the user to talk and answer him",
+            "enableStreaming": true
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          368,
+          -32
+        ],
+        "id": "70aef19f-f566-4628-8705-6f17fb21761d",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-4o-mini-realtime-preview",
+            "mode": "list",
+            "cachedResultName": "gpt-4o-mini-realtime-preview"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          272,
+          192
+        ],
+        "id": "093c39ec-d361-4e08-bf88-f26db725bd69",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "491fb7d2-1811-4f86-87ba-7e5007116bd1",
   "connections": {
     "Webhook": {
       "main": [
@@ -103,8 +199,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-09-09T15:17:19.982Z",
       "updatedAt": "2025-09-09T15:17:19.982Z",
+      "createdAt": "2025-09-09T15:17:19.982Z",
       "role": "workflow:owner",
       "workflowId": "Lx7E6qWE8kWSpWMh",
       "projectId": "0wopg4LuKwAYZbx5"

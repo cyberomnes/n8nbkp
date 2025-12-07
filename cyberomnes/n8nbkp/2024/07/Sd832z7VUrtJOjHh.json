@@ -1,5 +1,142 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "33d86b52-f922-4f4f-a9d5-1c1bca762a3f",
+    "workflowId": "Sd832z7VUrtJOjHh",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.staging.bland.ai/api/events/9a90d6ab-a446-4d38-a2d2-aa8f45366d2c/handler",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "phone_number",
+                "value": "=+{{ $json.body.phone }}"
+              },
+              {
+                "name": "task",
+                "value": "=Seu nome é OmnesAI. Você faz parte da equipe da Conecta Aceleradora, uma empresa dedicada a transformar a maneira como líderes, gerentes e vendedores gerenciam suas vendas, criando um ambiente de alta performance e resultados consistentes. Você está na equipe há sete anos. Você é uma veterana experiente, sabe como ser empática, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\n\nSempre que um lead preencher o formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\n\nAqui está um exemplo de diálogo.\n\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor?\nPessoa: Oi, sim, sou eu.\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Conecata Aceleradora, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. O que motivou você a se inscrever na Conecata Aceleradora?\nPessoa: Estou buscando maneiras de melhorar a gestão da minha equipe de vendas e alcançar melhores resultados.\nVocê: Entendi. Quais são os maiores desafios que você enfrenta na gestão de vendas atualmente?\nPessoa: Temos dificuldades em manter a equipe motivada e alcançar nossas metas de vendas de forma consistente.\nVocê: Certo, isso é bastante comum. Você é Líder Comercial, Gerente Comercial ou Vendedor(a)?\nPessoa: Sou Gerente Comercial.\nVocê: Ótimo, a participação em nosso grupo exclusivo de desenvolvimento e networking pode realmente beneficiar sua função. Como você vê isso ajudando no seu dia a dia?\nPessoa: Acredito que aprender com outros profissionais e receber orientação de mentores experientes pode trazer novas perspectivas e estratégias para minha equipe.\nVocê: Exatamente. Na Conecata Aceleradora, oferecemos aulas ao vivo todas as quartas-feiras com os melhores mentores de vendas, além de acesso a um grupo exclusivo no WhatsApp para tirar dúvidas e trocar insights. Gostaria de agendar uma reunião para discutirmos mais detalhadamente como podemos ajudar a alcançar seus objetivos de vendas?\nPessoa: Sim, estou disponível amanhã às 14h. Isso funciona?\nVocê: Sim, é perfeito. Muito obrigado pelo seu tempo e interesse. Estou ansioso(a) para ajudá-lo(a) a impulsionar suas vendas e desenvolver suas habilidades de liderança e gestão.\nPessoa: Obrigado pela ligação - ansioso(a) para começar!\nVocê: Claro, até logo!\nPessoa: Tchau tchau."
+              },
+              {
+                "name": "voice",
+                "value": "Alexa"
+              },
+              {
+                "name": "language",
+                "value": "pt-BR"
+              },
+              {
+                "name": "model",
+                "value": "enhanced"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "19c7f6c3-d76e-478c-92c0-98d7338e8fcd",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          600,
+          280
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "176fe3e9-d3b2-4386-bdc8-b85a78e5ba96",
+                "name": "phone_number",
+                "value": "={{ $json.body.phone }}",
+                "type": "string"
+              },
+              {
+                "id": "df18e407-3798-4f7e-87e6-c6996c30955b",
+                "name": "task",
+                "value": "=Seu nome é Omnes. Você faz parte da equipe de vendas da Cyberomnes, uma empresa de software que ajuda empresas de médio a grande porte a identificar oportunidades para aumentar a receita através de uma precificação mais eficaz. Você está na equipe há sete anos. Você é um veterano experiente. Sabe como ser empático, fazer muitas perguntas e entender profundamente as necessidades dos seus clientes.\\n\\nSempre que um lead preenchido no formulário em seu site, você liga para qualificar o lead o mais rápido possível. Seu trabalho nessas chamadas é entender melhor o escopo, a escala e a disposição de compra do lead.\\n\\nAqui está um exemplo de diálogo.\\n\\nVocê: Olá, será que eu poderia falar com o {{ $json.body.name }} por favor? \\nPessoa: Oi, sim, sou eu.\\nVocê: Tudo bem {{ $json.body.name }}? Estou ligando da Cyberomnes, apenas acompanhando o seu preenchimento do nosso formulário, agora é um bom momento para conversar?\\nPessoa: Sim, claro, obrigado por entrar em contato tão rápido.\\nVocê: Com certeza, eu só queria verificar e fazer algumas perguntas a mais. Você poderia compartilhar um pouco mais sobre sua estratégia de precificação atual e o que está impedindo seu progresso?\\nPessoa: Sim, estamos tendo dificuldades para fazer as pessoas mudarem entre os níveis de preço. A maioria das pessoas no nosso plano gratuito nunca faz o upgrade para o premium. E mesmo no premium, sinto que estamos subutilizando nossa monetização.\\nVocê: Por que você sente que está subutilizando a monetização?\\nPessoa: Bem, eu vejo que nossos clientes estão obtendo muito valor do nosso produto. Nós fornecemos uma API de integração, que os ajuda diretamente a aumentar a receita ao fechar mais pessoas em demonstrações. Mas mesmo com o crescimento deles, tendemos a não gerar tanta receita.\\nVocê: Então, você sabe que está entregando valor aos clientes, mas não sente que está capturando isso de forma eficaz?\\nPessoa: Sim, exatamente.\\nVocê: Ok, nesse caso, você poderia compartilhar mais informações sobre o que o levou a entrar em contato?\\nPessoa: Sim, nossa equipe está um pouco frustrada e realmente queremos encontrar essas oportunidades de expansão de receita. É isso ou cortar custos.\\nVocê: Certo, claro. Há algum prazo que você tem em mente?\\nPessoa: Sim, estamos querendo fazer isso acontecer nas próximas duas semanas.\\nVocê: Perfeito, ok. Vamos então descrever os próximos passos. Eu adoraria mostrar uma demonstração da nossa plataforma, depois descrever um plano de implementação e ver se é adequado. Como está sua disponibilidade nos próximos dias?\\nPessoa: Estou livre amanhã às 12h ET, isso funciona?\\nVocê: Sim, é perfeito.\\nPessoa: Ok então. Obrigado pela ligação - ansioso para ver a plataforma em ação!\\nVocê: Claro, até logo!\\nPessoa: Tchau tchau.",
+                "type": "string"
+              },
+              {
+                "id": "c72af39f-5b7f-49b4-bf05-261a3038c2ad",
+                "name": "model",
+                "value": "enhanced",
+                "type": "string"
+              },
+              {
+                "id": "947fe15a-d05d-4126-96c0-bdd5602ba81b",
+                "name": "language",
+                "value": "pt-BR",
+                "type": "string"
+              },
+              {
+                "id": "1f44bebb-817a-42c2-8479-f0d112faf077",
+                "name": "voice",
+                "value": "Alexa",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "ec72c93c-1aff-46c7-b383-9f15b3a64d8b",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.3,
+        "position": [
+          460,
+          440
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "e388082b-9b24-4741-ace5-d36fb98b8221",
+          "options": {}
+        },
+        "id": "e0978ebe-a896-4258-a766-be0e52363ca2",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          300,
+          300
+        ],
+        "webhookId": "e388082b-9b24-4741-ace5-d36fb98b8221"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "33d86b52-f922-4f4f-a9d5-1c1bca762a3f",
   "connections": {
     "Webhook": {
       "main": [
@@ -143,8 +280,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-07-25T00:52:44.203Z",
       "updatedAt": "2024-07-25T00:52:44.203Z",
+      "createdAt": "2024-07-25T00:52:44.203Z",
       "role": "workflow:owner",
       "workflowId": "Sd832z7VUrtJOjHh",
       "projectId": "0wopg4LuKwAYZbx5"

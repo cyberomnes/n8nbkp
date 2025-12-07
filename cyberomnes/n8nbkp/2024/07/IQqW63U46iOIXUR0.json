@@ -1,5 +1,748 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "f89fc0cd-75ed-4b6c-8751-6b15cdbbdf7b",
+    "workflowId": "IQqW63U46iOIXUR0",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "350fef6e-7213-420d-8e32-996cb3d46f67",
+          "options": {}
+        },
+        "id": "9aa656a9-a344-47b0-aeef-2cf085d38164",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          580,
+          300
+        ],
+        "webhookId": "350fef6e-7213-420d-8e32-996cb3d46f67"
+      },
+      {
+        "parameters": {
+          "url": "=https://api.bland.ai/v1/calls/{{ $json.body.call_id}}/recording",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authorization",
+                "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69"
+              },
+              {
+                "name": "accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "3f450999-7565-40a2-bc6e-c9c76a327e23",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          820,
+          520
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "=https://api.bland.ai/v1/calls/{{ $json.body.call_id}}/correct",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": {}
+        },
+        "id": "13c0be73-05a2-4f4d-b824-63ccccd58d8c",
+        "name": "HTTP Request1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          800,
+          300
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "=https://api.bland.ai/v1/calls/{{ $json.body.call_id}}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authorization",
+                "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69"
+              },
+              {
+                "name": "accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "27d05374-0142-437b-849a-9c5b6af2aec3",
+        "name": "HTTP Request2",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          800,
+          100
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "4eb3dcb6-786d-4f03-b250-78429915306d",
+        "name": "Convert to File",
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1240,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "a9d22ee7-1ee5-446b-939f-1dff7637e255",
+        "name": "Convert to File1",
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1240,
+          100
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "03d8f410-a887-4d06-a9c6-7f00d21129d4",
+        "name": "Convert to File2",
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1220,
+          520
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "f6fd7518-d670-43d3-9c9e-60898136a51b",
+        "name": "Convert to File3",
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1020,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "options": {
+            "temperature": 0.1
+          }
+        },
+        "id": "f3dbd50b-0d80-484c-9c60-d183b5b34097",
+        "name": "Chat OpenAI",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "position": [
+          600,
+          1060
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "name": "Calendar_Availability",
+          "description": "Call this tool to get my calendar availability as stringified JSON array.",
+          "workflowId": "={{ $workflow.id }}"
+        },
+        "id": "eb76a1a6-bb7a-47f6-8091-41b76211d7dd",
+        "name": "Workflow Tool",
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "position": [
+          1460,
+          1080
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "options": {
+            "temperature": 0
+          }
+        },
+        "id": "19ccf0a2-67ba-4c80-bd74-e30f4e744f3b",
+        "name": "Chat OpenAI1",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "position": [
+          1300,
+          1079
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Check if incoming email is about appointment\nWe use LLM to check subject and body of the email and determine if it's an appointment request. ",
+          "height": 410.24791575252334,
+          "width": 616.8060552874073
+        },
+        "id": "270f977d-6b6e-4ce4-a931-c16f58a6c0de",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          340,
+          780
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "## Get calendar availability and compose a response\nMake sure to update the Workflow ID if you are running this as 2 workflows",
+          "height": 241.70645019745504,
+          "width": 676.1951194231482
+        },
+        "id": "db940945-54c3-4f8d-a99f-6d2c84ca5066",
+        "name": "Sticky Note1",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1220,
+          780
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.is_appointment }}",
+                "value2": "true"
+              }
+            ],
+            "boolean": [
+              {
+                "value1": "={{ $json.is_appointment }}",
+                "value2": true
+              }
+            ]
+          },
+          "combineOperation": "any"
+        },
+        "id": "784c8741-6b51-4cb9-b833-3b0223704a20",
+        "name": "Is appointment request",
+        "type": "n8n-nodes-base.if",
+        "position": [
+          980,
+          880
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"is_appointment\": {\n      \"type\": \"boolean\"\n    }\n  }\n}"
+        },
+        "id": "8e4ffc0c-6822-418a-8c80-945ab5e5f6c5",
+        "name": "Structured Output Parser",
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "position": [
+          760,
+          1060
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "text": "=Sender:\\nSubject: {{ $('Gmail Trigger').item.json.Subject }}\\nEmail Text: {{ $('Gmail Trigger').item.json.snippet }}",
+          "options": {
+            "systemMessage": "=You are an email scheduling assistant. Based on the received email, check my availability and propose an appropriate response. \nAim to get a specific time, rather than just a day. When checking my availability, make sure that there's enough time in between meetings.\nIf I'm not available, ALWAYS propose a new time based on my availability. When proposing a new time, always leave 15 minutes buffer from previous meeting.\nToday date and time is: {{ $now.toISO() }}."
+          }
+        },
+        "id": "7e2aefa9-603c-40de-89f6-03bd6c8859e1",
+        "name": "Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "position": [
+          1280,
+          859
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "mode": "list",
+            "value": "your_email@gmail.com",
+            "cachedResultName": "your_email@gmail.com"
+          },
+          "returnAll": true,
+          "options": {
+            "timeMin": "={{ $now.minus(1, 'day').toISO() }}",
+            "timeMax": "={{ $now.plus(1, 'month').toISO() }}",
+            "singleEvents": true
+          }
+        },
+        "id": "cad798f3-d73e-4730-bb75-c5cfcf0ad232",
+        "name": "Google Calendar",
+        "type": "n8n-nodes-base.googleCalendar",
+        "position": [
+          520,
+          1401
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "akguFeu0y70N22uG",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "id": "4c91cd03-0110-40b4-94d7-7a36789e858f",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          300,
+          1401
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "operation": "concatenateItems",
+          "aggregate": "aggregateAllItemData",
+          "destinationFieldName": "response",
+          "include": "allFieldsExcept",
+          "fieldsToExclude": "sort",
+          "options": {}
+        },
+        "id": "f5e63ef9-68b1-42cf-921a-a76e077f5632",
+        "name": "Format response",
+        "type": "n8n-nodes-base.itemLists",
+        "position": [
+          1400,
+          1401
+        ],
+        "typeVersion": 3
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "response",
+                "value": "={{ JSON.stringify($json.response) }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "de639944-e2c0-4463-89f5-44670b605a33",
+        "name": "Stringify Response",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          1620,
+          1401
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "start",
+                "value": "={{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+              },
+              {
+                "name": "end",
+                "value": "={{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.DATE_HUGE) }}, {{ DateTime.fromISO($json.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET) }}"
+              },
+              {
+                "name": "name",
+                "value": "={{ $json.summary }}"
+              },
+              {
+                "name": "sort",
+                "value": "={{ $json.start.dateTime }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "45fecf01-f58b-4e64-a36e-b7317c7c669d",
+        "name": "Extract start, end and name",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          940,
+          1401
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $json.status }}",
+                "value2": "confirmed"
+              }
+            ],
+            "boolean": [
+              {
+                "value1": "={{ $json.start.dateTime }}",
+                "operation": "notEqual",
+                "value2": "={{ undefined }}"
+              }
+            ]
+          }
+        },
+        "id": "6b5de1ca-b1d9-4a38-9a07-3245519b1047",
+        "name": "Filter only confirmed and with set time",
+        "type": "n8n-nodes-base.filter",
+        "position": [
+          720,
+          1401
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "### Get all query google events for the next month and extract relevant data",
+          "height": 224.60561166142082,
+          "width": 810.4923211935056
+        },
+        "id": "1987fe71-d066-4caf-8fc3-66636dd50e77",
+        "name": "Sticky Note2",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          480,
+          1340
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "### Wrap the result in `response` object and return ",
+          "height": 220.42397542781927,
+          "width": 444.4130232558142
+        },
+        "id": "1d77c802-9d53-4a77-8b79-e3ad33adf438",
+        "name": "Sticky Note3",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1353,
+          1341
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "operation": "sort",
+          "sortFieldsUi": {
+            "sortField": [
+              {
+                "fieldName": "sort"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "fc49cd44-0cc7-4ffe-a61f-6f9bd9ca5da5",
+        "name": "Sort",
+        "type": "n8n-nodes-base.itemLists",
+        "position": [
+          1160,
+          1401
+        ],
+        "typeVersion": 3
+      },
+      {
+        "parameters": {
+          "prompt": "=Please evaluate the following transcript to determine if it suggests scheduling a meeting or a call:\n {{ $json.body.transcripts }}\n\nIndicate your assessment by responding with \"true\" if it suggests a meeting or call, or \"false\" otherwise. Use lowercase for your response.\n"
+        },
+        "id": "4a8199e1-81f1-4079-9715-7de7bac6e949",
+        "name": "Classify appointment",
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "position": [
+          600,
+          880
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "path": "4b5c7067-846c-4fa2-8fc0-d516d7833580",
+          "options": {}
+        },
+        "id": "305236e8-6526-4ee6-b77f-a179fba1d15b",
+        "name": "Webhook1",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          140,
+          1140
+        ],
+        "webhookId": "4b5c7067-846c-4fa2-8fc0-d516d7833580"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "HTTP Request1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Convert to File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Convert to File2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request1": {
+        "main": [
+          [
+            {
+              "node": "Convert to File3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request2": {
+        "main": [
+          [
+            {
+              "node": "Convert to File1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat OpenAI": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Classify appointment",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Workflow Tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat OpenAI1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is appointment request": {
+        "main": [
+          [
+            {
+              "node": "Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Classify appointment",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Calendar": {
+        "main": [
+          [
+            {
+              "node": "Filter only confirmed and with set time",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Google Calendar",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format response": {
+        "main": [
+          [
+            {
+              "node": "Stringify Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract start, end and name": {
+        "main": [
+          [
+            {
+              "node": "Sort",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter only confirmed and with set time": {
+        "main": [
+          [
+            {
+              "node": "Extract start, end and name",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Sort": {
+        "main": [
+          [
+            {
+              "node": "Format response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Classify appointment": {
+        "main": [
+          [
+            {
+              "node": "Is appointment request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "Classify appointment",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "f89fc0cd-75ed-4b6c-8751-6b15cdbbdf7b",
   "connections": {
     "Webhook": {
       "main": [
@@ -906,8 +1649,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-07-28T19:58:36.707Z",
       "updatedAt": "2024-07-28T19:58:36.707Z",
+      "createdAt": "2024-07-28T19:58:36.707Z",
       "role": "workflow:owner",
       "workflowId": "IQqW63U46iOIXUR0",
       "projectId": "0wopg4LuKwAYZbx5"

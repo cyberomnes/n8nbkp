@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Merge": {
       "main": [
@@ -902,8 +904,8 @@
   "settings": null,
   "shared": [
     {
-      "createdAt": "2025-01-09T01:09:44.937Z",
       "updatedAt": "2025-01-09T01:09:44.937Z",
+      "createdAt": "2025-01-09T01:09:44.937Z",
       "role": "workflow:owner",
       "workflowId": "pev5c8UmJR3XQV5n",
       "projectId": "0wopg4LuKwAYZbx5"

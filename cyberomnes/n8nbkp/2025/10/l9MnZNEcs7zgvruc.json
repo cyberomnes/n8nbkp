@@ -1,5 +1,62 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "d492e704-0b6f-44ce-9da4-12126b46cf14",
+    "workflowId": "l9MnZNEcs7zgvruc",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "cyberzap",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "6663e75e-da48-48a0-8635-807c823f44a1",
+        "name": "Webhook",
+        "webhookId": "d23e6dca-a7de-4aaa-9b39-be6c33496e21"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n    <Dial>\n        <Sip>sip:+16722022556@sip.rtc.elevenlabs.io:5060;transport=tcp</Sip>\n    </Dial>\n</Response>",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.4,
+        "position": [
+          240,
+          -16
+        ],
+        "id": "d95e99f9-58b8-48a2-8f2f-8a5fdb901e10",
+        "name": "Respond to Webhook"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "d492e704-0b6f-44ce-9da4-12126b46cf14",
   "connections": {
     "Webhook": {
       "main": [
@@ -63,8 +120,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-10-05T19:59:51.651Z",
       "updatedAt": "2025-10-05T19:59:51.651Z",
+      "createdAt": "2025-10-05T19:59:51.651Z",
       "role": "workflow:owner",
       "workflowId": "l9MnZNEcs7zgvruc",
       "projectId": "0wopg4LuKwAYZbx5"

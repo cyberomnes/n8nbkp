@@ -1,5 +1,209 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "64794bfb-8a6c-40cb-9f1e-b5c94b4a9ca4",
+    "workflowId": "lRaqaBF3FXJUoThn",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "b82cc1de-7c65-4f11-82a3-ae7d247fb2b3",
+          "options": {}
+        },
+        "id": "1601f6b0-9746-416e-9ae1-a57958bbb65c",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          1580,
+          560
+        ],
+        "webhookId": "b82cc1de-7c65-4f11-82a3-ae7d247fb2b3"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.bland.ai/api/events/0e0ad442-cafe-4dc0-80c9-09b0ba6ff799/handler",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "sk-8orn1i0503j7hqnann9xecip158zqgtsxsalar7p7ogyrh1q7yyftjxbw2bilsom69 -d {"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "phone_number",
+                "value": "={{ $json.body.phone_number }}"
+              },
+              {
+                "name": "from",
+                "value": "null"
+              },
+              {
+                "name": "task",
+                "value": "={{ $json.body.keInstruction }}"
+              },
+              {
+                "name": "model",
+                "value": "enhanced"
+              },
+              {
+                "name": "language",
+                "value": "={{ $json.body.language }}"
+              },
+              {
+                "name": "voice",
+                "value": "={{ $json.body.Voice }}"
+              },
+              {
+                "name": "voice_settings",
+                "value": "={}"
+              },
+              {
+                "name": "pathway_id",
+                "value": "null"
+              },
+              {
+                "name": "local_dialing",
+                "value": "false"
+              },
+              {
+                "name": "max_duration",
+                "value": "={{ $json.body['max duration'] }}"
+              },
+              {
+                "name": "answered_by_enabled",
+                "value": "={{ $json.body['Respondido por'] }}"
+              },
+              {
+                "name": "wait_for_greeting",
+                "value": "={{ $json.body['Aguarde a saudação'] }}"
+              },
+              {
+                "name": "record",
+                "value": "={{ $json.body.Registro }}"
+              },
+              {
+                "name": "amd",
+                "value": "={{ $json.body.AMD }}"
+              },
+              {
+                "name": "interruption_threshold",
+                "value": "={{ $json.body['Interrupções de bloqueio'] }}"
+              },
+              {
+                "name": "voicemail_message",
+                "value": "={{ $json.body['Answering machine message'] }}"
+              },
+              {
+                "name": "temperature",
+                "value": "={{ $json.body.Temp }}"
+              },
+              {
+                "name": "transfer_phone_number",
+                "value": "={{ $json.body.Transfernumber }}"
+              },
+              {
+                "name": "transfer_list",
+                "value": "={ \"{{ $json.body['Transfer list name'] }}\":\"{{ $json.body['Transferlist number'] }}\"}"
+              },
+              {
+                "name": "metadata",
+                "value": "={\" {{ $json.body['Metadata key'] }}:\" {{ $json.body['Metadata value'] }}\"}"
+              },
+              {
+                "name": "pronunciation_guide",
+                "value": "={\"word\":\" {{ $json.body['Pronunciation Word'] }}\"\" \"pronunciation\": {{ $json.body['Pronunciation '] }}\"  \"case_sensitive\": false,\n      \"spaced\": false}"
+              },
+              {
+                "name": "start_time",
+                "value": "null"
+              },
+              {
+                "name": "request_data",
+                "value": "={{ $json.body.requestdata }}"
+              },
+              {
+                "name": "tools",
+                "value": "[]"
+              },
+              {
+                "name": "dynamic_data",
+                "value": "[]"
+              },
+              {
+                "name": "analysis_schema",
+                "value": "={{ $json.body.Analisys }}"
+              },
+              {
+                "name": "webhook",
+                "value": "={{ $json.body.wbhook }}"
+              },
+              {
+                "name": "calendly"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "d9a4b98c-76b8-4008-93fb-66f7179a46af",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1800,
+          560
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "7e778d1f-de39-48e2-98b9-f0286ce72c2f",
+                "name": " ",
+                "value": "=",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "d1a2cad1-ad52-46fa-8cc5-25117f6b7082",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.3,
+        "position": [
+          1600,
+          260
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "64794bfb-8a6c-40cb-9f1e-b5c94b4a9ca4",
   "connections": {
     "Webhook": {
       "main": [
@@ -266,8 +470,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-08-12T14:01:33.087Z",
       "updatedAt": "2024-08-12T14:01:33.087Z",
+      "createdAt": "2024-08-12T14:01:33.087Z",
       "role": "workflow:owner",
       "workflowId": "lRaqaBF3FXJUoThn",
       "projectId": "0wopg4LuKwAYZbx5"

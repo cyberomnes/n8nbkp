@@ -1,5 +1,53 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "d0c8f59d-708b-4fe5-8be6-057dd5268d88",
+    "workflowId": "Q0uTxEKanw8luGmu",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "ef997d51-38d6-4550-94fb-25c600ba2a67",
+          "options": {}
+        },
+        "id": "f6e8ccd2-fc95-402d-ac95-f3372e55530e",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          780,
+          480
+        ],
+        "webhookId": "ef997d51-38d6-4550-94fb-25c600ba2a67"
+      },
+      {
+        "parameters": {
+          "jsCode": "hubsport token\n\npat-na1-28d1b8c2-be8f-46c6-ada6-d2fffe0bac61"
+        },
+        "id": "debbd942-dbc4-4027-a118-6467f5be11c9",
+        "name": "Code",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          860,
+          280
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "d0c8f59d-708b-4fe5-8be6-057dd5268d88",
   "connections": {
     "Webhook": {
       "main": [
@@ -54,8 +102,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-10-15T22:25:56.181Z",
       "updatedAt": "2024-10-15T22:25:56.181Z",
+      "createdAt": "2024-10-15T22:25:56.181Z",
       "role": "workflow:owner",
       "workflowId": "Q0uTxEKanw8luGmu",
       "projectId": "0wopg4LuKwAYZbx5"

@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Webhook /twilio/voice/wa": {
       "main": [
@@ -1478,8 +1480,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-10-07T23:17:11.240Z",
       "updatedAt": "2025-10-07T23:17:11.240Z",
+      "createdAt": "2025-10-07T23:17:11.240Z",
       "role": "workflow:owner",
       "workflowId": "9P3bo0Cjt8zYucpj",
       "projectId": "0wopg4LuKwAYZbx5"

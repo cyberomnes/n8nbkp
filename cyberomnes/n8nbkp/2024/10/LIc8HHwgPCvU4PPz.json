@@ -1,5 +1,7 @@
 {
   "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Get Text": {
       "main": [
@@ -2072,8 +2074,8 @@
   "settings": {},
   "shared": [
     {
-      "createdAt": "2024-10-27T20:33:22.969Z",
       "updatedAt": "2024-10-27T20:33:22.969Z",
+      "createdAt": "2024-10-27T20:33:22.969Z",
       "role": "workflow:owner",
       "workflowId": "LIc8HHwgPCvU4PPz",
       "projectId": "0wopg4LuKwAYZbx5"

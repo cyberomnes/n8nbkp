@@ -1,5 +1,314 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "cf0e246e-3582-43b4-9e63-31970b0df8b9",
+    "workflowId": "CHfVjpaIYWZwFO7z",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "Omnestalk",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "7fa83a35-0693-4055-8b81-c79f533ab09f",
+        "name": "Webhook",
+        "webhookId": "40ae2d88-75b3-417a-bf98-75479a921b83"
+      },
+      {
+        "parameters": {
+          "resource": "assistant",
+          "assistantId": {
+            "__rl": true,
+            "value": "asst_zQVVcYQGZmeFR716pJEzyTe8",
+            "mode": "list",
+            "cachedResultName": "OmnesTalk Prompter"
+          },
+          "prompt": "define",
+          "text": "=create an Agent that will talk to {{ $json.body.first_name }}. for this agent, the user defined he wants it to be {{ $json.body.user_input_data[0].answer }}. only give me the output of the creation. do not say that you are creating but only give me the result. Format the output result so it can be attached as it will be used to send an http request after. Format it as a Json but do not mention its a json and do not put the { }. and if there are any \" format it as \\\". \nuse the bellow as a formatting example\nIntrodução\\nVocê é \\\"O Velho da Havan IA\\\", um assistente virtual com o carisma e o bom humor do próprio Luciano Hang. Sua missão é conduzir entrevistas para as lojas Havan, utilizando todo o conhecimento adquirido no MySkills e o profundo entendimento sobre a cultura e valores da Havan. O nome da pessoas sendo entrevistada é Afonso e Você irá identificar os talentos mais adequados para cada cargo, baseando-se em competências, características e experiências dos candidatos, além de promover a cultura de excelência e encantamento que define a Havan.\\n\\nObjetivo\\nSeu objetivo é:\\n\\nRealizar entrevistas com os colaboradores e candidatos da Havan, utilizando técnicas avançadas do MySkills para avaliar competências, habilidades e comportamentos.\\nQualificar e recomendar os candidatos mais adequados para cada cargo, explicando de forma clara e objetiva os motivos da escolha.\\nReforçar os valores e a missão da Havan durante as interações, garantindo que os candidatos compreendam a importância de surpreender e encantar os clientes.\\nTornar a experiência da entrevista leve, divertida e engajante, utilizando expressões típicas e interjeições brasileiras como, \\\"Entendi!\\\" e \\\"Eita, bora lá!\\\"\\nFluxo da Conversa\\nAbertura:\\n\\nCumprimente o candidato com entusiasmo, apresentando-se como \\\"O Velho da Havan IA\\\".\\nExemplo: \\\"Opa! Tudo certo? Eu sou o Velho da Havan, seu guia pra brilhar nessa entrevista e, quem sabe, fazer parte dessa gigante chamada Havan! Bora lá?\\\"\\nEntendimento do Perfil:\\n\\nPergunte sobre as experiências e competências do candidato de maneira descontraída.\\nExemplo: \\\"Me conta aí, o que você já fez de bom nessa vida? Pode mandar ver, quero saber tudo!\\\"\\nAvaliação de Competências:\\n\\nRealize perguntas específicas sobre as competências do candidato, com base no cargo desejado.\\nExemplo: \\\"Aqui na Havan, a gente gosta de quem sabe encantar o cliente. Me diz, como você lidaria com um cliente super exigente?\\\"\\nValorização da Cultura Havan:\\n\\nReforce a importância de se alinhar aos valores da empresa.\\nExemplo: \\\"A gente aqui é movido a surpreender. Como você acha que pode ajudar a tornar a experiência dos nossos clientes única?\\\"\\nConclusão e Recomendações:\\n\\nInforme ao candidato os próximos passos e finalize com motivação.\\nExemplo: \\\"Show de bola! Agora vou passar essas informações pro pessoal e, quem sabe, nos vemos numa das nossas megalojas! Obrigado por compartilhar sua história, hein!\\\"\\nReações para Pausas ou Dúvidas:\\n\\nUtilize interjeições típicas para preencher pausas ou quando não entender algo:\\n\\\"Huuummm, tá, entendi!\\\"\\n\\\"Aaaah, saquei!\\\"\\n\\\"Eita, pode repetir? Não peguei essa parte!\\\"\\nInformações de Fundo\\nSobre a Havan: Uma das maiores redes de varejo do Brasil, com quase 200 megalojas espalhadas por 24 estados, reconhecida pela excelência em atendimento e experiência única para os clientes.\\nMissão da Havan: Surpreender e encantar a todos, oferecendo uma ampla variedade de produtos de qualidade com o menor preço.\\nValores da Havan:\\nEncantamento ao cliente.\\nTrabalho em equipe.\\nCompromisso com a qualidade e eficiência.\\nConexão com o MySkills: Expertise em mensurar habilidades, realizar análises de competências e auxiliar na escolha de talentos.\\nExemplos de Diálogos\\nCenário 1: Avaliação de um Candidato para Vendedor\\nCandidato: Quero trabalhar como vendedor na Havan.\\nIA: \\\"Boa escolha, hein? Aqui na Havan, o vendedor é o coração da loja! Me conta, como você lida com clientes que chegam indecisos? Tipo, ‘será que eu levo isso ou aquilo?’\\\"\\n\\nCenário 2: Candidato para Estoque\\nCandidato: Tenho experiência em logística e estoque.\\nIA: \\\"Ah, logística é o que move a Havan, literalmente! O que você acha mais importante pra manter tudo no estoque funcionando como um reloginho?\\\"\\n\\nCenário 3: Quando Não Entender Algo\\nCandidato: Trabalhei com coisas diversas.\\nIA: \\\"Eita, coisas diversas? Huuummm, pode detalhar um pouquinho mais? Quero entender direitinho!\\\"\\n\\nCenário 4: Finalizando a Entrevista\\nIA: \\\"Massa demais, adorei conversar com você! Agora é aguardar o retorno do nosso time, mas, ó, já tô torcendo pra você entrar nesse time campeão da Havan!\\\"\\n",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.8,
+        "position": [
+          220,
+          -120
+        ],
+        "id": "493fe3a2-069f-4e4c-bf7e-4051ed3f4dbc",
+        "name": "OpenAI",
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.bland.ai/v1/calls",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"phone_number\": \"+{{ $('AI Agent1').item.json.output }}\",\n  \"from\": \"+12136988255\",\n  \"task\": \"{{ $('OpenAI').item.json.output }}\",\n  \"voice\": \"OT - Lucas\",\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": false,\n  \"amd\": true,\n  \"answered_by_enabled\": false,\n  \"noise_cancellation\": true,\n  \"interruption_threshold\": \"90\",\n  \"temperature\": \"0.7\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": {{ $('AI Agent').item.json.output }},\n  \"max_duration\": \"5\",\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"background_track\": \"office\",\n  \"start_time\": null,\n  \"request_data\": {},\n  \"pronunciation_guide\": [],\n  \"webhook\": null,\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": \"\",\n  \"summary_prompt\": \"This should be done in Brazilian portuguese\\n\\nPrompt para Resumir as Chamadas:\\n\\nVocê é um assistente virtual responsável por resumir as chamadas realizadas com os clientes. Para cada chamada, elabore um resumo conciso que inclua os seguintes pontos:\\n\\nNome do Cliente: [Nome do cliente]\\nEmpresa: [Nome da empresa do cliente]\\nCargo/Função: [Cargo ou função do cliente na empresa]\\nMotivo do Contato: [Por que o cliente foi contatado ou entrou em contato]\\nPrincipais Necessidades ou Interesses: [Descreva as necessidades, interesses ou desafios mencionados pelo cliente]\\nInformações e Soluções Apresentadas: [Detalhe as informações fornecidas e as soluções discutidas]\\nObjeções ou Preocupações Levantadas: [Anote quaisquer objeções ou preocupações expressas pelo cliente]\\nPróximos Passos Acordados: [Especifique as ações a serem tomadas, como agendamento de reunião, envio de materiais, etc.]\\nData e Hora da Próxima Interação (se aplicável): [Registrar se uma próxima interação foi agendada]\\nObservações Adicionais: [Inclua qualquer informação relevante que possa ser útil para futuras interações]\\nCertifique-se de que o resumo seja claro, objetivo e organizado, facilitando o acompanhamento e o planejamento de futuras interações com o cliente.\",\n  \"webhook_events\": null,\n  \"sms\": null,\n  \"timezone\": \"America/Sao_Paulo\",\n  \"analysis_preset\": \"c45bb5f5-3be7-4e1a-b1fb-c3996d9f7d32\",\n  \"calendly\": {},\n  \"analysis_schema\": []\n}  ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1020,
+          -120
+        ],
+        "id": "cb4e1606-1c5a-4acb-915b-260758271581",
+        "name": "HTTP Request",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "jwdhBrr52G4lNHH6",
+            "name": "Unnamed credential"
+          },
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=create a short yet intriguing first sentence for this agent:{{ $json.output }} created mentioning the users first name :{{ $('Webhook').item.json.body.first_name }}. If you notice the users name is more then one, try to sanalize it and call him only by his first name. Only give me the sentence.",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          500,
+          -400
+        ],
+        "id": "8dbe3801-63f5-43ee-8db5-8d3f1bbda250",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.1,
+        "position": [
+          520,
+          -240
+        ],
+        "id": "a9f6ed50-2348-4237-8058-fb1e9ece9227",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "920302cc-15cc-463d-809a-15da6a7b7fe0",
+                "leftValue": "={{ $('Webhook').item.json.body.user_input_data[1].answer }}",
+                "rightValue": "Homem",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          580,
+          60
+        ],
+        "id": "6000148e-d02d-4cc2-90bc-1c57bfe1d61f",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.bland.ai/v1/calls",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"phone_number\": \"+{{ $('AI Agent1').item.json.output }}\",\n  \"from\": \"+12136988255\",\n  \"task\": \"{{ $('OpenAI').item.json.output }}\",\n  \"voice\": \"OT - Alice\",\n  \"wait_for_greeting\": false,\n  \"record\": true,\n  \"local_dialing\": false,\n  \"amd\": true,\n  \"answered_by_enabled\": false,\n  \"noise_cancellation\": true,\n  \"interruption_threshold\": \"90\",\n  \"temperature\": \"0.7\",\n  \"transfer_phone_number\": null,\n  \"block_interruptions\": false,\n  \"first_sentence\": {{ $('AI Agent').item.json.output }},\n  \"max_duration\": \"5\",\n  \"model\": \"enhanced\",\n  \"language\": \"pt-BR\",\n  \"background_track\": \"office\",\n  \"start_time\": null,\n  \"request_data\": {},\n  \"pronunciation_guide\": [],\n  \"webhook\": null,\n  \"prompt_modal\": false,\n  \"selected_saved_prompt_id\": null,\n  \"selected_edit_prompt_id\": null,\n  \"save_prompt_modal\": false,\n  \"encrypted_key\": null,\n  \"pathway_id\": null,\n  \"dynamic_data\": [],\n  \"voicemail_sms\": null,\n  \"voicemail_action\": \"hangup\",\n  \"voicemail_message\": \"\",\n  \"summary_prompt\": \"This should be done in Brazilian portuguese\\n\\nPrompt para Resumir as Chamadas:\\n\\nVocê é um assistente virtual responsável por resumir as chamadas realizadas com os clientes. Para cada chamada, elabore um resumo conciso que inclua os seguintes pontos:\\n\\nNome do Cliente: [Nome do cliente]\\nEmpresa: [Nome da empresa do cliente]\\nCargo/Função: [Cargo ou função do cliente na empresa]\\nMotivo do Contato: [Por que o cliente foi contatado ou entrou em contato]\\nPrincipais Necessidades ou Interesses: [Descreva as necessidades, interesses ou desafios mencionados pelo cliente]\\nInformações e Soluções Apresentadas: [Detalhe as informações fornecidas e as soluções discutidas]\\nObjeções ou Preocupações Levantadas: [Anote quaisquer objeções ou preocupações expressas pelo cliente]\\nPróximos Passos Acordados: [Especifique as ações a serem tomadas, como agendamento de reunião, envio de materiais, etc.]\\nData e Hora da Próxima Interação (se aplicável): [Registrar se uma próxima interação foi agendada]\\nObservações Adicionais: [Inclua qualquer informação relevante que possa ser útil para futuras interações]\\nCertifique-se de que o resumo seja claro, objetivo e organizado, facilitando o acompanhamento e o planejamento de futuras interações com o cliente.\",\n  \"webhook_events\": null,\n  \"sms\": null,\n  \"timezone\": \"America/Sao_Paulo\",\n  \"analysis_preset\": \"c45bb5f5-3be7-4e1a-b1fb-c3996d9f7d32\",\n  \"calendly\": {},\n  \"analysis_schema\": []\n}  ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          820,
+          120
+        ],
+        "id": "c1740e88-f13c-4607-965e-1945b2cc4f91",
+        "name": "HTTP Request2",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "jwdhBrr52G4lNHH6",
+            "name": "Unnamed credential"
+          },
+          "httpHeaderAuth": {
+            "id": "C8g5ht4UZRKmFSff",
+            "name": "AICALL"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=if the users number \"{{ $('Webhook').item.json.body.chat_id }}\" is from brazil (55) then I need you to make sure that it contains the 9 after the DDD \nso DDI+DDD+9+number(if the number doesnt already have the 9)\nhere is a sample code in java to help know the logic. as an output give me only the number such as if the users number is 556281761948 the final ooutput will be 5562981761948\n\"\nlet number = $input.item.json.Telefone.toString()  //(from GoogleSheets Node)\nlet numberDDI = 55\nlet numberDDD = number.substr(2, 2);\nlet numberUser = number.substr(-8, 8);\n\nlet numberFINAL = \"\";\n\nif (numberDDI == \"55\" && parseInt(numberDDD) <= 30) {\n  numberFINAL = \"55\" + numberDDD + \"9\" + numberUser;\n} else if (numberDDI == \"55\" && parseInt(numberDDD) > 30) {\n  numberFINAL = \"55\" + numberDDD + numberUser;\n}\n\n$input.item.json.numberFINAL = numberFINAL;\n\nreturn $input.item;\n\"\nonly give me the final number and nothing else. If the number is from any other country give me only the final number without making any changes.",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          980,
+          -420
+        ],
+        "id": "2fa6608d-a0d0-4d79-a83f-58d0fea5838a",
+        "name": "AI Agent1"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.1,
+        "position": [
+          980,
+          -220
+        ],
+        "id": "07b23d77-67de-404b-9654-55668bca9a23",
+        "name": "OpenAI Chat Model1",
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "OpenAI",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          []
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "HTTP Request2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent1": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "cf0e246e-3582-43b4-9e63-31970b0df8b9",
   "connections": {
     "Webhook": {
       "main": [
@@ -354,8 +663,8 @@
   },
   "shared": [
     {
-      "createdAt": "2025-01-20T00:05:44.729Z",
       "updatedAt": "2025-01-20T00:05:44.729Z",
+      "createdAt": "2025-01-20T00:05:44.729Z",
       "role": "workflow:owner",
       "workflowId": "CHfVjpaIYWZwFO7z",
       "projectId": "0wopg4LuKwAYZbx5"

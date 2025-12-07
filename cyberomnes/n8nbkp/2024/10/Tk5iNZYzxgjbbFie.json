@@ -1,5 +1,155 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "249a1048-d675-4d1d-a180-8446153a9000",
+    "workflowId": "Tk5iNZYzxgjbbFie",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "e50f122f-20c6-41e1-b094-8249cccdc2c7",
+          "options": {}
+        },
+        "id": "8706e271-e6d4-4fe4-9250-78123c4a3994",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          500,
+          200
+        ],
+        "webhookId": "e50f122f-20c6-41e1-b094-8249cccdc2c7"
+      },
+      {
+        "parameters": {
+          "model": "gpt-4",
+          "options": {}
+        },
+        "id": "6812a51e-b554-451c-88b0-245350f023f0",
+        "name": "OpenAI Chat Model",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1,
+        "position": [
+          720,
+          600
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "from": "+16722022556",
+          "to": "={{ $('Webhook').item.json.body.payload.userFieldsResponses.Phone.value }}",
+          "message": "={{ $json.output }}",
+          "options": {}
+        },
+        "id": "518e4c43-df04-41a5-b5c6-be25e440bdeb",
+        "name": "Twilio",
+        "type": "n8n-nodes-base.twilio",
+        "typeVersion": 1,
+        "position": [
+          1100,
+          200
+        ],
+        "credentials": {
+          "twilioApi": {
+            "id": "oqAAXrKq6GfGemRu",
+            "name": "Twilio account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "from": "+551139577770",
+          "to": "={{ $('Webhook').item.json.body.payload.userFieldsResponses.Phone.value }}",
+          "toWhatsapp": true,
+          "message": "={{ $json.output }}",
+          "options": {}
+        },
+        "id": "d2ee95e7-30b7-484d-9132-664375b5af2f",
+        "name": "Twilio1",
+        "type": "n8n-nodes-base.twilio",
+        "typeVersion": 1,
+        "position": [
+          1100,
+          420
+        ],
+        "credentials": {
+          "twilioApi": {
+            "id": "oqAAXrKq6GfGemRu",
+            "name": "Twilio account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "agent": "conversationalAgent",
+          "promptType": "define",
+          "text": "=From the information provided, create a short SMS message to confirm, cancel, or update a meeting with a client. The meeting will be between a Cyberomnes Specialist and the client.\n\nKey Points:\nLanguage Selection: The message should be sent in the client’s language, determined by their country code. Prioritize the local language according to the phone number's country code. If needed, include a reference to the country code's associated language.\nif country code is 55 write in portuguese, if country code is 1 write in english and french. if there is a need to rebook, \nDetails to Include:\n\nClient's Name: {{ $json.body.payload.attendees[0].name }}\nClient's Phone Number: {{ $json.body.payload.userFieldsResponses.Phone.value }}\nClient's Company: {{ $json.body.payload.userFieldsResponses.Comoany.value }}\nVideo Call Link: {{ $json.body.payload.videoCallData.url }}\nExtract the relevant information from the response provided to compose a concise, personalized SMS message.\nif needed to reschedule, https://cal.com/reschedule/{{ $json.body.payload.iCalUID }}?rescheduledBy={{ $json.body.payload.attendees[0].email }}\n\nFull Response:\n{{ $json.body }}\n\n\nwhen formating your response give spaces between the links and format it it nicily as to be easier to read",
+          "hasOutputParser": true,
+          "options": {}
+        },
+        "id": "7ba70e04-84fd-4f1d-8152-e5012adcedd6",
+        "name": "AI Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.6,
+        "position": [
+          720,
+          200
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Twilio",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Twilio1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "249a1048-d675-4d1d-a180-8446153a9000",
   "connections": {
     "Webhook": {
       "main": [
@@ -346,8 +496,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-10-09T23:53:41.291Z",
       "updatedAt": "2024-10-09T23:53:41.291Z",
+      "createdAt": "2024-10-09T23:53:41.291Z",
       "role": "workflow:owner",
       "workflowId": "Tk5iNZYzxgjbbFie",
       "projectId": "0wopg4LuKwAYZbx5"

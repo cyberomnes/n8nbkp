@@ -1,5 +1,34 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "e102bb0c-c268-4fbc-9381-8a9fda9ea866",
+    "workflowId": "hhBvwxMfqcVmVmVn",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "45c8ecd5-2d32-41d1-b789-4578d3517757",
+          "options": {}
+        },
+        "id": "2f279307-fe07-41f2-bf97-6c880f3b3f1d",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          1780,
+          620
+        ],
+        "webhookId": "45c8ecd5-2d32-41d1-b789-4578d3517757"
+      }
+    ],
+    "connections": {},
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "e102bb0c-c268-4fbc-9381-8a9fda9ea866",
   "connections": {},
   "createdAt": "2024-09-29T02:50:56.622Z",
   "id": "hhBvwxMfqcVmVmVn",
@@ -35,8 +64,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-09-29T02:50:56.639Z",
       "updatedAt": "2024-09-29T02:50:56.639Z",
+      "createdAt": "2024-09-29T02:50:56.639Z",
       "role": "workflow:owner",
       "workflowId": "hhBvwxMfqcVmVmVn",
       "projectId": "0wopg4LuKwAYZbx5"

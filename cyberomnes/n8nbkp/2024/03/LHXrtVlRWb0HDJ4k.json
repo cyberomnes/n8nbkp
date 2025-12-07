@@ -1,5 +1,117 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "771a34e7-0103-4b65-b316-2310e97cbefb",
+    "workflowId": "LHXrtVlRWb0HDJ4k",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "5d4d1305-d004-465f-8612-925c5c034a90",
+          "formTitle": "OmnesCards",
+          "formDescription": "OmnesCards NFC ",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "name",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "email",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "password",
+                "fieldType": "password",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "TAG ID ",
+                "requiredField": true
+              }
+            ]
+          },
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "id": "50f213a1-cf5a-4bf9-819f-56adb9045d6a",
+        "name": "Omnescards Trigger",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2,
+        "position": [
+          640,
+          300
+        ],
+        "webhookId": "f329858c-a1e1-4f02-8da2-33c13ed6fbae"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://omnes.link/admin-api/users",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "Bearer a7336902c39758973c4434c1abf9aaff"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ $json.name }}"
+              },
+              {
+                "name": "=email",
+                "value": "={{ $json.email }}"
+              },
+              {
+                "name": "=password",
+                "value": "={{ $json.password }}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "3c1308d7-1977-4987-a01c-83866b52cf79",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          860,
+          300
+        ],
+        "retryOnFail": true,
+        "onError": "continueErrorOutput"
+      }
+    ],
+    "connections": {
+      "Omnescards Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "771a34e7-0103-4b65-b316-2310e97cbefb",
   "connections": {
     "Omnescards Trigger": {
       "main": [
@@ -128,8 +240,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-03-03T17:54:12.301Z",
       "updatedAt": "2024-03-03T17:54:12.301Z",
+      "createdAt": "2024-03-03T17:54:12.301Z",
       "role": "workflow:owner",
       "workflowId": "LHXrtVlRWb0HDJ4k",
       "projectId": "0wopg4LuKwAYZbx5"
@@ -138,8 +250,8 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2024-03-03T17:54:11.064Z",
       "updatedAt": "2024-03-03T17:54:11.064Z",
+      "createdAt": "2024-03-03T17:54:11.064Z",
       "id": "5zo3zMYMC8sR65Tg",
       "name": "OmnesCards"
     }

@@ -1,5 +1,288 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "dadf6c2a-dd04-4a2d-9191-0b06cf896ffa",
+    "workflowId": "YNbNUTCvrQ9Heko8",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "4d1bb358-0f8a-4b38-b0f8-b071bf2f570b",
+          "options": {}
+        },
+        "id": "06016631-759f-426d-b6a3-1213564a08d4",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          420,
+          880
+        ],
+        "webhookId": "4d1bb358-0f8a-4b38-b0f8-b071bf2f570b"
+      },
+      {
+        "parameters": {},
+        "id": "c268c533-52b3-4233-b0ff-ddbd9ca24939",
+        "name": "On clicking 'execute'",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          140,
+          823.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "for (const item of $input.all()) {\n  if(item.json.body?.data?.message) {\n    const keys = Object.keys(item.json.body?.data?.message);\n    let messagetype;\n    for (const k of keys) {\n      if(k !== 'messageContextInfo') {\n        messagetype = k;\n        break;\n      }\n    }\n\n    item.json.body.data.message['type'] = messagetype;\n  }\n}\n\nreturn $input.all();"
+        },
+        "id": "0752da90-b65f-4144-9bbb-852439283a1c",
+        "name": "Code",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 1,
+        "position": [
+          60,
+          1163.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## CodeChat - WhatsApp Api \n**Api:** https://github.com/code-chat-br/whatsapp-api\n**node:** https://github.com/jrCleber/n8n-codechat-wapi#readme",
+          "height": 109.53027243998983,
+          "width": 610.3779366700719
+        },
+        "id": "c1439e3a-d796-4ec9-93b0-7b6c5af87229",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -180,
+          463.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "textProperty": "={{ $json[\"textMessage\"][\"text\"] }}"
+        },
+        "id": "da71a44a-d2b3-4ac0-a4fc-5a3c056ad3c4",
+        "name": "Send Text",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          1163.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "operation": "contactMessage",
+          "contactsProperty": "={{ $json[\"contactMessage\"] }}"
+        },
+        "id": "4b59e8ac-a250-484c-aa33-039f4e758c9a",
+        "name": "Send Contact",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          1343.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "operation": "listMessage",
+          "titleProperty": "={{ $json[\"listMessage\"][\"title\"] }}",
+          "descriptionProperty": "={{ $json[\"listMessage\"][\"description\"] }}",
+          "buttonTextProperty": "={{ $json[\"listMessage\"][\"buttonText\"] }}",
+          "footerTextProperty": "={{ $json[\"listMessage\"][\"footerText\"] }}",
+          "sectionProperty": "={{ $json[\"listMessage\"][\"sections\"] }}"
+        },
+        "id": "060390e7-72e2-4f3f-ba6e-dc023e9f5344",
+        "name": "Send List",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          1523.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "operation": "locationMessage",
+          "locationNameProperty": "={{ $json[\"locationMessage\"][\"name\"] }}",
+          "addressProperty": "={{ $json[\"locationMessage\"][\"address\"] }}",
+          "latitudeProperty": "={{ $json[\"locationMessage\"][\"latitude\"] }}",
+          "longitudeProperty": "={{ $json[\"locationMessage\"][\"longitude\"] }}"
+        },
+        "id": "bc5b5d5c-57e6-42e7-8ce8-e761381e95b5",
+        "name": "Send Location",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          1703.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "operation": "buttonMessage",
+          "titleProperty": "={{ $json[\"buttonMessage\"][\"title\"] }}",
+          "descriptionProperty": "={{ $json[\"buttonMessage\"][\"description\"] }}",
+          "footerTextProperty": "={{ $json[\"buttonMessage\"][\"footerText\"] }}",
+          "buttonsProperty": "={{ $json[\"buttonMessage\"][\"buttons\"] }}",
+          "mediaMessageProperty": {
+            "mediaProperty": {
+              "fileNameProperty": "={{ $json[\"mediaMessage\"][\"fileName\"] }}",
+              "mediaProperty": "={{ $json[\"mediaMessage\"][\"media\"] }}"
+            }
+          }
+        },
+        "id": "a10c253e-e9ec-4f6d-b533-ab1640dca9c4",
+        "name": "Send Buttons",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          1883.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "operation": "mediaMessage",
+          "fileNameProperty": "={{ $json[\"mediaMessage\"][\"fileName\"] }}",
+          "caprionProperty": "={{ $json[\"mediaMessage\"][\"caption\"] }}",
+          "mediaProperty": "={{ $json[\"mediaMessage\"][\"media\"] }}"
+        },
+        "id": "7a27eeee-65a5-4edb-b428-cd518da97fa8",
+        "name": "Send Media",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          983.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "number": "={{ $json[\"number\"] }}",
+          "dalay": "={{ $json[\"options\"][\"delay\"] }}",
+          "presence": "recording",
+          "operation": "mediaMessage",
+          "mediaType": "waAudio",
+          "mediaProperty": "={{ $json[\"audioMessage\"][\"audio\"] }}"
+        },
+        "id": "3a1a3982-3b7c-4f4b-b04e-a09ce6f09152",
+        "name": "Send WhatsApp Audio",
+        "type": "n8n-nodes-codechat-wapi.CodeChatApi",
+        "typeVersion": 1,
+        "position": [
+          600,
+          823.328936298077
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## Node Media\n\nRealiza o envio geral de mídias.\n\nFoi adicionado uma nova opção no **Media Type**: tipo **WhatsApp Audio**. Esse tipo simula a gravação do áudio no whatsapp.\n\n───────────────────────────────────────────────────────────────────────\n\nPerforms general media delivery.\n\nAdded a new option in **Media Type**: type **WhatsApp Audio**. This type simulates audio recording in whatsapp.",
+          "height": 681.865313251202,
+          "width": 388.96392822265625
+        },
+        "id": "328e64df-062b-4a39-8a95-961e1ee00da9",
+        "name": "Sticky Note1",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          460,
+          460
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "f21c9cbb-f530-4172-988f-cdc315104fc3",
+          "options": {}
+        },
+        "id": "4d548b7c-3186-4e7a-b779-8eac6763eb77",
+        "name": "Webhook1",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          -140,
+          1140
+        ],
+        "webhookId": "f21c9cbb-f530-4172-988f-cdc315104fc3"
+      }
+    ],
+    "connections": {
+      "On clicking 'execute'": {
+        "main": [
+          [
+            {
+              "node": "Send Text",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send Contact",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send List",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send Location",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send Buttons",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send Media",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send WhatsApp Audio",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook1": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "dadf6c2a-dd04-4a2d-9191-0b06cf896ffa",
   "connections": {
     "On clicking 'execute'": {
       "main": [
@@ -389,8 +672,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-08-15T20:56:08.494Z",
       "updatedAt": "2024-08-15T20:56:08.494Z",
+      "createdAt": "2024-08-15T20:56:08.494Z",
       "role": "workflow:owner",
       "workflowId": "YNbNUTCvrQ9Heko8",
       "projectId": "0wopg4LuKwAYZbx5"
@@ -399,8 +682,8 @@
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2024-08-15T21:10:04.390Z",
       "updatedAt": "2024-08-15T21:10:04.390Z",
+      "createdAt": "2024-08-15T21:10:04.390Z",
       "id": "2XTKQVQxtkcu4QD2",
       "name": "send message"
     }

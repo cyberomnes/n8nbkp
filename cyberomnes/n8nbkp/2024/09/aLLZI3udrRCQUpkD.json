@@ -1,5 +1,116 @@
 {
   "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-06T07:00:21.931Z",
+    "createdAt": "2025-12-06T07:00:21.931Z",
+    "versionId": "f22826b2-b432-4699-a822-6904d2dff0ec",
+    "workflowId": "aLLZI3udrRCQUpkD",
+    "nodes": [
+      {
+        "parameters": {
+          "events": [
+            "BOOKING_CREATED"
+          ],
+          "options": {}
+        },
+        "id": "ad031a95-92c5-48e2-9abc-4c30031082b8",
+        "name": "Cal Trigger",
+        "type": "n8n-nodes-base.calTrigger",
+        "typeVersion": 2,
+        "position": [
+          1420,
+          340
+        ],
+        "webhookId": "bc30fd2a-6fe4-41e2-9563-1ccdd4844d4c",
+        "credentials": {
+          "calApi": {
+            "id": "8301falHLCvBgtTh",
+            "name": "Cal account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "events": [
+            "BOOKING_CANCELLED"
+          ],
+          "options": {}
+        },
+        "id": "e2c9a6c8-4bb9-43a2-8b22-cd5be3ffce99",
+        "name": "Cal Trigger1",
+        "type": "n8n-nodes-base.calTrigger",
+        "typeVersion": 2,
+        "position": [
+          1420,
+          720
+        ],
+        "webhookId": "a3519494-5f36-4ff0-aeae-901a00516f09",
+        "credentials": {
+          "calApi": {
+            "id": "8301falHLCvBgtTh",
+            "name": "Cal account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "events": [
+            "BOOKING_RESCHEDULED"
+          ],
+          "options": {}
+        },
+        "id": "b39587f1-ec4a-49b1-8263-8898e25d7e9b",
+        "name": "Cal Trigger2",
+        "type": "n8n-nodes-base.calTrigger",
+        "typeVersion": 2,
+        "position": [
+          1420,
+          540
+        ],
+        "webhookId": "5d2a55a2-fce1-498e-b06f-2f455be17c27",
+        "credentials": {
+          "calApi": {
+            "id": "8301falHLCvBgtTh",
+            "name": "Cal account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "events": [
+            "MEETING_ENDED"
+          ],
+          "options": {}
+        },
+        "id": "8f04e69b-0769-4a91-b91f-611a6fbaf7f8",
+        "name": "Cal Trigger3",
+        "type": "n8n-nodes-base.calTrigger",
+        "typeVersion": 2,
+        "position": [
+          1420,
+          920
+        ],
+        "webhookId": "0e2c5c17-a6b1-4932-bb88-813718f5e631",
+        "credentials": {
+          "calApi": {
+            "id": "8301falHLCvBgtTh",
+            "name": "Cal account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Cal Trigger": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "f22826b2-b432-4699-a822-6904d2dff0ec",
   "connections": {
     "Cal Trigger": {
       "main": [
@@ -117,8 +228,8 @@
   },
   "shared": [
     {
-      "createdAt": "2024-09-24T18:10:57.996Z",
       "updatedAt": "2024-09-24T18:10:57.996Z",
+      "createdAt": "2024-09-24T18:10:57.996Z",
       "role": "workflow:owner",
       "workflowId": "aLLZI3udrRCQUpkD",
       "projectId": "0wopg4LuKwAYZbx5"

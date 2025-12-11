@@ -1,0 +1,1412 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-10T16:50:25.606Z",
+    "createdAt": "2025-12-10T16:50:25.606Z",
+    "versionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66",
+    "workflowId": "2RkLxq0L4iKt55If",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "video-generation",
+          "options": {}
+        },
+        "id": "2e98a883-1705-494b-ad2e-76d7ed6ea77c",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1104,
+          208
+        ],
+        "webhookId": "video-generation-webhook"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "project-id",
+                "name": "projectId",
+                "value": "={{ $json.body.projectId }}",
+                "type": "string"
+              },
+              {
+                "id": "scenes",
+                "name": "scenes",
+                "value": "={{ $json.body.scenes }}",
+                "type": "array"
+              },
+              {
+                "id": "video-engine",
+                "name": "videoEngine",
+                "value": "={{ $json.body.videoEngine || 'Auto (Best Available)' }}",
+                "type": "string"
+              },
+              {
+                "id": "aspect-ratio",
+                "name": "aspectRatio",
+                "value": "={{ $json.body.aspectRatio || '16:9' }}",
+                "type": "string"
+              },
+              {
+                "id": "reference-images",
+                "name": "referenceImages",
+                "value": "={{ $json.body.referenceImages || [] }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "eec69888-51bd-459a-8438-8b8d7cd350e5",
+        "name": "Extract Parameters",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -880,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "jsCode": "// Determine which video engine to use\nconst videoEngine = $input.item.json.videoEngine;\nconst scenes = $input.item.json.scenes || [];\nconst aspectRatio = $input.item.json.aspectRatio;\n\nlet selectedEngine = 'luma'; // default fallback\n\nif (videoEngine === 'Google Veo 3' || videoEngine === 'Auto (Best Available)') {\n  selectedEngine = 'veo3';\n} else if (videoEngine === 'Runway ML Gen-3') {\n  selectedEngine = 'runway';\n} else if (videoEngine === 'Luma AI Dream Machine') {\n  selectedEngine = 'luma';\n} else if (videoEngine === 'Budget Mode (Lowest Cost)') {\n  selectedEngine = 'luma';\n}\n\n// Map aspect ratio to API format\nlet apiAspectRatio = '16:9';\nif (aspectRatio.includes('9:16')) apiAspectRatio = '9:16';\nelse if (aspectRatio.includes('1:1')) apiAspectRatio = '1:1';\n\nreturn {\n  ...($input.item.json),\n  selectedEngine,\n  apiAspectRatio\n};"
+        },
+        "id": "fd3704fd-2dc1-4d7c-af0f-82dcceb886ef",
+        "name": "Determine Video Engine",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -656,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "scenes",
+          "options": {}
+        },
+        "id": "557816d6-fd34-4d00-af2d-4fe591c5f2be",
+        "name": "Split Into Scenes",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          -448,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "veo3-check",
+                "leftValue": "={{ $json.selectedEngine }}",
+                "rightValue": "veo3",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "0526d0e6-926c-45f9-b356-f08523dd6dd8",
+        "name": "Use Veo 3?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -224,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:generateVideos",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({instances: [{prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement + '. ' + $json.scenes.mood, image: $json.referenceImages?.[0] ? {imageUri: $json.referenceImages[0]} : undefined}], parameters: {aspectRatio: $json.apiAspectRatio, duration: 8, resolution: '1080p', personGeneration: 'allow_adult'}}) }}",
+          "options": {
+            "timeout": 600000
+          }
+        },
+        "id": "6e7b4bdf-9465-47f5-b0e4-1ababbe71fa0",
+        "name": "Generate with Veo 3",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          0
+        ],
+        "credentials": {
+          "googleApi": {
+            "id": "PTTV4IuRG4mAo8vT",
+            "name": "Google Service Account account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "runway-check",
+                "leftValue": "={{ $json.selectedEngine }}",
+                "rightValue": "runway",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "1f82500a-a662-4825-b5da-de3cfd86a478",
+        "name": "Use Runway?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          0,
+          224
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://runwayml.p.rapidapi.com/generate/imageToVideo",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-RapidAPI-Key",
+                "value": "={{ $env.RAPIDAPI_KEY }}"
+              },
+              {
+                "name": "X-RapidAPI-Host",
+                "value": "runwayml.p.rapidapi.com"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({text_prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement, image_url: $json.referenceImages?.[0] || null, duration: 5, aspect_ratio: $json.apiAspectRatio}) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "6fc4ed4a-e01b-4bd0-beef-8174d260887c",
+        "name": "Generate with Runway",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          224,
+          144
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.lumalabs.ai/dream-machine/v1/generations",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "={{ 'Bearer ' + $env.LUMA_API_KEY }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement + '. ' + $json.scenes.mood, aspect_ratio: $json.apiAspectRatio, keyframes: $json.referenceImages?.[0] ? {frame0: {type: 'image', url: $json.referenceImages[0]}} : undefined, callback_url: $env.LUMA_CALLBACK_URL + '?projectId=' + $json.projectId + '&sceneId=' + $json.scenes.id}) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "e1410514-aaa8-47af-9850-e806c515c030",
+        "name": "Generate with Luma",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          224,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "amount": 30
+        },
+        "id": "7f1e2886-1b4b-4a01-b075-6840620aa1f0",
+        "name": "Wait for Veo 3",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          224,
+          0
+        ],
+        "webhookId": "c491d754-9d31-4a84-9a16-1bc8ff7eec7d"
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.name }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googleApi",
+          "options": {}
+        },
+        "id": "331164f6-3b23-48fe-ab80-aae1ea709c45",
+        "name": "Poll Veo 3 Status",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          448,
+          0
+        ],
+        "credentials": {
+          "googleApi": {
+            "id": "PTTV4IuRG4mAo8vT",
+            "name": "Google Service Account account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "veo3-done",
+                "leftValue": "={{ $json.done }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "733fab22-8358-45fe-9471-7898779e77b2",
+        "name": "Veo 3 Complete?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          672,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "amount": 10
+        },
+        "id": "b182b9e0-d022-460e-a595-b4d1199aede3",
+        "name": "Wait for Runway",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          448,
+          144
+        ],
+        "webhookId": "27fc1d43-3a51-471d-b60f-98acd6a22db8"
+      },
+      {
+        "parameters": {
+          "url": "https://runwayml.p.rapidapi.com/status",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "uuid",
+                "value": "={{ $('Generate with Runway').item.json.uuid }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-RapidAPI-Key",
+                "value": "={{ $env.RAPIDAPI_KEY }}"
+              },
+              {
+                "name": "X-RapidAPI-Host",
+                "value": "runwayml.p.rapidapi.com"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "56b34d08-8f0d-40f1-b9ac-03930bbf7631",
+        "name": "Poll Runway Status",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          672,
+          144
+        ]
+      },
+      {
+        "parameters": {
+          "amount": 15
+        },
+        "id": "44560635-c858-4120-b82b-bc689e600437",
+        "name": "Wait for Luma",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          448,
+          352
+        ],
+        "webhookId": "1e41ab53-8b89-497f-b304-2724fc9a953e"
+      },
+      {
+        "parameters": {
+          "url": "={{ 'https://api.lumalabs.ai/dream-machine/v1/generations/' + $('Generate with Luma').item.json.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "={{ 'Bearer ' + $env.LUMA_API_KEY }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "823b70b7-b091-4be8-90a9-f90f1e3b4751",
+        "name": "Poll Luma Status",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          672,
+          352
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineByPosition",
+          "options": {}
+        },
+        "id": "5d407c74-6d63-4574-9105-5f1a3cc5bb63",
+        "name": "Merge Video Results",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          1104,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "jsCode": "// Normalize video result from different engines\nconst input = $input.item.json;\nlet videoUrl = null;\nlet thumbnailUrl = null;\nlet status = 'pending';\n\n// Check for Veo 3 result\nif (input.response?.generatedVideos?.[0]?.video?.uri) {\n  videoUrl = input.response.generatedVideos[0].video.uri;\n  status = 'completed';\n}\n\n// Check for Runway result\nif (input.output_url || input.url) {\n  videoUrl = input.output_url || input.url;\n  thumbnailUrl = input.thumbnail_url;\n  status = 'completed';\n}\n\n// Check for Luma result\nif (input.assets?.video) {\n  videoUrl = input.assets.video;\n  thumbnailUrl = input.assets.thumbnail;\n  status = input.state === 'completed' ? 'completed' : 'pending';\n}\n\nreturn {\n  sceneId: input.scenes?.id || input.sceneId,\n  videoUrl,\n  thumbnailUrl,\n  status,\n  engine: input.selectedEngine,\n  duration: input.scenes?.duration || 8\n};"
+        },
+        "id": "c7cae71a-3d7c-45e3-93ac-7dde7c6861a0",
+        "name": "Normalize Video Results",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1328,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Aggregate all video clips\nconst clips = $input.all().map(item => item.json);\n\nreturn {\n  videoClips: clips.filter(c => c.status === 'completed'),\n  pendingClips: clips.filter(c => c.status === 'pending'),\n  totalClips: clips.length,\n  completedClips: clips.filter(c => c.status === 'completed').length\n};"
+        },
+        "id": "0eb7daa5-f702-4024-ace7-3dfc43b9ae95",
+        "name": "Aggregate All Clips",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1552,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify($json) }}",
+          "options": {}
+        },
+        "id": "8ea5c90d-d3d3-42b7-885d-9756c39e8f2a",
+        "name": "Respond to Webhook",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1760,
+          208
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Extract Parameters",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Parameters": {
+        "main": [
+          [
+            {
+              "node": "Determine Video Engine",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Determine Video Engine": {
+        "main": [
+          [
+            {
+              "node": "Split Into Scenes",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Into Scenes": {
+        "main": [
+          [
+            {
+              "node": "Use Veo 3?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Use Veo 3?": {
+        "main": [
+          [
+            {
+              "node": "Generate with Veo 3",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Use Runway?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate with Veo 3": {
+        "main": [
+          [
+            {
+              "node": "Wait for Veo 3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait for Veo 3": {
+        "main": [
+          [
+            {
+              "node": "Poll Veo 3 Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Poll Veo 3 Status": {
+        "main": [
+          [
+            {
+              "node": "Veo 3 Complete?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Veo 3 Complete?": {
+        "main": [
+          [
+            {
+              "node": "Merge Video Results",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Wait for Veo 3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Use Runway?": {
+        "main": [
+          [
+            {
+              "node": "Generate with Runway",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Generate with Luma",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate with Runway": {
+        "main": [
+          [
+            {
+              "node": "Wait for Runway",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait for Runway": {
+        "main": [
+          [
+            {
+              "node": "Poll Runway Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Poll Runway Status": {
+        "main": [
+          [
+            {
+              "node": "Merge Video Results",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Generate with Luma": {
+        "main": [
+          [
+            {
+              "node": "Wait for Luma",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait for Luma": {
+        "main": [
+          [
+            {
+              "node": "Poll Luma Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge Video Results": {
+        "main": [
+          [
+            {
+              "node": "Normalize Video Results",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Normalize Video Results": {
+        "main": [
+          [
+            {
+              "node": "Aggregate All Clips",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate All Clips": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66",
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Parameters": {
+      "main": [
+        [
+          {
+            "node": "Determine Video Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Video Engine": {
+      "main": [
+        [
+          {
+            "node": "Split Into Scenes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Into Scenes": {
+      "main": [
+        [
+          {
+            "node": "Use Veo 3?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Veo 3?": {
+      "main": [
+        [
+          {
+            "node": "Generate with Veo 3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Use Runway?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate with Veo 3": {
+      "main": [
+        [
+          {
+            "node": "Wait for Veo 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Veo 3": {
+      "main": [
+        [
+          {
+            "node": "Poll Veo 3 Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Veo 3 Status": {
+      "main": [
+        [
+          {
+            "node": "Veo 3 Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Veo 3 Complete?": {
+      "main": [
+        [
+          {
+            "node": "Merge Video Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait for Veo 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Runway?": {
+      "main": [
+        [
+          {
+            "node": "Generate with Runway",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate with Luma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate with Runway": {
+      "main": [
+        [
+          {
+            "node": "Wait for Runway",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Runway": {
+      "main": [
+        [
+          {
+            "node": "Poll Runway Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Poll Runway Status": {
+      "main": [
+        [
+          {
+            "node": "Merge Video Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Generate with Luma": {
+      "main": [
+        [
+          {
+            "node": "Wait for Luma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Luma": {
+      "main": [
+        [
+          {
+            "node": "Poll Luma Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Video Results": {
+      "main": [
+        [
+          {
+            "node": "Normalize Video Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Video Results": {
+      "main": [
+        [
+          {
+            "node": "Aggregate All Clips",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate All Clips": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-10T16:50:25.390Z",
+  "id": "2RkLxq0L4iKt55If",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI Music Video Generator - Video Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "video-generation",
+        "options": {}
+      },
+      "id": "2e98a883-1705-494b-ad2e-76d7ed6ea77c",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1104,
+        208
+      ],
+      "webhookId": "video-generation-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "project-id",
+              "name": "projectId",
+              "value": "={{ $json.body.projectId }}",
+              "type": "string"
+            },
+            {
+              "id": "scenes",
+              "name": "scenes",
+              "value": "={{ $json.body.scenes }}",
+              "type": "array"
+            },
+            {
+              "id": "video-engine",
+              "name": "videoEngine",
+              "value": "={{ $json.body.videoEngine || 'Auto (Best Available)' }}",
+              "type": "string"
+            },
+            {
+              "id": "aspect-ratio",
+              "name": "aspectRatio",
+              "value": "={{ $json.body.aspectRatio || '16:9' }}",
+              "type": "string"
+            },
+            {
+              "id": "reference-images",
+              "name": "referenceImages",
+              "value": "={{ $json.body.referenceImages || [] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eec69888-51bd-459a-8438-8b8d7cd350e5",
+      "name": "Extract Parameters",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Determine which video engine to use\nconst videoEngine = $input.item.json.videoEngine;\nconst scenes = $input.item.json.scenes || [];\nconst aspectRatio = $input.item.json.aspectRatio;\n\nlet selectedEngine = 'luma'; // default fallback\n\nif (videoEngine === 'Google Veo 3' || videoEngine === 'Auto (Best Available)') {\n  selectedEngine = 'veo3';\n} else if (videoEngine === 'Runway ML Gen-3') {\n  selectedEngine = 'runway';\n} else if (videoEngine === 'Luma AI Dream Machine') {\n  selectedEngine = 'luma';\n} else if (videoEngine === 'Budget Mode (Lowest Cost)') {\n  selectedEngine = 'luma';\n}\n\n// Map aspect ratio to API format\nlet apiAspectRatio = '16:9';\nif (aspectRatio.includes('9:16')) apiAspectRatio = '9:16';\nelse if (aspectRatio.includes('1:1')) apiAspectRatio = '1:1';\n\nreturn {\n  ...($input.item.json),\n  selectedEngine,\n  apiAspectRatio\n};"
+      },
+      "id": "fd3704fd-2dc1-4d7c-af0f-82dcceb886ef",
+      "name": "Determine Video Engine",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "scenes",
+        "options": {}
+      },
+      "id": "557816d6-fd34-4d00-af2d-4fe591c5f2be",
+      "name": "Split Into Scenes",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "veo3-check",
+              "leftValue": "={{ $json.selectedEngine }}",
+              "rightValue": "veo3",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0526d0e6-926c-45f9-b356-f08523dd6dd8",
+      "name": "Use Veo 3?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-generate-preview:generateVideos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({instances: [{prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement + '. ' + $json.scenes.mood, image: $json.referenceImages?.[0] ? {imageUri: $json.referenceImages[0]} : undefined}], parameters: {aspectRatio: $json.apiAspectRatio, duration: 8, resolution: '1080p', personGeneration: 'allow_adult'}}) }}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "6e7b4bdf-9465-47f5-b0e4-1ababbe71fa0",
+      "name": "Generate with Veo 3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "PTTV4IuRG4mAo8vT",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "runway-check",
+              "leftValue": "={{ $json.selectedEngine }}",
+              "rightValue": "runway",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1f82500a-a662-4825-b5da-de3cfd86a478",
+      "name": "Use Runway?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        0,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://runwayml.p.rapidapi.com/generate/imageToVideo",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-RapidAPI-Key",
+              "value": "={{ $env.RAPIDAPI_KEY }}"
+            },
+            {
+              "name": "X-RapidAPI-Host",
+              "value": "runwayml.p.rapidapi.com"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({text_prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement, image_url: $json.referenceImages?.[0] || null, duration: 5, aspect_ratio: $json.apiAspectRatio}) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "6fc4ed4a-e01b-4bd0-beef-8174d260887c",
+      "name": "Generate with Runway",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.lumalabs.ai/dream-machine/v1/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $env.LUMA_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({prompt: $json.scenes.prompt + '. ' + $json.scenes.cameraMovement + '. ' + $json.scenes.mood, aspect_ratio: $json.apiAspectRatio, keyframes: $json.referenceImages?.[0] ? {frame0: {type: 'image', url: $json.referenceImages[0]}} : undefined, callback_url: $env.LUMA_CALLBACK_URL + '?projectId=' + $json.projectId + '&sceneId=' + $json.scenes.id}) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "e1410514-aaa8-47af-9850-e806c515c030",
+      "name": "Generate with Luma",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "id": "7f1e2886-1b4b-4a01-b075-6840620aa1f0",
+      "name": "Wait for Veo 3",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "webhookId": "c491d754-9d31-4a84-9a16-1bc8ff7eec7d"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.name }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "options": {}
+      },
+      "id": "331164f6-3b23-48fe-ab80-aae1ea709c45",
+      "name": "Poll Veo 3 Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "PTTV4IuRG4mAo8vT",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "veo3-done",
+              "leftValue": "={{ $json.done }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "733fab22-8358-45fe-9471-7898779e77b2",
+      "name": "Veo 3 Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "id": "b182b9e0-d022-460e-a595-b4d1199aede3",
+      "name": "Wait for Runway",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        144
+      ],
+      "webhookId": "27fc1d43-3a51-471d-b60f-98acd6a22db8"
+    },
+    {
+      "parameters": {
+        "url": "https://runwayml.p.rapidapi.com/status",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "uuid",
+              "value": "={{ $('Generate with Runway').item.json.uuid }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-RapidAPI-Key",
+              "value": "={{ $env.RAPIDAPI_KEY }}"
+            },
+            {
+              "name": "X-RapidAPI-Host",
+              "value": "runwayml.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "56b34d08-8f0d-40f1-b9ac-03930bbf7631",
+      "name": "Poll Runway Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "id": "44560635-c858-4120-b82b-bc689e600437",
+      "name": "Wait for Luma",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        352
+      ],
+      "webhookId": "1e41ab53-8b89-497f-b304-2724fc9a953e"
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://api.lumalabs.ai/dream-machine/v1/generations/' + $('Generate with Luma').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ 'Bearer ' + $env.LUMA_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "823b70b7-b091-4be8-90a9-f90f1e3b4751",
+      "name": "Poll Luma Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "5d407c74-6d63-4574-9105-5f1a3cc5bb63",
+      "name": "Merge Video Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Normalize video result from different engines\nconst input = $input.item.json;\nlet videoUrl = null;\nlet thumbnailUrl = null;\nlet status = 'pending';\n\n// Check for Veo 3 result\nif (input.response?.generatedVideos?.[0]?.video?.uri) {\n  videoUrl = input.response.generatedVideos[0].video.uri;\n  status = 'completed';\n}\n\n// Check for Runway result\nif (input.output_url || input.url) {\n  videoUrl = input.output_url || input.url;\n  thumbnailUrl = input.thumbnail_url;\n  status = 'completed';\n}\n\n// Check for Luma result\nif (input.assets?.video) {\n  videoUrl = input.assets.video;\n  thumbnailUrl = input.assets.thumbnail;\n  status = input.state === 'completed' ? 'completed' : 'pending';\n}\n\nreturn {\n  sceneId: input.scenes?.id || input.sceneId,\n  videoUrl,\n  thumbnailUrl,\n  status,\n  engine: input.selectedEngine,\n  duration: input.scenes?.duration || 8\n};"
+      },
+      "id": "c7cae71a-3d7c-45e3-93ac-7dde7c6861a0",
+      "name": "Normalize Video Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all video clips\nconst clips = $input.all().map(item => item.json);\n\nreturn {\n  videoClips: clips.filter(c => c.status === 'completed'),\n  pendingClips: clips.filter(c => c.status === 'pending'),\n  totalClips: clips.length,\n  completedClips: clips.filter(c => c.status === 'completed').length\n};"
+      },
+      "id": "0eb7daa5-f702-4024-ace7-3dfc43b9ae95",
+      "name": "Aggregate All Clips",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "8ea5c90d-d3d3-42b7-885d-9756c39e8f2a",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        208
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-10T16:50:25.594Z",
+      "createdAt": "2025-12-10T16:50:25.594Z",
+      "role": "workflow:owner",
+      "workflowId": "2RkLxq0L4iKt55If",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-12-10T16:13:35.325Z",
+      "createdAt": "2025-12-10T16:13:35.325Z",
+      "id": "D0Uujttz2po4uPU0",
+      "name": "Video Generation"
+    },
+    {
+      "updatedAt": "2025-12-10T14:57:55.317Z",
+      "createdAt": "2025-12-10T14:57:55.317Z",
+      "id": "HmSN4A1CMN0RXv4U",
+      "name": "AI Music Video"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-10T16:50:27.197Z",
+  "versionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66"
+}

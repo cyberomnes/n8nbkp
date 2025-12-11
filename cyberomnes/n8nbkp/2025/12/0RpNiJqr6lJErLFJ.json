@@ -1,0 +1,1874 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-10T16:40:47.304Z",
+    "createdAt": "2025-12-10T16:40:47.304Z",
+    "versionId": "53d56597-7949-4ffa-90ec-50eb0e54741f",
+    "workflowId": "0RpNiJqr6lJErLFJ",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "music-video-generator",
+          "options": {}
+        },
+        "id": "69253149-beec-47e1-9721-b3d1472e3d37",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -2384,
+          64
+        ],
+        "webhookId": "music-video-webhook"
+      },
+      {
+        "parameters": {
+          "path": "music-video-form",
+          "formTitle": "AI Music Video Generator",
+          "formDescription": "Create stunning AI-powered music videos from your songs",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Song Source",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Suno URL"
+                    },
+                    {
+                      "option": "YouTube URL"
+                    },
+                    {
+                      "option": "Direct Audio URL"
+                    },
+                    {
+                      "option": "Upload File"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Song URL",
+                "placeholder": "https://suno.com/song/..."
+              },
+              {
+                "fieldLabel": "Lyrics",
+                "fieldType": "textarea",
+                "placeholder": "Paste lyrics here or leave empty for auto-extraction"
+              },
+              {
+                "fieldLabel": "Visual Style",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Cinematic Realistic"
+                    },
+                    {
+                      "option": "Animated/Cartoon"
+                    },
+                    {
+                      "option": "Abstract/Artistic"
+                    },
+                    {
+                      "option": "Retro/Vintage"
+                    },
+                    {
+                      "option": "Futuristic/Sci-Fi"
+                    },
+                    {
+                      "option": "Nature/Organic"
+                    },
+                    {
+                      "option": "Urban/Street"
+                    },
+                    {
+                      "option": "Custom (specify in notes)"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Output Type",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Full Music Video"
+                    },
+                    {
+                      "option": "Short Clips (Social Media)"
+                    },
+                    {
+                      "option": "Images Only"
+                    },
+                    {
+                      "option": "Full Package (Video + Shorts + Images)"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Video Engine Preference",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "Auto (Best Available)"
+                    },
+                    {
+                      "option": "Google Veo 3"
+                    },
+                    {
+                      "option": "Runway ML Gen-3"
+                    },
+                    {
+                      "option": "Luma AI Dream Machine"
+                    },
+                    {
+                      "option": "Budget Mode (Lowest Cost)"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Add Lyrics to Video",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "No Lyrics"
+                    },
+                    {
+                      "option": "Karaoke Style"
+                    },
+                    {
+                      "option": "Subtitles (Bottom)"
+                    },
+                    {
+                      "option": "Artistic Typography"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Aspect Ratio",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "16:9 (YouTube/Landscape)"
+                    },
+                    {
+                      "option": "9:16 (TikTok/Reels/Shorts)"
+                    },
+                    {
+                      "option": "1:1 (Instagram Square)"
+                    }
+                  ]
+                },
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Reference Image URLs",
+                "fieldType": "textarea",
+                "placeholder": "Enter image URLs (one per line) for visual reference"
+              },
+              {
+                "fieldLabel": "Additional Notes",
+                "fieldType": "textarea",
+                "placeholder": "Any specific requirements or preferences"
+              },
+              {
+                "fieldLabel": "Email for Notification",
+                "placeholder": "your@email.com",
+                "requiredField": true
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "1f509470-6743-412f-bd8b-ec644cdbcffc",
+        "name": "Form Trigger",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.1,
+        "position": [
+          -2384,
+          272
+        ],
+        "webhookId": "music-video-form"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "project-id",
+                "name": "projectId",
+                "value": "={{ $json.body?.projectId || $('Form Trigger').item.json.submissionId || $now.format('yyyyMMdd-HHmmss') }}",
+                "type": "string"
+              },
+              {
+                "id": "song-source",
+                "name": "songSource",
+                "value": "={{ $json.body?.songSource || $('Form Trigger').item.json['Song Source'] }}",
+                "type": "string"
+              },
+              {
+                "id": "song-url",
+                "name": "songUrl",
+                "value": "={{ $json.body?.songUrl || $('Form Trigger').item.json['Song URL'] }}",
+                "type": "string"
+              },
+              {
+                "id": "lyrics",
+                "name": "lyrics",
+                "value": "={{ $json.body?.lyrics || $('Form Trigger').item.json['Lyrics'] || '' }}",
+                "type": "string"
+              },
+              {
+                "id": "visual-style",
+                "name": "visualStyle",
+                "value": "={{ $json.body?.visualStyle || $('Form Trigger').item.json['Visual Style'] }}",
+                "type": "string"
+              },
+              {
+                "id": "output-type",
+                "name": "outputType",
+                "value": "={{ $json.body?.outputType || $('Form Trigger').item.json['Output Type'] }}",
+                "type": "string"
+              },
+              {
+                "id": "video-engine",
+                "name": "videoEngine",
+                "value": "={{ $json.body?.videoEngine || $('Form Trigger').item.json['Video Engine Preference'] }}",
+                "type": "string"
+              },
+              {
+                "id": "lyric-overlay",
+                "name": "lyricOverlay",
+                "value": "={{ $json.body?.lyricOverlay || $('Form Trigger').item.json['Add Lyrics to Video'] }}",
+                "type": "string"
+              },
+              {
+                "id": "aspect-ratio",
+                "name": "aspectRatio",
+                "value": "={{ $json.body?.aspectRatio || $('Form Trigger').item.json['Aspect Ratio'] }}",
+                "type": "string"
+              },
+              {
+                "id": "reference-images",
+                "name": "referenceImages",
+                "value": "={{ ($json.body?.referenceImages || $('Form Trigger').item.json['Reference Image URLs'] || '').split('\\n').filter(url => url.trim()) }}",
+                "type": "array"
+              },
+              {
+                "id": "notes",
+                "name": "additionalNotes",
+                "value": "={{ $json.body?.notes || $('Form Trigger').item.json['Additional Notes'] || '' }}",
+                "type": "string"
+              },
+              {
+                "id": "email",
+                "name": "notificationEmail",
+                "value": "={{ $json.body?.email || $('Form Trigger').item.json['Email for Notification'] }}",
+                "type": "string"
+              },
+              {
+                "id": "status",
+                "name": "status",
+                "value": "initiated",
+                "type": "string"
+              },
+              {
+                "id": "created-at",
+                "name": "createdAt",
+                "value": "={{ $now.toISO() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "56a6e24b-4e2a-47d8-90bc-b644d96012a4",
+        "name": "Normalize Input Data",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -2144,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "has-song-url",
+                "leftValue": "={{ $json.songUrl }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "26fac624-037f-4024-b170-08f2bf14bb85",
+        "name": "Validate Input",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -1920,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.SONG_ANALYSIS_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "1ad669af-2cd3-41c4-a7bc-c5db769ebcb6",
+        "name": "Call Song Analysis Workflow",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1680,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "analysis-data",
+                "name": "analysisData",
+                "value": "={{ $json }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "949f8a34-55f6-4e42-a43e-dbecb6ebca1e",
+        "name": "Store Analysis Results",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -1456,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.SCENE_GENERATION_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({...($('Normalize Input Data').item.json), analysisData: $json.analysisData}) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "e69bf254-317d-45d7-a21d-6389136df7b6",
+        "name": "Call Scene Generation Workflow",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -1232,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "output-type-check",
+                "leftValue": "={{ $('Normalize Input Data').item.json.outputType }}",
+                "rightValue": "Images Only",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "ad1b09e0-1800-4a00-a6ce-86884143dcdc",
+        "name": "Video Generation Needed?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -1024,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.VIDEO_GENERATION_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, scenes: $json.scenes, videoEngine: $('Normalize Input Data').item.json.videoEngine, aspectRatio: $('Normalize Input Data').item.json.aspectRatio, referenceImages: $('Normalize Input Data').item.json.referenceImages}) }}",
+          "options": {
+            "timeout": 600000
+          }
+        },
+        "id": "c174fe0c-b16a-4bf9-93c7-fb1e6142b477",
+        "name": "Call Video Generation Workflow",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -784,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.IMAGE_GENERATION_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, scenes: $json.scenes, visualStyle: $('Normalize Input Data').item.json.visualStyle, referenceImages: $('Normalize Input Data').item.json.referenceImages}) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "cd5fccf9-9075-4416-b790-99c6abdddbf2",
+        "name": "Call Image Generation Workflow",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -784,
+          192
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineAll",
+          "options": {}
+        },
+        "id": "a6c0e37a-754e-4142-a883-e32098d7e677",
+        "name": "Merge Video & Images",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          -512,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "has-video-clips",
+                "leftValue": "={{ $json.videoClips?.length > 0 }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "49920924-612d-4542-8464-fda1a1c5f142",
+        "name": "Composition Needed?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -304,
+          64
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.VIDEO_COMPOSITION_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, videoClips: $json.videoClips, audioUrl: $('Store Analysis Results').item.json.analysisData.audioUrl, lyrics: $('Normalize Input Data').item.json.lyrics, lyricOverlay: $('Normalize Input Data').item.json.lyricOverlay, analysisData: $('Store Analysis Results').item.json.analysisData}) }}",
+          "options": {
+            "timeout": 600000
+          }
+        },
+        "id": "e64660b7-9f09-4161-ae39-d1dd55cdb0ed",
+        "name": "Call Video Composition Workflow",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -64,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "social-media-pack",
+                "leftValue": "={{ $('Normalize Input Data').item.json.outputType }}",
+                "rightValue": "Full Package",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "id": "212f9347-b013-4034-887a-5627464fa084",
+        "name": "Social Media Pack?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          176,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $env.SOCIAL_MEDIA_WEBHOOK_URL }}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, finalVideoUrl: $json.finalVideoUrl, audioUrl: $('Store Analysis Results').item.json.analysisData.audioUrl, images: $('Merge Video & Images').item.json.images}) }}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "5b620658-04e0-4046-8fce-52b21e17dbe8",
+        "name": "Generate Social Media Content",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          384,
+          -144
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineAll",
+          "options": {}
+        },
+        "id": "ee5b67da-5def-4b91-ad82-0c09a6a7836d",
+        "name": "Merge All Outputs",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          608,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "final-output",
+                "name": "output",
+                "value": "={{ {projectId: $('Normalize Input Data').item.json.projectId, status: 'completed', finalVideoUrl: $json.finalVideoUrl || null, socialMediaPack: $json.socialMediaContent || null, images: $json.images || [], createdAt: $('Normalize Input Data').item.json.createdAt, completedAt: $now.toISO()} }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "e2971979-126f-4a37-8735-b03f5b86a0df",
+        "name": "Prepare Final Output",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          832,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.sendgrid.com/v3/mail/send",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "sendGridApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({personalizations: [{to: [{email: $('Normalize Input Data').item.json.notificationEmail}]}], from: {email: 'noreply@yourdomain.com', name: 'AI Music Video Generator'}, subject: 'Your Music Video is Ready! 🎬', content: [{type: 'text/html', value: '<h1>Your music video is ready!</h1><p>Project ID: ' + $json.output.projectId + '</p><p>Video URL: ' + ($json.output.finalVideoUrl || 'N/A') + '</p>'}]}) }}",
+          "options": {}
+        },
+        "id": "dcdbff80-db90-4abe-a440-bd0f57fc93da",
+        "name": "Send Email Notification",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1056,
+          -32
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "UwqMvz0BU9Uid8ha",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify($json.output) }}",
+          "options": {}
+        },
+        "id": "ef0dd25c-8b92-494d-b1e8-c66210dcdb55",
+        "name": "Respond to Webhook",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1264,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={\"error\": \"Missing required field: songUrl\", \"message\": \"Please provide a valid song URL or upload an audio file\"}",
+          "options": {
+            "responseCode": 400
+          }
+        },
+        "id": "2f1fbef4-cf7c-4e04-a4f4-a32ad0c4fa2e",
+        "name": "Validation Error Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          -1680,
+          288
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Normalize Input Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Form Trigger": {
+        "main": [
+          [
+            {
+              "node": "Normalize Input Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Normalize Input Data": {
+        "main": [
+          [
+            {
+              "node": "Validate Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validate Input": {
+        "main": [
+          [
+            {
+              "node": "Call Song Analysis Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Validation Error Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Song Analysis Workflow": {
+        "main": [
+          [
+            {
+              "node": "Store Analysis Results",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Store Analysis Results": {
+        "main": [
+          [
+            {
+              "node": "Call Scene Generation Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Scene Generation Workflow": {
+        "main": [
+          [
+            {
+              "node": "Video Generation Needed?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Video Generation Needed?": {
+        "main": [
+          [
+            {
+              "node": "Call Video Generation Workflow",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Call Image Generation Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Call Image Generation Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Video Generation Workflow": {
+        "main": [
+          [
+            {
+              "node": "Merge Video & Images",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Image Generation Workflow": {
+        "main": [
+          [
+            {
+              "node": "Merge Video & Images",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Merge Video & Images": {
+        "main": [
+          [
+            {
+              "node": "Composition Needed?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Composition Needed?": {
+        "main": [
+          [
+            {
+              "node": "Call Video Composition Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Prepare Final Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Video Composition Workflow": {
+        "main": [
+          [
+            {
+              "node": "Social Media Pack?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Social Media Pack?": {
+        "main": [
+          [
+            {
+              "node": "Generate Social Media Content",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Merge All Outputs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Social Media Content": {
+        "main": [
+          [
+            {
+              "node": "Merge All Outputs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge All Outputs": {
+        "main": [
+          [
+            {
+              "node": "Prepare Final Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Final Output": {
+        "main": [
+          [
+            {
+              "node": "Send Email Notification",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Email Notification": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "53d56597-7949-4ffa-90ec-50eb0e54741f",
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Normalize Input Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Input Data": {
+      "main": [
+        [
+          {
+            "node": "Validate Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Input": {
+      "main": [
+        [
+          {
+            "node": "Call Song Analysis Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validation Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Song Analysis Workflow": {
+      "main": [
+        [
+          {
+            "node": "Store Analysis Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Analysis Results": {
+      "main": [
+        [
+          {
+            "node": "Call Scene Generation Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Scene Generation Workflow": {
+      "main": [
+        [
+          {
+            "node": "Video Generation Needed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video Generation Needed?": {
+      "main": [
+        [
+          {
+            "node": "Call Video Generation Workflow",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call Image Generation Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call Image Generation Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Video Generation Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge Video & Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Image Generation Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge Video & Images",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Video & Images": {
+      "main": [
+        [
+          {
+            "node": "Composition Needed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Composition Needed?": {
+      "main": [
+        [
+          {
+            "node": "Call Video Composition Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Video Composition Workflow": {
+      "main": [
+        [
+          {
+            "node": "Social Media Pack?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Social Media Pack?": {
+      "main": [
+        [
+          {
+            "node": "Generate Social Media Content",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge All Outputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Social Media Content": {
+      "main": [
+        [
+          {
+            "node": "Merge All Outputs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge All Outputs": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Final Output": {
+      "main": [
+        [
+          {
+            "node": "Send Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email Notification": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-10T16:13:40.217Z",
+  "id": "0RpNiJqr6lJErLFJ",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI Music Video Generator - Master Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "music-video-generator",
+        "options": {}
+      },
+      "id": "69253149-beec-47e1-9721-b3d1472e3d37",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -2384,
+        64
+      ],
+      "webhookId": "music-video-webhook"
+    },
+    {
+      "parameters": {
+        "path": "music-video-form",
+        "formTitle": "AI Music Video Generator",
+        "formDescription": "Create stunning AI-powered music videos from your songs",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Song Source",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Suno URL"
+                  },
+                  {
+                    "option": "YouTube URL"
+                  },
+                  {
+                    "option": "Direct Audio URL"
+                  },
+                  {
+                    "option": "Upload File"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Song URL",
+              "placeholder": "https://suno.com/song/..."
+            },
+            {
+              "fieldLabel": "Lyrics",
+              "fieldType": "textarea",
+              "placeholder": "Paste lyrics here or leave empty for auto-extraction"
+            },
+            {
+              "fieldLabel": "Visual Style",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Cinematic Realistic"
+                  },
+                  {
+                    "option": "Animated/Cartoon"
+                  },
+                  {
+                    "option": "Abstract/Artistic"
+                  },
+                  {
+                    "option": "Retro/Vintage"
+                  },
+                  {
+                    "option": "Futuristic/Sci-Fi"
+                  },
+                  {
+                    "option": "Nature/Organic"
+                  },
+                  {
+                    "option": "Urban/Street"
+                  },
+                  {
+                    "option": "Custom (specify in notes)"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Output Type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Full Music Video"
+                  },
+                  {
+                    "option": "Short Clips (Social Media)"
+                  },
+                  {
+                    "option": "Images Only"
+                  },
+                  {
+                    "option": "Full Package (Video + Shorts + Images)"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Video Engine Preference",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Auto (Best Available)"
+                  },
+                  {
+                    "option": "Google Veo 3"
+                  },
+                  {
+                    "option": "Runway ML Gen-3"
+                  },
+                  {
+                    "option": "Luma AI Dream Machine"
+                  },
+                  {
+                    "option": "Budget Mode (Lowest Cost)"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Add Lyrics to Video",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "No Lyrics"
+                  },
+                  {
+                    "option": "Karaoke Style"
+                  },
+                  {
+                    "option": "Subtitles (Bottom)"
+                  },
+                  {
+                    "option": "Artistic Typography"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Aspect Ratio",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "16:9 (YouTube/Landscape)"
+                  },
+                  {
+                    "option": "9:16 (TikTok/Reels/Shorts)"
+                  },
+                  {
+                    "option": "1:1 (Instagram Square)"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Reference Image URLs",
+              "fieldType": "textarea",
+              "placeholder": "Enter image URLs (one per line) for visual reference"
+            },
+            {
+              "fieldLabel": "Additional Notes",
+              "fieldType": "textarea",
+              "placeholder": "Any specific requirements or preferences"
+            },
+            {
+              "fieldLabel": "Email for Notification",
+              "placeholder": "your@email.com",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1f509470-6743-412f-bd8b-ec644cdbcffc",
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        -2384,
+        272
+      ],
+      "webhookId": "music-video-form"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "project-id",
+              "name": "projectId",
+              "value": "={{ $json.body?.projectId || $('Form Trigger').item.json.submissionId || $now.format('yyyyMMdd-HHmmss') }}",
+              "type": "string"
+            },
+            {
+              "id": "song-source",
+              "name": "songSource",
+              "value": "={{ $json.body?.songSource || $('Form Trigger').item.json['Song Source'] }}",
+              "type": "string"
+            },
+            {
+              "id": "song-url",
+              "name": "songUrl",
+              "value": "={{ $json.body?.songUrl || $('Form Trigger').item.json['Song URL'] }}",
+              "type": "string"
+            },
+            {
+              "id": "lyrics",
+              "name": "lyrics",
+              "value": "={{ $json.body?.lyrics || $('Form Trigger').item.json['Lyrics'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "visual-style",
+              "name": "visualStyle",
+              "value": "={{ $json.body?.visualStyle || $('Form Trigger').item.json['Visual Style'] }}",
+              "type": "string"
+            },
+            {
+              "id": "output-type",
+              "name": "outputType",
+              "value": "={{ $json.body?.outputType || $('Form Trigger').item.json['Output Type'] }}",
+              "type": "string"
+            },
+            {
+              "id": "video-engine",
+              "name": "videoEngine",
+              "value": "={{ $json.body?.videoEngine || $('Form Trigger').item.json['Video Engine Preference'] }}",
+              "type": "string"
+            },
+            {
+              "id": "lyric-overlay",
+              "name": "lyricOverlay",
+              "value": "={{ $json.body?.lyricOverlay || $('Form Trigger').item.json['Add Lyrics to Video'] }}",
+              "type": "string"
+            },
+            {
+              "id": "aspect-ratio",
+              "name": "aspectRatio",
+              "value": "={{ $json.body?.aspectRatio || $('Form Trigger').item.json['Aspect Ratio'] }}",
+              "type": "string"
+            },
+            {
+              "id": "reference-images",
+              "name": "referenceImages",
+              "value": "={{ ($json.body?.referenceImages || $('Form Trigger').item.json['Reference Image URLs'] || '').split('\\n').filter(url => url.trim()) }}",
+              "type": "array"
+            },
+            {
+              "id": "notes",
+              "name": "additionalNotes",
+              "value": "={{ $json.body?.notes || $('Form Trigger').item.json['Additional Notes'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "email",
+              "name": "notificationEmail",
+              "value": "={{ $json.body?.email || $('Form Trigger').item.json['Email for Notification'] }}",
+              "type": "string"
+            },
+            {
+              "id": "status",
+              "name": "status",
+              "value": "initiated",
+              "type": "string"
+            },
+            {
+              "id": "created-at",
+              "name": "createdAt",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "56a6e24b-4e2a-47d8-90bc-b644d96012a4",
+      "name": "Normalize Input Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2144,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-song-url",
+              "leftValue": "={{ $json.songUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "26fac624-037f-4024-b170-08f2bf14bb85",
+      "name": "Validate Input",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1920,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.SONG_ANALYSIS_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "1ad669af-2cd3-41c4-a7bc-c5db769ebcb6",
+      "name": "Call Song Analysis Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1680,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "analysis-data",
+              "name": "analysisData",
+              "value": "={{ $json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "949f8a34-55f6-4e42-a43e-dbecb6ebca1e",
+      "name": "Store Analysis Results",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1456,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.SCENE_GENERATION_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({...($('Normalize Input Data').item.json), analysisData: $json.analysisData}) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "e69bf254-317d-45d7-a21d-6389136df7b6",
+      "name": "Call Scene Generation Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1232,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "output-type-check",
+              "leftValue": "={{ $('Normalize Input Data').item.json.outputType }}",
+              "rightValue": "Images Only",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ad1b09e0-1800-4a00-a6ce-86884143dcdc",
+      "name": "Video Generation Needed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.VIDEO_GENERATION_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, scenes: $json.scenes, videoEngine: $('Normalize Input Data').item.json.videoEngine, aspectRatio: $('Normalize Input Data').item.json.aspectRatio, referenceImages: $('Normalize Input Data').item.json.referenceImages}) }}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "c174fe0c-b16a-4bf9-93c7-fb1e6142b477",
+      "name": "Call Video Generation Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.IMAGE_GENERATION_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, scenes: $json.scenes, visualStyle: $('Normalize Input Data').item.json.visualStyle, referenceImages: $('Normalize Input Data').item.json.referenceImages}) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "cd5fccf9-9075-4416-b790-99c6abdddbf2",
+      "name": "Call Image Generation Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -784,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "a6c0e37a-754e-4142-a883-e32098d7e677",
+      "name": "Merge Video & Images",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-video-clips",
+              "leftValue": "={{ $json.videoClips?.length > 0 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "49920924-612d-4542-8464-fda1a1c5f142",
+      "name": "Composition Needed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.VIDEO_COMPOSITION_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, videoClips: $json.videoClips, audioUrl: $('Store Analysis Results').item.json.analysisData.audioUrl, lyrics: $('Normalize Input Data').item.json.lyrics, lyricOverlay: $('Normalize Input Data').item.json.lyricOverlay, analysisData: $('Store Analysis Results').item.json.analysisData}) }}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "e64660b7-9f09-4161-ae39-d1dd55cdb0ed",
+      "name": "Call Video Composition Workflow",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "social-media-pack",
+              "leftValue": "={{ $('Normalize Input Data').item.json.outputType }}",
+              "rightValue": "Full Package",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "212f9347-b013-4034-887a-5627464fa084",
+      "name": "Social Media Pack?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.SOCIAL_MEDIA_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({projectId: $('Normalize Input Data').item.json.projectId, finalVideoUrl: $json.finalVideoUrl, audioUrl: $('Store Analysis Results').item.json.analysisData.audioUrl, images: $('Merge Video & Images').item.json.images}) }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "5b620658-04e0-4046-8fce-52b21e17dbe8",
+      "name": "Generate Social Media Content",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        384,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "ee5b67da-5def-4b91-ad82-0c09a6a7836d",
+      "name": "Merge All Outputs",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        608,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "final-output",
+              "name": "output",
+              "value": "={{ {projectId: $('Normalize Input Data').item.json.projectId, status: 'completed', finalVideoUrl: $json.finalVideoUrl || null, socialMediaPack: $json.socialMediaContent || null, images: $json.images || [], createdAt: $('Normalize Input Data').item.json.createdAt, completedAt: $now.toISO()} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e2971979-126f-4a37-8735-b03f5b86a0df",
+      "name": "Prepare Final Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.sendgrid.com/v3/mail/send",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "sendGridApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({personalizations: [{to: [{email: $('Normalize Input Data').item.json.notificationEmail}]}], from: {email: 'noreply@yourdomain.com', name: 'AI Music Video Generator'}, subject: 'Your Music Video is Ready! 🎬', content: [{type: 'text/html', value: '<h1>Your music video is ready!</h1><p>Project ID: ' + $json.output.projectId + '</p><p>Video URL: ' + ($json.output.finalVideoUrl || 'N/A') + '</p>'}]}) }}",
+        "options": {}
+      },
+      "id": "dcdbff80-db90-4abe-a440-bd0f57fc93da",
+      "name": "Send Email Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1056,
+        -32
+      ],
+      "credentials": {
+        "sendGridApi": {
+          "id": "UwqMvz0BU9Uid8ha",
+          "name": "SendGrid account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.output) }}",
+        "options": {}
+      },
+      "id": "ef0dd25c-8b92-494d-b1e8-c66210dcdb55",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1264,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"error\": \"Missing required field: songUrl\", \"message\": \"Please provide a valid song URL or upload an audio file\"}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "2f1fbef4-cf7c-4e04-a4f4-a32ad0c4fa2e",
+      "name": "Validation Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1680,
+        288
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-10T16:13:40.320Z",
+      "createdAt": "2025-12-10T16:13:40.320Z",
+      "role": "workflow:owner",
+      "workflowId": "0RpNiJqr6lJErLFJ",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-12-10T16:13:35.325Z",
+      "createdAt": "2025-12-10T16:13:35.325Z",
+      "id": "D0Uujttz2po4uPU0",
+      "name": "Video Generation"
+    },
+    {
+      "updatedAt": "2025-12-10T14:57:55.317Z",
+      "createdAt": "2025-12-10T14:57:55.317Z",
+      "id": "HmSN4A1CMN0RXv4U",
+      "name": "AI Music Video"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2025-12-10T16:40:47.300Z",
+  "versionId": "53d56597-7949-4ffa-90ec-50eb0e54741f"
+}

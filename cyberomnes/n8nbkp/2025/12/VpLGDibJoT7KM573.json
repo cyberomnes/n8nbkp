@@ -1,0 +1,1134 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-10T16:43:00.212Z",
+    "createdAt": "2025-12-10T16:43:00.212Z",
+    "versionId": "285595b7-74b5-43e1-bc40-423dcbda9d01",
+    "workflowId": "VpLGDibJoT7KM573",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "song-analysis",
+          "options": {}
+        },
+        "id": "710efc28-0024-4504-9240-1c52a517636a",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -1104,
+          112
+        ],
+        "webhookId": "song-analysis-webhook"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "project-id",
+                "name": "projectId",
+                "value": "={{ $json.body.projectId }}",
+                "type": "string"
+              },
+              {
+                "id": "song-url",
+                "name": "songUrl",
+                "value": "={{ $json.body.songUrl }}",
+                "type": "string"
+              },
+              {
+                "id": "lyrics-provided",
+                "name": "lyricsProvided",
+                "value": "={{ $json.body.lyrics || '' }}",
+                "type": "string"
+              },
+              {
+                "id": "visual-style",
+                "name": "visualStyle",
+                "value": "={{ $json.body.visualStyle }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "c6d84586-ea2e-42c0-9517-c6619ecfa246",
+        "name": "Extract Parameters",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -880,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.songUrl }}",
+          "options": {
+            "response": {
+              "response": {
+                "fullResponse": true
+              }
+            }
+          }
+        },
+        "id": "e06e5b95-0d7d-40e6-aa98-d43796812ce0",
+        "name": "Download Audio",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -656,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "name": "MusicVideos",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $env.GOOGLE_DRIVE_FOLDER_ID }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "id": "8ef2392d-15e2-4d31-b8c7-8907b460ee06",
+        "name": "Upload to Google Drive",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          -448,
+          112
+        ],
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "keTLaYS3Tdb2VXAF",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "lyrics-empty",
+                "leftValue": "={{ $('Extract Parameters').item.json.lyricsProvided }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "empty"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "3768f880-2b68-421d-b923-9f0b940eb3c0",
+        "name": "Lyrics Provided?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -224,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/audio/transcriptions",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "openAiApi",
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "parameterType": "formBinaryData",
+                "name": "file",
+                "inputDataFieldName": "data"
+              },
+              {
+                "name": "model",
+                "value": "whisper-1"
+              },
+              {
+                "name": "response_format",
+                "value": "verbose_json"
+              },
+              {
+                "name": "timestamp_granularities[]",
+                "value": "word"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "a14688fd-784a-4f44-a65d-a637a85ed2c3",
+        "name": "Transcribe with Whisper",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          0,
+          0
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "lyrics",
+                "name": "lyrics",
+                "value": "={{ $json.text }}",
+                "type": "string"
+              },
+              {
+                "id": "word-timestamps",
+                "name": "wordTimestamps",
+                "value": "={{ $json.words }}",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "4a2f52c0-0a74-4a98-934c-80b27bb66fbb",
+        "name": "Extract Transcribed Lyrics",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          224,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "lyrics",
+                "name": "lyrics",
+                "value": "={{ $('Extract Parameters').item.json.lyricsProvided }}",
+                "type": "string"
+              },
+              {
+                "id": "word-timestamps",
+                "name": "wordTimestamps",
+                "value": "=[]",
+                "type": "array"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "2e6b762b-9a01-4f0d-a36b-871491296d06",
+        "name": "Use Provided Lyrics",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          224,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineByPosition",
+          "options": {}
+        },
+        "id": "ff01c799-409e-4247-8b1a-3a022dd6ffb6",
+        "name": "Merge Lyrics",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          448,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-5-chat-latest",
+            "mode": "list",
+            "cachedResultName": "GPT-5-CHAT-LATEST"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "You are an expert music analyst. Analyze the following song lyrics and provide a detailed breakdown.\n\nLyrics:\n{{ $json.lyrics }}\n\nVisual Style Preference: {{ $('Extract Parameters').item.json.visualStyle }}\n\nProvide analysis in the following JSON format:\n{\n  \"title\": \"suggested title if not obvious\",\n  \"genre\": \"detected genre\",\n  \"mood\": \"overall mood (e.g., melancholic, uplifting, energetic)\",\n  \"themes\": [\"theme1\", \"theme2\"],\n  \"emotionalArc\": [\n    {\"section\": \"intro\", \"emotion\": \"anticipation\", \"intensity\": 3},\n    {\"section\": \"verse1\", \"emotion\": \"contemplative\", \"intensity\": 4},\n    {\"section\": \"chorus\", \"emotion\": \"powerful\", \"intensity\": 8}\n  ],\n  \"keyPhrases\": [\"impactful line 1\", \"impactful line 2\"],\n  \"colorPalette\": [\"#hex1\", \"#hex2\", \"#hex3\"],\n  \"visualThemes\": [\"suggested visual theme 1\", \"suggested visual theme 2\"],\n  \"storyNarrative\": \"brief narrative arc for music video\",\n  \"segments\": [\n    {\n      \"id\": 1,\n      \"type\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 15,\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"mood\": \"mood for this segment\",\n      \"suggestedVisual\": \"brief visual description\"\n    }\n  ]\n}\n\nBe creative but ensure the visuals match the requested style: {{ $('Extract Parameters').item.json.visualStyle }}"
+              }
+            ]
+          },
+          "jsonOutput": true,
+          "options": {
+            "temperature": 0.7
+          }
+        },
+        "id": "53086336-7fac-4015-ae0a-2d97e2d097ca",
+        "name": "Analyze Lyrics with GPT-4",
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.4,
+        "position": [
+          592,
+          -32
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelId": {
+            "__rl": true,
+            "value": "gpt-5-chat-latest",
+            "mode": "list",
+            "cachedResultName": "GPT-5-CHAT-LATEST"
+          },
+          "messages": {
+            "values": [
+              {
+                "content": "Based on the audio file information, estimate the following musical characteristics.\n\nProvide response in JSON format:\n{\n  \"estimatedBPM\": 120,\n  \"estimatedKey\": \"C major\",\n  \"estimatedDuration\": 180,\n  \"energyProfile\": [\n    {\"time\": 0, \"energy\": 0.3},\n    {\"time\": 30, \"energy\": 0.5},\n    {\"time\": 60, \"energy\": 0.8},\n    {\"time\": 90, \"energy\": 0.9},\n    {\"time\": 120, \"energy\": 0.7},\n    {\"time\": 150, \"energy\": 0.8},\n    {\"time\": 180, \"energy\": 0.4}\n  ],\n  \"sections\": [\n    {\"name\": \"intro\", \"start\": 0, \"end\": 15},\n    {\"name\": \"verse1\", \"start\": 15, \"end\": 45},\n    {\"name\": \"chorus1\", \"start\": 45, \"end\": 75},\n    {\"name\": \"verse2\", \"start\": 75, \"end\": 105},\n    {\"name\": \"chorus2\", \"start\": 105, \"end\": 135},\n    {\"name\": \"bridge\", \"start\": 135, \"end\": 155},\n    {\"name\": \"outro\", \"start\": 155, \"end\": 180}\n  ]\n}\n\nNote: This is an estimation based on typical song structures. Adjust timings based on lyrics analysis if available."
+              }
+            ]
+          },
+          "jsonOutput": true,
+          "options": {
+            "temperature": 0.3
+          }
+        },
+        "id": "b8d7926c-c246-4e25-9fc3-3015a4e46316",
+        "name": "Estimate Audio Features",
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.4,
+        "position": [
+          576,
+          304
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "combineBy": "combineAll",
+          "options": {}
+        },
+        "id": "3d632c51-c072-41b4-8fa8-bf445073f373",
+        "name": "Merge All Analysis",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          880,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "complete-analysis",
+                "name": "analysisData",
+                "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, audioUrl: $('Upload to Google Drive').item.json.webViewLink, lyrics: $('Merge Lyrics').item.json.lyrics, wordTimestamps: $('Merge Lyrics').item.json.wordTimestamps, lyricsAnalysis: $('Analyze Lyrics with GPT-4').item.json, audioFeatures: $('Estimate Audio Features').item.json, visualStyle: $('Extract Parameters').item.json.visualStyle} }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "552f0a4f-e9cf-45ea-ba26-121507ea9993",
+        "name": "Compile Complete Analysis",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1104,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify($json) }}",
+          "options": {}
+        },
+        "id": "9beb443f-5709-4f25-8663-bcb8f9188d54",
+        "name": "Respond to Webhook",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1328,
+          208
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Extract Parameters",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Parameters": {
+        "main": [
+          [
+            {
+              "node": "Download Audio",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download Audio": {
+        "main": [
+          [
+            {
+              "node": "Upload to Google Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to Google Drive": {
+        "main": [
+          [
+            {
+              "node": "Lyrics Provided?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Lyrics Provided?": {
+        "main": [
+          [
+            {
+              "node": "Transcribe with Whisper",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Use Provided Lyrics",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transcribe with Whisper": {
+        "main": [
+          [
+            {
+              "node": "Extract Transcribed Lyrics",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Transcribed Lyrics": {
+        "main": [
+          [
+            {
+              "node": "Merge Lyrics",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Use Provided Lyrics": {
+        "main": [
+          [
+            {
+              "node": "Merge Lyrics",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Merge Lyrics": {
+        "main": [
+          [
+            {
+              "node": "Analyze Lyrics with GPT-4",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Estimate Audio Features",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Analyze Lyrics with GPT-4": {
+        "main": [
+          [
+            {
+              "node": "Merge All Analysis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Estimate Audio Features": {
+        "main": [
+          [
+            {
+              "node": "Merge All Analysis",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Merge All Analysis": {
+        "main": [
+          [
+            {
+              "node": "Compile Complete Analysis",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Compile Complete Analysis": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "285595b7-74b5-43e1-bc40-423dcbda9d01",
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Parameters": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Upload to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Lyrics Provided?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lyrics Provided?": {
+      "main": [
+        [
+          {
+            "node": "Transcribe with Whisper",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Use Provided Lyrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe with Whisper": {
+      "main": [
+        [
+          {
+            "node": "Extract Transcribed Lyrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Transcribed Lyrics": {
+      "main": [
+        [
+          {
+            "node": "Merge Lyrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Provided Lyrics": {
+      "main": [
+        [
+          {
+            "node": "Merge Lyrics",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Lyrics": {
+      "main": [
+        [
+          {
+            "node": "Analyze Lyrics with GPT-4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Estimate Audio Features",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Lyrics with GPT-4": {
+      "main": [
+        [
+          {
+            "node": "Merge All Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estimate Audio Features": {
+      "main": [
+        [
+          {
+            "node": "Merge All Analysis",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge All Analysis": {
+      "main": [
+        [
+          {
+            "node": "Compile Complete Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compile Complete Analysis": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-10T16:43:00.109Z",
+  "id": "VpLGDibJoT7KM573",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI Music Video Generator - Song Analysis",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "song-analysis",
+        "options": {}
+      },
+      "id": "710efc28-0024-4504-9240-1c52a517636a",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1104,
+        112
+      ],
+      "webhookId": "song-analysis-webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "project-id",
+              "name": "projectId",
+              "value": "={{ $json.body.projectId }}",
+              "type": "string"
+            },
+            {
+              "id": "song-url",
+              "name": "songUrl",
+              "value": "={{ $json.body.songUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "lyrics-provided",
+              "name": "lyricsProvided",
+              "value": "={{ $json.body.lyrics || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "visual-style",
+              "name": "visualStyle",
+              "value": "={{ $json.body.visualStyle }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c6d84586-ea2e-42c0-9517-c6619ecfa246",
+      "name": "Extract Parameters",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.songUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "e06e5b95-0d7d-40e6-aa98-d43796812ce0",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -656,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "name": "MusicVideos",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $env.GOOGLE_DRIVE_FOLDER_ID }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "8ef2392d-15e2-4d31-b8c7-8907b460ee06",
+      "name": "Upload to Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -448,
+        112
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "keTLaYS3Tdb2VXAF",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "lyrics-empty",
+              "leftValue": "={{ $('Extract Parameters').item.json.lyricsProvided }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3768f880-2b68-421d-b923-9f0b940eb3c0",
+      "name": "Lyrics Provided?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "whisper-1"
+            },
+            {
+              "name": "response_format",
+              "value": "verbose_json"
+            },
+            {
+              "name": "timestamp_granularities[]",
+              "value": "word"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a14688fd-784a-4f44-a65d-a637a85ed2c3",
+      "name": "Transcribe with Whisper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "lyrics",
+              "name": "lyrics",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "word-timestamps",
+              "name": "wordTimestamps",
+              "value": "={{ $json.words }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4a2f52c0-0a74-4a98-934c-80b27bb66fbb",
+      "name": "Extract Transcribed Lyrics",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "lyrics",
+              "name": "lyrics",
+              "value": "={{ $('Extract Parameters').item.json.lyricsProvided }}",
+              "type": "string"
+            },
+            {
+              "id": "word-timestamps",
+              "name": "wordTimestamps",
+              "value": "=[]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2e6b762b-9a01-4f0d-a36b-871491296d06",
+      "name": "Use Provided Lyrics",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "ff01c799-409e-4247-8b1a-3a022dd6ffb6",
+      "name": "Merge Lyrics",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        448,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-chat-latest",
+          "mode": "list",
+          "cachedResultName": "GPT-5-CHAT-LATEST"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert music analyst. Analyze the following song lyrics and provide a detailed breakdown.\n\nLyrics:\n{{ $json.lyrics }}\n\nVisual Style Preference: {{ $('Extract Parameters').item.json.visualStyle }}\n\nProvide analysis in the following JSON format:\n{\n  \"title\": \"suggested title if not obvious\",\n  \"genre\": \"detected genre\",\n  \"mood\": \"overall mood (e.g., melancholic, uplifting, energetic)\",\n  \"themes\": [\"theme1\", \"theme2\"],\n  \"emotionalArc\": [\n    {\"section\": \"intro\", \"emotion\": \"anticipation\", \"intensity\": 3},\n    {\"section\": \"verse1\", \"emotion\": \"contemplative\", \"intensity\": 4},\n    {\"section\": \"chorus\", \"emotion\": \"powerful\", \"intensity\": 8}\n  ],\n  \"keyPhrases\": [\"impactful line 1\", \"impactful line 2\"],\n  \"colorPalette\": [\"#hex1\", \"#hex2\", \"#hex3\"],\n  \"visualThemes\": [\"suggested visual theme 1\", \"suggested visual theme 2\"],\n  \"storyNarrative\": \"brief narrative arc for music video\",\n  \"segments\": [\n    {\n      \"id\": 1,\n      \"type\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 15,\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"mood\": \"mood for this segment\",\n      \"suggestedVisual\": \"brief visual description\"\n    }\n  ]\n}\n\nBe creative but ensure the visuals match the requested style: {{ $('Extract Parameters').item.json.visualStyle }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "53086336-7fac-4015-ae0a-2d97e2d097ca",
+      "name": "Analyze Lyrics with GPT-4",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        592,
+        -32
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-chat-latest",
+          "mode": "list",
+          "cachedResultName": "GPT-5-CHAT-LATEST"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Based on the audio file information, estimate the following musical characteristics.\n\nProvide response in JSON format:\n{\n  \"estimatedBPM\": 120,\n  \"estimatedKey\": \"C major\",\n  \"estimatedDuration\": 180,\n  \"energyProfile\": [\n    {\"time\": 0, \"energy\": 0.3},\n    {\"time\": 30, \"energy\": 0.5},\n    {\"time\": 60, \"energy\": 0.8},\n    {\"time\": 90, \"energy\": 0.9},\n    {\"time\": 120, \"energy\": 0.7},\n    {\"time\": 150, \"energy\": 0.8},\n    {\"time\": 180, \"energy\": 0.4}\n  ],\n  \"sections\": [\n    {\"name\": \"intro\", \"start\": 0, \"end\": 15},\n    {\"name\": \"verse1\", \"start\": 15, \"end\": 45},\n    {\"name\": \"chorus1\", \"start\": 45, \"end\": 75},\n    {\"name\": \"verse2\", \"start\": 75, \"end\": 105},\n    {\"name\": \"chorus2\", \"start\": 105, \"end\": 135},\n    {\"name\": \"bridge\", \"start\": 135, \"end\": 155},\n    {\"name\": \"outro\", \"start\": 155, \"end\": 180}\n  ]\n}\n\nNote: This is an estimation based on typical song structures. Adjust timings based on lyrics analysis if available."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "b8d7926c-c246-4e25-9fc3-3015a4e46316",
+      "name": "Estimate Audio Features",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        576,
+        304
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "hIbzO0TgpkKLndpi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "3d632c51-c072-41b4-8fa8-bf445073f373",
+      "name": "Merge All Analysis",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        880,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "complete-analysis",
+              "name": "analysisData",
+              "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, audioUrl: $('Upload to Google Drive').item.json.webViewLink, lyrics: $('Merge Lyrics').item.json.lyrics, wordTimestamps: $('Merge Lyrics').item.json.wordTimestamps, lyricsAnalysis: $('Analyze Lyrics with GPT-4').item.json, audioFeatures: $('Estimate Audio Features').item.json, visualStyle: $('Extract Parameters').item.json.visualStyle} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "552f0a4f-e9cf-45ea-ba26-121507ea9993",
+      "name": "Compile Complete Analysis",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1104,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "9beb443f-5709-4f25-8663-bcb8f9188d54",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1328,
+        208
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-10T16:43:00.202Z",
+      "createdAt": "2025-12-10T16:43:00.202Z",
+      "role": "workflow:owner",
+      "workflowId": "VpLGDibJoT7KM573",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-12-10T14:57:55.317Z",
+      "createdAt": "2025-12-10T14:57:55.317Z",
+      "id": "HmSN4A1CMN0RXv4U",
+      "name": "AI Music Video"
+    },
+    {
+      "updatedAt": "2025-12-10T16:41:29.414Z",
+      "createdAt": "2025-12-10T16:41:29.414Z",
+      "id": "bR8IhrktzQVZZihf",
+      "name": "Song Analysis"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-10T16:43:01.512Z",
+  "versionId": "285595b7-74b5-43e1-bc40-423dcbda9d01"
+}

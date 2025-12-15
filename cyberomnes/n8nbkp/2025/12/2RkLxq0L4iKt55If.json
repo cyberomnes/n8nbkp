@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-10T16:50:25.606Z",
-    "createdAt": "2025-12-10T16:50:25.606Z",
-    "versionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66",
+    "updatedAt": "2025-12-14T22:52:16.128Z",
+    "createdAt": "2025-12-14T22:52:16.128Z",
+    "versionId": "cdd23ac5-8d0a-42b8-ab31-a570633f8eec",
     "workflowId": "2RkLxq0L4iKt55If",
     "nodes": [
       {
@@ -689,7 +689,7 @@
     "name": null,
     "description": null
   },
-  "activeVersionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66",
+  "activeVersionId": "cdd23ac5-8d0a-42b8-ab31-a570633f8eec",
   "connections": {
     "Webhook Trigger": {
       "main": [
@@ -1380,7 +1380,8 @@
   "repo_owner": "cyberomnes",
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "availableInMCP": true
   },
   "shared": [
     {
@@ -1407,6 +1408,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-12-10T16:50:27.197Z",
-  "versionId": "eabc1e0f-6e70-4e3e-a7c1-429a73bc7e66"
+  "updatedAt": "2025-12-14T22:52:16.125Z",
+  "versionId": "cdd23ac5-8d0a-42b8-ab31-a570633f8eec"
 }

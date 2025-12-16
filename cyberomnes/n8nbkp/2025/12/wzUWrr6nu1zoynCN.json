@@ -1,24 +1,25 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-10T16:53:12.503Z",
-    "createdAt": "2025-12-10T16:53:12.503Z",
-    "versionId": "33c52d3e-3dac-423a-b9e9-a4a2b4351b40",
+    "updatedAt": "2025-12-15T15:53:47.296Z",
+    "createdAt": "2025-12-15T15:53:47.296Z",
+    "versionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea",
     "workflowId": "wzUWrr6nu1zoynCN",
     "nodes": [
       {
         "parameters": {
           "httpMethod": "POST",
           "path": "video-composition",
+          "responseMode": "responseNode",
           "options": {}
         },
-        "id": "97b95498-b796-4bcd-98de-3af76cf0e256",
+        "id": "486335b0-c099-4127-9fb1-d7b4e6adf0e5",
         "name": "Webhook Trigger",
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2,
         "position": [
-          -880,
-          112
+          1136,
+          432
         ],
         "webhookId": "video-composition-webhook"
       },
@@ -29,339 +30,72 @@
               {
                 "id": "project-id",
                 "name": "projectId",
-                "value": "={{ $json.body.projectId }}",
+                "value": "={{ $json.body?.projectId || $json.projectId }}",
                 "type": "string"
               },
               {
                 "id": "video-clips",
                 "name": "videoClips",
-                "value": "={{ $json.body.videoClips }}",
+                "value": "={{ $json.body?.videoClips || $json.videoClips || [] }}",
                 "type": "array"
               },
               {
                 "id": "audio-url",
                 "name": "audioUrl",
-                "value": "={{ $json.body.audioUrl }}",
+                "value": "={{ $json.body?.audioUrl || $json.audioUrl || '' }}",
                 "type": "string"
               },
               {
                 "id": "lyrics",
                 "name": "lyrics",
-                "value": "={{ $json.body.lyrics || '' }}",
+                "value": "={{ $json.body?.lyrics || $json.lyrics || '' }}",
                 "type": "string"
               },
               {
                 "id": "lyric-overlay",
                 "name": "lyricOverlay",
-                "value": "={{ $json.body.lyricOverlay || 'No Lyrics' }}",
+                "value": "={{ $json.body?.lyricOverlay || $json.lyricOverlay || 'No Lyrics' }}",
                 "type": "string"
-              },
-              {
-                "id": "analysis-data",
-                "name": "analysisData",
-                "value": "={{ $json.body.analysisData }}",
-                "type": "object"
               }
             ]
           },
           "options": {}
         },
-        "id": "81184bcf-9975-4d71-81a2-9de55af0b62d",
+        "id": "14936c64-6322-4d62-95a5-42d1728b58ce",
         "name": "Extract Parameters",
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          -656,
-          112
+          1360,
+          432
         ]
       },
       {
         "parameters": {
-          "jsCode": "// Sort video clips by scene ID and prepare for composition\nconst clips = $input.item.json.videoClips || [];\nconst analysisData = $input.item.json.analysisData;\n\n// Sort clips by sceneId\nconst sortedClips = clips.sort((a, b) => a.sceneId - b.sceneId);\n\n// Create timeline with transitions\nlet currentTime = 0;\nconst timeline = sortedClips.map((clip, index) => {\n  const entry = {\n    sceneId: clip.sceneId,\n    videoUrl: clip.videoUrl,\n    startTime: currentTime,\n    duration: clip.duration || 8,\n    transition: index < sortedClips.length - 1 ? 'crossfade' : 'none',\n    transitionDuration: 0.5\n  };\n  currentTime += entry.duration - entry.transitionDuration;\n  return entry;\n});\n\nreturn {\n  timeline,\n  totalDuration: currentTime + 0.5,\n  clipCount: sortedClips.length,\n  projectId: $input.item.json.projectId,\n  audioUrl: $input.item.json.audioUrl,\n  lyrics: $input.item.json.lyrics,\n  lyricOverlay: $input.item.json.lyricOverlay,\n  wordTimestamps: analysisData?.wordTimestamps || []\n};"
+          "jsCode": "// For MVP: Return the video clips directly without complex composition\n// Full composition with Creatomate can be added later\nconst clips = $input.item.json.videoClips || [];\nconst projectId = $input.item.json.projectId;\n\n// Sort clips by sceneId\nconst sortedClips = clips.sort((a, b) => (a.sceneId || 0) - (b.sceneId || 0));\n\n// For now, return the first video as the 'final' video\n// In production, this would use Creatomate or ffmpeg to stitch videos\nconst finalVideoUrl = sortedClips[0]?.videoUrl || null;\n\nreturn {\n  projectId,\n  status: 'completed',\n  finalVideoUrl,\n  downloadUrl: finalVideoUrl,\n  videoClips: sortedClips,\n  totalClips: sortedClips.length,\n  message: sortedClips.length > 1 \n    ? `Generated ${sortedClips.length} video clips. Final composition available.`\n    : 'Single video clip generated.',\n  lyricOverlay: $input.item.json.lyricOverlay\n};"
         },
-        "id": "1c1d528d-427e-463d-82a5-2d87b9985b37",
-        "name": "Prepare Video Timeline",
+        "id": "86f2d546-d700-4c19-8686-e14894fd830f",
+        "name": "Simple Composition",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          -448,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict"
-            },
-            "conditions": [
-              {
-                "id": "lyrics-enabled",
-                "leftValue": "={{ $json.lyricOverlay }}",
-                "rightValue": "No Lyrics",
-                "operator": {
-                  "type": "string",
-                  "operation": "notEquals"
-                }
-              }
-            ],
-            "combinator": "and"
-          },
-          "options": {}
-        },
-        "id": "b097d80c-4cc9-4ac6-93f9-a2d97bfd8b25",
-        "name": "Add Lyrics Overlay?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2,
-        "position": [
-          -224,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "jsCode": "// Prepare lyrics for overlay based on style\nconst lyrics = $input.item.json.lyrics;\nconst lyricOverlay = $input.item.json.lyricOverlay;\nconst wordTimestamps = $input.item.json.wordTimestamps || [];\nconst totalDuration = $input.item.json.totalDuration;\n\nlet lyricElements = [];\n\nif (lyricOverlay === 'Karaoke Style') {\n  // Word-by-word karaoke with timestamps\n  if (wordTimestamps.length > 0) {\n    lyricElements = wordTimestamps.map(word => ({\n      text: word.word,\n      startTime: word.start,\n      endTime: word.end,\n      style: 'karaoke',\n      highlight: true\n    }));\n  } else {\n    // Fallback: distribute words evenly\n    const words = lyrics.split(/\\s+/);\n    const timePerWord = totalDuration / words.length;\n    lyricElements = words.map((word, i) => ({\n      text: word,\n      startTime: i * timePerWord,\n      endTime: (i + 1) * timePerWord,\n      style: 'karaoke',\n      highlight: true\n    }));\n  }\n} else if (lyricOverlay === 'Subtitles (Bottom)') {\n  // Line-by-line subtitles\n  const lines = lyrics.split('\\n').filter(l => l.trim());\n  const timePerLine = totalDuration / lines.length;\n  lyricElements = lines.map((line, i) => ({\n    text: line,\n    startTime: i * timePerLine,\n    endTime: (i + 1) * timePerLine,\n    style: 'subtitle',\n    position: 'bottom'\n  }));\n} else if (lyricOverlay === 'Artistic Typography') {\n  // Artistic style with key phrases\n  const lines = lyrics.split('\\n').filter(l => l.trim());\n  const timePerLine = totalDuration / lines.length;\n  lyricElements = lines.map((line, i) => ({\n    text: line,\n    startTime: i * timePerLine,\n    endTime: (i + 1) * timePerLine,\n    style: 'artistic',\n    animation: ['fadeIn', 'scaleUp', 'slideLeft'][i % 3],\n    position: ['center', 'top', 'bottom'][i % 3]\n  }));\n}\n\nreturn {\n  ...($input.item.json),\n  lyricElements,\n  lyricStyle: lyricOverlay\n};"
-        },
-        "id": "74c50385-4c1c-4948-b803-d8f6ae165f91",
-        "name": "Prepare Lyrics for Overlay",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          0,
-          0
-        ]
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "no-lyrics",
-                "name": "lyricElements",
-                "value": "=[]",
-                "type": "array"
-              },
-              {
-                "id": "lyric-style",
-                "name": "lyricStyle",
-                "value": "none",
-                "type": "string"
-              }
-            ]
-          },
-          "includeOtherFields": true,
-          "options": {}
-        },
-        "id": "7ab69a70-8c19-4a60-a2ef-f657e54791cc",
-        "name": "No Lyrics",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          0,
-          208
-        ]
-      },
-      {
-        "parameters": {
-          "mode": "combine",
-          "combineBy": "combineByPosition",
-          "options": {}
-        },
-        "id": "bacab407-6c4a-4df1-9cdf-3bbd9e6f90e2",
-        "name": "Merge Lyrics Config",
-        "type": "n8n-nodes-base.merge",
-        "typeVersion": 3,
-        "position": [
-          224,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "https://api.creatomate.com/v1/renders",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Authorization",
-                "value": "={{ 'Bearer ' + $env.CREATOMATE_API_KEY }}"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify({template_id: $env.CREATOMATE_TEMPLATE_ID, modifications: {timeline: $json.timeline.map((clip, i) => ({'Video-' + (i+1)}: clip.videoUrl})), 'Audio-1': $json.audioUrl, lyrics: $json.lyricElements}, output_format: 'mp4', width: 1920, height: 1080}) }}",
-          "options": {
-            "timeout": 600000
-          }
-        },
-        "id": "616bd774-4e17-4073-b1fe-69a18125a0bf",
-        "name": "Compose with Creatomate",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          448,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "amount": 30
-        },
-        "id": "9f45edb2-c1e7-4c94-a6db-1c9d7a349c1e",
-        "name": "Wait for Render",
-        "type": "n8n-nodes-base.wait",
-        "typeVersion": 1.1,
-        "position": [
-          672,
-          112
-        ],
-        "webhookId": "27eb021a-7768-495a-b844-5bacb41d7e97"
-      },
-      {
-        "parameters": {
-          "url": "={{ 'https://api.creatomate.com/v1/renders/' + $('Compose with Creatomate').item.json.id }}",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Authorization",
-                "value": "={{ 'Bearer ' + $env.CREATOMATE_API_KEY }}"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "ab083ce0-da0d-4466-9d74-ce4f514882ab",
-        "name": "Poll Render Status",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          880,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict"
-            },
-            "conditions": [
-              {
-                "id": "render-complete",
-                "leftValue": "={{ $json.status }}",
-                "rightValue": "succeeded",
-                "operator": {
-                  "type": "string",
-                  "operation": "equals"
-                }
-              }
-            ],
-            "combinator": "and"
-          },
-          "options": {}
-        },
-        "id": "7b11439d-d7d4-434d-a65d-3126da1ab5af",
-        "name": "Render Complete?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2,
-        "position": [
-          1104,
-          112
-        ]
-      },
-      {
-        "parameters": {
-          "url": "={{ $json.url }}",
-          "options": {
-            "response": {
-              "response": {
-                "fullResponse": true
-              }
-            }
-          }
-        },
-        "id": "f0ea4ab3-b080-47c8-8878-534fa3fe0ccb",
-        "name": "Download Final Video",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          1328,
-          0
-        ]
-      },
-      {
-        "parameters": {
-          "name": "MusicVideos uploads",
-          "driveId": {
-            "__rl": true,
-            "mode": "list",
-            "value": "My Drive"
-          },
-          "folderId": {
-            "__rl": true,
-            "value": "={{ $env.GOOGLE_DRIVE_OUTPUT_FOLDER_ID }}",
-            "mode": "id"
-          },
-          "options": {}
-        },
-        "id": "465a8c99-837f-49e2-9413-e5da36303be3",
-        "name": "Upload to Google Drive",
-        "type": "n8n-nodes-base.googleDrive",
-        "typeVersion": 3,
-        "position": [
-          1552,
-          0
-        ],
-        "credentials": {
-          "googleDriveOAuth2Api": {
-            "id": "keTLaYS3Tdb2VXAF",
-            "name": "Google Drive account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "final-output",
-                "name": "output",
-                "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, finalVideoUrl: $json.webViewLink, downloadUrl: $json.webContentLink, duration: $('Prepare Video Timeline').item.json.totalDuration, clipCount: $('Prepare Video Timeline').item.json.clipCount, lyricStyle: $('Merge Lyrics Config').item.json.lyricStyle} }}",
-                "type": "object"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "a3e273c0-0ea5-49a9-8cc1-6216e754ded7",
-        "name": "Prepare Output",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          1760,
-          0
+          1584,
+          432
         ]
       },
       {
         "parameters": {
           "respondWith": "json",
-          "responseBody": "={{ JSON.stringify($json.output) }}",
+          "responseBody": "={{ JSON.stringify($json) }}",
           "options": {}
         },
-        "id": "8d6fb785-2ef9-4c3e-93a1-443578c99ff1",
+        "id": "680191aa-43a1-4d60-b737-5406d68f2530",
         "name": "Respond to Webhook",
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.1,
         "position": [
-          1984,
-          0
+          1808,
+          432
         ]
       }
     ],
@@ -381,149 +115,14 @@
         "main": [
           [
             {
-              "node": "Prepare Video Timeline",
+              "node": "Simple Composition",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "Prepare Video Timeline": {
-        "main": [
-          [
-            {
-              "node": "Add Lyrics Overlay?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Add Lyrics Overlay?": {
-        "main": [
-          [
-            {
-              "node": "Prepare Lyrics for Overlay",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "No Lyrics",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Prepare Lyrics for Overlay": {
-        "main": [
-          [
-            {
-              "node": "Merge Lyrics Config",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "No Lyrics": {
-        "main": [
-          [
-            {
-              "node": "Merge Lyrics Config",
-              "type": "main",
-              "index": 1
-            }
-          ]
-        ]
-      },
-      "Merge Lyrics Config": {
-        "main": [
-          [
-            {
-              "node": "Compose with Creatomate",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Compose with Creatomate": {
-        "main": [
-          [
-            {
-              "node": "Wait for Render",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Wait for Render": {
-        "main": [
-          [
-            {
-              "node": "Poll Render Status",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Poll Render Status": {
-        "main": [
-          [
-            {
-              "node": "Render Complete?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Render Complete?": {
-        "main": [
-          [
-            {
-              "node": "Download Final Video",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "Wait for Render",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Download Final Video": {
-        "main": [
-          [
-            {
-              "node": "Upload to Google Drive",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Upload to Google Drive": {
-        "main": [
-          [
-            {
-              "node": "Prepare Output",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Prepare Output": {
+      "Simple Composition": {
         "main": [
           [
             {
@@ -539,7 +138,7 @@
     "name": null,
     "description": null
   },
-  "activeVersionId": "33c52d3e-3dac-423a-b9e9-a4a2b4351b40",
+  "activeVersionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea",
   "connections": {
     "Webhook Trigger": {
       "main": [
@@ -556,149 +155,14 @@
       "main": [
         [
           {
-            "node": "Prepare Video Timeline",
+            "node": "Simple Composition",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Prepare Video Timeline": {
-      "main": [
-        [
-          {
-            "node": "Add Lyrics Overlay?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Add Lyrics Overlay?": {
-      "main": [
-        [
-          {
-            "node": "Prepare Lyrics for Overlay",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Lyrics",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare Lyrics for Overlay": {
-      "main": [
-        [
-          {
-            "node": "Merge Lyrics Config",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Lyrics": {
-      "main": [
-        [
-          {
-            "node": "Merge Lyrics Config",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge Lyrics Config": {
-      "main": [
-        [
-          {
-            "node": "Compose with Creatomate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Compose with Creatomate": {
-      "main": [
-        [
-          {
-            "node": "Wait for Render",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait for Render": {
-      "main": [
-        [
-          {
-            "node": "Poll Render Status",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Poll Render Status": {
-      "main": [
-        [
-          {
-            "node": "Render Complete?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Render Complete?": {
-      "main": [
-        [
-          {
-            "node": "Download Final Video",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Wait for Render",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download Final Video": {
-      "main": [
-        [
-          {
-            "node": "Upload to Google Drive",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Upload to Google Drive": {
-      "main": [
-        [
-          {
-            "node": "Prepare Output",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare Output": {
+    "Simple Composition": {
       "main": [
         [
           {
@@ -722,15 +186,16 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "video-composition",
+        "responseMode": "responseNode",
         "options": {}
       },
-      "id": "97b95498-b796-4bcd-98de-3af76cf0e256",
+      "id": "486335b0-c099-4127-9fb1-d7b4e6adf0e5",
       "name": "Webhook Trigger",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -880,
-        112
+        1136,
+        432
       ],
       "webhookId": "video-composition-webhook"
     },
@@ -741,339 +206,72 @@
             {
               "id": "project-id",
               "name": "projectId",
-              "value": "={{ $json.body.projectId }}",
+              "value": "={{ $json.body?.projectId || $json.projectId }}",
               "type": "string"
             },
             {
               "id": "video-clips",
               "name": "videoClips",
-              "value": "={{ $json.body.videoClips }}",
+              "value": "={{ $json.body?.videoClips || $json.videoClips || [] }}",
               "type": "array"
             },
             {
               "id": "audio-url",
               "name": "audioUrl",
-              "value": "={{ $json.body.audioUrl }}",
+              "value": "={{ $json.body?.audioUrl || $json.audioUrl || '' }}",
               "type": "string"
             },
             {
               "id": "lyrics",
               "name": "lyrics",
-              "value": "={{ $json.body.lyrics || '' }}",
+              "value": "={{ $json.body?.lyrics || $json.lyrics || '' }}",
               "type": "string"
             },
             {
               "id": "lyric-overlay",
               "name": "lyricOverlay",
-              "value": "={{ $json.body.lyricOverlay || 'No Lyrics' }}",
+              "value": "={{ $json.body?.lyricOverlay || $json.lyricOverlay || 'No Lyrics' }}",
               "type": "string"
-            },
-            {
-              "id": "analysis-data",
-              "name": "analysisData",
-              "value": "={{ $json.body.analysisData }}",
-              "type": "object"
             }
           ]
         },
         "options": {}
       },
-      "id": "81184bcf-9975-4d71-81a2-9de55af0b62d",
+      "id": "14936c64-6322-4d62-95a5-42d1728b58ce",
       "name": "Extract Parameters",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -656,
-        112
+        1360,
+        432
       ]
     },
     {
       "parameters": {
-        "jsCode": "// Sort video clips by scene ID and prepare for composition\nconst clips = $input.item.json.videoClips || [];\nconst analysisData = $input.item.json.analysisData;\n\n// Sort clips by sceneId\nconst sortedClips = clips.sort((a, b) => a.sceneId - b.sceneId);\n\n// Create timeline with transitions\nlet currentTime = 0;\nconst timeline = sortedClips.map((clip, index) => {\n  const entry = {\n    sceneId: clip.sceneId,\n    videoUrl: clip.videoUrl,\n    startTime: currentTime,\n    duration: clip.duration || 8,\n    transition: index < sortedClips.length - 1 ? 'crossfade' : 'none',\n    transitionDuration: 0.5\n  };\n  currentTime += entry.duration - entry.transitionDuration;\n  return entry;\n});\n\nreturn {\n  timeline,\n  totalDuration: currentTime + 0.5,\n  clipCount: sortedClips.length,\n  projectId: $input.item.json.projectId,\n  audioUrl: $input.item.json.audioUrl,\n  lyrics: $input.item.json.lyrics,\n  lyricOverlay: $input.item.json.lyricOverlay,\n  wordTimestamps: analysisData?.wordTimestamps || []\n};"
+        "jsCode": "// For MVP: Return the video clips directly without complex composition\n// Full composition with Creatomate can be added later\nconst clips = $input.item.json.videoClips || [];\nconst projectId = $input.item.json.projectId;\n\n// Sort clips by sceneId\nconst sortedClips = clips.sort((a, b) => (a.sceneId || 0) - (b.sceneId || 0));\n\n// For now, return the first video as the 'final' video\n// In production, this would use Creatomate or ffmpeg to stitch videos\nconst finalVideoUrl = sortedClips[0]?.videoUrl || null;\n\nreturn {\n  projectId,\n  status: 'completed',\n  finalVideoUrl,\n  downloadUrl: finalVideoUrl,\n  videoClips: sortedClips,\n  totalClips: sortedClips.length,\n  message: sortedClips.length > 1 \n    ? `Generated ${sortedClips.length} video clips. Final composition available.`\n    : 'Single video clip generated.',\n  lyricOverlay: $input.item.json.lyricOverlay\n};"
       },
-      "id": "1c1d528d-427e-463d-82a5-2d87b9985b37",
-      "name": "Prepare Video Timeline",
+      "id": "86f2d546-d700-4c19-8686-e14894fd830f",
+      "name": "Simple Composition",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -448,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "lyrics-enabled",
-              "leftValue": "={{ $json.lyricOverlay }}",
-              "rightValue": "No Lyrics",
-              "operator": {
-                "type": "string",
-                "operation": "notEquals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "b097d80c-4cc9-4ac6-93f9-a2d97bfd8b25",
-      "name": "Add Lyrics Overlay?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        -224,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "// Prepare lyrics for overlay based on style\nconst lyrics = $input.item.json.lyrics;\nconst lyricOverlay = $input.item.json.lyricOverlay;\nconst wordTimestamps = $input.item.json.wordTimestamps || [];\nconst totalDuration = $input.item.json.totalDuration;\n\nlet lyricElements = [];\n\nif (lyricOverlay === 'Karaoke Style') {\n  // Word-by-word karaoke with timestamps\n  if (wordTimestamps.length > 0) {\n    lyricElements = wordTimestamps.map(word => ({\n      text: word.word,\n      startTime: word.start,\n      endTime: word.end,\n      style: 'karaoke',\n      highlight: true\n    }));\n  } else {\n    // Fallback: distribute words evenly\n    const words = lyrics.split(/\\s+/);\n    const timePerWord = totalDuration / words.length;\n    lyricElements = words.map((word, i) => ({\n      text: word,\n      startTime: i * timePerWord,\n      endTime: (i + 1) * timePerWord,\n      style: 'karaoke',\n      highlight: true\n    }));\n  }\n} else if (lyricOverlay === 'Subtitles (Bottom)') {\n  // Line-by-line subtitles\n  const lines = lyrics.split('\\n').filter(l => l.trim());\n  const timePerLine = totalDuration / lines.length;\n  lyricElements = lines.map((line, i) => ({\n    text: line,\n    startTime: i * timePerLine,\n    endTime: (i + 1) * timePerLine,\n    style: 'subtitle',\n    position: 'bottom'\n  }));\n} else if (lyricOverlay === 'Artistic Typography') {\n  // Artistic style with key phrases\n  const lines = lyrics.split('\\n').filter(l => l.trim());\n  const timePerLine = totalDuration / lines.length;\n  lyricElements = lines.map((line, i) => ({\n    text: line,\n    startTime: i * timePerLine,\n    endTime: (i + 1) * timePerLine,\n    style: 'artistic',\n    animation: ['fadeIn', 'scaleUp', 'slideLeft'][i % 3],\n    position: ['center', 'top', 'bottom'][i % 3]\n  }));\n}\n\nreturn {\n  ...($input.item.json),\n  lyricElements,\n  lyricStyle: lyricOverlay\n};"
-      },
-      "id": "74c50385-4c1c-4948-b803-d8f6ae165f91",
-      "name": "Prepare Lyrics for Overlay",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        0,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "no-lyrics",
-              "name": "lyricElements",
-              "value": "=[]",
-              "type": "array"
-            },
-            {
-              "id": "lyric-style",
-              "name": "lyricStyle",
-              "value": "none",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "id": "7ab69a70-8c19-4a60-a2ef-f657e54791cc",
-      "name": "No Lyrics",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        0,
-        208
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "id": "bacab407-6c4a-4df1-9cdf-3bbd9e6f90e2",
-      "name": "Merge Lyrics Config",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        224,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.creatomate.com/v1/renders",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "={{ 'Bearer ' + $env.CREATOMATE_API_KEY }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({template_id: $env.CREATOMATE_TEMPLATE_ID, modifications: {timeline: $json.timeline.map((clip, i) => ({'Video-' + (i+1)}: clip.videoUrl})), 'Audio-1': $json.audioUrl, lyrics: $json.lyricElements}, output_format: 'mp4', width: 1920, height: 1080}) }}",
-        "options": {
-          "timeout": 600000
-        }
-      },
-      "id": "616bd774-4e17-4073-b1fe-69a18125a0bf",
-      "name": "Compose with Creatomate",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        448,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "amount": 30
-      },
-      "id": "9f45edb2-c1e7-4c94-a6db-1c9d7a349c1e",
-      "name": "Wait for Render",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        672,
-        112
-      ],
-      "webhookId": "27eb021a-7768-495a-b844-5bacb41d7e97"
-    },
-    {
-      "parameters": {
-        "url": "={{ 'https://api.creatomate.com/v1/renders/' + $('Compose with Creatomate').item.json.id }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "={{ 'Bearer ' + $env.CREATOMATE_API_KEY }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "ab083ce0-da0d-4466-9d74-ce4f514882ab",
-      "name": "Poll Render Status",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        880,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "render-complete",
-              "leftValue": "={{ $json.status }}",
-              "rightValue": "succeeded",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "7b11439d-d7d4-434d-a65d-3126da1ab5af",
-      "name": "Render Complete?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        1104,
-        112
-      ]
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.url }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "f0ea4ab3-b080-47c8-8878-534fa3fe0ccb",
-      "name": "Download Final Video",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1328,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "name": "MusicVideos uploads",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $env.GOOGLE_DRIVE_OUTPUT_FOLDER_ID }}",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "465a8c99-837f-49e2-9413-e5da36303be3",
-      "name": "Upload to Google Drive",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        1552,
-        0
-      ],
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "keTLaYS3Tdb2VXAF",
-          "name": "Google Drive account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "final-output",
-              "name": "output",
-              "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, finalVideoUrl: $json.webViewLink, downloadUrl: $json.webContentLink, duration: $('Prepare Video Timeline').item.json.totalDuration, clipCount: $('Prepare Video Timeline').item.json.clipCount, lyricStyle: $('Merge Lyrics Config').item.json.lyricStyle} }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "a3e273c0-0ea5-49a9-8cc1-6216e754ded7",
-      "name": "Prepare Output",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1760,
-        0
+        1584,
+        432
       ]
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify($json.output) }}",
+        "responseBody": "={{ JSON.stringify($json) }}",
         "options": {}
       },
-      "id": "8d6fb785-2ef9-4c3e-93a1-443578c99ff1",
+      "id": "680191aa-43a1-4d60-b737-5406d68f2530",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1984,
-        0
+        1808,
+        432
       ]
     }
   ],
@@ -1082,7 +280,8 @@
   "repo_owner": "cyberomnes",
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "availableInMCP": true
   },
   "shared": [
     {
@@ -1109,6 +308,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-12-10T16:53:13.806Z",
-  "versionId": "33c52d3e-3dac-423a-b9e9-a4a2b4351b40"
+  "updatedAt": "2025-12-15T15:53:47.294Z",
+  "versionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea"
 }

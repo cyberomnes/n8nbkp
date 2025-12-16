@@ -1,24 +1,25 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-10T16:51:32.458Z",
-    "createdAt": "2025-12-10T16:51:32.458Z",
-    "versionId": "b9543407-c000-4308-8e15-585943c09a7e",
+    "updatedAt": "2025-12-15T15:53:15.735Z",
+    "createdAt": "2025-12-15T15:53:15.735Z",
+    "versionId": "41a3b590-8d50-45b7-966a-23cebd62c0e5",
     "workflowId": "v6HR9z6v1OyLUBEh",
     "nodes": [
       {
         "parameters": {
           "httpMethod": "POST",
           "path": "scene-generation",
+          "responseMode": "responseNode",
           "options": {}
         },
-        "id": "6cd55835-1caf-40e3-9c1e-3c4a3eb167ff",
+        "id": "e6abb23e-a2b8-4ffe-be04-89dc6168836c",
         "name": "Webhook Trigger",
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2,
         "position": [
-          -112,
-          64
+          1072,
+          240
         ],
         "webhookId": "scene-generation-webhook"
       },
@@ -29,163 +30,57 @@
               {
                 "id": "project-id",
                 "name": "projectId",
-                "value": "={{ $json.body.projectId }}",
+                "value": "={{ $json.body?.projectId || $json.projectId }}",
                 "type": "string"
               },
               {
                 "id": "analysis-data",
                 "name": "analysisData",
-                "value": "={{ $json.body.analysisData }}",
+                "value": "={{ $json.body?.analysisData || $json.analysisData }}",
                 "type": "object"
               },
               {
                 "id": "visual-style",
                 "name": "visualStyle",
-                "value": "={{ $json.body.visualStyle }}",
+                "value": "={{ $json.body?.visualStyle || $json.visualStyle || 'Cinematic Realistic' }}",
                 "type": "string"
               },
               {
                 "id": "reference-images",
                 "name": "referenceImages",
-                "value": "={{ $json.body.referenceImages || [] }}",
+                "value": "={{ $json.body?.referenceImages || $json.referenceImages || [] }}",
                 "type": "array"
               },
               {
                 "id": "video-engine",
                 "name": "videoEngine",
-                "value": "={{ $json.body.videoEngine }}",
+                "value": "={{ $json.body?.videoEngine || $json.videoEngine || 'Kling 2.6 (Recommended)' }}",
                 "type": "string"
               }
             ]
           },
           "options": {}
         },
-        "id": "90d511d8-3a33-4559-a0ef-f580e6cd217d",
+        "id": "51a8a10f-365f-486b-a925-4c819ef8fd40",
         "name": "Extract Parameters",
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          112,
-          64
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "options": {
-              "caseSensitive": true,
-              "leftValue": "",
-              "typeValidation": "strict"
-            },
-            "conditions": [
-              {
-                "id": "has-images",
-                "leftValue": "={{ $json.referenceImages.length > 0 }}",
-                "rightValue": true,
-                "operator": {
-                  "type": "boolean",
-                  "operation": "equals"
-                }
-              }
-            ],
-            "combinator": "and"
-          },
-          "options": {}
-        },
-        "id": "e36f0d81-f526-4e03-a129-ca761edd1577",
-        "name": "Has Reference Images?",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 2,
-        "position": [
-          336,
-          64
+          1296,
+          240
         ]
       },
       {
         "parameters": {
           "modelId": {
             "__rl": true,
-            "value": "gpt-5-chat-latest",
-            "mode": "list",
-            "cachedResultName": "GPT-5-CHAT-LATEST"
+            "value": "gpt-4o",
+            "mode": "list"
           },
           "messages": {
             "values": [
               {
-                "content": "Analyze the following reference images and extract visual style elements that should be maintained throughout the music video.\n\nProvide analysis in JSON format:\n{\n  \"characters\": [{\"description\": \"detailed description\", \"features\": [\"feature1\", \"feature2\"]}],\n  \"colorPalette\": [\"#hex1\", \"#hex2\"],\n  \"artStyle\": \"description of art/visual style\",\n  \"lighting\": \"lighting characteristics\",\n  \"mood\": \"visual mood\",\n  \"recurringElements\": [\"element1\", \"element2\"]\n}\n\nImage URLs:\n{{ $json.referenceImages.join('\\n') }}"
-              }
-            ]
-          },
-          "jsonOutput": true,
-          "options": {
-            "temperature": 0.5
-          }
-        },
-        "id": "430e0937-5726-4c9d-9db5-bfe77011fbc8",
-        "name": "Analyze Reference Images",
-        "type": "@n8n/n8n-nodes-langchain.openAi",
-        "typeVersion": 1.4,
-        "position": [
-          528,
-          -112
-        ],
-        "credentials": {
-          "openAiApi": {
-            "id": "hIbzO0TgpkKLndpi",
-            "name": "OpenAi account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "image-analysis",
-                "name": "imageAnalysis",
-                "value": "={{ null }}",
-                "type": "object"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "e90c92b8-8e2d-4749-b80e-1b17a10cf7a4",
-        "name": "No Image Analysis",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          544,
-          160
-        ]
-      },
-      {
-        "parameters": {
-          "mode": "combine",
-          "combineBy": "combineByPosition",
-          "options": {}
-        },
-        "id": "a90f0ec6-b150-45e4-8ecd-a597ad0dd997",
-        "name": "Merge Image Analysis",
-        "type": "n8n-nodes-base.merge",
-        "typeVersion": 3,
-        "position": [
-          768,
-          64
-        ]
-      },
-      {
-        "parameters": {
-          "modelId": {
-            "__rl": true,
-            "value": "gpt-5.1-chat-latest",
-            "mode": "list",
-            "cachedResultName": "GPT-5.1-CHAT-LATEST"
-          },
-          "messages": {
-            "values": [
-              {
-                "content": "You are a creative director creating scene prompts for an AI music video generator. Based on the song analysis and style preferences, create detailed scene descriptions for each segment of the song.\n\nSONG ANALYSIS:\n{{ JSON.stringify($('Extract Parameters').item.json.analysisData.lyricsAnalysis, null, 2) }}\n\nAUDIO STRUCTURE:\n{{ JSON.stringify($('Extract Parameters').item.json.analysisData.audioFeatures, null, 2) }}\n\nVISUAL STYLE: {{ $('Extract Parameters').item.json.visualStyle }}\n\nREFERENCE IMAGE ANALYSIS:\n{{ $json.imageAnalysis ? JSON.stringify($json.imageAnalysis, null, 2) : 'No reference images provided' }}\n\nVIDEO ENGINE: {{ $('Extract Parameters').item.json.videoEngine }}\n\nCreate a JSON response with the following structure:\n{\n  \"overallTheme\": \"cohesive theme for entire video\",\n  \"colorPalette\": [\"#color1\", \"#color2\", \"#color3\"],\n  \"characterConsistency\": \"description of main character/subject to maintain consistency\",\n  \"scenes\": [\n    {\n      \"id\": 1,\n      \"segmentName\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 15,\n      \"duration\": 8,\n      \"prompt\": \"Detailed visual description for AI video generation. Be specific about setting, subject, action, lighting, and atmosphere. Include cinematographic details.\",\n      \"cameraMovement\": \"slow dolly forward / static wide shot / tracking left / etc.\",\n      \"mood\": \"emotional tone\",\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"transitionToNext\": \"fade / cut / dissolve\"\n    }\n  ]\n}\n\nIMPORTANT GUIDELINES:\n1. Each scene should be 6-8 seconds for optimal AI video generation\n2. Prompts should be detailed (50-100 words) and visually descriptive\n3. Maintain visual consistency across all scenes\n4. Match camera movements to the energy of the music\n5. Include specific details about lighting, colors, and atmosphere\n6. Consider the emotional arc of the song\n7. For Veo 3, you can include audio descriptions (dialogue, sound effects)\n8. For Runway/Luma, focus on visual motion and transformations\n\nGenerate scenes for the ENTIRE song duration ({{ $('Extract Parameters').item.json.analysisData.audioFeatures.estimatedDuration || 180 }} seconds)."
+                "content": "You are a creative director creating scene prompts for an AI music video generator. Based on the song analysis and style preferences, create detailed scene descriptions.\n\nSONG ANALYSIS:\n{{ JSON.stringify($json.analysisData?.lyricsAnalysis || {}, null, 2) }}\n\nAUDIO STRUCTURE:\n{{ JSON.stringify($json.analysisData?.audioFeatures || {}, null, 2) }}\n\nVISUAL STYLE: {{ $json.visualStyle }}\n\nVIDEO ENGINE: {{ $json.videoEngine }}\n\nEstimated song duration: {{ $json.analysisData?.duration || $json.analysisData?.audioFeatures?.estimatedDuration || 180 }} seconds\n\nCreate a JSON response with the following structure:\n{\n  \"overallTheme\": \"cohesive theme for entire video\",\n  \"colorPalette\": [\"#color1\", \"#color2\", \"#color3\"],\n  \"characterConsistency\": \"description of main character/subject to maintain consistency\",\n  \"scenes\": [\n    {\n      \"id\": 1,\n      \"segmentName\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 8,\n      \"duration\": 8,\n      \"prompt\": \"Detailed visual description for AI video generation. Be specific about setting, subject, action, lighting, and atmosphere. Include cinematographic details. 50-100 words.\",\n      \"cameraMovement\": \"slow dolly forward\",\n      \"mood\": \"emotional tone\",\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"transitionToNext\": \"fade\"\n    }\n  ]\n}\n\nIMPORTANT GUIDELINES:\n1. Each scene should be 5-8 seconds (aim for 6 seconds each)\n2. For a 3-minute song, create approximately 25-30 scenes\n3. Prompts should be detailed (50-100 words) and visually descriptive\n4. Maintain visual consistency across all scenes\n5. Match camera movements to the energy of the music\n6. Include specific details about lighting, colors, and atmosphere\n7. For {{ $json.videoEngine }}, optimize prompts accordingly\n\nGenerate scenes for the ENTIRE song duration."
               }
             ]
           },
@@ -195,13 +90,13 @@
             "temperature": 0.8
           }
         },
-        "id": "a983d852-03b0-4bda-936b-48c527fc259e",
+        "id": "6c88f4a5-185e-40c4-9b35-3df69369742d",
         "name": "Generate Scene Prompts",
         "type": "@n8n/n8n-nodes-langchain.openAi",
         "typeVersion": 1.4,
         "position": [
-          960,
-          -48
+          1472,
+          192
         ],
         "credentials": {
           "openAiApi": {
@@ -213,15 +108,15 @@
       {
         "parameters": {
           "mode": "runOnceForEachItem",
-          "jsCode": "// Optimize prompts for the specific video engine\nconst scenes = $input.item.json.scenes || [];\nconst videoEngine = $('Extract Parameters').item.json.videoEngine;\n\nconst optimizedScenes = scenes.map(scene => {\n  let optimizedPrompt = scene.prompt;\n  \n  // Add engine-specific optimizations\n  if (videoEngine.includes('Veo')) {\n    // Veo 3 works well with detailed cinematic prompts\n    optimizedPrompt = `Cinematic shot: ${scene.prompt}. Camera: ${scene.cameraMovement}. Lighting: professional, ${scene.mood} atmosphere.`;\n  } else if (videoEngine.includes('Runway')) {\n    // Runway works well with motion-focused prompts\n    optimizedPrompt = `${scene.prompt}. Motion: ${scene.cameraMovement}. Style: ${$('Extract Parameters').item.json.visualStyle}.`;\n  } else if (videoEngine.includes('Luma')) {\n    // Luma Dream Machine likes vivid, descriptive prompts\n    optimizedPrompt = `${scene.prompt}, ${scene.mood} atmosphere, cinematic lighting, high quality, detailed`;\n  } else {\n    // Default optimization\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} mood.`;\n  }\n  \n  return {\n    ...scene,\n    prompt: optimizedPrompt,\n    originalPrompt: scene.prompt\n  };\n});\n\nreturn {\n  ...($input.item.json),\n  scenes: optimizedScenes\n};"
+          "jsCode": "// Optimize prompts for the specific video engine\nconst scenes = $input.item.json.scenes || [];\nconst videoEngine = $('Extract Parameters').item.json.videoEngine || '';\nconst visualStyle = $('Extract Parameters').item.json.visualStyle || 'Cinematic';\n\nconst optimizedScenes = scenes.map((scene, index) => {\n  let optimizedPrompt = scene.prompt;\n  \n  // Add engine-specific optimizations\n  if (videoEngine.includes('Kling')) {\n    // Kling works well with action-focused, detailed prompts\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} atmosphere. High quality, cinematic, ${visualStyle} style.`;\n  } else if (videoEngine.includes('Veo') || videoEngine.includes('Premium')) {\n    // Veo 3 works well with detailed cinematic prompts\n    optimizedPrompt = `Cinematic shot: ${scene.prompt}. Camera: ${scene.cameraMovement}. Lighting: professional, ${scene.mood} atmosphere. 4K quality.`;\n  } else if (videoEngine.includes('Runway')) {\n    // Runway works well with motion-focused prompts  \n    optimizedPrompt = `${scene.prompt}. Motion: ${scene.cameraMovement}. Style: ${visualStyle}. Smooth motion, high quality.`;\n  } else if (videoEngine.includes('Hailuo') || videoEngine.includes('MiniMax')) {\n    // Hailuo/MiniMax - simpler, focused prompts\n    optimizedPrompt = `${scene.prompt}. ${scene.mood} mood. ${visualStyle} style.`;\n  } else {\n    // Default optimization\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} mood. ${visualStyle} style.`;\n  }\n  \n  return {\n    ...scene,\n    id: scene.id || index + 1,\n    prompt: optimizedPrompt,\n    originalPrompt: scene.prompt,\n    duration: scene.duration || 6\n  };\n});\n\nreturn {\n  overallTheme: $input.item.json.overallTheme,\n  colorPalette: $input.item.json.colorPalette,\n  characterConsistency: $input.item.json.characterConsistency,\n  scenes: optimizedScenes\n};"
         },
-        "id": "a1e4ff41-08cb-451c-92f0-4587aa01b779",
+        "id": "39b9b3db-302b-4ebc-963b-9118f97d2475",
         "name": "Optimize Prompts for Engine",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1216,
-          64
+          1744,
+          240
         ]
       },
       {
@@ -231,20 +126,20 @@
               {
                 "id": "final-output",
                 "name": "output",
-                "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, scenes: $json.scenes, overallTheme: $json.overallTheme, colorPalette: $json.colorPalette, characterConsistency: $json.characterConsistency, totalScenes: $json.scenes.length, estimatedDuration: $json.scenes.reduce((sum, s) => sum + s.duration, 0)} }}",
+                "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, scenes: $json.scenes, overallTheme: $json.overallTheme, colorPalette: $json.colorPalette, characterConsistency: $json.characterConsistency, totalScenes: $json.scenes.length, estimatedDuration: $json.scenes.reduce((sum, s) => sum + (s.duration || 6), 0)} }}",
                 "type": "object"
               }
             ]
           },
           "options": {}
         },
-        "id": "e9dd2c85-1e7d-429d-97d2-64daf0b4346b",
+        "id": "15417f50-b31d-436d-8829-8677ab427808",
         "name": "Prepare Output",
         "type": "n8n-nodes-base.set",
         "typeVersion": 3.4,
         "position": [
-          1424,
-          64
+          1968,
+          240
         ]
       },
       {
@@ -253,13 +148,13 @@
           "responseBody": "={{ JSON.stringify($json.output) }}",
           "options": {}
         },
-        "id": "6079e72e-2c03-4b69-9756-b84a7c848fdc",
+        "id": "07aa8ea5-c26d-4058-998e-a797d4e19357",
         "name": "Respond to Webhook",
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.1,
         "position": [
-          1648,
-          64
+          2192,
+          240
         ]
       }
     ],
@@ -276,57 +171,6 @@
         ]
       },
       "Extract Parameters": {
-        "main": [
-          [
-            {
-              "node": "Has Reference Images?",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Has Reference Images?": {
-        "main": [
-          [
-            {
-              "node": "Analyze Reference Images",
-              "type": "main",
-              "index": 0
-            }
-          ],
-          [
-            {
-              "node": "No Image Analysis",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Analyze Reference Images": {
-        "main": [
-          [
-            {
-              "node": "Merge Image Analysis",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "No Image Analysis": {
-        "main": [
-          [
-            {
-              "node": "Merge Image Analysis",
-              "type": "main",
-              "index": 1
-            }
-          ]
-        ]
-      },
-      "Merge Image Analysis": {
         "main": [
           [
             {
@@ -375,7 +219,7 @@
     "name": null,
     "description": null
   },
-  "activeVersionId": "b9543407-c000-4308-8e15-585943c09a7e",
+  "activeVersionId": "41a3b590-8d50-45b7-966a-23cebd62c0e5",
   "connections": {
     "Webhook Trigger": {
       "main": [
@@ -389,57 +233,6 @@
       ]
     },
     "Extract Parameters": {
-      "main": [
-        [
-          {
-            "node": "Has Reference Images?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Has Reference Images?": {
-      "main": [
-        [
-          {
-            "node": "Analyze Reference Images",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Image Analysis",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analyze Reference Images": {
-      "main": [
-        [
-          {
-            "node": "Merge Image Analysis",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "No Image Analysis": {
-      "main": [
-        [
-          {
-            "node": "Merge Image Analysis",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge Image Analysis": {
       "main": [
         [
           {
@@ -496,15 +289,16 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "scene-generation",
+        "responseMode": "responseNode",
         "options": {}
       },
-      "id": "6cd55835-1caf-40e3-9c1e-3c4a3eb167ff",
+      "id": "e6abb23e-a2b8-4ffe-be04-89dc6168836c",
       "name": "Webhook Trigger",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -112,
-        64
+        1072,
+        240
       ],
       "webhookId": "scene-generation-webhook"
     },
@@ -515,163 +309,57 @@
             {
               "id": "project-id",
               "name": "projectId",
-              "value": "={{ $json.body.projectId }}",
+              "value": "={{ $json.body?.projectId || $json.projectId }}",
               "type": "string"
             },
             {
               "id": "analysis-data",
               "name": "analysisData",
-              "value": "={{ $json.body.analysisData }}",
+              "value": "={{ $json.body?.analysisData || $json.analysisData }}",
               "type": "object"
             },
             {
               "id": "visual-style",
               "name": "visualStyle",
-              "value": "={{ $json.body.visualStyle }}",
+              "value": "={{ $json.body?.visualStyle || $json.visualStyle || 'Cinematic Realistic' }}",
               "type": "string"
             },
             {
               "id": "reference-images",
               "name": "referenceImages",
-              "value": "={{ $json.body.referenceImages || [] }}",
+              "value": "={{ $json.body?.referenceImages || $json.referenceImages || [] }}",
               "type": "array"
             },
             {
               "id": "video-engine",
               "name": "videoEngine",
-              "value": "={{ $json.body.videoEngine }}",
+              "value": "={{ $json.body?.videoEngine || $json.videoEngine || 'Kling 2.6 (Recommended)' }}",
               "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "id": "90d511d8-3a33-4559-a0ef-f580e6cd217d",
+      "id": "51a8a10f-365f-486b-a925-4c819ef8fd40",
       "name": "Extract Parameters",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        112,
-        64
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "has-images",
-              "leftValue": "={{ $json.referenceImages.length > 0 }}",
-              "rightValue": true,
-              "operator": {
-                "type": "boolean",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "e36f0d81-f526-4e03-a129-ca761edd1577",
-      "name": "Has Reference Images?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        336,
-        64
+        1296,
+        240
       ]
     },
     {
       "parameters": {
         "modelId": {
           "__rl": true,
-          "value": "gpt-5-chat-latest",
-          "mode": "list",
-          "cachedResultName": "GPT-5-CHAT-LATEST"
+          "value": "gpt-4o",
+          "mode": "list"
         },
         "messages": {
           "values": [
             {
-              "content": "Analyze the following reference images and extract visual style elements that should be maintained throughout the music video.\n\nProvide analysis in JSON format:\n{\n  \"characters\": [{\"description\": \"detailed description\", \"features\": [\"feature1\", \"feature2\"]}],\n  \"colorPalette\": [\"#hex1\", \"#hex2\"],\n  \"artStyle\": \"description of art/visual style\",\n  \"lighting\": \"lighting characteristics\",\n  \"mood\": \"visual mood\",\n  \"recurringElements\": [\"element1\", \"element2\"]\n}\n\nImage URLs:\n{{ $json.referenceImages.join('\\n') }}"
-            }
-          ]
-        },
-        "jsonOutput": true,
-        "options": {
-          "temperature": 0.5
-        }
-      },
-      "id": "430e0937-5726-4c9d-9db5-bfe77011fbc8",
-      "name": "Analyze Reference Images",
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.4,
-      "position": [
-        528,
-        -112
-      ],
-      "credentials": {
-        "openAiApi": {
-          "id": "hIbzO0TgpkKLndpi",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "image-analysis",
-              "name": "imageAnalysis",
-              "value": "={{ null }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "e90c92b8-8e2d-4749-b80e-1b17a10cf7a4",
-      "name": "No Image Analysis",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        544,
-        160
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "id": "a90f0ec6-b150-45e4-8ecd-a597ad0dd997",
-      "name": "Merge Image Analysis",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        768,
-        64
-      ]
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-5.1-chat-latest",
-          "mode": "list",
-          "cachedResultName": "GPT-5.1-CHAT-LATEST"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "You are a creative director creating scene prompts for an AI music video generator. Based on the song analysis and style preferences, create detailed scene descriptions for each segment of the song.\n\nSONG ANALYSIS:\n{{ JSON.stringify($('Extract Parameters').item.json.analysisData.lyricsAnalysis, null, 2) }}\n\nAUDIO STRUCTURE:\n{{ JSON.stringify($('Extract Parameters').item.json.analysisData.audioFeatures, null, 2) }}\n\nVISUAL STYLE: {{ $('Extract Parameters').item.json.visualStyle }}\n\nREFERENCE IMAGE ANALYSIS:\n{{ $json.imageAnalysis ? JSON.stringify($json.imageAnalysis, null, 2) : 'No reference images provided' }}\n\nVIDEO ENGINE: {{ $('Extract Parameters').item.json.videoEngine }}\n\nCreate a JSON response with the following structure:\n{\n  \"overallTheme\": \"cohesive theme for entire video\",\n  \"colorPalette\": [\"#color1\", \"#color2\", \"#color3\"],\n  \"characterConsistency\": \"description of main character/subject to maintain consistency\",\n  \"scenes\": [\n    {\n      \"id\": 1,\n      \"segmentName\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 15,\n      \"duration\": 8,\n      \"prompt\": \"Detailed visual description for AI video generation. Be specific about setting, subject, action, lighting, and atmosphere. Include cinematographic details.\",\n      \"cameraMovement\": \"slow dolly forward / static wide shot / tracking left / etc.\",\n      \"mood\": \"emotional tone\",\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"transitionToNext\": \"fade / cut / dissolve\"\n    }\n  ]\n}\n\nIMPORTANT GUIDELINES:\n1. Each scene should be 6-8 seconds for optimal AI video generation\n2. Prompts should be detailed (50-100 words) and visually descriptive\n3. Maintain visual consistency across all scenes\n4. Match camera movements to the energy of the music\n5. Include specific details about lighting, colors, and atmosphere\n6. Consider the emotional arc of the song\n7. For Veo 3, you can include audio descriptions (dialogue, sound effects)\n8. For Runway/Luma, focus on visual motion and transformations\n\nGenerate scenes for the ENTIRE song duration ({{ $('Extract Parameters').item.json.analysisData.audioFeatures.estimatedDuration || 180 }} seconds)."
+              "content": "You are a creative director creating scene prompts for an AI music video generator. Based on the song analysis and style preferences, create detailed scene descriptions.\n\nSONG ANALYSIS:\n{{ JSON.stringify($json.analysisData?.lyricsAnalysis || {}, null, 2) }}\n\nAUDIO STRUCTURE:\n{{ JSON.stringify($json.analysisData?.audioFeatures || {}, null, 2) }}\n\nVISUAL STYLE: {{ $json.visualStyle }}\n\nVIDEO ENGINE: {{ $json.videoEngine }}\n\nEstimated song duration: {{ $json.analysisData?.duration || $json.analysisData?.audioFeatures?.estimatedDuration || 180 }} seconds\n\nCreate a JSON response with the following structure:\n{\n  \"overallTheme\": \"cohesive theme for entire video\",\n  \"colorPalette\": [\"#color1\", \"#color2\", \"#color3\"],\n  \"characterConsistency\": \"description of main character/subject to maintain consistency\",\n  \"scenes\": [\n    {\n      \"id\": 1,\n      \"segmentName\": \"intro\",\n      \"startTime\": 0,\n      \"endTime\": 8,\n      \"duration\": 8,\n      \"prompt\": \"Detailed visual description for AI video generation. Be specific about setting, subject, action, lighting, and atmosphere. Include cinematographic details. 50-100 words.\",\n      \"cameraMovement\": \"slow dolly forward\",\n      \"mood\": \"emotional tone\",\n      \"lyrics\": \"relevant lyrics for this segment\",\n      \"transitionToNext\": \"fade\"\n    }\n  ]\n}\n\nIMPORTANT GUIDELINES:\n1. Each scene should be 5-8 seconds (aim for 6 seconds each)\n2. For a 3-minute song, create approximately 25-30 scenes\n3. Prompts should be detailed (50-100 words) and visually descriptive\n4. Maintain visual consistency across all scenes\n5. Match camera movements to the energy of the music\n6. Include specific details about lighting, colors, and atmosphere\n7. For {{ $json.videoEngine }}, optimize prompts accordingly\n\nGenerate scenes for the ENTIRE song duration."
             }
           ]
         },
@@ -681,13 +369,13 @@
           "temperature": 0.8
         }
       },
-      "id": "a983d852-03b0-4bda-936b-48c527fc259e",
+      "id": "6c88f4a5-185e-40c4-9b35-3df69369742d",
       "name": "Generate Scene Prompts",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.4,
       "position": [
-        960,
-        -48
+        1472,
+        192
       ],
       "credentials": {
         "openAiApi": {
@@ -699,15 +387,15 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "// Optimize prompts for the specific video engine\nconst scenes = $input.item.json.scenes || [];\nconst videoEngine = $('Extract Parameters').item.json.videoEngine;\n\nconst optimizedScenes = scenes.map(scene => {\n  let optimizedPrompt = scene.prompt;\n  \n  // Add engine-specific optimizations\n  if (videoEngine.includes('Veo')) {\n    // Veo 3 works well with detailed cinematic prompts\n    optimizedPrompt = `Cinematic shot: ${scene.prompt}. Camera: ${scene.cameraMovement}. Lighting: professional, ${scene.mood} atmosphere.`;\n  } else if (videoEngine.includes('Runway')) {\n    // Runway works well with motion-focused prompts\n    optimizedPrompt = `${scene.prompt}. Motion: ${scene.cameraMovement}. Style: ${$('Extract Parameters').item.json.visualStyle}.`;\n  } else if (videoEngine.includes('Luma')) {\n    // Luma Dream Machine likes vivid, descriptive prompts\n    optimizedPrompt = `${scene.prompt}, ${scene.mood} atmosphere, cinematic lighting, high quality, detailed`;\n  } else {\n    // Default optimization\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} mood.`;\n  }\n  \n  return {\n    ...scene,\n    prompt: optimizedPrompt,\n    originalPrompt: scene.prompt\n  };\n});\n\nreturn {\n  ...($input.item.json),\n  scenes: optimizedScenes\n};"
+        "jsCode": "// Optimize prompts for the specific video engine\nconst scenes = $input.item.json.scenes || [];\nconst videoEngine = $('Extract Parameters').item.json.videoEngine || '';\nconst visualStyle = $('Extract Parameters').item.json.visualStyle || 'Cinematic';\n\nconst optimizedScenes = scenes.map((scene, index) => {\n  let optimizedPrompt = scene.prompt;\n  \n  // Add engine-specific optimizations\n  if (videoEngine.includes('Kling')) {\n    // Kling works well with action-focused, detailed prompts\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} atmosphere. High quality, cinematic, ${visualStyle} style.`;\n  } else if (videoEngine.includes('Veo') || videoEngine.includes('Premium')) {\n    // Veo 3 works well with detailed cinematic prompts\n    optimizedPrompt = `Cinematic shot: ${scene.prompt}. Camera: ${scene.cameraMovement}. Lighting: professional, ${scene.mood} atmosphere. 4K quality.`;\n  } else if (videoEngine.includes('Runway')) {\n    // Runway works well with motion-focused prompts  \n    optimizedPrompt = `${scene.prompt}. Motion: ${scene.cameraMovement}. Style: ${visualStyle}. Smooth motion, high quality.`;\n  } else if (videoEngine.includes('Hailuo') || videoEngine.includes('MiniMax')) {\n    // Hailuo/MiniMax - simpler, focused prompts\n    optimizedPrompt = `${scene.prompt}. ${scene.mood} mood. ${visualStyle} style.`;\n  } else {\n    // Default optimization\n    optimizedPrompt = `${scene.prompt}. ${scene.cameraMovement}. ${scene.mood} mood. ${visualStyle} style.`;\n  }\n  \n  return {\n    ...scene,\n    id: scene.id || index + 1,\n    prompt: optimizedPrompt,\n    originalPrompt: scene.prompt,\n    duration: scene.duration || 6\n  };\n});\n\nreturn {\n  overallTheme: $input.item.json.overallTheme,\n  colorPalette: $input.item.json.colorPalette,\n  characterConsistency: $input.item.json.characterConsistency,\n  scenes: optimizedScenes\n};"
       },
-      "id": "a1e4ff41-08cb-451c-92f0-4587aa01b779",
+      "id": "39b9b3db-302b-4ebc-963b-9118f97d2475",
       "name": "Optimize Prompts for Engine",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1216,
-        64
+        1744,
+        240
       ]
     },
     {
@@ -717,20 +405,20 @@
             {
               "id": "final-output",
               "name": "output",
-              "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, scenes: $json.scenes, overallTheme: $json.overallTheme, colorPalette: $json.colorPalette, characterConsistency: $json.characterConsistency, totalScenes: $json.scenes.length, estimatedDuration: $json.scenes.reduce((sum, s) => sum + s.duration, 0)} }}",
+              "value": "={{ {projectId: $('Extract Parameters').item.json.projectId, scenes: $json.scenes, overallTheme: $json.overallTheme, colorPalette: $json.colorPalette, characterConsistency: $json.characterConsistency, totalScenes: $json.scenes.length, estimatedDuration: $json.scenes.reduce((sum, s) => sum + (s.duration || 6), 0)} }}",
               "type": "object"
             }
           ]
         },
         "options": {}
       },
-      "id": "e9dd2c85-1e7d-429d-97d2-64daf0b4346b",
+      "id": "15417f50-b31d-436d-8829-8677ab427808",
       "name": "Prepare Output",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1424,
-        64
+        1968,
+        240
       ]
     },
     {
@@ -739,13 +427,13 @@
         "responseBody": "={{ JSON.stringify($json.output) }}",
         "options": {}
       },
-      "id": "6079e72e-2c03-4b69-9756-b84a7c848fdc",
+      "id": "07aa8ea5-c26d-4058-998e-a797d4e19357",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        1648,
-        64
+        2192,
+        240
       ]
     }
   ],
@@ -754,7 +442,8 @@
   "repo_owner": "cyberomnes",
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "availableInMCP": true
   },
   "shared": [
     {
@@ -781,6 +470,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-12-10T16:51:33.640Z",
-  "versionId": "b9543407-c000-4308-8e15-585943c09a7e"
+  "updatedAt": "2025-12-15T15:53:15.731Z",
+  "versionId": "41a3b590-8d50-45b7-966a-23cebd62c0e5"
 }

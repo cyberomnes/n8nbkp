@@ -1,144 +1,7 @@
 {
-  "active": true,
-  "activeVersion": {
-    "updatedAt": "2025-12-15T15:53:47.296Z",
-    "createdAt": "2025-12-15T15:53:47.296Z",
-    "versionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea",
-    "workflowId": "wzUWrr6nu1zoynCN",
-    "nodes": [
-      {
-        "parameters": {
-          "httpMethod": "POST",
-          "path": "video-composition",
-          "responseMode": "responseNode",
-          "options": {}
-        },
-        "id": "486335b0-c099-4127-9fb1-d7b4e6adf0e5",
-        "name": "Webhook Trigger",
-        "type": "n8n-nodes-base.webhook",
-        "typeVersion": 2,
-        "position": [
-          1136,
-          432
-        ],
-        "webhookId": "video-composition-webhook"
-      },
-      {
-        "parameters": {
-          "assignments": {
-            "assignments": [
-              {
-                "id": "project-id",
-                "name": "projectId",
-                "value": "={{ $json.body?.projectId || $json.projectId }}",
-                "type": "string"
-              },
-              {
-                "id": "video-clips",
-                "name": "videoClips",
-                "value": "={{ $json.body?.videoClips || $json.videoClips || [] }}",
-                "type": "array"
-              },
-              {
-                "id": "audio-url",
-                "name": "audioUrl",
-                "value": "={{ $json.body?.audioUrl || $json.audioUrl || '' }}",
-                "type": "string"
-              },
-              {
-                "id": "lyrics",
-                "name": "lyrics",
-                "value": "={{ $json.body?.lyrics || $json.lyrics || '' }}",
-                "type": "string"
-              },
-              {
-                "id": "lyric-overlay",
-                "name": "lyricOverlay",
-                "value": "={{ $json.body?.lyricOverlay || $json.lyricOverlay || 'No Lyrics' }}",
-                "type": "string"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "14936c64-6322-4d62-95a5-42d1728b58ce",
-        "name": "Extract Parameters",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.4,
-        "position": [
-          1360,
-          432
-        ]
-      },
-      {
-        "parameters": {
-          "jsCode": "// For MVP: Return the video clips directly without complex composition\n// Full composition with Creatomate can be added later\nconst clips = $input.item.json.videoClips || [];\nconst projectId = $input.item.json.projectId;\n\n// Sort clips by sceneId\nconst sortedClips = clips.sort((a, b) => (a.sceneId || 0) - (b.sceneId || 0));\n\n// For now, return the first video as the 'final' video\n// In production, this would use Creatomate or ffmpeg to stitch videos\nconst finalVideoUrl = sortedClips[0]?.videoUrl || null;\n\nreturn {\n  projectId,\n  status: 'completed',\n  finalVideoUrl,\n  downloadUrl: finalVideoUrl,\n  videoClips: sortedClips,\n  totalClips: sortedClips.length,\n  message: sortedClips.length > 1 \n    ? `Generated ${sortedClips.length} video clips. Final composition available.`\n    : 'Single video clip generated.',\n  lyricOverlay: $input.item.json.lyricOverlay\n};"
-        },
-        "id": "86f2d546-d700-4c19-8686-e14894fd830f",
-        "name": "Simple Composition",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          1584,
-          432
-        ]
-      },
-      {
-        "parameters": {
-          "respondWith": "json",
-          "responseBody": "={{ JSON.stringify($json) }}",
-          "options": {}
-        },
-        "id": "680191aa-43a1-4d60-b737-5406d68f2530",
-        "name": "Respond to Webhook",
-        "type": "n8n-nodes-base.respondToWebhook",
-        "typeVersion": 1.1,
-        "position": [
-          1808,
-          432
-        ]
-      }
-    ],
-    "connections": {
-      "Webhook Trigger": {
-        "main": [
-          [
-            {
-              "node": "Extract Parameters",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Extract Parameters": {
-        "main": [
-          [
-            {
-              "node": "Simple Composition",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Simple Composition": {
-        "main": [
-          [
-            {
-              "node": "Respond to Webhook",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      }
-    },
-    "authors": "Cyber Omnes",
-    "name": null,
-    "description": null
-  },
-  "activeVersionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea",
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {
     "Webhook Trigger": {
       "main": [
@@ -281,7 +144,7 @@
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": true
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -308,6 +171,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-12-15T15:53:47.294Z",
+  "updatedAt": "2026-01-01T17:48:32.000Z",
   "versionId": "af192bb0-dcfa-4f2b-8737-a9e2ea37d1ea"
 }

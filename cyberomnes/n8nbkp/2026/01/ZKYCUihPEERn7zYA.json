@@ -1,0 +1,876 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-05T23:45:47.397Z",
+    "createdAt": "2026-01-05T23:45:47.397Z",
+    "versionId": "d0a7c640-086a-4ee1-a61e-57869d9258f2",
+    "workflowId": "ZKYCUihPEERn7zYA",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "omnesforge",
+          "responseMode": "responseNode",
+          "options": {
+            "allowedOrigins": "*"
+          }
+        },
+        "id": "3dfc74b8-59cd-4c62-a53f-dccdfd289fed",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -432,
+          112
+        ],
+        "webhookId": "omnesforge-main"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Extract and validate input parameters\nconst body = $input.first().json.body || $input.first().json;\n\nconst payload = {\n  prompt: body.prompt || '',\n  provider: body.provider || 'openai',\n  contentType: body.contentType || 'post',\n  brand: body.brand || {},\n  hashtagStrategy: body.hashtagStrategy || 'auto',\n  bulkMode: body.bulkMode || false,\n  variationCount: body.variationCount || 1,\n  referenceImages: body.referenceImages || [],\n  apiKey: body.apiKey || ''\n};\n\n// Validate required fields\nif (!payload.prompt) {\n  return [{ json: { error: 'Prompt is required', success: false } }];\n}\n\nif (!payload.apiKey) {\n  return [{ json: { error: 'API key is required', success: false } }];\n}\n\nreturn [{ json: payload }];"
+        },
+        "id": "3fbef5b6-8c18-49fd-9ffb-ceec8264d066",
+        "name": "Extract Parameters",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -208,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "check-error",
+                "leftValue": "={{ $json.error }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "6e2ddd57-eea8-4f3b-a142-5d3e99e2e3bb",
+        "name": "Check Validation",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          16,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Build OpenAI request body as proper JSON\nconst input = $input.first().json;\n\nconst brandName = input.brand?.name || 'General';\nconst brandDescription = input.brand?.description || 'Professional and engaging';\nconst brandAudience = input.brand?.audience || 'General audience';\nconst brandTags = input.brand?.tags ? input.brand.tags.join(', ') : 'modern, trendy';\n\nconst systemPrompt = `You are an expert Instagram content creator and social media strategist. Your job is to create viral, engaging content that drives maximum engagement.\n\nBrand: ${brandName}\nBrand Voice: ${brandDescription}\nTarget Audience: ${brandAudience}\nStyle Tags: ${brandTags}\n\nCreate content that:\n- Is scroll-stopping and attention-grabbing\n- Uses emojis naturally and effectively\n- Includes a clear call-to-action\n- Matches the brand voice perfectly\n- Is optimized for the Instagram algorithm`;\n\nconst userPrompt = `Create an engaging Instagram ${input.contentType} for: ${input.prompt}\n\nProvide your response in this exact JSON format:\n{\n  \"caption\": \"The main caption text with emojis\",\n  \"hashtags\": [\"hashtag1\", \"hashtag2\"],\n  \"imagePrompt\": \"Detailed prompt for image generation\",\n  \"hook\": \"The attention-grabbing first line\",\n  \"cta\": \"Call to action text\"\n}`;\n\nconst requestBody = {\n  model: 'gpt-4-turbo-preview',\n  messages: [\n    { role: 'system', content: systemPrompt },\n    { role: 'user', content: userPrompt }\n  ],\n  max_tokens: 1000,\n  response_format: { type: 'json_object' }\n};\n\nreturn [{ json: { requestBody, apiKey: input.apiKey, originalInput: input } }];"
+        },
+        "id": "c5dfcc83-9b7c-48b9-b52f-15b732fc161f",
+        "name": "Build OpenAI Request",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          240,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Build Gemini request body as proper JSON\nconst input = $input.first().json;\n\nconst brandName = input.brand?.name || 'General';\nconst brandDescription = input.brand?.description || 'Professional and engaging';\nconst brandAudience = input.brand?.audience || 'General audience';\nconst brandTags = input.brand?.tags ? input.brand.tags.join(', ') : 'modern, trendy';\n\nconst prompt = `You are an expert Instagram content creator. Create viral, engaging content.\n\nBrand: ${brandName}\nBrand Voice: ${brandDescription}\nTarget Audience: ${brandAudience}\nStyle Tags: ${brandTags}\n\nCreate an Instagram ${input.contentType} for: ${input.prompt}\n\nRespond ONLY with valid JSON in this exact format:\n{\n  \"caption\": \"The main caption with emojis\",\n  \"hashtags\": [\"hashtag1\", \"hashtag2\"],\n  \"imagePrompt\": \"Detailed image prompt\",\n  \"hook\": \"First attention-grabbing line\",\n  \"cta\": \"Call to action\"\n}`;\n\nconst requestBody = {\n  contents: [{\n    parts: [{ text: prompt }]\n  }],\n  generationConfig: {\n    temperature: 0.9,\n    maxOutputTokens: 1000\n  }\n};\n\nreturn [{ json: { requestBody, apiKey: input.apiKey, originalInput: input } }];"
+        },
+        "id": "caca00bb-6ce2-4f40-88e0-8e65407cb502",
+        "name": "Build Gemini Request",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          240,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "is-openai",
+                "leftValue": "={{ $json.provider }}",
+                "rightValue": "openai",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "7fc017d3-6195-438c-87ee-62c1227b20ce",
+        "name": "Check Provider",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          16,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/chat/completions",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $json.apiKey }}"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+          "options": {
+            "timeout": 60000
+          }
+        },
+        "id": "c3a6d9fd-4f70-407b-bdd9-7a5f3c85df09",
+        "name": "Call OpenAI API",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          464,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={{ $json.apiKey }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+          "options": {
+            "timeout": 60000
+          }
+        },
+        "id": "215e9970-c1bd-4422-b9e1-7e8d652fada8",
+        "name": "Call Gemini API",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          464,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parse OpenAI response\nconst response = $input.first().json;\nconst originalInput = $('Build OpenAI Request').item.json.originalInput;\n\ntry {\n  const content = JSON.parse(response.choices[0].message.content);\n  return [{ json: { success: true, content, originalInput } }];\n} catch (e) {\n  return [{ json: { success: false, error: 'Failed to parse OpenAI response: ' + e.message, originalInput } }];\n}"
+        },
+        "id": "bc30db9c-0a0f-4155-bc55-cda835c96c81",
+        "name": "Parse OpenAI Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          688,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parse Gemini response\nconst response = $input.first().json;\nconst originalInput = $('Build Gemini Request').item.json.originalInput;\n\ntry {\n  const text = response.candidates[0].content.parts[0].text;\n  let content;\n  \n  // Try to parse directly\n  try {\n    content = JSON.parse(text);\n  } catch (e) {\n    // Try to extract JSON from markdown code block\n    const jsonMatch = text.match(/```json\\n([\\s\\S]*?)\\n```/) || text.match(/\\{[\\s\\S]*\\}/);\n    if (jsonMatch) {\n      content = JSON.parse(jsonMatch[1] || jsonMatch[0]);\n    } else {\n      throw new Error('Could not extract JSON from response');\n    }\n  }\n  \n  return [{ json: { success: true, content, originalInput } }];\n} catch (e) {\n  return [{ json: { success: false, error: 'Failed to parse Gemini response: ' + e.message, originalInput } }];\n}"
+        },
+        "id": "a4518ce5-8773-46e4-b3db-3a6d43fd730d",
+        "name": "Parse Gemini Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          688,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Merge results from either provider\nconst items = $input.all();\nconst result = items[0].json;\n\nif (!result.success) {\n  return [{ json: result }];\n}\n\n// Format final response\nconst content = result.content;\nconst originalInput = result.originalInput;\n\nconst formattedResult = {\n  success: true,\n  content: {\n    caption: content.caption,\n    hashtags: (content.hashtags || []).map(h => h.startsWith('#') ? h : '#' + h),\n    imagePrompt: content.imagePrompt,\n    hook: content.hook,\n    cta: content.cta,\n    contentType: originalInput.contentType\n  }\n};\n\nreturn [{ json: formattedResult }];"
+        },
+        "id": "d9bed3e5-4565-425c-9d4b-d74ae7dee2dc",
+        "name": "Format Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          896,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}",
+          "options": {
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "name": "Access-Control-Allow-Headers",
+                  "value": "Content-Type, Authorization"
+                }
+              ]
+            }
+          }
+        },
+        "id": "01d71748-e6d9-4fab-b298-65996f1a0bfe",
+        "name": "Success Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1120,
+          112
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: $json.error || 'Validation failed' } }}",
+          "options": {
+            "responseCode": 400,
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ]
+            }
+          }
+        },
+        "id": "50c0a81a-fc47-494f-b144-325e1b37bc23",
+        "name": "Error Response",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          240,
+          304
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Extract Parameters",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Parameters": {
+        "main": [
+          [
+            {
+              "node": "Check Validation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Validation": {
+        "main": [
+          [
+            {
+              "node": "Error Response",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Check Provider",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Provider": {
+        "main": [
+          [
+            {
+              "node": "Build OpenAI Request",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Build Gemini Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build OpenAI Request": {
+        "main": [
+          [
+            {
+              "node": "Call OpenAI API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Gemini Request": {
+        "main": [
+          [
+            {
+              "node": "Call Gemini API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call OpenAI API": {
+        "main": [
+          [
+            {
+              "node": "Parse OpenAI Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Gemini API": {
+        "main": [
+          [
+            {
+              "node": "Parse Gemini Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse OpenAI Response": {
+        "main": [
+          [
+            {
+              "node": "Format Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse Gemini Response": {
+        "main": [
+          [
+            {
+              "node": "Format Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Response": {
+        "main": [
+          [
+            {
+              "node": "Success Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "d0a7c640-086a-4ee1-a61e-57869d9258f2",
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Parameters": {
+      "main": [
+        [
+          {
+            "node": "Check Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Validation": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check Provider",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Provider": {
+      "main": [
+        [
+          {
+            "node": "Build OpenAI Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Gemini Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build OpenAI Request": {
+      "main": [
+        [
+          {
+            "node": "Call OpenAI API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Gemini Request": {
+      "main": [
+        [
+          {
+            "node": "Call Gemini API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call OpenAI API": {
+      "main": [
+        [
+          {
+            "node": "Parse OpenAI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Gemini API": {
+      "main": [
+        [
+          {
+            "node": "Parse Gemini Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse OpenAI Response": {
+      "main": [
+        [
+          {
+            "node": "Format Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Gemini Response": {
+      "main": [
+        [
+          {
+            "node": "Format Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Response": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-05T23:45:47.180Z",
+  "id": "ZKYCUihPEERn7zYA",
+  "isArchived": false,
+  "meta": null,
+  "name": "OmnesForge AI - Content Generator v2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "omnesforge",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "3dfc74b8-59cd-4c62-a53f-dccdfd289fed",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        112
+      ],
+      "webhookId": "omnesforge-main"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and validate input parameters\nconst body = $input.first().json.body || $input.first().json;\n\nconst payload = {\n  prompt: body.prompt || '',\n  provider: body.provider || 'openai',\n  contentType: body.contentType || 'post',\n  brand: body.brand || {},\n  hashtagStrategy: body.hashtagStrategy || 'auto',\n  bulkMode: body.bulkMode || false,\n  variationCount: body.variationCount || 1,\n  referenceImages: body.referenceImages || [],\n  apiKey: body.apiKey || ''\n};\n\n// Validate required fields\nif (!payload.prompt) {\n  return [{ json: { error: 'Prompt is required', success: false } }];\n}\n\nif (!payload.apiKey) {\n  return [{ json: { error: 'API key is required', success: false } }];\n}\n\nreturn [{ json: payload }];"
+      },
+      "id": "3fbef5b6-8c18-49fd-9ffb-ceec8264d066",
+      "name": "Extract Parameters",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-error",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6e2ddd57-eea8-4f3b-a142-5d3e99e2e3bb",
+      "name": "Check Validation",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        16,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build OpenAI request body as proper JSON\nconst input = $input.first().json;\n\nconst brandName = input.brand?.name || 'General';\nconst brandDescription = input.brand?.description || 'Professional and engaging';\nconst brandAudience = input.brand?.audience || 'General audience';\nconst brandTags = input.brand?.tags ? input.brand.tags.join(', ') : 'modern, trendy';\n\nconst systemPrompt = `You are an expert Instagram content creator and social media strategist. Your job is to create viral, engaging content that drives maximum engagement.\n\nBrand: ${brandName}\nBrand Voice: ${brandDescription}\nTarget Audience: ${brandAudience}\nStyle Tags: ${brandTags}\n\nCreate content that:\n- Is scroll-stopping and attention-grabbing\n- Uses emojis naturally and effectively\n- Includes a clear call-to-action\n- Matches the brand voice perfectly\n- Is optimized for the Instagram algorithm`;\n\nconst userPrompt = `Create an engaging Instagram ${input.contentType} for: ${input.prompt}\n\nProvide your response in this exact JSON format:\n{\n  \"caption\": \"The main caption text with emojis\",\n  \"hashtags\": [\"hashtag1\", \"hashtag2\"],\n  \"imagePrompt\": \"Detailed prompt for image generation\",\n  \"hook\": \"The attention-grabbing first line\",\n  \"cta\": \"Call to action text\"\n}`;\n\nconst requestBody = {\n  model: 'gpt-4-turbo-preview',\n  messages: [\n    { role: 'system', content: systemPrompt },\n    { role: 'user', content: userPrompt }\n  ],\n  max_tokens: 1000,\n  response_format: { type: 'json_object' }\n};\n\nreturn [{ json: { requestBody, apiKey: input.apiKey, originalInput: input } }];"
+      },
+      "id": "c5dfcc83-9b7c-48b9-b52f-15b732fc161f",
+      "name": "Build OpenAI Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build Gemini request body as proper JSON\nconst input = $input.first().json;\n\nconst brandName = input.brand?.name || 'General';\nconst brandDescription = input.brand?.description || 'Professional and engaging';\nconst brandAudience = input.brand?.audience || 'General audience';\nconst brandTags = input.brand?.tags ? input.brand.tags.join(', ') : 'modern, trendy';\n\nconst prompt = `You are an expert Instagram content creator. Create viral, engaging content.\n\nBrand: ${brandName}\nBrand Voice: ${brandDescription}\nTarget Audience: ${brandAudience}\nStyle Tags: ${brandTags}\n\nCreate an Instagram ${input.contentType} for: ${input.prompt}\n\nRespond ONLY with valid JSON in this exact format:\n{\n  \"caption\": \"The main caption with emojis\",\n  \"hashtags\": [\"hashtag1\", \"hashtag2\"],\n  \"imagePrompt\": \"Detailed image prompt\",\n  \"hook\": \"First attention-grabbing line\",\n  \"cta\": \"Call to action\"\n}`;\n\nconst requestBody = {\n  contents: [{\n    parts: [{ text: prompt }]\n  }],\n  generationConfig: {\n    temperature: 0.9,\n    maxOutputTokens: 1000\n  }\n};\n\nreturn [{ json: { requestBody, apiKey: input.apiKey, originalInput: input } }];"
+      },
+      "id": "caca00bb-6ce2-4f40-88e0-8e65407cb502",
+      "name": "Build Gemini Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-openai",
+              "leftValue": "={{ $json.provider }}",
+              "rightValue": "openai",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7fc017d3-6195-438c-87ee-62c1227b20ce",
+      "name": "Check Provider",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        16,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.apiKey }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "c3a6d9fd-4f70-407b-bdd9-7a5f3c85df09",
+      "name": "Call OpenAI API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={{ $json.apiKey }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "215e9970-c1bd-4422-b9e1-7e8d652fada8",
+      "name": "Call Gemini API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse OpenAI response\nconst response = $input.first().json;\nconst originalInput = $('Build OpenAI Request').item.json.originalInput;\n\ntry {\n  const content = JSON.parse(response.choices[0].message.content);\n  return [{ json: { success: true, content, originalInput } }];\n} catch (e) {\n  return [{ json: { success: false, error: 'Failed to parse OpenAI response: ' + e.message, originalInput } }];\n}"
+      },
+      "id": "bc30db9c-0a0f-4155-bc55-cda835c96c81",
+      "name": "Parse OpenAI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Gemini response\nconst response = $input.first().json;\nconst originalInput = $('Build Gemini Request').item.json.originalInput;\n\ntry {\n  const text = response.candidates[0].content.parts[0].text;\n  let content;\n  \n  // Try to parse directly\n  try {\n    content = JSON.parse(text);\n  } catch (e) {\n    // Try to extract JSON from markdown code block\n    const jsonMatch = text.match(/```json\\n([\\s\\S]*?)\\n```/) || text.match(/\\{[\\s\\S]*\\}/);\n    if (jsonMatch) {\n      content = JSON.parse(jsonMatch[1] || jsonMatch[0]);\n    } else {\n      throw new Error('Could not extract JSON from response');\n    }\n  }\n  \n  return [{ json: { success: true, content, originalInput } }];\n} catch (e) {\n  return [{ json: { success: false, error: 'Failed to parse Gemini response: ' + e.message, originalInput } }];\n}"
+      },
+      "id": "a4518ce5-8773-46e4-b3db-3a6d43fd730d",
+      "name": "Parse Gemini Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge results from either provider\nconst items = $input.all();\nconst result = items[0].json;\n\nif (!result.success) {\n  return [{ json: result }];\n}\n\n// Format final response\nconst content = result.content;\nconst originalInput = result.originalInput;\n\nconst formattedResult = {\n  success: true,\n  content: {\n    caption: content.caption,\n    hashtags: (content.hashtags || []).map(h => h.startsWith('#') ? h : '#' + h),\n    imagePrompt: content.imagePrompt,\n    hook: content.hook,\n    cta: content.cta,\n    contentType: originalInput.contentType\n  }\n};\n\nreturn [{ json: formattedResult }];"
+      },
+      "id": "d9bed3e5-4565-425c-9d4b-d74ae7dee2dc",
+      "name": "Format Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        896,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type, Authorization"
+              }
+            ]
+          }
+        }
+      },
+      "id": "01d71748-e6d9-4fab-b298-65996f1a0bfe",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: false, error: $json.error || 'Validation failed' } }}",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "50c0a81a-fc47-494f-b144-325e1b37bc23",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        304
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-05T23:45:47.354Z",
+      "createdAt": "2026-01-05T23:45:47.354Z",
+      "role": "workflow:owner",
+      "workflowId": "ZKYCUihPEERn7zYA",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-01T17:48:49.652Z",
+      "createdAt": "2026-01-01T17:48:49.652Z",
+      "id": "ejHtzObGYyAPdr4l",
+      "name": "OmnesForge AI"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-05T23:50:34.225Z",
+  "versionId": "d0a7c640-086a-4ee1-a61e-57869d9258f2"
+}

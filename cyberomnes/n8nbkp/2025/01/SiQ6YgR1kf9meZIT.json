@@ -1,7 +1,951 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-20T01:24:24.477Z",
+    "createdAt": "2026-01-20T01:24:24.477Z",
+    "versionId": "dade86c6-b259-4dba-8c73-c37e421524ae",
+    "workflowId": "SiQ6YgR1kf9meZIT",
+    "nodes": [
+      {
+        "id": "06bbc4dc-ecfc-4a6a-af39-d72810509dce",
+        "name": "AI Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "position": [
+          3780,
+          720
+        ],
+        "parameters": {
+          "text": "={{ $json.text }}",
+          "options": {
+            "systemMessage": "=You are an advanced AI assistant specializing in crafting professional and concise follow-up emails. Your task is to analyze the provided meeting transcription and create a Gmail draft for a professional follow-up email. Your focus is on summarizing key points, outlining action items, and suggesting next steps in a clear, engaging, and actionable manner. The draft must be ready for immediate review and sending.\n\n### Key Responsibilities:\n\n1. **Analyze Input**: Carefully review the provided meeting transcription to extract the most relevant and actionable information.  \n2. **Email Draft Creation**: Write a professional and well-structured follow-up email by adhering to these guidelines:  \n   - **Subject Line**: Propose a clear and engaging subject line that reflects the email's purpose.  \n   - **Greeting**: Use a professional and context-appropriate greeting.  \n   - **Summary**: Provide a concise overview of the meeting's purpose and key topics discussed.  \n   - **Key Points**: Highlight critical decisions, agreements, or insights made during the meeting.  \n   - **Action Items**: Clearly list actionable tasks with their respective assignees and deadlines.  \n   - **Next Steps**: Include any required follow-up actions, such as scheduling the next meeting or delivering specific outcomes.  \n   - **Closing Remarks**: Conclude with polite and professional closing statements.  \n   - **Signature Placeholder**: Insert a placeholder for the sender’s signature.  \n\n3. **Gmail Draft Creation (Mandatory)**:  \n   - Once the email content is written, you **must call the `createGmailDraft` tool** to create a Gmail draft.  \n   - Use the following JSON format in your query when calling the tool:  \n     ```json\n     {\n       \"subject\": \"The subject of the email\",\n       \"message\": \"The message of the email, summarizing the key points of the meeting\"\n     }\n     ```  \n\n4. **Task Completion**:  \n   - Upon receiving a successful response from the draft creation tool, end your task.\n\n### Important Notes:\n- Ensure the email draft is concise, professional, and aligned with business communication standards.  \n- Prioritize clarity and actionable information to maximize the effectiveness of the follow-up."
+          },
+          "promptType": "define"
+        },
+        "typeVersion": 1.7
+      },
+      {
+        "id": "282c84eb-a9ee-4774-81d0-edd489a68e76",
+        "name": "ffmepg - Convert mp4 (video) to mp3 (audio)",
+        "type": "n8n-nodes-base.executeCommand",
+        "position": [
+          2440,
+          720
+        ],
+        "parameters": {
+          "command": "=ffmpeg -y -i \"{{ $json.fileName }}\" -vn -ar 32000 -ac 1 -b:a 32k output.mp3"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "109e12d2-2c00-4669-8cad-833bb7455da5",
+        "name": "Get meeting audio recording from disk",
+        "type": "n8n-nodes-base.readWriteFile",
+        "position": [
+          2840,
+          720
+        ],
+        "parameters": {
+          "options": {},
+          "fileSelector": "./output.mp3"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "8cadee97-b467-47bc-9a93-cea457913d8a",
+        "name": "Send audio recording to OpenAi for transcription",
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "position": [
+          3240,
+          720
+        ],
+        "parameters": {
+          "options": {
+            "language": "en"
+          },
+          "resource": "audio",
+          "operation": "transcribe"
+        },
+        "typeVersion": 1.7
+      },
+      {
+        "id": "40a8a19a-3b26-448b-8319-0169d6d98583",
+        "name": "Tool Calling - Create gmail draft",
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "position": [
+          4100,
+          1180
+        ],
+        "parameters": {
+          "name": "createGmailDraft",
+          "workflowId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "NSbLc9ETpPzl6SHR",
+            "cachedResultName": "file-drive"
+          },
+          "description": "Call thi tool to create a draft in gmail",
+          "jsonSchemaExample": "{\n\t\"subject\": \"The subject of the mail\",\n\t\"message\": \"The message of the email, listing the key points of the meeting\"\n}",
+          "specifyInputSchema": true
+        },
+        "typeVersion": 1.3
+      },
+      {
+        "id": "35a6ad4f-02ed-437c-ae4c-43675a7d2c82",
+        "name": "Delete temporary audio & video file from disk",
+        "type": "n8n-nodes-base.executeCommand",
+        "position": [
+          4520,
+          720
+        ],
+        "parameters": {
+          "command": "=rm ./*"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "9404e37a-df49-4297-a059-df06e0d40ca5",
+        "name": "Create transcription text file on Google Drive",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          3920,
+          -160
+        ],
+        "parameters": {
+          "name": "=Transcription of the meeting  {{ $('Trigger - Meeting record file is added').item.json.name }}",
+          "content": "={{ $json.text }}",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "options": {},
+          "folderId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "1BTZfNS71J5ruscr5F-VL7zVzqW1BP6F-",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1BTZfNS71J5ruscr5F-VL7zVzqW1BP6F-",
+            "cachedResultName": "Meeting text transcription"
+          },
+          "operation": "createFromText"
+        },
+        "typeVersion": 3,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "keTLaYS3Tdb2VXAF",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "id": "4f0097e6-5153-4109-a700-5a7fac320b17",
+        "name": "Trigger from Agent Tool Calling",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "position": [
+          3620,
+          1660
+        ],
+        "parameters": {},
+        "typeVersion": 1
+      },
+      {
+        "id": "c1859fbe-f1ed-42de-8e15-83dbdad65ea6",
+        "name": "Set fields - response if success",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          4540,
+          1580
+        ],
+        "parameters": {
+          "options": {},
+          "assignments": {
+            "assignments": [
+              {
+                "id": "52f4de7d-b85f-418f-8faf-0ababf56ac14",
+                "name": "response",
+                "type": "string",
+                "value": "=Success! A draft email with the ID {{ $json.message.id }} has been successfully created."
+              }
+            ]
+          }
+        },
+        "typeVersion": 3.4
+      },
+      {
+        "id": "e7bd331c-88b0-4a35-bef9-9ccd2938df06",
+        "name": "Set field - response if error",
+        "type": "n8n-nodes-base.set",
+        "position": [
+          4540,
+          1760
+        ],
+        "parameters": {
+          "options": {},
+          "assignments": {
+            "assignments": [
+              {
+                "id": "52f4de7d-b85f-418f-8faf-0ababf56ac14",
+                "name": "response",
+                "type": "string",
+                "value": "=Error! The draft email could not be created."
+              }
+            ]
+          }
+        },
+        "typeVersion": 3.4
+      },
+      {
+        "id": "bd2d21b5-a53f-4a92-8ef7-a00cbe5a6216",
+        "name": "Send notification in slack",
+        "type": "n8n-nodes-base.slack",
+        "disabled": true,
+        "position": [
+          4520,
+          1160
+        ],
+        "webhookId": "767ad4d3-6d3a-4fba-a068-b69675e06de5",
+        "parameters": {
+          "otherOptions": {}
+        },
+        "typeVersion": 2.3
+      },
+      {
+        "id": "be102b16-b6b7-48d1-a39b-de2192ea2831",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1120,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Google Drive Trigger - A file is added in a Google Drive folder\n\nThis node checks every minute (adjust the interval as needed) for new meeting recordings added to the folder **\"Meet Recordings\"**. This folder is the default location where recorded **Google Meet sessions** are uploaded after the session ends."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "160c1108-044f-4efd-ab00-11337b1a5e0f",
+        "name": "Sticky Note1",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1520,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Google Drive - Download the file\n\nIf a **meeting recording file** is detected by the previous node, this node **downloads the file**.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "75a83bbb-13d3-42dc-aa52-7690cf235379",
+        "name": "Google Drive - Download the file",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1640,
+          720
+        ],
+        "parameters": {
+          "fileId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.id }}"
+          },
+          "options": {},
+          "operation": "download"
+        },
+        "typeVersion": 3,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "keTLaYS3Tdb2VXAF",
+            "name": "Google Drive account"
+          }
+        }
+      },
+      {
+        "id": "7699c99f-9a15-4bee-9530-acdcb7ce4632",
+        "name": "Sticky Note2",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1920,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Write meeting file to disk\n\nThis node **writes the binary file** (usually an MP4 file) to your n8n disk.  \nIt simplifies handling compared to the default \"binaryData\" folder, as the **file will be processed in the next step** to convert it from **MP4 to MP3**."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "8bc8ad80-a0dc-4ea1-b77e-3a6b4981cc6c",
+        "name": "Write meeting file to disk",
+        "type": "n8n-nodes-base.readWriteFile",
+        "position": [
+          2040,
+          720
+        ],
+        "parameters": {
+          "options": {},
+          "fileName": "=./meet_recording_{{ $json.name }}",
+          "operation": "write"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "a3343230-f614-45ab-b907-2b36d2961bdc",
+        "name": "Sticky Note3",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          2320,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Execute Command - ffmpeg - Convert MP4 (video) to MP3 (audio)\n\n*Assumes a custom n8n instance with ffmpeg installed.*\n\nThis node **converts the MP4 file** from the previous step (the Google Meet recording) **to an MP3 file** with 32 kbps bitrate, significantly **reducing the file size**.  \nThis is **essential because the OpenAI API does not accept files larger than 25MB**, and an MP4 recording can easily exceed this limit.\n\nThe **current command** \n`ffmpeg -y -i \"{{ $json.fileName }}\" -vn -ar 32000 -ac 1 -b:a 32k output.mp3` \n**overwrites** the \"output.mp3\" file if it already exists.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "dcf44da1-6076-4d76-b44a-070b1b00891f",
+        "name": "Sticky Note4",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          2720,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Get meeting audio recording from disk\n\nThis node **retrieves the MP3 file** of the meeting recording created in the previous step from the disk.  \nThe file **will be sent to the OpenAI API** in the next step.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "9b5add62-d012-4fa2-8594-c7d6b33b1f38",
+        "name": "Sticky Note5",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3120,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Send audio recording to OpenAI for transcription\n\nThis node **sends the MP3 file to OpenAI's Whisper audio model** and retrieves the **transcription as output**.  \nSet up the **Language of audio File** in this node *(default in the template: en)*\n\nThe pricing (announced by OpenAI) for this service is **$0.006 per minute of audio**. For example, a 10-minute audio file **should** cost $0.06. But monitor your usage to avoid unexpected billing."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "04ed7208-b256-46de-ad98-7bdadde15873",
+        "name": "Sticky Note6",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3560,
+          -380
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 780,
+          "height": 500,
+          "content": "## Create transcription text file on Google Drive\n\nThis node **uploads the transcription** of the meeting to a **Google Drive folder**. You can **create a folder** as needed and configure this node to use it.  \n\nIf the **language spoken** during your meeting is **English**, Google Workspace offers a **native transcription feature**. However, this feature is currently available only for English."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "a4d7983d-a1f6-47c5-b385-1193f09a8d22",
+        "name": "Sticky Note7",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3520,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 820,
+          "height": 680,
+          "content": "## Tool AI Agent\n\nThis AI Agent is **tasked with analyzing the meeting audio**, **extracting the key points**, and **preparing a follow-up email** for the participants.  \n\nOnce the email is ready, it **triggers a tool** (an n8n sub-workflow) to **create a draft in your Gmail**. This allows you to **review the draft** and make any necessary edits before sending it to the participants.  \n\n**Important Notes:**  \n- The email is **saved as a draft**, **not sent**, so you can modify it before finalizing.  \n- In this version of the template, the **draft does not include recipients**, as participant details are not fetched in the previous steps. You will need to **manually add the recipients** who should receive the follow-up email."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "9455d408-4c5a-408e-b040-cf946fd3f419",
+        "name": "Sticky Note8",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4400,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 680,
+          "content": "## Execute command - Delete temporary audio & video file from disk\n\nThis node **deletes all files created in previous steps** from the disk to **prevent your disk from filling up unnecessarily**.  \n\n## ⚠️ Important  \nIn this workflow, **files are created and then deleted from the path `./`**.  \nIf you have **other workflows storing files in this path** that should not be deleted, **DO NOT USE this command** or **USE IT WITH A DIFFERENT PATH**.  \nIf you use a different path, you'll also have to change the path where the files are writed/read on the nodes **`Write Meeting File to Disk`** and **`Get Meeting Audio Recording from Disk`** accordingly."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "3c5e3653-7725-4018-87b8-462753680dee",
+        "name": "Sticky Note9",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4400,
+          960
+        ],
+        "parameters": {
+          "color": 6,
+          "width": 340,
+          "height": 380,
+          "content": "## Suggestion - Send notification in slack\n\nThis node is **deactivated by default** but can be set up to send a **Slack notification when the workflow is executed** and a draft email is created.\n\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "32390e83-af65-4591-9b94-3e9cb7f0e46e",
+        "name": "Sticky Note10",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3540,
+          980
+        ],
+        "parameters": {
+          "color": 5,
+          "width": 300,
+          "height": 340,
+          "content": "## OpenAI Model \n\nThis is the model used by the AI Agent. Currently, it uses **gpt-4o-mini** for its balance between performance and cost efficiency.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "c16df510-6ccb-413f-b9ec-37837c54525f",
+        "name": "OpenAI Model",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "position": [
+          3640,
+          1180
+        ],
+        "parameters": {
+          "options": {}
+        },
+        "typeVersion": 1,
+        "credentials": {
+          "openAiApi": {
+            "id": "hIbzO0TgpkKLndpi",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "id": "6794e6b5-956a-46d5-afbb-55b0204e20c2",
+        "name": "Sticky Note11",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3980,
+          980
+        ],
+        "parameters": {
+          "color": 5,
+          "width": 300,
+          "height": 340,
+          "content": "## Tool Calling - Create gmail draft\nThis sub-node **calls the sub-workflow** in this template to **create a Gmail draft**.  \nAn input **schema is specified to include** the **Subject** and **Message** in the query, making it easy to use within the sub-workflow.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "1a400323-031f-4ba9-948c-357ad7e764a2",
+        "name": "Sticky Note13",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3520,
+          1360
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 760,
+          "content": "## Trigger from Agent Tool Calling\n\nThis node is triggered when the AI Agent calls the tool to create a Gmail draft.  \nIt receives a **JSON object from the AI Agent** containing the **Subject** and **Message**."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "b4ad5a75-d8cc-4710-b177-87d71c738090",
+        "name": "Sticky Note14",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3960,
+          1360
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 760,
+          "content": "## Create draft in gmail\n\nThis node **creates a Gmail draft using the data** provided by the previous node.  \n\n**Reminder:** In this version of the template, recipients are not included in the draft. You will need to add them manually.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "ce0d6ac8-95d0-46a5-9b0e-cc6aee2e3218",
+        "name": "Create draft in gmail",
+        "type": "n8n-nodes-base.gmail",
+        "onError": "continueErrorOutput",
+        "position": [
+          4100,
+          1660
+        ],
+        "webhookId": "a8173b8d-c87e-438b-9cee-09b082b06ad4",
+        "parameters": {
+          "message": "={{$json.query.message}}",
+          "options": {},
+          "subject": "={{$json.query.subject}}",
+          "resource": "draft"
+        },
+        "typeVersion": 2.1,
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "r2eWisM8HAUWlfAB",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "id": "4e73e0e0-11ef-4807-8fdb-0fb0c5597e06",
+        "name": "Sticky Note15",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4400,
+          1360
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 360,
+          "content": "## Set fields - response if success\n\nThis node **defines the response sent** to the AI Agent in case of **successful Gmail draft creation**.  \n\nYou can modify the response to suit your needs."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "92bf2854-e5ad-4c0f-ad24-49a0530c45eb",
+        "name": "Sticky Note16",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4400,
+          1740
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 340,
+          "height": 380,
+          "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n## Set fields - response if error\n\nThis node **defines the response sent** to the AI Agent in case of an **error during Gmail draft creation**.  \nYou can modify the response to suit your needs."
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "dc7befa4-77ed-4131-b9fe-8b9f6cffaab0",
+        "name": "Sticky Note12",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          380,
+          240
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 720,
+          "height": 1860,
+          "content": "# Create a Follow-Up Email on Gmail from a Google Meet Recording – With OpenAI Whisper \n\nThis workflow is **designed to streamline the process of creating professional follow-up emails based on Google Meet recordings**. It leverages **OpenAI's transcription and summarization capabilities** to extract key points, action items, and next steps, then **drafts an email in Gmail** for easy review and sending.  \n\nThis workflow is designed for **non-English Google Meet recordings**. If you record Google Meet conferences in English, you can use the **native transcription** feature and work directly with the transcript file, bypassing most of this workflow.\n\n## Important :  \n\n1. **Custom n8n Installation with ffmpeg (Recommended):**  \n   The workflow is **optimized for instances of n8n with ffmpeg installed**. This allows for seamless conversion of Google Meet recordings **from MP4 to MP3 format**, significantly reducing file size and improving processing efficiency.  \n\n2. **OAuth Configuration Required:**  \n   For self-hosted n8n instances, ensure OAuth authentication is properly configured for Google Drive and Gmail. This is essential for accessing recordings and creating email drafts securely.  \n\n3. **Privacy Considerations:**  \n    Before sending Google Meet recordings to OpenAI for processing, **verify compliance with the data protection standards** of the country or company you belong to. As this workflow is shared publicly, the creator is not responsible for ensuring compliance with regulations in your region or company.\n\n## Workflow Overview:  \n\n1. **Detects when a Google Meet recording is uploaded** to a designated Google Drive folder.  \n2. Processes the recording via one of the following paths (choose the path based on whether you record meetings with subtitles or not):  \n   - **Convert MP4 to MP3**: If ffmpeg is available, the recording is converted to MP3 format and processed through OpenAI for transcription.  \n   - **Extract Subtitles**: If subtitles are included in the Google Meet recording, they are extracted directly as a text file, bypassing the need for transcription and saving costs.  \n3. **Summarizes the meeting** and generates a **professional follow-up email draft in Gmail**, ready for your review and customization.  \n\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "1ecfca19-aadf-4408-a682-4d4b0daaad42",
+        "name": "Sticky Note17",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1920,
+          940
+        ],
+        "parameters": {
+          "color": 3,
+          "width": 1140,
+          "height": 400,
+          "content": "# Self-Instance with ffmpeg installed  \n\nThese **three steps work if your n8n instance has ffmpeg installed** and can **execute a command to convert MP4 files to MP3**.  \n\n## What to do if you don't have ffmpeg:  \n\n### 1. **Use a Conversion API:**  \n   This is **not a recommended method**, as Google Meet recordings **may contain sensitive information** that you might **not want to send to multiple APIs** (especially since **you'll likely already send it to OpenAI**).  \n\n### 2. **Skip the Conversion Steps:**  \n   You can **bypass these steps and send the MP4 file directly from Google Drive to OpenAI**. However, this will only work if the **file size is under 25MB**, as OpenAI's API has a file size limit.  \n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "6b3aeef4-eb8f-4156-a523-771f79e5d046",
+        "name": "Write meeting file to disk1",
+        "type": "n8n-nodes-base.readWriteFile",
+        "position": [
+          2040,
+          1400
+        ],
+        "parameters": {
+          "options": {},
+          "fileName": "=./meet_recording_{{ $json.name }}",
+          "operation": "write"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "a919166f-79aa-497c-a0c8-77149dc0d459",
+        "name": "Extract text from captions file",
+        "type": "n8n-nodes-base.extractFromFile",
+        "position": [
+          3260,
+          1400
+        ],
+        "parameters": {
+          "options": {},
+          "operation": "text",
+          "destinationKey": "text"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "e6461b8c-72cd-4f0e-8689-2c44c5019246",
+        "name": "Sticky Note18",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1300,
+          960
+        ],
+        "parameters": {
+          "color": 7,
+          "height": 580,
+          "content": "## Google Meet Record with subtitles\n\n### Description:\nIf you record Google Meet conferences with subtitles (recommended), use this path instead.  \n\nTo implement this, connect the nodes `Trigger - Meeting record file is added` and `Google Drive - Download the file (meet record with subtitles)`, and remove the connection to the node `Google Drive - Download the file`.  \n\nThis approach eliminates the need to use the OpenAI Whisper API, saving costs.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "a2dedd16-0f03-4460-bd59-c22ee2e28f1d",
+        "name": "Sticky Note19",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          2360,
+          1400
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 300,
+          "height": 480,
+          "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n## Execute command - extract subtitles and Create a TXT file\n\nThis node executes the command `ffmpeg -i video.mp4 -map 0:2 -c:s srt -f srt - > subtitles.txt` to extract subtitles from the video file and generate a TXT file containing the subtitles.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "1c9b1f83-11e2-4280-8b40-44d0911cd895",
+        "name": "Sticky Note20",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3080,
+          1360
+        ],
+        "parameters": {
+          "color": 7,
+          "width": 300,
+          "height": 480,
+          "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n## Extract from File - Extract Text from Binary Data\n\nThis node extracts **text from a binary subtitles** file and generates a JSON object containing the extracted text.\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "7c65e0d9-2011-4bc6-bbc9-58c44f7306d1",
+        "name": "Trigger - Meeting record file is added",
+        "type": "n8n-nodes-base.googleDriveTrigger",
+        "position": [
+          1220,
+          720
+        ],
+        "parameters": {
+          "event": "fileCreated",
+          "options": {},
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyMinute"
+              }
+            ]
+          },
+          "triggerOn": "specificFolder",
+          "folderToWatch": {
+            "__rl": true,
+            "mode": "list",
+            "value": "1ue5pUHlNoUGH-F_8_0A2AGtxiBcFQhvr",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1ue5pUHlNoUGH-F_8_0A2AGtxiBcFQhvr",
+            "cachedResultName": "Meet Recordings"
+          }
+        },
+        "typeVersion": 1,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "keTLaYS3Tdb2VXAF",
+            "name": "Google Drive account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "id": "2c97cc0d-db45-4dd1-8e11-59c2851678cb",
+        "name": "ffmepg - Extract subtitles from mp4 and create .txt file",
+        "type": "n8n-nodes-base.executeCommand",
+        "position": [
+          2460,
+          1400
+        ],
+        "parameters": {
+          "command": "=ffmpeg -i \"{{ $json.fileName }}\" -map 0:2 -c:s srt -f srt - > subtitles.txt\n"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "24952abc-4856-43ec-811d-8d0c39906264",
+        "name": "Get subtitles file",
+        "type": "n8n-nodes-base.readWriteFile",
+        "position": [
+          2860,
+          1400
+        ],
+        "parameters": {
+          "options": {},
+          "fileSelector": "./subtitles.txt"
+        },
+        "typeVersion": 1
+      },
+      {
+        "id": "22fc0400-2e10-49f9-a863-efda8e803664",
+        "name": "Google Drive - Download the file (meet record with subtitles)",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1620,
+          1400
+        ],
+        "parameters": {
+          "fileId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.id }}"
+          },
+          "options": {},
+          "operation": "download"
+        },
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "keTLaYS3Tdb2VXAF",
+            "name": "Google Drive account"
+          }
+        },
+        "typeVersion": 3
+      }
+    ],
+    "connections": {
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Delete temporary audio & video file from disk",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send notification in slack",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get subtitles file": {
+        "main": [
+          [
+            {
+              "node": "Extract text from captions file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create draft in gmail": {
+        "main": [
+          [
+            {
+              "node": "Set fields - response if success",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set field - response if error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write meeting file to disk": {
+        "main": [
+          [
+            {
+              "node": "ffmepg - Convert mp4 (video) to mp3 (audio)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write meeting file to disk1": {
+        "main": [
+          [
+            {
+              "node": "ffmepg - Extract subtitles from mp4 and create .txt file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract text from captions file": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Trigger from Agent Tool Calling": {
+        "main": [
+          [
+            {
+              "node": "Create draft in gmail",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Drive - Download the file": {
+        "main": [
+          [
+            {
+              "node": "Write meeting file to disk",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tool Calling - Create gmail draft": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get meeting audio recording from disk": {
+        "main": [
+          [
+            {
+              "node": "Send audio recording to OpenAi for transcription",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Trigger - Meeting record file is added": {
+        "main": [
+          [
+            {
+              "node": "Google Drive - Download the file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ffmepg - Convert mp4 (video) to mp3 (audio)": {
+        "main": [
+          [
+            {
+              "node": "Get meeting audio recording from disk",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send audio recording to OpenAi for transcription": {
+        "main": [
+          [
+            {
+              "node": "Create transcription text file on Google Drive",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "ffmepg - Extract subtitles from mp4 and create .txt file": {
+        "main": [
+          [
+            {
+              "node": "Get subtitles file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Drive - Download the file (meet record with subtitles)": {
+        "main": [
+          [
+            {
+              "node": "Write meeting file to disk1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "dade86c6-b259-4dba-8c73-c37e421524ae",
   "connections": {
     "AI Agent": {
       "main": [
@@ -888,7 +1832,8 @@
           "id": "keTLaYS3Tdb2VXAF",
           "name": "Google Drive account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "id": "2c97cc0d-db45-4dd1-8e11-59c2851678cb",
@@ -961,5 +1906,5 @@
   "tags": [],
   "triggerCount": 0,
   "updatedAt": "2025-01-09T01:10:02.507Z",
-  "versionId": "171a0636-ae59-4b6c-9e9f-482504f75470"
+  "versionId": "dade86c6-b259-4dba-8c73-c37e421524ae"
 }

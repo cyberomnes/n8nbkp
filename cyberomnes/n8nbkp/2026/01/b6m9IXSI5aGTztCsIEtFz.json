@@ -1,0 +1,704 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "GPT-5 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Write Social Posts",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Write Social Posts",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "The Verge AI": {
+      "main": [
+        [
+          {
+            "node": "Merge All Feeds",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Compare Lists": {
+      "main": [
+        [
+          {
+            "node": "Select Random Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Recent": {
+      "main": [
+        [
+          {
+            "node": "Standardize Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TechCrunch AI": {
+      "main": [
+        [
+          {
+            "node": "Merge All Feeds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Feeds": {
+      "main": [
+        [
+          {
+            "node": "TechCrunch AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Ars Technica AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "The Verge AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MIT Tech Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ars Technica AI": {
+      "main": [
+        [
+          {
+            "node": "Merge All Feeds",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "MIT Tech Review": {
+      "main": [
+        [
+          {
+            "node": "Merge All Feeds",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge All Feeds": {
+      "main": [
+        [
+          {
+            "node": "Filter Recent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Cue": {
+      "main": [
+        [
+          {
+            "node": "Create Draft in Cue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Recent Posts": {
+      "main": [
+        [
+          {
+            "node": "Trigger Feeds",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Collect Posted URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily 9am Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Recent Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Sheet Data": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Standardize Fields": {
+      "main": [
+        [
+          {
+            "node": "Collect New Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Social Posts": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Cue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Posted URLs": {
+      "main": [
+        [
+          {
+            "node": "Compare Lists",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Create Draft in Cue": {
+      "main": [
+        [
+          {
+            "node": "Prepare Sheet Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect New Articles": {
+      "main": [
+        [
+          {
+            "node": "Compare Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Random Article": {
+      "main": [
+        [
+          {
+            "node": "Write Social Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-28T13:47:13.578Z",
+  "id": "b6m9IXSI5aGTztCsIEtFz",
+  "isArchived": false,
+  "meta": {
+    "templateId": "12634"
+  },
+  "name": "Curate and post AI news to X, Bluesky, Threads and more with GPT-5 mini and Cue",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily 9am Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        928,
+        720
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "options": {}
+      },
+      "id": "rss-techcrunch",
+      "name": "TechCrunch AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        1376,
+        496
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://arstechnica.com/ai/feed/",
+        "options": {}
+      },
+      "id": "rss-arstechnica",
+      "name": "Ars Technica AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        1376,
+        640
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "options": {}
+      },
+      "id": "rss-verge",
+      "name": "The Verge AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        1376,
+        784
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+        "options": {}
+      },
+      "id": "rss-mit",
+      "name": "MIT Tech Review",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        1376,
+        928
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "id": "merge-feeds",
+      "name": "Merge All Feeds",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1568,
+        688
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter articles from the last 7 days and limit to 30\nconst DAYS = 7;\nconst MAX_ARTICLES = 30;\nconst cutoff = new Date(Date.now() - DAYS * 24 * 60 * 60 * 1000);\n\nconst filtered = $input.all().filter(item => {\n  const pubDate = item.json.pubDate || item.json.isoDate;\n  if (!pubDate) return true;\n  \n  const articleDate = new Date(pubDate);\n  return articleDate >= cutoff;\n});\n\n// Sort by date (newest first) and take top 30\nfiltered.sort((a, b) => {\n  const dateA = new Date(a.json.isoDate || a.json.pubDate);\n  const dateB = new Date(b.json.isoDate || b.json.pubDate);\n  return dateB - dateA;\n});\n\nreturn filtered.slice(0, MAX_ARTICLES);"
+      },
+      "id": "filter-recent",
+      "name": "Filter Recent",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1776,
+        720
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Standardize fields across different RSS feed formats\nreturn $input.all().map(item => {\n  const json = item.json;\n  return {\n    json: {\n      url: json.link || json.url,\n      title: json.title,\n      description: json.contentSnippet || json.description || json.summary || '',\n      pubDate: json.isoDate || json.pubDate,\n      source: json.creator || json.author || 'Unknown'\n    }\n  };\n});"
+      },
+      "id": "standardize-fields",
+      "name": "Standardize Fields",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1952,
+        720
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "newArticles",
+        "include": "allFieldsExcept",
+        "options": {}
+      },
+      "id": "aggregate-new",
+      "name": "Collect New Articles",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        2144,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "postedURLs",
+        "include": "specifiedFields",
+        "fieldsToInclude": "article_url",
+        "options": {}
+      },
+      "id": "aggregate-posted",
+      "name": "Collect Posted URLs",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        2144,
+        928
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "merge-compare",
+      "name": "Compare Lists",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        2336,
+        800
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filter out already-posted articles and pick a random one\nconst newArticles = $input.first().json.newArticles || [];\nconst postedData = $input.last().json.postedURLs || [];\n\n// Extract just the URLs from posted data\nconst postedURLs = postedData.map(item => item.article_url);\n\n// Filter to only unposted articles\nconst available = newArticles.filter(article => \n  !postedURLs.includes(article.url)\n);\n\nif (available.length === 0) {\n  // No new articles to process - stop workflow\n  return [];\n}\n\n// Pick a random article\nconst randomIndex = Math.floor(Math.random() * available.length);\nreturn [{ json: available[randomIndex] }];"
+      },
+      "id": "select-random",
+      "name": "Select Random Article",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2528,
+        800
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "sheets-lookup",
+      "name": "Get Recent Posts",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1136,
+        928
+      ],
+      "typeVersion": 4.5,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Always output exactly 1 item to trigger RSS feeds once\n// Regardless of how many rows are in the sheet\nreturn [{ json: { ready: true } }];"
+      },
+      "id": "trigger-feeds",
+      "name": "Trigger Feeds",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1136,
+        720
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write social media posts for this article:\n\nTITLE: {{ $json.title }}\nSUMMARY: {{ $json.description }}\n\nGenerate posts for all 5 platforms. Each post MUST:\n- Start with a compelling hook (not \"Check out\" or \"New article\")\n- Include the key insight or news\n- Stay within character limits\n- Do NOT include any URLs",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a social media content writer specializing in AI/tech news.\nGenerate engaging posts tailored to each platform's audience and style.\n\nGuidelines:\n- X: Punchy, hook-first, drives curiosity (max 280 chars)\n- Bluesky: Conversational, community-oriented (max 300 chars)\n- Threads: Casual, Instagram-audience friendly (max 500 chars)\n- Mastodon: Technical angle, open-source perspective (max 500 chars)\n- Facebook: Broader context, accessible to non-experts (max 600 chars)"
+        }
+      },
+      "id": "ai-agent",
+      "name": "Write Social Posts",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        2752,
+        800
+      ],
+      "typeVersion": 3.1
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "openai-model",
+      "name": "GPT-5 mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        2752,
+        1024
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"x\": {\n      \"type\": \"string\",\n      \"description\": \"X/Twitter post (max 280 chars)\"\n    },\n    \"bluesky\": {\n      \"type\": \"string\",\n      \"description\": \"Bluesky post (max 300 chars)\"\n    },\n    \"threads\": {\n      \"type\": \"string\",\n      \"description\": \"Threads post (max 500 chars)\"\n    },\n    \"mastodon\": {\n      \"type\": \"string\",\n      \"description\": \"Mastodon post (max 500 chars)\"\n    },\n    \"facebook\": {\n      \"type\": \"string\",\n      \"description\": \"Facebook post (max 600 chars)\"\n    }\n  },\n  \"required\": [\"x\", \"bluesky\", \"threads\", \"mastodon\", \"facebook\"]\n}"
+      },
+      "id": "output-parser",
+      "name": "Post Format",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        2896,
+        1024
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare for Cue - AI Agent outputs structured JSON directly\nconst article = $('Select Random Article').item.json;\nconst content = $json.output; // Structured output from AI Agent\n\nreturn [{\n  json: {\n    article,\n    content\n  }\n}];"
+      },
+      "id": "prepare-cue",
+      "name": "Prepare for Cue",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        3120,
+        800
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "cue-create-post",
+      "name": "Create Draft in Cue",
+      "type": "@cuehq/n8n-nodes-cue.cue",
+      "position": [
+        3312,
+        800
+      ],
+      "typeVersion": 1,
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare data for Google Sheets logging\nconst preparedData = $('Prepare for Cue').item.json;\nconst article = preparedData.article;\n\nreturn [{\n  json: {\n    article_url: article.url,\n    title: article.title,\n    source: article.source || 'AI News Digest',\n    processed_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "prepare-sheet-data",
+      "name": "Prepare Sheet Data",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        3504,
+        800
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Get Recent Posts').params.documentId.value }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Get Recent Posts').params.sheetName.value }}"
+        },
+        "columns": {
+          "value": {
+            "title": "={{ $json.title }}",
+            "source": "={{ $json.source }}",
+            "article_url": "={{ $json.article_url }}",
+            "processed_at": "={{ $json.processed_at }}"
+          },
+          "mappingMode": "defineBelow"
+        },
+        "options": {}
+      },
+      "id": "sheets-append",
+      "name": "Log to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        3696,
+        800
+      ],
+      "typeVersion": 4.5
+    },
+    {
+      "parameters": {
+        "content": "## Curate AI news and generate platform-tailored posts for X, Bluesky, Threads, Mastodon & Facebook via Cue.\n\n### How it works\n• Fetches from 4 AI/tech RSS feeds daily\n• Filters to articles from the last 7 days\n• Skips already-posted articles using Google Sheets tracking\n• Picks a random new article\n• GPT-5 mini generates platform-tailored posts\n• Creates draft in Cue for review\n\n### How to use\n• Configure your Google Sheets for tracking\n• Add your OpenAI API credentials\n• Set up the Cue node with your social accounts\n• Activate the workflow - it runs daily at 9am\n\n### Requirements\n• Cue account (oncue.so)\n• OpenAI API key\n• Google Sheets\n\n### Need Help?\nCheck out [docs.oncue.so](https://docs.oncue.so) for setup guides!\n\nHappy Posting!",
+        "height": 912,
+        "width": 480
+      },
+      "id": "sticky-intro",
+      "name": "Intro",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 1. Fetch News\n\n4 AI/tech RSS feeds checked daily.\n\n• Replace feeds with your niche sources\n• Keep 3-6 feeds for best results",
+        "height": 920,
+        "width": 840,
+        "color": 7
+      },
+      "id": "sticky-sources",
+      "name": "Section 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 3. Write Posts\n\nGPT-5 mini generates tailored content for each platform.\n\n• Configure OpenAI credentials",
+        "height": 920,
+        "width": 352,
+        "color": 4
+      },
+      "id": "sticky-ai",
+      "name": "Section 3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2688,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 4. Publish to Cue\n\nCreates drafts in Cue for review. Logs to spreadsheet for tracking.\n\n• Configure Cue credentials\n• Select your social accounts\n\n**Platforms:**\n• Slot 1 → X/Twitter\n• Slot 2 → Bluesky\n• Slot 3 → Threads\n• Slot 4 → Mastodon\n• Slot 5 → Facebook",
+        "height": 928,
+        "width": 800,
+        "color": 6
+      },
+      "id": "sticky-cue",
+      "name": "Section 4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3072,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 2. Find New Stories\n\nFilters to last 7 days, skips already-posted articles.\n\n• Configure Google Sheets credentials\n• Select your tracking spreadsheet\n• Import tracking-sheet.csv to get started",
+        "height": 928,
+        "width": 912,
+        "color": 2
+      },
+      "id": "sticky-sheets",
+      "name": "Section 2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1744,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Tip:** To auto-publish instead of drafts, enable \"Publish Immediately\" in the Cue node settings.",
+        "height": 100,
+        "width": 280,
+        "color": 2
+      },
+      "id": "sticky-tip",
+      "name": "Tip",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3216,
+        976
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-28T13:47:13.658Z",
+      "createdAt": "2026-01-28T13:47:13.658Z",
+      "role": "workflow:owner",
+      "workflowId": "b6m9IXSI5aGTztCsIEtFz",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-28T13:47:13.578Z",
+  "versionId": "86cca9d5-3b77-4fbe-ab08-104147a37035"
+}

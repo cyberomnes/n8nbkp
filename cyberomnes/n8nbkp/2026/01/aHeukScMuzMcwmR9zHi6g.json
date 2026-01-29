@@ -1,0 +1,166 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Receive Whatsapp Messages": {
+      "main": [
+        [
+          {
+            "node": "Confirm news with Citations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirm news with Citations": {
+      "main": [
+        [
+          {
+            "node": "Send Summary to whatsapp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-28T13:45:46.921Z",
+  "id": "aHeukScMuzMcwmR9zHi6g",
+  "isArchived": false,
+  "meta": {
+    "templateId": "6842"
+  },
+  "name": "WhatsApp fact-checking bot with Perplexity AI and Twilio",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-inbound",
+        "options": {}
+      },
+      "id": "5a66e287-a2c6-48bc-ad4b-9812fdf0c19a",
+      "name": "Receive Whatsapp Messages",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        480,
+        560
+      ],
+      "webhookId": "885a0e87-c3f0-486a-9cbd-c59941cc412b",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "messages": {
+          "message": [
+            {
+              "content": "You are a cautious and objective AI fact-checker for a WhatsApp service. Your task is to verify the news or claim provided by the user.\n\n1. Analyze the user's query to understand the core claim being made.\n2. Perform a web search to find information from multiple reliable, neutral sources (like major news outlets, scientific journals, and fact-checking organizations).\n3. Based on the search results, provide a clear, one-phrase verdict at the very beginning of your response. Use one of the following: \"✅ Likely True\", \"❌ Likely False\", \"⚠️ Misleading\", or \"❓ Unverified\".\n4. After the verdict, write a brief, neutral summary (2-3 sentences) explaining your findings in simple language suitable for a WhatsApp message.\n5. You MUST include citations for your key sources as provided by your search results. This is critical for user trust.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.body.Body }}"
+            }
+          ]
+        },
+        "simplify": true,
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "a81de7f9-1bdc-40c8-8f51-2f13f70fe08e",
+      "name": "Confirm news with Citations",
+      "type": "n8n-nodes-base.perplexity",
+      "position": [
+        816,
+        560
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "from": "={{ $('Receive Whatsapp Messages').item.json.body.To.replace('whatsapp:', '') }}",
+        "to": "={{ $('Receive Whatsapp Messages').item.json.body.From.replace('whatsapp:', '')  }}",
+        "toWhatsapp": true,
+        "message": "={{$json.message}}\n\n---\n\n*Sources:*\n{{ $json.citations.map((url, index) => `[${index + 1}] ${url}`).join('\\n') }}",
+        "options": {}
+      },
+      "id": "0f57741e-9a02-47b1-8908-147d7651e7bc",
+      "name": "Send Summary to whatsapp",
+      "type": "n8n-nodes-base.twilio",
+      "position": [
+        1152,
+        560
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "\n### 📬 **WhatsApp Gateway**\n\nThis node is our digital front door! It patiently listens for incoming WhatsApp messages from a user.\n\n* **Triggers on:** A new message.\n* **Outputs:** The user's message (`Body`) and their phone number (`From`).",
+        "height": 512,
+        "width": 320
+      },
+      "id": "eb925e9f-f154-4b84-8405-b5a0a9881930",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🤖 **The Digital Detective**\n\nThis is where the magic happens! We hand the user's question over to our AI detective. It follows strict instructions to scour the web for facts.\n\n* **Input:** The user's raw text from the webhook.\n* **Action:** Fact-checks the claim against reliable sources.\n* **Output:** A structured response with a verdict, a simple summary, and source citations.",
+        "height": 512,
+        "width": 320,
+        "color": 7
+      },
+      "id": "cb07fac9-16cb-4be9-94c2-537623eb43a8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        704,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📲 **WhatsApp Reply Service**\n\nMission complete! This node takes the carefully crafted answer from our AI detective and sends it directly back to the user.\n\n* **Input:** The AI's formatted verdict, summary, and citations.\n* **Action:** Delivers the final message to the original user via Twilio.",
+        "height": 512,
+        "width": 320,
+        "color": 3
+      },
+      "id": "fa055749-49e5-452d-ab25-5aa6475a3f70",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1040,
+        240
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-28T13:45:46.931Z",
+      "createdAt": "2026-01-28T13:45:46.931Z",
+      "role": "workflow:owner",
+      "workflowId": "aHeukScMuzMcwmR9zHi6g",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-28T13:45:46.921Z",
+  "versionId": "25d5285d-5a75-46a8-b8b7-f5cc49c085c2"
+}

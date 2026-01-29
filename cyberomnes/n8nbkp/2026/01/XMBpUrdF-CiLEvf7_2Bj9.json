@@ -1,0 +1,246 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Log Conversation": {
+      "main": [
+        [
+          {
+            "node": "Check for Appointment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Speech Input": {
+      "main": [
+        [
+          {
+            "node": "OpenAI GPT-4o Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Initial Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twilio Voice Webhook": {
+      "main": [
+        [
+          {
+            "node": "Check Speech Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Appointment": {
+      "main": [
+        [
+          {
+            "node": "Save Appointment Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "OpenAI GPT-4o Response": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs Text-to-Speech",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Audio to Storage": {
+      "main": [
+        [
+          {
+            "node": "Twilio TwiML Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ElevenLabs Text-to-Speech": {
+      "main": [
+        [
+          {
+            "node": "Upload Audio to Storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-28T13:51:57.208Z",
+  "id": "XMBpUrdF-CiLEvf7_2Bj9",
+  "isArchived": false,
+  "meta": {
+    "templateId": "6309"
+  },
+  "name": "Create multilingual voice calling bot with GPT-4o, ElevenLabs & Twilio 2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "voice-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-start",
+      "name": "Twilio Voice Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        368,
+        240
+      ],
+      "webhookId": "voice-webhook-start",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "maxTokens": 150,
+          "temperature": 0.7
+        },
+        "requestOptions": {}
+      },
+      "id": "openai-gpt",
+      "name": "OpenAI GPT-4o Response",
+      "type": "n8n-nodes-base.openAi",
+      "position": [
+        816,
+        144
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "elevenlabs-tts",
+      "name": "ElevenLabs Text-to-Speech",
+      "type": "n8n-nodes-base.elevenLabs",
+      "position": [
+        1040,
+        144
+      ],
+      "typeVersion": 1,
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "upload-audio",
+      "name": "Upload Audio to Storage",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1248,
+        144
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "twilio-response",
+      "name": "Twilio TwiML Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1472,
+        144
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "initial-greeting",
+      "name": "Initial Greeting",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        816,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "your-google-sheet-id",
+        "sheetName": "Call_Logs",
+        "options": {}
+      },
+      "id": "log-conversation",
+      "name": "Log Conversation",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1040,
+        352
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "your-appointments-sheet-id",
+        "sheetName": "Appointments",
+        "options": {}
+      },
+      "id": "save-appointment",
+      "name": "Save Appointment Request",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1472,
+        448
+      ],
+      "typeVersion": 3
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-28T13:51:57.289Z",
+      "createdAt": "2026-01-28T13:51:57.289Z",
+      "role": "workflow:owner",
+      "workflowId": "XMBpUrdF-CiLEvf7_2Bj9",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-28T13:51:57.208Z",
+  "versionId": "66a6a3e8-151c-4afd-93ab-57df789b9da2"
+}

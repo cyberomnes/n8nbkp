@@ -1,0 +1,525 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Main Webhook": {
+      "main": [
+        [
+          {
+            "node": "Route by Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Source": {
+      "main": [
+        [
+          {
+            "node": "Process Biolink",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Biolink": {
+      "main": [
+        [
+          {
+            "node": "AllMyBots Send",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AllMyBots Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Signup": {
+      "main": [
+        [
+          {
+            "node": "Omnes.Link Create User",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AllMyBots Create User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Booking": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AllMyBots Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Call Request": {
+      "main": [
+        [
+          {
+            "node": "OmnesTalk Trigger Call",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AllMyBots Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "OmnesTalk Trigger Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process OmnesTalk Webhook": {
+      "main": [
+        [
+          {
+            "node": "AllMyBots Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AllMyBots Send": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AllMyBots Template": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OmnesTalk Trigger Call": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Omnes.Link Create User": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AllMyBots Create User": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:06:48.286Z",
+  "id": "M1KgYkZ5F1bRrBClYBY0L",
+  "isArchived": true,
+  "meta": null,
+  "name": "Omnes Integration Hub v2 - Complete",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "omnes-hub-v2",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "11cb508c-77f8-46b7-89bb-bf7cfa024c03",
+      "name": "Main Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -608,
+        320
+      ],
+      "webhookId": "omnes-hub-v2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b56de6e9-77c3-42b0-8aba-ac5d82b0860c",
+      "name": "Route by Source",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Biolink Block Handler\nconst data = $input.all()[0].json;\n\nconst cleanPhone = (data.phone || '').replace(/[\\s\\-\\(\\)]/g, '');\nconst blockType = data.block_type || 'generic';\n\nlet action = { type: 'whatsapp', useTemplate: false };\nlet message = data.auto_message || `Hi ${data.name || 'there'}! Thanks for connecting via our biolink.`;\n\nswitch(blockType) {\n  case 'contact_form':\n    action = { type: 'whatsapp_template', templateId: data.template_id };\n    break;\n  case 'call_request':\n    action = { type: 'trigger_call' };\n    break;\n  case 'booking':\n    action = { type: 'create_booking' };\n    break;\n}\n\nreturn {\n  action,\n  phone: cleanPhone,\n  name: data.name || 'Visitor',\n  email: data.email || '',\n  message,\n  templateVariables: {\n    '1': data.name || 'Visitor',\n    '2': data.email || '',\n    '3': data.message || ''\n  },\n  metadata: { link_id: data.link_id, block_id: data.block_id }\n};"
+      },
+      "id": "fea924b8-34f0-482a-b10f-2b748dfe545f",
+      "name": "Process Biolink",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// User Signup Sync Handler\nconst data = $input.all()[0].json;\n\nconst PLAN_MAP = {\n  'free': { allmybots: 'free', omnestalk: false },\n  'starter': { allmybots: 'basic', omnestalk: false },\n  'pro': { allmybots: 'premium', omnestalk: true },\n  'business': { allmybots: 'enterprise', omnestalk: true },\n  'enterprise': { allmybots: 'enterprise', omnestalk: true }\n};\n\nconst plan = PLAN_MAP[data.plan_id] || PLAN_MAP['free'];\n\nfunction generatePassword() {\n  return 'Omnes' + Math.random().toString(36).substring(2, 10) + '!';\n}\n\nfunction getExpiry() {\n  const d = new Date();\n  d.setFullYear(d.getFullYear() + 1);\n  return d.toISOString().split('T')[0] + ' 00:00:00';\n}\n\nreturn {\n  user: {\n    name: data.name,\n    email: data.email,\n    phone: data.phone || '',\n    password: data.password || generatePassword()\n  },\n  omneslink: { plan_id: data.plan_id, expiry: getExpiry() },\n  allmybots: { package_id: plan.allmybots, create: data.plan_id !== 'free' },\n  omnestalk: { create: plan.omnestalk },\n  send_welcome: true\n};"
+      },
+      "id": "f5602907-e0e1-4dc1-95fe-dcac52a36c3d",
+      "name": "Process Signup",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Booking Handler with Calendar Sync\nconst data = $input.all()[0].json;\n\nfunction parseDateTime(input) {\n  if (input.start_time) return new Date(input.start_time);\n  if (input.date && input.time) return new Date(`${input.date}T${input.time}`);\n  return new Date();\n}\n\nconst startTime = parseDateTime(data);\nconst duration = data.duration || 30;\nconst endTime = new Date(startTime.getTime() + duration * 60000);\n\nconst booking = {\n  title: data.title || `Meeting with ${data.name || 'Guest'}`,\n  description: data.notes || '',\n  start_time: startTime.toISOString(),\n  end_time: endTime.toISOString(),\n  attendee: { name: data.name, email: data.email, phone: data.phone },\n  timezone: data.timezone || 'UTC'\n};\n\nconst formatted = startTime.toLocaleString('en-US', { \n  weekday: 'long', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' \n});\n\nreturn {\n  booking,\n  sync: { google: data.sync_google !== false, calcom: data.sync_calcom === true },\n  confirmation: `✅ Booking Confirmed!\\n📅 ${formatted}\\nWe look forward to meeting you, ${booking.attendee.name}!`,\n  send_whatsapp: !!data.phone,\n  send_email: !!data.email\n};"
+      },
+      "id": "0f37b319-5a38-45ae-a864-b5013734a1d8",
+      "name": "Process Booking",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Call Request Handler - Triggers OmnesTalk\nconst data = $input.all()[0].json;\n\nreturn {\n  call: {\n    toNumber: data.phone || data.phone_number,\n    name: data.name || 'Unknown',\n    email: data.email || '',\n    notes: data.notes || data.message || '',\n    priority: data.priority || 'normal'\n  },\n  agent_id: data.agent_id || $env.OMNESTALK_DEFAULT_AGENT_ID,\n  engine: data.engine || 'omnestalk-voice',\n  send_whatsapp_confirmation: true,\n  confirmation_message: `Thank you ${data.name || ''}! We received your call request and will contact you shortly.`\n};"
+      },
+      "id": "0d951f76-9a64-4ba3-9c6b-683f17a549f6",
+      "name": "Process Call Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// WhatsApp Incoming Message Handler\nconst data = $input.all()[0].json;\n\nconst messageText = (data.message || data.text || '').toLowerCase();\nlet intent = 'general';\nlet action = 'reply';\n\nif (messageText.includes('call') || messageText.includes('phone') || messageText.includes('speak')) {\n  intent = 'call_request';\n  action = 'trigger_call';\n} else if (messageText.includes('book') || messageText.includes('appointment') || messageText.includes('schedule')) {\n  intent = 'booking';\n  action = 'show_booking_link';\n}\n\nreturn {\n  subscriber: {\n    phone: data.phone_number || data.from,\n    id: data.subscriber_id\n  },\n  message: data.message || data.text,\n  intent,\n  action,\n  bot_id: data.bot_id,\n  phone_number_id: data.phone_number_id\n};"
+      },
+      "id": "18a28d77-ad5c-42a3-ad35-fdcc6fc1fd09",
+      "name": "Process WhatsApp",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        736
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// OmnesTalk Webhook Handler (call.completed, etc.)\nconst data = $input.all()[0].json;\n\nconst event = data.event || 'unknown';\nconst callData = data.data || data;\n\nlet followUpAction = null;\nlet whatsappMessage = null;\n\nif (event === 'call.completed') {\n  // Send follow-up WhatsApp after call ends\n  whatsappMessage = `Thank you for speaking with us! Here's a summary of our conversation:\\n\\n${callData.aiSummary || 'No summary available'}\\n\\nFeel free to reach out if you have any questions.`;\n  followUpAction = 'send_whatsapp_followup';\n} else if (event === 'call.failed') {\n  whatsappMessage = `We tried to reach you but couldn't connect. Would you like us to try again? Reply YES to schedule a callback.`;\n  followUpAction = 'send_whatsapp_retry';\n}\n\nreturn {\n  event,\n  call: {\n    id: callData.id || callData.callId,\n    phone: callData.toNumber,\n    status: callData.status,\n    duration: callData.duration,\n    transcript: callData.transcript,\n    summary: callData.aiSummary,\n    sentiment: callData.sentiment,\n    recording_url: callData.recordingUrl\n  },\n  followUpAction,\n  whatsappMessage\n};"
+      },
+      "id": "cd9f879c-3c4a-41ed-9bae-351097908eae",
+      "name": "Process OmnesTalk Webhook",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        928
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"message\": \"{{ $json.message || $json.confirmation || $json.whatsappMessage }}\",\n  \"phone_number\": \"{{ $json.phone || $json.booking.attendee.phone || $json.call.phone || $json.subscriber.phone }}\"\n}",
+        "options": {}
+      },
+      "id": "d925ff3a-ca0b-441a-9cbb-6279343c3275",
+      "name": "AllMyBots Send",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send/template",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phoneNumberID\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"botTemplateID\": \"{{ $json.action.templateId || $json.templateId }}\",\n  \"sendToPhoneNumber\": \"{{ $json.phone }}\",\n  \"templateVariable-1\": \"{{ $json.templateVariables['1'] || '' }}\",\n  \"templateVariable-2\": \"{{ $json.templateVariables['2'] || '' }}\",\n  \"templateVariable-3\": \"{{ $json.templateVariables['3'] || '' }}\"\n}",
+        "options": {}
+      },
+      "id": "8e8b49ea-923e-4f56-8c06-9e669e236fe2",
+      "name": "AllMyBots Template",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"agentId\": \"{{ $json.agent_id || $env.OMNESTALK_DEFAULT_AGENT_ID }}\",\n  \"toNumber\": \"{{ $json.call.toNumber || $json.phone }}\",\n  \"engine\": \"{{ $json.engine || 'omnestalk-voice' }}\",\n  \"metadata\": {\n    \"name\": \"{{ $json.call.name || $json.name || '' }}\",\n    \"email\": \"{{ $json.call.email || $json.email || '' }}\",\n    \"notes\": \"{{ $json.call.notes || '' }}\",\n    \"source\": \"omnes_integration_hub\"\n  }\n}",
+        "options": {}
+      },
+      "id": "29dd68b6-49c3-49b0-905f-96ece4542c3c",
+      "name": "OmnesTalk Trigger Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        736
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnes.link/admin-api/users",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.user.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.user.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.user.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ef592d34-1b40-45e5-8175-aee292c240e9",
+      "name": "Omnes.Link Create User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/user/create",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"name\": \"{{ $json.user.name }}\",\n  \"email\": \"{{ $json.user.email }}\",\n  \"mobile\": \"{{ $json.user.phone }}\",\n  \"password\": \"{{ $json.user.password }}\",\n  \"package_id\": \"{{ $json.allmybots.package_id }}\"\n}",
+        "options": {}
+      },
+      "id": "6e94c404-0b9d-4891-8d03-25123a8df022",
+      "name": "AllMyBots Create User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "id"
+        },
+        "start": "={{ $json.booking.start_time }}",
+        "end": "={{ $json.booking.end_time }}",
+        "additionalFields": {
+          "attendees": [
+            {
+              "email": "={{ $json.booking.attendee.email }}"
+            }
+          ],
+          "description": "={{ $json.booking.description }}\\n\\nAttendee: {{ $json.booking.attendee.name }}\\nPhone: {{ $json.booking.attendee.phone }}",
+          "summary": "={{ $json.booking.title }}"
+        }
+      },
+      "id": "8bae1579-e320-4cf4-958c-eb5686e058ea",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        896
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Processed', timestamp: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "de1dea46-c93d-4e25-b07e-e3cf76e024fe",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        320
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:06:48.411Z",
+      "createdAt": "2026-01-29T19:06:48.411Z",
+      "role": "workflow:owner",
+      "workflowId": "M1KgYkZ5F1bRrBClYBY0L",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T18:44:20.117Z",
+      "createdAt": "2026-01-29T18:44:20.117Z",
+      "id": "8FYyoACof9fYFMzS",
+      "name": "omneslink"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.428Z",
+      "createdAt": "2026-01-29T18:44:20.428Z",
+      "id": "aO7vO9xsVzzG1Dkc",
+      "name": "omnes"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.634Z",
+      "createdAt": "2026-01-29T18:44:20.634Z",
+      "id": "cta3Iw3EW82LuV1N",
+      "name": "integration"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.658Z",
+      "createdAt": "2026-01-29T18:44:20.658Z",
+      "id": "nzK4wlWGT0G8NG4l",
+      "name": "allmybots"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.853Z",
+      "createdAt": "2026-01-29T18:44:20.853Z",
+      "id": "ueOlFlCi7DVIA3Tw",
+      "name": "omnestalk"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:10:24.000Z",
+  "versionId": "98cbbf17-de9e-4f47-b346-0772d16bd83f"
+}

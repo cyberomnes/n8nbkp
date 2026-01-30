@@ -1,0 +1,504 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Get Balance Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get OmnesTalk Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get OmnesTalk Balance": {
+      "main": [
+        [
+          {
+            "node": "Format Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Balance": {
+      "main": [
+        [
+          {
+            "node": "Respond Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Usage Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get OmnesTalk Usage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get OmnesTalk Usage": {
+      "main": [
+        [
+          {
+            "node": "Format Usage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Usage": {
+      "main": [
+        [
+          {
+            "node": "Respond Usage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analytics Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Analytics Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Analytics Summary": {
+      "main": [
+        [
+          {
+            "node": "Combine Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Call Analytics": {
+      "main": [
+        [
+          {
+            "node": "Combine Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Analytics": {
+      "main": [
+        [
+          {
+            "node": "Respond Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Credits Schedule": {
+      "main": [
+        [
+          {
+            "node": "Check Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Balance": {
+      "main": [
+        [
+          {
+            "node": "Low Credits?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Low Credits?": {
+      "main": [
+        [
+          {
+            "node": "Send Low Credit Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Credits OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:45:31.441Z",
+  "id": "iDoz8wK7dwILXICUu_p2O",
+  "isArchived": false,
+  "meta": null,
+  "name": "Credits & Analytics Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "credits-balance",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "54064581-9075-4157-b886-287bc6e11dff",
+      "name": "Get Balance Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "credits-balance"
+    },
+    {
+      "parameters": {
+        "url": "https://app.omnestalk.com/api/v1/credits/balance",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "2cddf374-080c-4994-a6a1-6b91736761f4",
+      "name": "Get OmnesTalk Balance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format balance response\nconst input = $input.first().json;\nconst data = input.data || input;\n\nconst available = data.available || data.balance || 0;\nconst reserved = data.reserved || 0;\nconst total = data.total || available + reserved;\n\n// Calculate status\nlet status = 'healthy';\nlet warning = null;\n\nif (available < 10) {\n  status = 'critical';\n  warning = 'Credits critically low! Top up immediately.';\n} else if (available < 50) {\n  status = 'low';\n  warning = 'Credits running low. Consider topping up soon.';\n} else if (available < 100) {\n  status = 'moderate';\n  warning = 'Credits at moderate level.';\n}\n\nreturn {\n  success: true,\n  credits: {\n    available: available,\n    reserved: reserved,\n    total: total,\n    unit: 'minutes'\n  },\n  status: status,\n  warning: warning,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "d3204dac-5b43-48c8-9106-80b01f64b75a",
+      "name": "Format Balance",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "1f691b6f-ead2-4646-adc6-d30a9667af71",
+      "name": "Respond Balance",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "path": "credits-usage",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4a8d23e7-1cac-4169-a670-d54a875644cb",
+      "name": "Get Usage Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ],
+      "webhookId": "credits-usage"
+    },
+    {
+      "parameters": {
+        "url": "=https://app.omnestalk.com/api/v1/credits/usage?days={{ $json.query.days || 30 }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "0e110e95-b174-4703-b619-6ba80111212c",
+      "name": "Get OmnesTalk Usage",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format usage response\nconst input = $input.first().json;\nconst data = input.data || input;\nconst usage = data.usage || data.daily || [];\n\n// Calculate totals\nlet totalCredits = 0;\nlet totalCalls = 0;\n\nusage.forEach(day => {\n  totalCredits += day.creditsUsed || day.credits || 0;\n  totalCalls += day.calls || day.callCount || 0;\n});\n\n// Calculate average\nconst days = usage.length || 1;\nconst avgCreditsPerDay = Math.round((totalCredits / days) * 100) / 100;\nconst avgCallsPerDay = Math.round((totalCalls / days) * 100) / 100;\n\nreturn {\n  success: true,\n  period: {\n    days: days,\n    start: usage[0]?.date || null,\n    end: usage[usage.length - 1]?.date || null\n  },\n  totals: {\n    credits_used: totalCredits,\n    total_calls: totalCalls\n  },\n  averages: {\n    credits_per_day: avgCreditsPerDay,\n    calls_per_day: avgCallsPerDay\n  },\n  daily: usage,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "7465f2cd-6a97-49b2-9a0a-0f8ab356581c",
+      "name": "Format Usage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "ca3379f0-c495-40b0-9c84-beeaff2d99e0",
+      "name": "Respond Usage",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "path": "analytics-summary",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "af17d366-b1ea-438f-8b3b-f81f710a9022",
+      "name": "Analytics Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        400
+      ],
+      "webhookId": "analytics-summary"
+    },
+    {
+      "parameters": {
+        "url": "=https://app.omnestalk.com/api/v1/analytics/summary?days={{ $json.query.days || 30 }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "c9128fe6-6043-4b8e-91ce-88af4c0ff82b",
+      "name": "Get Analytics Summary",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://app.omnestalk.com/api/v1/analytics/calls?days={{ $json.query.days || 30 }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "55db0dbc-8c7a-4d5e-b3b4-5fe8b9e7fd6e",
+      "name": "Get Call Analytics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine analytics data\nconst summary = $('Get Analytics Summary').first().json;\nconst calls = $('Get Call Analytics').first().json;\n\nconst summaryData = summary.data || summary;\nconst callsData = calls.data || calls;\n\n// Calculate success rate\nconst totalCalls = callsData.totalCalls || summaryData.totalCalls || 0;\nconst completedCalls = callsData.completedCalls || summaryData.completedCalls || 0;\nconst failedCalls = callsData.failedCalls || summaryData.failedCalls || 0;\nconst successRate = totalCalls > 0 ? Math.round((completedCalls / totalCalls) * 100) : 0;\n\n// Average duration\nconst avgDuration = callsData.averageDuration || summaryData.averageDuration || 0;\n\nreturn {\n  success: true,\n  calls: {\n    total: totalCalls,\n    completed: completedCalls,\n    failed: failedCalls,\n    success_rate: successRate + '%',\n    average_duration_seconds: avgDuration,\n    average_duration_formatted: Math.floor(avgDuration / 60) + 'm ' + (avgDuration % 60) + 's'\n  },\n  credits: {\n    used: callsData.creditsUsed || summaryData.creditsUsed || 0\n  },\n  campaigns: {\n    total: summaryData.totalCampaigns || 0,\n    active: summaryData.activeCampaigns || 0,\n    completed: summaryData.completedCampaigns || 0\n  },\n  sentiment: {\n    positive: summaryData.positiveSentiment || 0,\n    neutral: summaryData.neutralSentiment || 0,\n    negative: summaryData.negativeSentiment || 0\n  },\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "73499a7a-93de-46db-a771-51f44250f261",
+      "name": "Combine Analytics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        464
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "363ef425-3dea-4603-8846-f2a5a7a3d382",
+      "name": "Respond Analytics",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        464
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "47fc6c15-c32c-489e-854b-5cfd876c03b8",
+      "name": "Check Credits Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        688
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://app.omnestalk.com/api/v1/credits/balance",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "020090c2-58fd-4572-afe1-94fb78daf756",
+      "name": "Check Balance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        688
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ ($json.data?.available || $json.available || 0) }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "849bad2a-ad02-478c-aa36-d7e15b955799",
+      "name": "Low Credits?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        448,
+        688
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $env.ADMIN_PHONE }}\",\n  \"message\": \"⚠️ *Low Credits Alert*\\n\\nYour OmnesTalk credits are running low!\\n\\n💰 Available: {{ $json.data?.available || $json.available || 0 }} credits\\n\\nTop up now: https://app.omnestalk.com/billing\"\n}",
+        "options": {}
+      },
+      "id": "26095d06-afb8-4046-a721-3b3166ce0818",
+      "name": "Send Low Credit Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        688,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "564a8292-ed71-409c-a123-cc7816c5052e",
+      "name": "Credits OK",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        752
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:45:31.452Z",
+      "createdAt": "2026-01-29T19:45:31.452Z",
+      "role": "workflow:owner",
+      "workflowId": "iDoz8wK7dwILXICUu_p2O",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T19:45:29.601Z",
+      "createdAt": "2026-01-29T19:45:29.601Z",
+      "id": "ZCNB8m8FlmdNL8xX",
+      "name": "credits"
+    },
+    {
+      "updatedAt": "2026-01-29T19:45:29.620Z",
+      "createdAt": "2026-01-29T19:45:29.620Z",
+      "id": "qjDQM3xt7FPzS2KT",
+      "name": "analytics"
+    },
+    {
+      "updatedAt": "2026-01-29T19:45:29.588Z",
+      "createdAt": "2026-01-29T19:45:29.588Z",
+      "id": "sF7KurP63IKwJx5e",
+      "name": "monitoring"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:45:31.441Z",
+  "versionId": "c0ab653a-24a7-4b08-acea-3a2f20f29a1c"
+}

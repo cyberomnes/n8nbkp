@@ -1,0 +1,714 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Create Campaign Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Campaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Campaign": {
+      "main": [
+        [
+          {
+            "node": "Create Campaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Campaign": {
+      "main": [
+        [
+          {
+            "node": "Store Campaign ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Campaign ID": {
+      "main": [
+        [
+          {
+            "node": "Has Contacts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Contacts?": {
+      "main": [
+        [
+          {
+            "node": "Add Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Contacts": {
+      "main": [
+        [
+          {
+            "node": "Store Contacts Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Contacts Result": {
+      "main": [
+        [
+          {
+            "node": "Auto Start?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Contacts": {
+      "main": [
+        [
+          {
+            "node": "Auto Start?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto Start?": {
+      "main": [
+        [
+          {
+            "node": "Start Campaign",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Start",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Campaign": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Start": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Control Campaign Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Control": {
+      "main": [
+        [
+          {
+            "node": "Route Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Action": {
+      "main": [
+        [
+          {
+            "node": "Start",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pause",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Build Control Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pause": {
+      "main": [
+        [
+          {
+            "node": "Build Control Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Build Control Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Control Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Control",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:45:00.572Z",
+  "id": "vVyUjBQcD75q1_t_8e-Tf",
+  "isArchived": false,
+  "meta": null,
+  "name": "OmnesTalk Campaign Manager",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "campaign-create",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "21a13a7a-d95e-47d6-ba01-ec3a3daeb184",
+      "name": "Create Campaign Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1136,
+        64
+      ],
+      "webhookId": "campaign-create"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and prepare campaign creation\nconst input = $input.first().json;\n\nif (!input.name) {\n  throw new Error('Campaign name is required');\n}\n\nif (!input.agent_id && !input.agentId) {\n  throw new Error('Agent ID is required');\n}\n\n// Clean phone numbers in contacts\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  if (!cleaned.startsWith('+') && cleaned.length > 10) {\n    cleaned = '+' + cleaned;\n  }\n  return cleaned;\n}\n\n// Process contacts if provided\nlet contacts = [];\nif (input.contacts && Array.isArray(input.contacts)) {\n  contacts = input.contacts.map(c => ({\n    phoneNumber: cleanPhone(c.phone || c.phoneNumber || c.phone_number),\n    firstName: c.firstName || c.first_name || c.name?.split(' ')[0] || '',\n    lastName: c.lastName || c.last_name || c.name?.split(' ').slice(1).join(' ') || '',\n    email: c.email || '',\n    customFields: c.customFields || c.custom_fields || {}\n  })).filter(c => c.phoneNumber.length >= 10);\n}\n\nreturn {\n  campaign: {\n    name: input.name,\n    agentId: input.agent_id || input.agentId,\n    engine: input.engine || 'omnestalk-voice',\n    maxConcurrentCalls: input.max_concurrent_calls || input.maxConcurrentCalls || 5,\n    scheduledStartTime: input.scheduled_start_time || input.scheduledStartTime || null,\n    callWindowStart: input.call_window_start || input.callWindowStart || '09:00',\n    callWindowEnd: input.call_window_end || input.callWindowEnd || '18:00',\n    timezone: input.timezone || 'UTC',\n    retryConfig: {\n      maxRetries: input.max_retries || 2,\n      retryDelay: input.retry_delay || 3600\n    }\n  },\n  contacts: contacts,\n  hasContacts: contacts.length > 0,\n  contactCount: contacts.length,\n  autoStart: input.auto_start === true,\n  notifications: {\n    notify_on_complete: input.notify_on_complete !== false,\n    admin_phone: input.admin_phone || null,\n    admin_email: input.admin_email || null\n  }\n};"
+      },
+      "id": "2f74b672-fd23-4c80-897d-abd34e9678ac",
+      "name": "Validate Campaign",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -928,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/campaigns",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"{{ $json.campaign.name }}\",\n  \"agentId\": \"{{ $json.campaign.agentId }}\",\n  \"engine\": \"{{ $json.campaign.engine }}\",\n  \"maxConcurrentCalls\": {{ $json.campaign.maxConcurrentCalls }},\n  \"callWindowStart\": \"{{ $json.campaign.callWindowStart }}\",\n  \"callWindowEnd\": \"{{ $json.campaign.callWindowEnd }}\",\n  \"timezone\": \"{{ $json.campaign.timezone }}\"\n}",
+        "options": {}
+      },
+      "id": "484c9a5f-7389-4000-9b9b-630174a14632",
+      "name": "Create Campaign",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -688,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store campaign result and prepare for contacts\nconst input = $input.first().json;\nconst originalData = $('Validate Campaign').first().json;\n\nconst campaignId = input.data?.id || input.data?.campaignId;\n\nif (!campaignId) {\n  throw new Error('Failed to create campaign: ' + JSON.stringify(input));\n}\n\nreturn {\n  ...originalData,\n  campaignId: campaignId,\n  campaignStatus: input.data?.status || 'draft',\n  createResponse: input\n};"
+      },
+      "id": "ae7071be-7cc0-450d-b49e-398784cdf382",
+      "name": "Store Campaign ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.hasContacts }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ef74f3b2-34cd-4439-841f-156df7397048",
+      "name": "Has Contacts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.omnestalk.com/api/v1/campaigns/{{ $json.campaignId }}/contacts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contacts\": {{ JSON.stringify($json.contacts) }}\n}",
+        "options": {}
+      },
+      "id": "8e7b2e5b-c183-4719-947f-8154dcd5955a",
+      "name": "Add Contacts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store contacts result\nconst input = $input.first().json;\nconst originalData = $('Store Campaign ID').first().json;\n\nreturn {\n  ...originalData,\n  contactsAdded: input.data?.added || originalData.contactCount,\n  contactsResponse: input\n};"
+      },
+      "id": "ec45e062-5b51-4645-8465-e3d86f5d53db",
+      "name": "Store Contacts Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.autoStart }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dd316d3e-0545-465d-921e-f2c75381ae71",
+      "name": "Auto Start?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        448,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.omnestalk.com/api/v1/campaigns/{{ $json.campaignId }}/start",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "0d0c9041-c361-487b-9e61-0246d3afae02",
+      "name": "Start Campaign",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        688,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build final response\nlet data = $input.first().json;\n\n// Try to get the most complete data\nlet campaignId, contactsAdded, autoStart;\ntry {\n  const storedData = $('Store Contacts Result').first().json;\n  campaignId = storedData.campaignId;\n  contactsAdded = storedData.contactsAdded;\n  autoStart = storedData.autoStart;\n} catch {\n  try {\n    const storedData = $('Store Campaign ID').first().json;\n    campaignId = storedData.campaignId;\n    contactsAdded = 0;\n    autoStart = storedData.autoStart;\n  } catch {\n    campaignId = data.data?.campaignId || data.campaignId;\n    contactsAdded = 0;\n    autoStart = false;\n  }\n}\n\nconst wasStarted = data.data?.status === 'running' || data.success;\n\nreturn {\n  success: true,\n  campaign: {\n    id: campaignId,\n    status: wasStarted ? 'running' : 'draft',\n    contacts_added: contactsAdded,\n    auto_started: autoStart && wasStarted\n  },\n  message: wasStarted ? 'Campaign created and started' : 'Campaign created (not started)',\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "380229d9-e5c1-437f-bf6c-c3f3bfa92b25",
+      "name": "Build Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 201
+        }
+      },
+      "id": "6b9cce49-e0b2-45d0-a359-8fbd505d0c75",
+      "name": "Respond Create",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "campaign-control",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "6704b204-92d0-4027-9c0d-a9e70aee5f0d",
+      "name": "Control Campaign Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1136,
+        368
+      ],
+      "webhookId": "campaign-control"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate campaign control request\nconst input = $input.first().json;\n\nconst campaignId = input.campaign_id || input.campaignId || input.id;\nconst action = (input.action || '').toLowerCase();\n\nif (!campaignId) {\n  throw new Error('Campaign ID is required');\n}\n\nconst validActions = ['start', 'pause', 'resume', 'cancel', 'status'];\nif (!validActions.includes(action)) {\n  throw new Error(`Invalid action. Must be one of: ${validActions.join(', ')}`);\n}\n\nreturn {\n  campaignId,\n  action,\n  notify: input.notify !== false\n};"
+      },
+      "id": "f83e681d-63b5-4c14-8f88-fe1719e62757",
+      "name": "Validate Control",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -928,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "pause",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Pause"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "status",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Status"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "4fc233b2-463c-45d5-b339-6c906815c904",
+      "name": "Route Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -688,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.omnestalk.com/api/v1/campaigns/{{ $json.campaignId }}/start",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "c5deae46-429d-4928-8242-308a1c691088",
+      "name": "Start",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.omnestalk.com/api/v1/campaigns/{{ $json.campaignId }}/pause",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "44969bba-7a72-4487-a255-36fdb3fe2151",
+      "name": "Pause",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://app.omnestalk.com/api/v1/campaigns/{{ $json.campaignId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "af72a8fb-196c-4a7c-adcf-c679a01a3863",
+      "name": "Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build control response\nconst input = $input.first().json;\nconst action = $('Validate Control').first().json.action;\nconst campaignId = $('Validate Control').first().json.campaignId;\n\nreturn {\n  success: input.success !== false,\n  campaign_id: campaignId,\n  action: action,\n  status: input.data?.status || input.status,\n  data: input.data || input,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "de4b432f-1318-4836-811d-16687df410e4",
+      "name": "Build Control Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "a272422d-6d41-4abc-83bf-5faaedd803ce",
+      "name": "Respond Control",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        32,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skip contacts - pass through\nconst originalData = $('Store Campaign ID').first().json;\nreturn {\n  ...originalData,\n  contactsAdded: 0\n};"
+      },
+      "id": "f1e8f3f6-36bc-4308-8bb1-3dd559968533",
+      "name": "Skip Contacts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skip start - pass through  \nlet data;\ntry {\n  data = $('Store Contacts Result').first().json;\n} catch {\n  data = $('Skip Contacts').first().json;\n}\nreturn data;"
+      },
+      "id": "53648e59-415b-42fe-be9a-40589dcddd08",
+      "name": "Skip Start",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        128
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:45:00.591Z",
+      "createdAt": "2026-01-29T19:45:00.591Z",
+      "role": "workflow:owner",
+      "workflowId": "vVyUjBQcD75q1_t_8e-Tf",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T18:44:20.853Z",
+      "createdAt": "2026-01-29T18:44:20.853Z",
+      "id": "ueOlFlCi7DVIA3Tw",
+      "name": "omnestalk"
+    },
+    {
+      "updatedAt": "2026-01-29T19:44:59.314Z",
+      "createdAt": "2026-01-29T19:44:59.314Z",
+      "id": "yHFalG2sAK0aSMsG",
+      "name": "campaigns"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:45:00.572Z",
+  "versionId": "1971185f-cd70-4775-993a-fed632ed6731"
+}

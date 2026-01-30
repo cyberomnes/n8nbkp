@@ -1,0 +1,510 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Call Request Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Call Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Call Request": {
+      "main": [
+        [
+          {
+            "node": "Send Pre-Call Message?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Pre-Call Message?": {
+      "main": [
+        [
+          {
+            "node": "Send Pre-Call WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create/Update Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Pre-Call WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Create/Update Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create/Update Contact": {
+      "main": [
+        [
+          {
+            "node": "Trigger OmnesTalk Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger OmnesTalk Call": {
+      "main": [
+        [
+          {
+            "node": "Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OmnesTalk Event Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Event": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Notification?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Notification?": {
+      "main": [
+        [
+          {
+            "node": "Send Event WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Acknowledge Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Event WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Call Status Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Call from OmnesTalk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Call from OmnesTalk": {
+      "main": [
+        [
+          {
+            "node": "Return Call Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:43:31.612Z",
+  "id": "ppj6PyiKg2MQ0GWVa5GBT",
+  "isArchived": false,
+  "meta": null,
+  "name": "OmnesTalk AI Voice Calls",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "omnestalk-calls",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "fdd03a8e-9fd8-4d78-989e-4ee6653fedcc",
+      "name": "Call Request Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        64
+      ],
+      "webhookId": "omnestalk-calls"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and prepare call request\nconst input = $input.first().json;\n\n// Validate required fields\nif (!input.phone && !input.toNumber && !input.phone_number) {\n  throw new Error('Phone number is required');\n}\n\n// Clean phone number\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  // Add + if missing and starts with country code\n  if (!cleaned.startsWith('+') && cleaned.length > 10) {\n    cleaned = '+' + cleaned;\n  }\n  return cleaned;\n}\n\nconst phone = cleanPhone(input.phone || input.toNumber || input.phone_number);\n\n// Validate phone format\nif (phone.length < 10) {\n  throw new Error('Invalid phone number format');\n}\n\n// Determine action type\nconst action = input.action || 'single_call';\n\nreturn {\n  action: action,\n  call: {\n    toNumber: phone,\n    agentId: input.agent_id || input.agentId || null,\n    engine: input.engine || 'omnestalk-voice',\n    fromNumber: input.from_number || input.fromNumber || null,\n    scheduledAt: input.scheduled_at || input.scheduledAt || null,\n    metadata: {\n      name: input.name || input.contact_name || '',\n      email: input.email || '',\n      company: input.company || '',\n      notes: input.notes || input.message || '',\n      source: input.source || 'api',\n      external_id: input.external_id || input.id || '',\n      custom: input.custom_fields || input.customFields || {}\n    }\n  },\n  notifications: {\n    send_sms_before: input.send_sms_before === true,\n    send_whatsapp_before: input.send_whatsapp_before === true,\n    send_whatsapp_after: input.send_whatsapp_after !== false,\n    pre_call_message: input.pre_call_message || `Hi ${input.name || 'there'}! You'll receive a call from us in just a moment.`,\n    post_call_followup: true\n  },\n  contact: {\n    create_if_missing: input.create_contact !== false,\n    phone: phone,\n    firstName: input.name?.split(' ')[0] || input.firstName || '',\n    lastName: input.name?.split(' ').slice(1).join(' ') || input.lastName || '',\n    email: input.email || '',\n    company: input.company || '',\n    tags: input.tags || ['api-call']\n  }\n};"
+      },
+      "id": "08435de7-f62f-4bf3-8fa4-356b29494996",
+      "name": "Validate Call Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.notifications.send_whatsapp_before }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cd5ee8a0-06ae-4a97-89da-fa4714ef6209",
+      "name": "Send Pre-Call Message?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.call.toNumber }}\",\n  \"message\": \"{{ $json.notifications.pre_call_message }}\"\n}",
+        "options": {}
+      },
+      "id": "f452375d-4cc9-4faa-a4a6-be0dcb2730ca",
+      "name": "Send Pre-Call WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/contacts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone\": \"{{ $json.contact.phone }}\",\n  \"firstName\": \"{{ $json.contact.firstName }}\",\n  \"lastName\": \"{{ $json.contact.lastName }}\",\n  \"email\": \"{{ $json.contact.email }}\",\n  \"company\": \"{{ $json.contact.company }}\",\n  \"tags\": {{ JSON.stringify($json.contact.tags) }},\n  \"customFields\": {{ JSON.stringify($json.call.metadata.custom) }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "8f9457c1-10e2-438c-8cbf-c424619eac54",
+      "name": "Create/Update Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"agentId\": \"{{ $json.call.agentId || $env.OMNESTALK_DEFAULT_AGENT_ID }}\",\n  \"toNumber\": \"{{ $json.call.toNumber }}\",\n  \"engine\": \"{{ $json.call.engine }}\",\n  \"fromNumber\": {{ $json.call.fromNumber ? '\"' + $json.call.fromNumber + '\"' : 'null' }},\n  \"scheduledAt\": {{ $json.call.scheduledAt ? '\"' + $json.call.scheduledAt + '\"' : 'null' }},\n  \"metadata\": {{ JSON.stringify($json.call.metadata) }}\n}",
+        "options": {}
+      },
+      "id": "f336459c-ba8a-4057-a199-0730a3005b08",
+      "name": "Trigger OmnesTalk Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process OmnesTalk API response\nconst input = $input.first().json;\nconst prevData = $('Validate Call Request').first().json;\n\nconst success = input.success === true;\nconst callId = input.data?.callId || null;\nconst status = input.data?.status || 'unknown';\n\nreturn {\n  success,\n  call: {\n    id: callId,\n    status: status,\n    toNumber: prevData.call.toNumber,\n    agentId: input.data?.agentId,\n    engine: input.data?.engine,\n    createdAt: input.data?.createdAt\n  },\n  original_request: prevData,\n  response: input\n};"
+      },
+      "id": "6e7e156b-6b17-4452-b8b8-86e87156d890",
+      "name": "Process Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": {{ $json.success }},\n  \"data\": {\n    \"callId\": \"{{ $json.call.id }}\",\n    \"status\": \"{{ $json.call.status }}\",\n    \"toNumber\": \"{{ $json.call.toNumber }}\",\n    \"message\": \"{{ $json.success ? 'Call initiated successfully' : 'Failed to initiate call' }}\"\n  },\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {
+          "responseCode": "={{ $json.success ? 200 : 400 }}"
+        }
+      },
+      "id": "416412d7-256c-4c61-8ccf-fa0d0accefd4",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "omnestalk-events",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "694e695c-53c0-4c8d-9dbb-f61012de88f5",
+      "name": "OmnesTalk Event Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        368
+      ],
+      "webhookId": "omnestalk-events"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process OmnesTalk webhook event\nconst input = $input.first().json;\n\nconst event = input.event || input.type || 'unknown';\nconst data = input.data || input;\n\nlet action = 'log';\nlet sendWhatsApp = false;\nlet whatsappMessage = '';\n\nswitch(event) {\n  case 'call.started':\n    action = 'log';\n    break;\n    \n  case 'call.completed':\n    action = 'followup';\n    sendWhatsApp = true;\n    \n    const summary = data.aiSummary || 'Thank you for your time!';\n    const duration = data.duration ? Math.ceil(data.duration / 60) : 0;\n    const sentiment = data.sentiment || 'neutral';\n    \n    let emoji = '📞';\n    if (sentiment === 'positive') emoji = '😊';\n    if (sentiment === 'negative') emoji = '😔';\n    \n    whatsappMessage = `${emoji} *Call Summary*\\n\\nThank you for speaking with us today!\\n\\n📝 *Notes:*\\n${summary}\\n\\n⏱️ Duration: ${duration} min\\n\\nHave questions? Just reply here!`;\n    break;\n    \n  case 'call.failed':\n    action = 'retry_offer';\n    sendWhatsApp = true;\n    whatsappMessage = `📞 *We Tried to Reach You*\\n\\nWe attempted to call but couldn't connect.\\n\\n*Would you like us to try again?*\\n\\n• Reply *YES* - Call me back\\n• Reply *LATER* - I'll schedule a time\\n• Reply *TEXT* - Let's chat here instead`;\n    break;\n    \n  case 'call.no_answer':\n    action = 'voicemail';\n    sendWhatsApp = true;\n    whatsappMessage = `📞 *Missed Call*\\n\\nWe tried calling but you weren't available.\\n\\nReply with a good time to call you back!`;\n    break;\n    \n  case 'campaign.started':\n    action = 'admin_notify';\n    break;\n    \n  case 'campaign.completed':\n    action = 'admin_notify';\n    whatsappMessage = `📊 *Campaign Complete*\\n\\n✅ Total: ${data.totalContacts || 0}\\n📞 Called: ${data.calledContacts || 0}\\n⏱️ Duration: ${data.totalDuration || 0} min`;\n    break;\n    \n  case 'credits.low':\n    action = 'admin_alert';\n    whatsappMessage = `⚠️ *Low Credits Alert*\\n\\nYour OmnesTalk credits are running low.\\n\\nBalance: ${data.available || 0} credits\\n\\nTop up at: https://app.omnestalk.com/billing`;\n    break;\n}\n\nreturn {\n  event,\n  action,\n  call: {\n    id: data.id || data.callId,\n    phone: data.toNumber || data.phone,\n    status: data.status,\n    duration: data.duration,\n    transcript: data.transcript,\n    summary: data.aiSummary,\n    sentiment: data.sentiment,\n    recordingUrl: data.recordingUrl\n  },\n  campaign: {\n    id: data.campaignId,\n    name: data.campaignName\n  },\n  notification: {\n    send_whatsapp: sendWhatsApp,\n    message: whatsappMessage\n  },\n  raw: input\n};"
+      },
+      "id": "e9207d6b-d2bf-4d00-a03a-4c3b52289ed0",
+      "name": "Process Event",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.notification.send_whatsapp }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bffb3a09-a1cd-46eb-a3ef-4092753cd498",
+      "name": "Send WhatsApp Notification?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.call.phone }}\",\n  \"message\": \"{{ $json.notification.message }}\"\n}",
+        "options": {}
+      },
+      "id": "91207960-a824-4910-a470-e9e9a5c212ee",
+      "name": "Send Event WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"event\": \"{{ $json.event }}\", \"action\": \"{{ $json.action }}\" }",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "1ec558d0-1692-41a0-b9e1-36ffd2168cde",
+      "name": "Acknowledge Event",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "path": "omnestalk-call-status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "3cbd7e0e-6aa2-414d-8746-23731073b610",
+      "name": "Get Call Status Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        672
+      ],
+      "webhookId": "omnestalk-call-status"
+    },
+    {
+      "parameters": {
+        "url": "=https://app.omnestalk.com/api/v1/calls/{{ $json.query.call_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "e736145a-0a8f-4c40-bcb6-42eaeda83d4b",
+      "name": "Get Call from OmnesTalk",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "1be6328f-fbf6-498c-8600-6c2cc837f002",
+      "name": "Return Call Status",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -224,
+        672
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:43:31.642Z",
+      "createdAt": "2026-01-29T19:43:31.642Z",
+      "role": "workflow:owner",
+      "workflowId": "ppj6PyiKg2MQ0GWVa5GBT",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T19:43:17.840Z",
+      "createdAt": "2026-01-29T19:43:17.840Z",
+      "id": "AjByMbibkeyBUBOD",
+      "name": "voice"
+    },
+    {
+      "updatedAt": "2026-01-29T19:43:17.852Z",
+      "createdAt": "2026-01-29T19:43:17.852Z",
+      "id": "tt1sNnsbFoUEUyoi",
+      "name": "calls"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.853Z",
+      "createdAt": "2026-01-29T18:44:20.853Z",
+      "id": "ueOlFlCi7DVIA3Tw",
+      "name": "omnestalk"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:43:31.612Z",
+  "versionId": "b823c74d-d0dd-4774-ae42-e1f36dcdba7c"
+}

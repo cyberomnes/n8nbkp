@@ -1,0 +1,797 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Send Message Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Message": {
+      "main": [
+        [
+          {
+            "node": "Route by Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Type": {
+      "main": [
+        [
+          {
+            "node": "Send Text Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Template Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Media Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Text Message": {
+      "main": [
+        [
+          {
+            "node": "Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Template Message": {
+      "main": [
+        [
+          {
+            "node": "Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Media Message": {
+      "main": [
+        [
+          {
+            "node": "Process Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Response": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Incoming Message Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Incoming",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Incoming": {
+      "main": [
+        [
+          {
+            "node": "Route by Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Intent": {
+      "main": [
+        [
+          {
+            "node": "Trigger Call",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Booking Info",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Default Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Call": {
+      "main": [
+        [
+          {
+            "node": "Send Call Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Call Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Incoming",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Booking Info": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Incoming",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Default Reply": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Incoming",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Broadcast Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare Broadcast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Broadcast": {
+      "main": [
+        [
+          {
+            "node": "Split Recipients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Recipients": {
+      "main": [
+        [
+          {
+            "node": "Send Broadcast Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Broadcast Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Broadcast Message": {
+      "main": [
+        [
+          {
+            "node": "Rate Limit Delay",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rate Limit Delay": {
+      "main": [
+        [
+          {
+            "node": "Split Recipients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:43:59.183Z",
+  "id": "u6QElR7uaCXN1hdNPAx5S",
+  "isArchived": false,
+  "meta": null,
+  "name": "AllMyBots WhatsApp Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "allmybots-send",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8aa0c701-7de9-49f3-b9ab-61476fc8ff13",
+      "name": "Send Message Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -688,
+        128
+      ],
+      "webhookId": "allmybots-send"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and prepare WhatsApp message\nconst input = $input.first().json;\n\n// Clean phone number\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  if (!cleaned.startsWith('+') && cleaned.length > 10) {\n    cleaned = '+' + cleaned;\n  }\n  return cleaned;\n}\n\nconst phone = cleanPhone(input.phone || input.phone_number || input.to);\n\nif (!phone) {\n  throw new Error('Phone number is required');\n}\n\n// Determine message type\nconst messageType = input.type || input.message_type || 'text';\n\nlet payload = {\n  messageType,\n  phone,\n  phoneNumberId: input.phone_number_id || null // Will use env if null\n};\n\nswitch(messageType) {\n  case 'text':\n    if (!input.message && !input.text) {\n      throw new Error('Message text is required for text messages');\n    }\n    payload.message = input.message || input.text;\n    break;\n    \n  case 'template':\n    if (!input.template_id && !input.templateId) {\n      throw new Error('Template ID is required for template messages');\n    }\n    payload.templateId = input.template_id || input.templateId;\n    payload.templateVariables = {};\n    \n    // Support multiple variable formats\n    for (let i = 1; i <= 10; i++) {\n      const varValue = input[`var${i}`] || input[`variable_${i}`] || input[`templateVariable-${i}`] || input.variables?.[i-1];\n      if (varValue !== undefined) {\n        payload.templateVariables[i] = varValue;\n      }\n    }\n    break;\n    \n  case 'image':\n  case 'video':\n  case 'document':\n  case 'audio':\n    if (!input.media_url && !input.mediaUrl && !input.url) {\n      throw new Error('Media URL is required for media messages');\n    }\n    payload.mediaUrl = input.media_url || input.mediaUrl || input.url;\n    payload.mediaType = messageType;\n    payload.caption = input.caption || input.message || '';\n    payload.filename = input.filename || '';\n    break;\n    \n  case 'location':\n    payload.latitude = input.latitude || input.lat;\n    payload.longitude = input.longitude || input.lng || input.lon;\n    payload.locationName = input.name || input.location_name || '';\n    payload.address = input.address || '';\n    break;\n    \n  case 'contact':\n    payload.contactName = input.contact_name || input.contactName;\n    payload.contactPhone = cleanPhone(input.contact_phone || input.contactPhone);\n    break;\n}\n\nreturn payload;"
+      },
+      "id": "2a38fd34-3758-4f8d-a38a-b71bb47744f1",
+      "name": "Validate Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "template",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Template"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "document",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "leftValue": "={{ $json.messageType }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "or"
+              },
+              "renameOutput": true,
+              "outputKey": "Media"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "844b77c4-fb5b-4cc2-94d3-cc81ad2978eb",
+      "name": "Route by Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -240,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $json.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.phone }}\",\n  \"message\": \"{{ $json.message }}\"\n}",
+        "options": {}
+      },
+      "id": "a67bf90b-c470-446e-955c-535949111454",
+      "name": "Send Text Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        -112
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send/template",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phoneNumberID\": \"{{ $json.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"botTemplateID\": \"{{ $json.templateId }}\",\n  \"sendToPhoneNumber\": \"{{ $json.phone }}\",\n  \"templateVariable-1\": \"{{ $json.templateVariables['1'] || '' }}\",\n  \"templateVariable-2\": \"{{ $json.templateVariables['2'] || '' }}\",\n  \"templateVariable-3\": \"{{ $json.templateVariables['3'] || '' }}\",\n  \"templateVariable-4\": \"{{ $json.templateVariables['4'] || '' }}\",\n  \"templateVariable-5\": \"{{ $json.templateVariables['5'] || '' }}\"\n}",
+        "options": {}
+      },
+      "id": "a8b890cb-faf8-4b12-9ce8-909a51f93733",
+      "name": "Send Template Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $json.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.phone }}\",\n  \"media_type\": \"{{ $json.mediaType }}\",\n  \"media_url\": \"{{ $json.mediaUrl }}\",\n  \"caption\": \"{{ $json.caption }}\",\n  \"filename\": \"{{ $json.filename }}\"\n}",
+        "options": {}
+      },
+      "id": "ee18fbd1-64ae-4f14-9660-1bd0439c6496",
+      "name": "Send Media Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build response\nconst input = $input.first().json;\nconst success = input.success === true || input.status === 'success' || input.message_id;\n\nreturn {\n  success,\n  messageId: input.message_id || input.messageId || null,\n  status: input.status || (success ? 'sent' : 'failed'),\n  response: input\n};"
+      },
+      "id": "ff0014b5-f714-438c-981c-6c621c48e147",
+      "name": "Process Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": {{ $json.success }},\n  \"messageId\": \"{{ $json.messageId }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {
+          "responseCode": "={{ $json.success ? 200 : 400 }}"
+        }
+      },
+      "id": "ecbb7152-09e9-41b4-9937-fbc5eb8603ad",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "allmybots-incoming",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "85fb6e42-da66-411d-8a42-99453a840178",
+      "name": "Incoming Message Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -688,
+        448
+      ],
+      "webhookId": "allmybots-incoming"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process incoming WhatsApp message from AllMyBots\nconst input = $input.first().json;\n\n// Extract message details\nconst message = {\n  id: input.message_id || input.messageId,\n  text: input.message || input.text || input.body || '',\n  type: input.message_type || input.type || 'text',\n  timestamp: input.timestamp || new Date().toISOString()\n};\n\n// Extract sender details\nconst sender = {\n  phone: input.phone_number || input.from || input.sender,\n  name: input.name || input.sender_name || input.profile_name || '',\n  subscriberId: input.subscriber_id || input.subscriberId\n};\n\n// Extract bot context\nconst context = {\n  botId: input.bot_id || input.botId,\n  phoneNumberId: input.phone_number_id || input.phoneNumberId,\n  flowId: input.flow_id || input.flowId\n};\n\n// Intent detection\nconst textLower = message.text.toLowerCase();\nlet intent = 'general';\nlet suggestedAction = 'auto_reply';\n\nconst intents = [\n  { keywords: ['call', 'phone', 'speak', 'talk', 'ring me', 'call me'], intent: 'call_request', action: 'trigger_call' },\n  { keywords: ['book', 'appointment', 'schedule', 'meeting', 'calendar'], intent: 'booking', action: 'show_booking' },\n  { keywords: ['help', 'support', 'issue', 'problem', 'question'], intent: 'support', action: 'support_flow' },\n  { keywords: ['price', 'cost', 'pricing', 'how much', 'quote'], intent: 'pricing', action: 'pricing_info' },\n  { keywords: ['yes', 'ok', 'sure', 'confirm', 'agree'], intent: 'confirmation', action: 'confirm_action' },\n  { keywords: ['no', 'cancel', 'stop', 'nevermind'], intent: 'cancellation', action: 'cancel_action' },\n  { keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon'], intent: 'greeting', action: 'greeting_reply' }\n];\n\nfor (const check of intents) {\n  if (check.keywords.some(kw => textLower.includes(kw))) {\n    intent = check.intent;\n    suggestedAction = check.action;\n    break;\n  }\n}\n\n// Media handling\nlet media = null;\nif (message.type !== 'text') {\n  media = {\n    type: message.type,\n    url: input.media_url || input.mediaUrl,\n    mimeType: input.mime_type || input.mimeType,\n    caption: input.caption\n  };\n}\n\nreturn {\n  message,\n  sender,\n  context,\n  analysis: {\n    intent,\n    suggestedAction,\n    confidence: intent !== 'general' ? 'high' : 'low'\n  },\n  media,\n  raw: input\n};"
+      },
+      "id": "997a1e02-8dd8-4d33-8686-2d48d5a771e9",
+      "name": "Process Incoming",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.analysis.intent }}",
+                    "rightValue": "call_request",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Call Request"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "loose"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.analysis.intent }}",
+                    "rightValue": "booking",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "Booking"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "8b3f5075-9d67-4072-8cac-1fd68024e3a4",
+      "name": "Route by Intent",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -240,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/calls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"agentId\": \"{{ $env.OMNESTALK_DEFAULT_AGENT_ID }}\",\n  \"toNumber\": \"{{ $json.sender.phone }}\",\n  \"engine\": \"omnestalk-voice\",\n  \"metadata\": {\n    \"source\": \"whatsapp\",\n    \"original_message\": \"{{ $json.message.text }}\",\n    \"subscriber_id\": \"{{ $json.sender.subscriberId }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "965f3c39-82f2-4e87-84b1-46a38d5b6e63",
+      "name": "Trigger Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $json.context.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.sender.phone }}\",\n  \"message\": \"📞 Got it! Connecting you now. You'll receive a call in just a moment.\"\n}",
+        "options": {}
+      },
+      "id": "9e82bc29-ef6d-4b1b-bce8-abf798031089",
+      "name": "Send Call Confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $json.context.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.sender.phone }}\",\n  \"message\": \"📅 I'd love to help you book an appointment!\\n\\nHere's our booking page: [BOOKING_LINK]\\n\\nOr just reply with your preferred date and time!\"\n}",
+        "options": {}
+      },
+      "id": "983c26de-917a-4210-a23b-6eef15206263",
+      "name": "Send Booking Info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $json.context.phoneNumberId || $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.sender.phone }}\",\n  \"message\": \"Thanks for your message! 👋\\n\\nHow can I help you today?\\n\\n• Reply *CALL* for a callback\\n• Reply *BOOK* to schedule\\n• Or just ask your question!\"\n}",
+        "options": {}
+      },
+      "id": "d25bfebd-8b6c-4995-888f-3a2e2f8f0d60",
+      "name": "Send Default Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        672
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"success\": true, \"intent\": \"{{ $json.analysis.intent }}\", \"action\": \"{{ $json.analysis.suggestedAction }}\" }",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "acff652e-c357-4b34-8e65-df4d7a8afbb7",
+      "name": "Acknowledge Incoming",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "allmybots-broadcast",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "d4996429-3912-4ff1-9221-9034e36f93c1",
+      "name": "Broadcast Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -688,
+        800
+      ],
+      "webhookId": "allmybots-broadcast"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare broadcast\nconst input = $input.first().json;\n\nif (!input.recipients || !Array.isArray(input.recipients) || input.recipients.length === 0) {\n  throw new Error('Recipients array is required');\n}\n\nif (!input.message && !input.template_id) {\n  throw new Error('Message or template_id is required');\n}\n\n// Clean all phone numbers\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  if (!cleaned.startsWith('+') && cleaned.length > 10) cleaned = '+' + cleaned;\n  return cleaned;\n}\n\nconst recipients = input.recipients.map(r => {\n  if (typeof r === 'string') {\n    return { phone: cleanPhone(r), name: '' };\n  }\n  return {\n    phone: cleanPhone(r.phone || r.phone_number),\n    name: r.name || '',\n    variables: r.variables || {}\n  };\n}).filter(r => r.phone.length >= 10);\n\nreturn {\n  broadcast: {\n    id: 'bc_' + Date.now(),\n    total: recipients.length,\n    type: input.template_id ? 'template' : 'text',\n    message: input.message,\n    templateId: input.template_id,\n    delay: input.delay || 1000  // Delay between messages in ms\n  },\n  recipients\n};"
+      },
+      "id": "0e7b39c8-f3e4-44c0-b2e1-19f3ca44c27c",
+      "name": "Prepare Broadcast",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "a42661e8-4f3b-47b9-820e-8c22781577c9",
+      "name": "Split Recipients",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -240,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.phone }}\",\n  \"message\": \"{{ $('Prepare Broadcast').first().json.broadcast.message }}\"\n}",
+        "options": {}
+      },
+      "id": "5b70a5f8-9cfd-4831-ac02-e92e4f717ea7",
+      "name": "Send Broadcast Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "id": "9b4729fc-addf-49ea-a6ab-a96ae453423f",
+      "name": "Rate Limit Delay",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        800
+      ],
+      "webhookId": "7f02e07f-2238-45a5-b001-fb8a2f9f2a68"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"broadcast_id\": \"{{ $('Prepare Broadcast').first().json.broadcast.id }}\",\n  \"total_sent\": {{ $('Prepare Broadcast').first().json.broadcast.total }},\n  \"message\": \"Broadcast initiated\"\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "68cf6538-5774-4355-aab8-0e75645dc991",
+      "name": "Broadcast Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:43:59.230Z",
+      "createdAt": "2026-01-29T19:43:59.230Z",
+      "role": "workflow:owner",
+      "workflowId": "u6QElR7uaCXN1hdNPAx5S",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T18:44:20.658Z",
+      "createdAt": "2026-01-29T18:44:20.658Z",
+      "id": "nzK4wlWGT0G8NG4l",
+      "name": "allmybots"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:12.700Z",
+      "createdAt": "2026-01-29T19:07:12.700Z",
+      "id": "wzaoYcvGtDm5pE5U",
+      "name": "whatsapp"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:43:59.183Z",
+  "versionId": "b3997580-da56-472e-8c10-68507c1820d3"
+}

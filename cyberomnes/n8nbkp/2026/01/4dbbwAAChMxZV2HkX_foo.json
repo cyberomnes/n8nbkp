@@ -1,0 +1,551 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Contact Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Contact": {
+      "main": [
+        [
+          {
+            "node": "Sync OmnesTalk?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync OmnesTalk?": {
+      "main": [
+        [
+          {
+            "node": "Create OmnesTalk Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip OmnesTalk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create OmnesTalk Contact": {
+      "main": [
+        [
+          {
+            "node": "Store OmnesTalk Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store OmnesTalk Result": {
+      "main": [
+        [
+          {
+            "node": "Sync AllMyBots?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip OmnesTalk": {
+      "main": [
+        [
+          {
+            "node": "Sync AllMyBots?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync AllMyBots?": {
+      "main": [
+        [
+          {
+            "node": "Ping AllMyBots",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip AllMyBots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ping AllMyBots": {
+      "main": [
+        [
+          {
+            "node": "Store AllMyBots Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store AllMyBots Result": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip AllMyBots": {
+      "main": [
+        [
+          {
+            "node": "Build Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Response": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bulk Sync Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Bulk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Bulk": {
+      "main": [
+        [
+          {
+            "node": "Bulk Import OmnesTalk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bulk Import OmnesTalk": {
+      "main": [
+        [
+          {
+            "node": "Build Bulk Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Bulk Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Bulk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:45:17.922Z",
+  "id": "4dbbwAAChMxZV2HkX_foo",
+  "isArchived": false,
+  "meta": null,
+  "name": "Contact Sync Hub",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-sync",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8d09f0b2-a7ae-405a-8324-e1104e742183",
+      "name": "Contact Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        64
+      ],
+      "webhookId": "contact-sync"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and normalize contact data\nconst input = $input.first().json;\n\n// Clean phone number\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  if (!cleaned.startsWith('+') && cleaned.length > 10) {\n    cleaned = '+' + cleaned;\n  }\n  return cleaned;\n}\n\n// Required: phone number\nconst phone = cleanPhone(input.phone || input.phone_number || input.mobile);\nif (!phone || phone.length < 10) {\n  throw new Error('Valid phone number is required');\n}\n\n// Parse name\nconst fullName = input.name || `${input.firstName || ''} ${input.lastName || ''}`.trim() || 'Unknown';\nconst nameParts = fullName.split(' ');\n\n// Build normalized contact\nconst contact = {\n  phone: phone,\n  firstName: input.firstName || input.first_name || nameParts[0] || '',\n  lastName: input.lastName || input.last_name || nameParts.slice(1).join(' ') || '',\n  fullName: fullName,\n  email: input.email || '',\n  company: input.company || input.organization || '',\n  tags: input.tags || [],\n  customFields: input.customFields || input.custom_fields || {},\n  notes: input.notes || '',\n  source: input.source || 'api'\n};\n\n// Determine action\nconst action = (input.action || 'create').toLowerCase();\nconst validActions = ['create', 'update', 'upsert', 'delete', 'sync'];\nif (!validActions.includes(action)) {\n  throw new Error(`Invalid action. Must be one of: ${validActions.join(', ')}`);\n}\n\n// Determine which platforms to sync\nconst platforms = {\n  omnestalk: input.sync_omnestalk !== false,\n  allmybots: input.sync_allmybots !== false,\n  omneslink: input.sync_omneslink === true // Only if explicitly requested\n};\n\nreturn {\n  contact,\n  action,\n  platforms,\n  options: {\n    skip_duplicates: input.skip_duplicates !== false,\n    merge_tags: input.merge_tags === true,\n    notify_contact: input.notify_contact === true\n  },\n  results: {}\n};"
+      },
+      "id": "4a91f2e8-b13e-4ed8-b262-0a26affded9b",
+      "name": "Validate Contact",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.platforms.omnestalk }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "729d6914-8d1b-48b8-9fb8-a1393170aaa9",
+      "name": "Sync OmnesTalk?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/contacts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"phone\": \"{{ $json.contact.phone }}\",\n  \"firstName\": \"{{ $json.contact.firstName }}\",\n  \"lastName\": \"{{ $json.contact.lastName }}\",\n  \"email\": \"{{ $json.contact.email }}\",\n  \"company\": \"{{ $json.contact.company }}\",\n  \"tags\": {{ JSON.stringify($json.contact.tags.length ? $json.contact.tags : ['synced']) }},\n  \"customFields\": {{ JSON.stringify($json.contact.customFields) }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "fc9cf1ef-bff1-4aff-9d8f-35dfe54e5721",
+      "name": "Create OmnesTalk Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store OmnesTalk result\nconst input = $input.first().json;\nconst originalData = $('Validate Contact').first().json;\n\nconst success = input.success || input.data?.id || (input.statusCode >= 200 && input.statusCode < 300);\n\nreturn {\n  ...originalData,\n  results: {\n    ...originalData.results,\n    omnestalk: {\n      success,\n      contactId: input.data?.id || null,\n      error: success ? null : (input.error?.message || input.message || 'Unknown error')\n    }\n  }\n};"
+      },
+      "id": "500e3b39-26e1-4150-b62b-8ee78dfc89d5",
+      "name": "Store OmnesTalk Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skip OmnesTalk\nconst originalData = $('Validate Contact').first().json;\nreturn {\n  ...originalData,\n  results: {\n    ...originalData.results,\n    omnestalk: { skipped: true }\n  }\n};"
+      },
+      "id": "84225da1-1b47-4119-8d6d-425e5a92dddc",
+      "name": "Skip OmnesTalk",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.platforms.allmybots }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "leftValue": "={{ $json.contact.phone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4a052b12-35cd-4a6a-9fec-07fe99c8b137",
+      "name": "Sync AllMyBots?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        448,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"phone_number\": \"{{ $json.contact.phone }}\",\n  \"message\": \"👋 Hi {{ $json.contact.firstName || 'there' }}! You've been added to our contact list. Reply STOP to unsubscribe.\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "199b3c14-3301-45a5-a4af-3bf1c1b9dab2",
+      "name": "Ping AllMyBots",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        688,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store AllMyBots result\nconst input = $input.first().json;\nlet originalData;\ntry {\n  originalData = $('Store OmnesTalk Result').first().json;\n} catch {\n  originalData = $('Skip OmnesTalk').first().json;\n}\n\nconst success = input.success || input.message_id;\n\nreturn {\n  ...originalData,\n  results: {\n    ...originalData.results,\n    allmybots: {\n      success,\n      messageId: input.message_id || null,\n      registered: success\n    }\n  }\n};"
+      },
+      "id": "6fc00af0-c638-4d41-b677-2a8610785896",
+      "name": "Store AllMyBots Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skip AllMyBots\nlet originalData;\ntry {\n  originalData = $('Store OmnesTalk Result').first().json;\n} catch {\n  originalData = $('Skip OmnesTalk').first().json;\n}\n\nreturn {\n  ...originalData,\n  results: {\n    ...originalData.results,\n    allmybots: { skipped: true }\n  }\n};"
+      },
+      "id": "61fcf5b9-afed-4e28-870f-f6d1f8aa762e",
+      "name": "Skip AllMyBots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build final response\nconst data = $input.first().json;\n\nconst omnestalkSuccess = data.results.omnestalk?.success || data.results.omnestalk?.skipped;\nconst allmybotsSuccess = data.results.allmybots?.success || data.results.allmybots?.skipped;\n\nreturn {\n  success: omnestalkSuccess && allmybotsSuccess,\n  contact: {\n    phone: data.contact.phone,\n    name: data.contact.fullName\n  },\n  sync_results: {\n    omnestalk: data.results.omnestalk?.skipped ? 'skipped' : (data.results.omnestalk?.success ? 'synced' : 'failed'),\n    allmybots: data.results.allmybots?.skipped ? 'skipped' : (data.results.allmybots?.success ? 'synced' : 'failed')\n  },\n  ids: {\n    omnestalk_id: data.results.omnestalk?.contactId || null\n  },\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "3d39b34e-74ec-4aa9-9acd-c2111b590014",
+      "name": "Build Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": "={{ $json.success ? 201 : 207 }}"
+        }
+      },
+      "id": "b7d0429f-3588-4b3c-bd1f-a6ac5f210a1a",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-bulk-sync",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "5578038a-770e-47e8-9380-eb31eed744cb",
+      "name": "Bulk Sync Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        368
+      ],
+      "webhookId": "contact-bulk-sync"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process bulk contacts for OmnesTalk\nconst input = $input.first().json;\n\nif (!input.contacts || !Array.isArray(input.contacts)) {\n  throw new Error('contacts array is required');\n}\n\nfunction cleanPhone(phone) {\n  if (!phone) return '';\n  let cleaned = phone.toString().replace(/[\\s\\-\\(\\)\\.]/g, '');\n  if (!cleaned.startsWith('+') && cleaned.length > 10) {\n    cleaned = '+' + cleaned;\n  }\n  return cleaned;\n}\n\nconst contacts = input.contacts.map(c => {\n  const phone = cleanPhone(c.phone || c.phone_number || c.mobile);\n  if (!phone || phone.length < 10) return null;\n  \n  const fullName = c.name || `${c.firstName || ''} ${c.lastName || ''}`.trim();\n  const nameParts = fullName.split(' ');\n  \n  return {\n    phone: phone,\n    firstName: c.firstName || c.first_name || nameParts[0] || '',\n    lastName: c.lastName || c.last_name || nameParts.slice(1).join(' ') || '',\n    email: c.email || '',\n    company: c.company || '',\n    tags: c.tags || ['bulk-import'],\n    customFields: c.customFields || {}\n  };\n}).filter(c => c !== null);\n\nif (contacts.length === 0) {\n  throw new Error('No valid contacts found');\n}\n\nreturn {\n  contacts,\n  count: contacts.length,\n  original_count: input.contacts.length,\n  skip_duplicates: input.skip_duplicates !== false\n};"
+      },
+      "id": "3b470e23-c99f-46d0-8ad6-0d475eaee5f9",
+      "name": "Process Bulk",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.omnestalk.com/api/v1/contacts/bulk-import",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contacts\": {{ JSON.stringify($json.contacts) }},\n  \"skipDuplicates\": {{ $json.skip_duplicates }}\n}",
+        "options": {}
+      },
+      "id": "28422ef7-2efb-4e2f-89be-f6731e66325b",
+      "name": "Bulk Import OmnesTalk",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -240,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build bulk response\nconst input = $input.first().json;\nconst originalData = $('Process Bulk').first().json;\n\nreturn {\n  success: input.success !== false,\n  imported: input.data?.imported || input.data?.created || originalData.count,\n  duplicates_skipped: input.data?.duplicatesSkipped || input.data?.skipped || 0,\n  failed: input.data?.failed || 0,\n  total_submitted: originalData.count,\n  original_count: originalData.original_count,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "e98279df-4528-489d-a38d-23c96be63562",
+      "name": "Build Bulk Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": "={{ $json.success ? 201 : 207 }}"
+        }
+      },
+      "id": "ace1fcf3-0832-4187-b475-db87c2749c56",
+      "name": "Respond Bulk",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        368
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:45:17.946Z",
+      "createdAt": "2026-01-29T19:45:17.946Z",
+      "role": "workflow:owner",
+      "workflowId": "4dbbwAAChMxZV2HkX_foo",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T19:45:16.430Z",
+      "createdAt": "2026-01-29T19:45:16.430Z",
+      "id": "EcdX8YrVXqfzzAQu",
+      "name": "sync"
+    },
+    {
+      "updatedAt": "2026-01-29T19:45:16.580Z",
+      "createdAt": "2026-01-29T19:45:16.580Z",
+      "id": "cTlr5qg4M6AKoo2v",
+      "name": "contacts"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.658Z",
+      "createdAt": "2026-01-29T18:44:20.658Z",
+      "id": "nzK4wlWGT0G8NG4l",
+      "name": "allmybots"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.853Z",
+      "createdAt": "2026-01-29T18:44:20.853Z",
+      "id": "ueOlFlCi7DVIA3Tw",
+      "name": "omnestalk"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:45:17.922Z",
+  "versionId": "78f65b38-37f8-4679-9d52-eac1b479a28c"
+}

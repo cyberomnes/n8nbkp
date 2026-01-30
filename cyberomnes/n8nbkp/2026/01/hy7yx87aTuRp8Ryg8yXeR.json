@@ -1,0 +1,458 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Booking Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Booking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Booking": {
+      "main": [
+        [
+          {
+            "node": "Sync to Google?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Sync to Cal.com?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send WhatsApp?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync to Google?": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync to Cal.com?": {
+      "main": [
+        [
+          {
+            "node": "Cal.com Booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Cal.com",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp?": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cal.com Booking": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Google": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Cal.com": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Merge Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Results": {
+      "main": [
+        [
+          {
+            "node": "Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:07:40.788Z",
+  "id": "hy7yx87aTuRp8Ryg8yXeR",
+  "isArchived": true,
+  "meta": null,
+  "name": "Omnes - Booking & Calendar Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "booking-sync",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "c1463bbf-8ddc-4bfb-9ab8-a7b76a0e273c",
+      "name": "Booking Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        208
+      ],
+      "webhookId": "booking-sync-hook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Booking Processor\n// Normalizes booking data from various sources\n\nconst input = $input.all()[0].json;\n\n// Determine booking source and normalize data\nconst source = input.source || detectSource(input);\n\nfunction detectSource(data) {\n  if (data.allmybots_subscriber_id) return 'allmybots';\n  if (data.link_id || data.block_id) return 'omneslink';\n  if (data.omnestalk_call_id) return 'omnestalk';\n  return 'external';\n}\n\n// Parse date/time\nfunction parseDateTime(input) {\n  if (input.start_time) return new Date(input.start_time);\n  if (input.date && input.time) {\n    return new Date(`${input.date}T${input.time}`);\n  }\n  if (input.datetime) return new Date(input.datetime);\n  return new Date(); // Default to now if no date provided\n}\n\nfunction calculateEndTime(startTime, durationMinutes) {\n  const end = new Date(startTime);\n  end.setMinutes(end.getMinutes() + (durationMinutes || 30));\n  return end;\n}\n\nconst startTime = parseDateTime(input);\nconst duration = input.duration || 30;\nconst endTime = input.end_time ? new Date(input.end_time) : calculateEndTime(startTime, duration);\n\nconst booking = {\n  // Core booking info\n  title: input.title || input.subject || `Meeting with ${input.name || 'Guest'}`,\n  description: input.description || input.notes || input.message || '',\n  start_time: startTime.toISOString(),\n  end_time: endTime.toISOString(),\n  duration_minutes: duration,\n  timezone: input.timezone || 'UTC',\n  location: input.location || 'Online',\n  \n  // Attendee info\n  attendee: {\n    name: input.name || input.attendee_name || 'Guest',\n    email: input.email || input.attendee_email || '',\n    phone: input.phone || input.attendee_phone || ''\n  },\n  \n  // Sync settings\n  sync: {\n    google_calendar: input.sync_google !== false,\n    cal_com: input.sync_calcom === true,\n    send_whatsapp: input.send_whatsapp !== false && !!input.phone,\n    send_email: !!input.email\n  },\n  \n  // Metadata\n  source: source,\n  booking_id: input.booking_id || `BK-${Date.now()}`,\n  created_at: new Date().toISOString()\n};\n\n// Generate confirmation message\nconst formattedDate = startTime.toLocaleDateString('en-US', { \n  weekday: 'long', \n  year: 'numeric', \n  month: 'long', \n  day: 'numeric' \n});\nconst formattedTime = startTime.toLocaleTimeString('en-US', { \n  hour: '2-digit', \n  minute: '2-digit' \n});\n\nbooking.confirmation_message = `✅ Booking Confirmed!\\n\\n` +\n  `📅 ${formattedDate}\\n` +\n  `🕐 ${formattedTime}\\n` +\n  `📍 ${booking.location}\\n\\n` +\n  `We look forward to meeting you, ${booking.attendee.name}!`;\n\nreturn booking;"
+      },
+      "id": "01fb58fa-12e4-4ffc-ace7-0499a1a8719a",
+      "name": "Process Booking",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.sync.google_calendar }}",
+              "value2": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3b81c836-d4d2-4aaf-ac09-df852188d40b",
+      "name": "Sync to Google?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.sync.cal_com }}",
+              "value2": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9112f8bb-f243-4127-8cbe-6ff9883d8e9c",
+      "name": "Sync to Cal.com?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.sync.send_whatsapp }}",
+              "value2": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3dc6cc04-41d7-46da-aacd-b50b08f2ad60",
+      "name": "Send WhatsApp?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        0,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "id"
+        },
+        "start": "={{ $('Process Booking').item.json.start_time }}",
+        "end": "={{ $('Process Booking').item.json.end_time }}",
+        "additionalFields": {
+          "attendees": [
+            {
+              "email": "={{ $('Process Booking').item.json.attendee.email }}"
+            }
+          ],
+          "description": "={{ $('Process Booking').item.json.description }}\\n\\nAttendee: {{ $('Process Booking').item.json.attendee.name }}\\nPhone: {{ $('Process Booking').item.json.attendee.phone }}\\n\\nBooked via: Omnes Integration Hub",
+          "location": "={{ $('Process Booking').item.json.location }}",
+          "summary": "={{ $('Process Booking').item.json.title }}"
+        }
+      },
+      "id": "c84d891c-d078-4ec3-bc67-1c0e1b734779",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cal.com/v1/bookings",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apiKey",
+              "value": "={{ $env.CALCOM_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"eventTypeId\": {{ $env.CALCOM_EVENT_TYPE_ID || 1 }},\n  \"start\": \"{{ $('Process Booking').item.json.start_time }}\",\n  \"end\": \"{{ $('Process Booking').item.json.end_time }}\",\n  \"responses\": {\n    \"name\": \"{{ $('Process Booking').item.json.attendee.name }}\",\n    \"email\": \"{{ $('Process Booking').item.json.attendee.email }}\",\n    \"phone\": \"{{ $('Process Booking').item.json.attendee.phone }}\",\n    \"notes\": \"{{ $('Process Booking').item.json.description }}\"\n  },\n  \"timeZone\": \"{{ $('Process Booking').item.json.timezone }}\",\n  \"language\": \"en\",\n  \"metadata\": {\n    \"source\": \"omnes_integration_hub\",\n    \"booking_id\": \"{{ $('Process Booking').item.json.booking_id }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "958f2831-ccea-4c71-a114-550b60b34f1c",
+      "name": "Cal.com Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"message\": \"{{ $('Process Booking').item.json.confirmation_message }}\",\n  \"phone_number\": \"{{ $('Process Booking').item.json.attendee.phone }}\"\n}",
+        "options": {}
+      },
+      "id": "247be87c-1361-44cd-9e5b-e1bf930bf293",
+      "name": "WhatsApp Confirmation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect all results\nconst booking = $('Process Booking').item.json;\n\n// Get results from each branch (may not exist if skipped)\nlet googleResult = null;\nlet calcomResult = null;\nlet whatsappResult = null;\n\ntry { googleResult = $('Google Calendar').item?.json; } catch(e) {}\ntry { calcomResult = $('Cal.com Booking').item?.json; } catch(e) {}\ntry { whatsappResult = $('WhatsApp Confirmation').item?.json; } catch(e) {}\n\nreturn {\n  success: true,\n  booking: {\n    id: booking.booking_id,\n    title: booking.title,\n    start: booking.start_time,\n    end: booking.end_time,\n    attendee: booking.attendee.name\n  },\n  synced: {\n    google_calendar: !!googleResult,\n    google_event_id: googleResult?.id || null,\n    cal_com: !!calcomResult,\n    cal_booking_id: calcomResult?.id || null,\n    whatsapp_sent: !!whatsappResult\n  },\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "7989ed06-3529-4694-a124-b04c29aadebc",
+      "name": "Merge Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "1aa0914e-710a-417b-8883-78e284e4b80a",
+      "name": "Booking Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ba063bc1-61ca-4013-93a5-a9cd87b5e058",
+      "name": "Skip Google",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c0c952fa-f332-46b9-b441-933420a932d6",
+      "name": "Skip Cal.com",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ff6d4ee6-f4d9-494e-88ad-55d789379ce5",
+      "name": "Skip WhatsApp",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        480
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:07:40.895Z",
+      "createdAt": "2026-01-29T19:07:40.895Z",
+      "role": "workflow:owner",
+      "workflowId": "hy7yx87aTuRp8Ryg8yXeR",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T19:07:36.872Z",
+      "createdAt": "2026-01-29T19:07:36.872Z",
+      "id": "HTluSiHtF9b64Xru",
+      "name": "calendar"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:36.997Z",
+      "createdAt": "2026-01-29T19:07:36.997Z",
+      "id": "Kift2ZMO0pzbsAr0",
+      "name": "google"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:36.838Z",
+      "createdAt": "2026-01-29T19:07:36.838Z",
+      "id": "Z4p2G73jnIbEp1v4",
+      "name": "calcom"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:36.861Z",
+      "createdAt": "2026-01-29T19:07:36.861Z",
+      "id": "Za6IooO2RKqpkHUg",
+      "name": "booking"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:10:50.000Z",
+  "versionId": "ec9b64de-29a0-4b63-a1e5-54efa277afbb"
+}

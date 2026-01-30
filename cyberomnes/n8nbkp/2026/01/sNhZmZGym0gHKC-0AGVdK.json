@@ -1,0 +1,236 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Biolink Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Biolink Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Biolink Data": {
+      "main": [
+        [
+          {
+            "node": "Use Template?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Template?": {
+      "main": [
+        [
+          {
+            "node": "Send Template Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Template Message": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Text Message": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:07:14.724Z",
+  "id": "sNhZmZGym0gHKC-0AGVdK",
+  "isArchived": true,
+  "meta": null,
+  "name": "Omnes - Biolink to WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "biolink-whatsapp",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9918b885-bbb9-4171-a56d-4a2740a62593",
+      "name": "Biolink Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        112
+      ],
+      "webhookId": "biolink-whatsapp-hook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process biolink click/form submission\nconst data = $input.all()[0].json;\n\n// Validate required fields\nif (!data.phone) {\n  throw new Error('Phone number is required');\n}\n\n// Clean phone number (remove spaces, dashes)\nconst cleanPhone = data.phone.replace(/[\\s\\-\\(\\)]/g, '');\n\n// Determine message type and content\nconst blockType = data.block_type || 'generic';\nlet messageConfig = {\n  use_template: false,\n  message: '',\n  template_id: null,\n  variables: {}\n};\n\nswitch(blockType) {\n  case 'contact_form':\n    messageConfig.use_template = true;\n    messageConfig.template_id = data.template_id || $env.CONTACT_FORM_TEMPLATE;\n    messageConfig.variables = {\n      '1': data.name || 'Visitor',\n      '2': data.email || '',\n      '3': data.message || 'Form submitted'\n    };\n    break;\n    \n  case 'booking_request':\n    messageConfig.use_template = true;\n    messageConfig.template_id = data.template_id || $env.BOOKING_TEMPLATE;\n    messageConfig.variables = {\n      '1': data.name || 'Visitor',\n      '2': data.preferred_date || 'TBD',\n      '3': data.preferred_time || 'TBD'\n    };\n    break;\n    \n  case 'whatsapp_button':\n  case 'cta_button':\n    messageConfig.message = data.auto_message || \n      `Hi ${data.name || 'there'}! 👋 Thanks for reaching out through our link. How can we help you today?`;\n    break;\n    \n  default:\n    messageConfig.message = data.message || \n      `Hello! Thanks for connecting with us. How can we assist you?`;\n}\n\nreturn {\n  recipient_phone: cleanPhone,\n  recipient_name: data.name || 'Visitor',\n  recipient_email: data.email || '',\n  ...messageConfig,\n  source_link: data.link_id || '',\n  source_block: data.block_id || '',\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "0e159c73-83f1-490f-ada2-dece443b6bbd",
+      "name": "Process Biolink Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.use_template }}",
+              "value2": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f9a85f79-7230-4b9c-81f0-b84d8a0027f9",
+      "name": "Use Template?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send/template",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phoneNumberID\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"botTemplateID\": \"{{ $json.template_id }}\",\n  \"sendToPhoneNumber\": \"{{ $json.recipient_phone }}\",\n  \"templateVariable-1\": \"{{ $json.variables['1'] || '' }}\",\n  \"templateVariable-2\": \"{{ $json.variables['2'] || '' }}\",\n  \"templateVariable-3\": \"{{ $json.variables['3'] || '' }}\"\n}",
+        "options": {}
+      },
+      "id": "dc95972e-7b3a-4bcb-937f-f0a64c7bf3cb",
+      "name": "Send Template Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"message\": \"{{ $json.message }}\",\n  \"phone_number\": \"{{ $json.recipient_phone }}\"\n}",
+        "options": {}
+      },
+      "id": "568fca24-9586-44fe-b18d-01939f2a6941",
+      "name": "Send Text Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"WhatsApp message sent successfully\",\n  \"recipient\": \"{{ $json.recipient_phone }}\",\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "7a5c8ac4-78b4-4905-b895-c9fca9b679c6",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"{{ $json.message || 'Failed to send message' }}\"\n}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "id": "6ce88b5e-4526-46f0-8a5b-b67ea3d7b759",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        304
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:07:14.778Z",
+      "createdAt": "2026-01-29T19:07:14.778Z",
+      "role": "workflow:owner",
+      "workflowId": "sNhZmZGym0gHKC-0AGVdK",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T18:44:20.658Z",
+      "createdAt": "2026-01-29T18:44:20.658Z",
+      "id": "nzK4wlWGT0G8NG4l",
+      "name": "allmybots"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:12.772Z",
+      "createdAt": "2026-01-29T19:07:12.772Z",
+      "id": "phL60YfXimjFSdgj",
+      "name": "biolink"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:12.700Z",
+      "createdAt": "2026-01-29T19:07:12.700Z",
+      "id": "wzaoYcvGtDm5pE5U",
+      "name": "whatsapp"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:10:28.000Z",
+  "versionId": "f17d08fe-ce9d-4f96-a704-826e43956267"
+}

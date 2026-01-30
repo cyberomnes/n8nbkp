@@ -1,0 +1,334 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Signup Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Signup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Signup": {
+      "main": [
+        [
+          {
+            "node": "Create Omnes.Link User",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create AllMyBots?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Omnes.Link User": {
+      "main": [
+        [
+          {
+            "node": "Update Omnes.Link Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create AllMyBots?": {
+      "main": [
+        [
+          {
+            "node": "Create AllMyBots User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Omnes.Link Plan": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create AllMyBots User": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Results": {
+      "main": [
+        [
+          {
+            "node": "Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T19:07:59.725Z",
+  "id": "_FleTSaAJh5U07JGp9nKc",
+  "isArchived": true,
+  "meta": null,
+  "name": "Omnes - User Signup Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "user-signup-sync",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "d06b8cf3-6c2d-4802-8d8d-9d0fded23dec",
+      "name": "Signup Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        112
+      ],
+      "webhookId": "user-signup-sync-hook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// User Signup Processor\n// Handles cross-platform user creation\n\nconst input = $input.all()[0].json;\n\n// Plan mapping between platforms\nconst PLAN_MAP = {\n  // Omnes.Link plan_id -> AllMyBots package_id\n  'free': { allmybots: 'free', create_allmybots: false, create_omnestalk: false },\n  'starter': { allmybots: 'basic', create_allmybots: true, create_omnestalk: false },\n  'pro': { allmybots: 'premium', create_allmybots: true, create_omnestalk: true },\n  'business': { allmybots: 'enterprise', create_allmybots: true, create_omnestalk: true },\n  'enterprise': { allmybots: 'enterprise', create_allmybots: true, create_omnestalk: true }\n};\n\n// Validate input\nif (!input.email) {\n  throw new Error('Email is required');\n}\nif (!input.name) {\n  throw new Error('Name is required');\n}\n\nconst planId = input.plan_id || 'free';\nconst planConfig = PLAN_MAP[planId] || PLAN_MAP['free'];\n\n// Generate secure password if not provided\nfunction generatePassword() {\n  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';\n  let password = '';\n  for (let i = 0; i < 12; i++) {\n    password += chars.charAt(Math.floor(Math.random() * chars.length));\n  }\n  return password;\n}\n\n// Calculate expiration date\nfunction getExpirationDate(planId) {\n  if (planId === 'free') return null;\n  const date = new Date();\n  date.setFullYear(date.getFullYear() + 1);\n  return date.toISOString().split('T')[0] + ' 00:00:00';\n}\n\nconst userData = {\n  name: input.name,\n  email: input.email,\n  phone: input.phone || '',\n  password: input.password || generatePassword(),\n  \n  // Omnes.Link specific\n  omneslink: {\n    plan_id: planId,\n    plan_expiration_date: getExpirationDate(planId),\n    status: 1 // Active\n  },\n  \n  // AllMyBots specific\n  allmybots: {\n    package_id: planConfig.allmybots,\n    expired_date: getExpirationDate(planId),\n    should_create: planConfig.create_allmybots\n  },\n  \n  // OmnesTalk specific\n  omnestalk: {\n    should_create: planConfig.create_omnestalk\n  },\n  \n  // Meta\n  source: input.source || 'signup_form',\n  created_at: new Date().toISOString()\n};\n\nreturn userData;"
+      },
+      "id": "2e9f9947-7f12-4e48-9560-0912c5b980c7",
+      "name": "Process Signup",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://omnes.link/admin-api/users",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $json.password }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83430ac7-63a8-481a-87c3-26a7c8255e06",
+      "name": "Create Omnes.Link User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://omnes.link/admin-api/users/{{ $('Create Omnes.Link User').item.json.data.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "plan_id",
+              "value": "={{ $('Process Signup').item.json.omneslink.plan_id }}"
+            },
+            {
+              "name": "plan_expiration_date",
+              "value": "={{ $('Process Signup').item.json.omneslink.plan_expiration_date || '' }}"
+            },
+            {
+              "name": "status",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88f88cbd-c46f-4e28-8b9a-c55e18e79f41",
+      "name": "Update Omnes.Link Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('Process Signup').item.json.allmybots.should_create }}",
+              "value2": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "11b8a064-a924-46d4-90cc-c17bda50bf7e",
+      "name": "Create AllMyBots?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/user/create",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"name\": \"{{ $('Process Signup').item.json.name }}\",\n  \"email\": \"{{ $('Process Signup').item.json.email }}\",\n  \"mobile\": \"{{ $('Process Signup').item.json.phone }}\",\n  \"password\": \"{{ $('Process Signup').item.json.password }}\",\n  \"package_id\": \"{{ $('Process Signup').item.json.allmybots.package_id }}\",\n  \"expired_date\": \"{{ $('Process Signup').item.json.allmybots.expired_date || '' }}\"\n}",
+        "options": {}
+      },
+      "id": "07b238e8-4303-4ed5-8fb9-b8b0d0c39f37",
+      "name": "Create AllMyBots User",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.allmybots.com/api/v1/whatsapp/send",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"apiToken\": \"{{ $env.ALLMYBOTS_API_TOKEN }}\",\n  \"phone_number_id\": \"{{ $env.ALLMYBOTS_PHONE_NUMBER_ID }}\",\n  \"message\": \"Welcome to Omnes, {{ $('Process Signup').item.json.name }}! 🎉\\n\\nYour account has been created successfully.\\n\\nPlan: {{ $('Process Signup').item.json.omneslink.plan_id }}\\n\\nNeed help? Just reply to this message!\",\n  \"phone_number\": \"{{ $('Process Signup').item.json.phone }}\"\n}",
+        "options": {}
+      },
+      "id": "e12750cd-693a-47fe-845b-783b1d74fdaf",
+      "name": "Send Welcome WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        112
+      ],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate results from all platforms\nconst processedData = $('Process Signup').item.json;\nconst omnesLinkResult = $('Update Omnes.Link Plan').item.json;\nconst allmybotsResult = $('Create AllMyBots User').item?.json || { skipped: true };\n\nreturn {\n  success: true,\n  user: {\n    name: processedData.name,\n    email: processedData.email,\n    plan: processedData.omneslink.plan_id\n  },\n  platforms: {\n    omneslink: {\n      created: true,\n      user_id: omnesLinkResult.data?.id\n    },\n    allmybots: {\n      created: processedData.allmybots.should_create,\n      result: allmybotsResult\n    }\n  },\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "2fb78364-7718-4264-b724-4b0c11aa3ff0",
+      "name": "Aggregate Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "8085fc1b-c635-4678-89da-c207f4185c54",
+      "name": "Final Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        112
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T19:07:59.878Z",
+      "createdAt": "2026-01-29T19:07:59.878Z",
+      "role": "workflow:owner",
+      "workflowId": "_FleTSaAJh5U07JGp9nKc",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-01-29T18:44:20.117Z",
+      "createdAt": "2026-01-29T18:44:20.117Z",
+      "id": "8FYyoACof9fYFMzS",
+      "name": "omneslink"
+    },
+    {
+      "updatedAt": "2026-01-29T19:07:58.125Z",
+      "createdAt": "2026-01-29T19:07:58.125Z",
+      "id": "AhjFI1AvIyZrzOF6",
+      "name": "user-sync"
+    },
+    {
+      "updatedAt": "2026-01-29T18:44:20.658Z",
+      "createdAt": "2026-01-29T18:44:20.658Z",
+      "id": "nzK4wlWGT0G8NG4l",
+      "name": "allmybots"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T19:10:46.000Z",
+  "versionId": "9cf4263d-1e46-4b11-9159-1584f8b9020d"
+}

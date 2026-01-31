@@ -1,0 +1,64 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Create a biolink page": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-01-30T16:40:42.249Z",
+  "id": "oJLh2vX38XWkKT5GOof-r",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 47",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "biolink",
+        "biolinkUrl": "olinktestn8n",
+        "biolinkFields": {}
+      },
+      "type": "CUSTOM.omnesLink",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "79b5acd6-0b0a-4ac2-ae5e-1e528b934a01",
+      "name": "Create a biolink page",
+      "credentials": {
+        "omnesLinkApi": {
+          "id": "vYuXdeax08b1iv7a",
+          "name": "OmnesLink user admin account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-30T16:40:42.263Z",
+      "createdAt": "2026-01-30T16:40:42.263Z",
+      "role": "workflow:owner",
+      "workflowId": "oJLh2vX38XWkKT5GOof-r",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-30T16:42:21.673Z",
+  "versionId": "c768bc45-2059-4761-a429-ff4665638bae"
+}

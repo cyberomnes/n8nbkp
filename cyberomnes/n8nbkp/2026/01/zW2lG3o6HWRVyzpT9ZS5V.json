@@ -1,0 +1,81 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "OmnesTalk Trigger1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-01-29T16:05:22.698Z",
+  "id": "zW2lG3o6HWRVyzpT9ZS5V",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 46",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "CUSTOM.omnesTalkTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "709f6fd2-76b4-49fa-bc94-8ffb59563577",
+      "name": "OmnesTalk Trigger",
+      "webhookId": "0feec78d-e05a-4639-9833-50e22537cda8",
+      "credentials": {
+        "omnesTalkApi": {
+          "id": "1F6zibAkt27qPgw7",
+          "name": "OmnesTalk account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "appointment.scheduled"
+      },
+      "type": "CUSTOM.omnesTalkTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -176
+      ],
+      "id": "c6514545-02eb-47d1-b402-240b4bf57dbf",
+      "name": "OmnesTalk Trigger1",
+      "webhookId": "30fd8de3-128f-43c4-bba0-a710833af132",
+      "credentials": {
+        "omnesTalkApi": {
+          "id": "1F6zibAkt27qPgw7",
+          "name": "OmnesTalk account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-29T16:05:22.848Z",
+      "createdAt": "2026-01-29T16:05:22.848Z",
+      "role": "workflow:owner",
+      "workflowId": "zW2lG3o6HWRVyzpT9ZS5V",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-29T16:06:16.215Z",
+  "versionId": "4cffc9a1-39f8-42ea-b6ad-2690b428a3cd"
+}

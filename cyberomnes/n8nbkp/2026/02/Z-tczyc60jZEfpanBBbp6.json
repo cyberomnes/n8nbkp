@@ -1,0 +1,153 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-16T14:44:36.000Z",
+    "createdAt": "2026-02-16T14:43:39.097Z",
+    "versionId": "29973ed2-0c5e-4afe-b416-5ecc64f369c1",
+    "workflowId": "Z-tczyc60jZEfpanBBbp6",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "otalkzapv2",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "46131a19-2776-4765-818b-85ea03b9f89e",
+        "name": "Webhook",
+        "webhookId": "dee9fbbc-3b30-405d-8415-ed5fb95b11cc"
+      },
+      {
+        "parameters": {
+          "respondWith": "text",
+          "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n<Dial>\n<Sip>sip:+551139577770@sip.rtc.elevenlabs.io:5060;transport=tcp</Sip>\n</Dial>\n</ Response>",
+          "options": {
+            "responseHeaders": {
+              "entries": [
+                {
+                  "name": "Content-Type",
+                  "value": "application/xml"
+                }
+              ]
+            }
+          }
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [
+          208,
+          0
+        ],
+        "id": "b7f6b326-4db7-406b-9d10-758f1c08ac95",
+        "name": "Respond to Webhook"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": "Version 29973ed2",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "29973ed2-0c5e-4afe-b416-5ecc64f369c1",
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-16T14:36:48.202Z",
+  "id": "Z-tczyc60jZEfpanBBbp6",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 48",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "otalkzapv2",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "46131a19-2776-4765-818b-85ea03b9f89e",
+      "name": "Webhook",
+      "webhookId": "dee9fbbc-3b30-405d-8415-ed5fb95b11cc"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n<Dial>\n<Sip>sip:+551139577770@sip.rtc.elevenlabs.io:5060;transport=tcp</Sip>\n</Dial>\n</ Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/xml"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b7f6b326-4db7-406b-9d10-758f1c08ac95",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-16T14:36:48.354Z",
+      "createdAt": "2026-02-16T14:36:48.354Z",
+      "role": "workflow:owner",
+      "workflowId": "Z-tczyc60jZEfpanBBbp6",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-16T14:43:39.068Z",
+  "versionId": "29973ed2-0c5e-4afe-b416-5ecc64f369c1"
+}

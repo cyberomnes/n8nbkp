@@ -1,0 +1,266 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-23T18:36:48.000Z",
+    "createdAt": "2026-02-23T18:34:52.747Z",
+    "versionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82",
+    "workflowId": "HmrFk1S3g_c3ltFLyK-7s",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "servnova-motd-install",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "ceac1628-7f6b-432f-9b6b-c9f2040ea74e",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          -576,
+          560
+        ],
+        "webhookId": "fef21090-9be1-492a-a8de-bbf3fb7f9343"
+      },
+      {
+        "parameters": {
+          "jsCode": "// ServNova MOTD Installer — dynamic SSH using ssh2 (bundled with n8n)\n// POST body: { ip, password, script }\n\nconst body = $input.first().json.body;\nconst { ip, password, script } = body;\n\nif (!ip)       throw new Error('Missing: ip');\nif (!password) throw new Error('Missing: password');\nif (!script)   throw new Error('Missing: script');\n\nconst { Client } = require('ssh2');\n\nconst result = await new Promise((resolve, reject) => {\n  const conn = new Client();\n  let stdout = '';\n  let stderr = '';\n\n  conn.on('ready', () => {\n    conn.exec(script, (err, stream) => {\n      if (err) { conn.end(); return reject(err); }\n      stream.on('close', (code) => {\n        conn.end();\n        resolve({ stdout, stderr, code });\n      });\n      stream.on('data', (data) => { stdout += data.toString(); });\n      stream.stderr.on('data', (data) => { stderr += data.toString(); });\n    });\n  });\n\n  conn.on('error', (err) => reject(new Error('SSH connection failed: ' + err.message)));\n\n  conn.connect({\n    host: ip,\n    port: 22,\n    username: 'root',\n    password: password,\n    readyTimeout: 20000,\n    tryKeyboard: true,\n    debug: false\n  });\n});\n\nreturn [{ json: { success: true, stdout: result.stdout, stderr: result.stderr, code: result.code } }];"
+        },
+        "id": "2795b131-8d6a-442b-a457-e841e12f363f",
+        "name": "SSH - Run MOTD Script",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -336,
+          560
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify({ success: true, stdout: $json.stdout, stderr: $json.stderr }) }}",
+          "options": {}
+        },
+        "id": "27da607f-9f97-4a75-8e4b-3281b9e3e747",
+        "name": "Respond - Success",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          -96,
+          448
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ JSON.stringify({ success: false, error: $json.message || 'SSH failed' }) }}",
+          "options": {}
+        },
+        "id": "5c24e6fc-4b7e-40a3-bb6b-e156aa748d72",
+        "name": "Respond - Error",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1,
+        "position": [
+          -96,
+          672
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "86695ef7-3243-43f1-9d9b-2d3f2dbedc7a",
+        "name": "Error Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -336,
+          752
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "SSH - Run MOTD Script",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SSH - Run MOTD Script": {
+        "main": [
+          [
+            {
+              "node": "Respond - Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Respond - Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Cyber Omnes",
+    "name": "Version 94e7a049",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82",
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "SSH - Run MOTD Script",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SSH - Run MOTD Script": {
+      "main": [
+        [
+          {
+            "node": "Respond - Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Respond - Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-23T18:30:43.840Z",
+  "id": "HmrFk1S3g_c3ltFLyK-7s",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ServNova - MOTD Installer (SSH)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "servnova-motd-install",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ceac1628-7f6b-432f-9b6b-c9f2040ea74e",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        560
+      ],
+      "webhookId": "fef21090-9be1-492a-a8de-bbf3fb7f9343"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ServNova MOTD Installer — dynamic SSH using ssh2 (bundled with n8n)\n// POST body: { ip, password, script }\n\nconst body = $input.first().json.body;\nconst { ip, password, script } = body;\n\nif (!ip)       throw new Error('Missing: ip');\nif (!password) throw new Error('Missing: password');\nif (!script)   throw new Error('Missing: script');\n\nconst { Client } = require('ssh2');\n\nconst result = await new Promise((resolve, reject) => {\n  const conn = new Client();\n  let stdout = '';\n  let stderr = '';\n\n  conn.on('ready', () => {\n    conn.exec(script, (err, stream) => {\n      if (err) { conn.end(); return reject(err); }\n      stream.on('close', (code) => {\n        conn.end();\n        resolve({ stdout, stderr, code });\n      });\n      stream.on('data', (data) => { stdout += data.toString(); });\n      stream.stderr.on('data', (data) => { stderr += data.toString(); });\n    });\n  });\n\n  conn.on('error', (err) => reject(new Error('SSH connection failed: ' + err.message)));\n\n  conn.connect({\n    host: ip,\n    port: 22,\n    username: 'root',\n    password: password,\n    readyTimeout: 20000,\n    tryKeyboard: true,\n    debug: false\n  });\n});\n\nreturn [{ json: { success: true, stdout: result.stdout, stderr: result.stderr, code: result.code } }];"
+      },
+      "id": "2795b131-8d6a-442b-a457-e841e12f363f",
+      "name": "SSH - Run MOTD Script",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, stdout: $json.stdout, stderr: $json.stderr }) }}",
+        "options": {}
+      },
+      "id": "27da607f-9f97-4a75-8e4b-3281b9e3e747",
+      "name": "Respond - Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: $json.message || 'SSH failed' }) }}",
+        "options": {}
+      },
+      "id": "5c24e6fc-4b7e-40a3-bb6b-e156aa748d72",
+      "name": "Respond - Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        672
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "86695ef7-3243-43f1-9d9b-2d3f2dbedc7a",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        752
+      ]
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-23T18:30:44.085Z",
+      "createdAt": "2026-02-23T18:30:44.085Z",
+      "role": "workflow:owner",
+      "workflowId": "HmrFk1S3g_c3ltFLyK-7s",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-02-23T18:07:00.337Z",
+      "createdAt": "2026-02-23T18:07:00.337Z",
+      "id": "q3KYgbksuh0wpgUX",
+      "name": "ServNova"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-23T18:34:52.735Z",
+  "versionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82"
+}

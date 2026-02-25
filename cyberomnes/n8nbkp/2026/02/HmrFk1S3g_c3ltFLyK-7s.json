@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-23T18:36:48.000Z",
-    "createdAt": "2026-02-23T18:34:52.747Z",
-    "versionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82",
+    "updatedAt": "2026-02-24T16:47:54.283Z",
+    "createdAt": "2026-02-24T16:47:54.283Z",
+    "versionId": "b4e3f0b1-3971-48a0-8a5f-1a18ed5aced1",
     "workflowId": "HmrFk1S3g_c3ltFLyK-7s",
     "nodes": [
       {
@@ -25,14 +25,45 @@
       },
       {
         "parameters": {
-          "jsCode": "// ServNova MOTD Installer — dynamic SSH using ssh2 (bundled with n8n)\n// POST body: { ip, password, script }\n\nconst body = $input.first().json.body;\nconst { ip, password, script } = body;\n\nif (!ip)       throw new Error('Missing: ip');\nif (!password) throw new Error('Missing: password');\nif (!script)   throw new Error('Missing: script');\n\nconst { Client } = require('ssh2');\n\nconst result = await new Promise((resolve, reject) => {\n  const conn = new Client();\n  let stdout = '';\n  let stderr = '';\n\n  conn.on('ready', () => {\n    conn.exec(script, (err, stream) => {\n      if (err) { conn.end(); return reject(err); }\n      stream.on('close', (code) => {\n        conn.end();\n        resolve({ stdout, stderr, code });\n      });\n      stream.on('data', (data) => { stdout += data.toString(); });\n      stream.stderr.on('data', (data) => { stderr += data.toString(); });\n    });\n  });\n\n  conn.on('error', (err) => reject(new Error('SSH connection failed: ' + err.message)));\n\n  conn.connect({\n    host: ip,\n    port: 22,\n    username: 'root',\n    password: password,\n    readyTimeout: 20000,\n    tryKeyboard: true,\n    debug: false\n  });\n});\n\nreturn [{ json: { success: true, stdout: result.stdout, stderr: result.stderr, code: result.code } }];"
+          "jsCode": "const body = $input.first().json.body;\nconst { ip, password, script } = body;\nif (!ip) throw new Error(\"Missing: ip\");\nif (!password) throw new Error(\"Missing: password\");\nif (!script) throw new Error(\"Missing: script\");\nreturn [{ json: { ip, password, script } }];"
         },
         "id": "2795b131-8d6a-442b-a457-e841e12f363f",
-        "name": "SSH - Run MOTD Script",
+        "name": "Validate",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
           -336,
+          560
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://185.187.170.110:3022/run",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "x-proxy-secret",
+                "value": "93226436c57dd0df2779977dee5f776b29579d10b55280cd393218d838574427"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify({ ip: $json.ip, password: $json.password, script: $json.script }) }}",
+          "options": {}
+        },
+        "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "name": "Run via SSH",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4,
+        "position": [
+          -96,
           560
         ]
       },
@@ -47,14 +78,14 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1,
         "position": [
-          -96,
+          144,
           448
         ]
       },
       {
         "parameters": {
           "respondWith": "json",
-          "responseBody": "={{ JSON.stringify({ success: false, error: $json.message || 'SSH failed' }) }}",
+          "responseBody": "={{ JSON.stringify({ success: false, error: $json.error || $json.message || \"SSH failed\" }) }}",
           "options": {}
         },
         "id": "5c24e6fc-4b7e-40a3-bb6b-e156aa748d72",
@@ -62,7 +93,7 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1,
         "position": [
-          -96,
+          144,
           672
         ]
       },
@@ -73,7 +104,7 @@
         "type": "n8n-nodes-base.errorTrigger",
         "typeVersion": 1,
         "position": [
-          -336,
+          -96,
           752
         ]
       }
@@ -83,14 +114,25 @@
         "main": [
           [
             {
-              "node": "SSH - Run MOTD Script",
+              "node": "Validate",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "SSH - Run MOTD Script": {
+      "Validate": {
+        "main": [
+          [
+            {
+              "node": "Run via SSH",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Run via SSH": {
         "main": [
           [
             {
@@ -114,24 +156,35 @@
       }
     },
     "authors": "Cyber Omnes",
-    "name": "Version 94e7a049",
-    "description": "",
+    "name": null,
+    "description": null,
     "autosaved": false
   },
-  "activeVersionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82",
+  "activeVersionId": "b4e3f0b1-3971-48a0-8a5f-1a18ed5aced1",
   "connections": {
     "Webhook": {
       "main": [
         [
           {
-            "node": "SSH - Run MOTD Script",
+            "node": "Validate",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "SSH - Run MOTD Script": {
+    "Validate": {
+      "main": [
+        [
+          {
+            "node": "Run via SSH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run via SSH": {
       "main": [
         [
           {
@@ -181,14 +234,45 @@
     },
     {
       "parameters": {
-        "jsCode": "// ServNova MOTD Installer — dynamic SSH using ssh2 (bundled with n8n)\n// POST body: { ip, password, script }\n\nconst body = $input.first().json.body;\nconst { ip, password, script } = body;\n\nif (!ip)       throw new Error('Missing: ip');\nif (!password) throw new Error('Missing: password');\nif (!script)   throw new Error('Missing: script');\n\nconst { Client } = require('ssh2');\n\nconst result = await new Promise((resolve, reject) => {\n  const conn = new Client();\n  let stdout = '';\n  let stderr = '';\n\n  conn.on('ready', () => {\n    conn.exec(script, (err, stream) => {\n      if (err) { conn.end(); return reject(err); }\n      stream.on('close', (code) => {\n        conn.end();\n        resolve({ stdout, stderr, code });\n      });\n      stream.on('data', (data) => { stdout += data.toString(); });\n      stream.stderr.on('data', (data) => { stderr += data.toString(); });\n    });\n  });\n\n  conn.on('error', (err) => reject(new Error('SSH connection failed: ' + err.message)));\n\n  conn.connect({\n    host: ip,\n    port: 22,\n    username: 'root',\n    password: password,\n    readyTimeout: 20000,\n    tryKeyboard: true,\n    debug: false\n  });\n});\n\nreturn [{ json: { success: true, stdout: result.stdout, stderr: result.stderr, code: result.code } }];"
+        "jsCode": "const body = $input.first().json.body;\nconst { ip, password, script } = body;\nif (!ip) throw new Error(\"Missing: ip\");\nif (!password) throw new Error(\"Missing: password\");\nif (!script) throw new Error(\"Missing: script\");\nreturn [{ json: { ip, password, script } }];"
       },
       "id": "2795b131-8d6a-442b-a457-e841e12f363f",
-      "name": "SSH - Run MOTD Script",
+      "name": "Validate",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -336,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://185.187.170.110:3022/run",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-proxy-secret",
+              "value": "93226436c57dd0df2779977dee5f776b29579d10b55280cd393218d838574427"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ ip: $json.ip, password: $json.password, script: $json.script }) }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Run via SSH",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -96,
         560
       ]
     },
@@ -203,14 +287,14 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        -96,
+        144,
         448
       ]
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ success: false, error: $json.message || 'SSH failed' }) }}",
+        "responseBody": "={{ JSON.stringify({ success: false, error: $json.error || $json.message || \"SSH failed\" }) }}",
         "options": {}
       },
       "id": "5c24e6fc-4b7e-40a3-bb6b-e156aa748d72",
@@ -218,7 +302,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        -96,
+        144,
         672
       ]
     },
@@ -229,7 +313,7 @@
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
       "position": [
-        -336,
+        -96,
         752
       ]
     }
@@ -240,7 +324,8 @@
   "repo_path": "cyberomnes/n8nbkp/",
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -261,6 +346,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-02-23T18:34:52.735Z",
-  "versionId": "94e7a049-3cd1-44f3-96a5-ec90a6cd5a82"
+  "updatedAt": "2026-02-24T16:47:54.269Z",
+  "versionId": "b4e3f0b1-3971-48a0-8a5f-1a18ed5aced1"
 }

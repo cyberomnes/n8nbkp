@@ -1,0 +1,50 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-03-18T17:43:49.801Z",
+  "id": "2uSDNg165-9m0G8hhf3cv",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 49",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "1f9470dd-0d0e-49ce-83f3-5815ef6d78d1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "530a3ad9-4342-468d-bc31-4370719d1412",
+      "name": "Webhook",
+      "webhookId": "1f9470dd-0d0e-49ce-83f3-5815ef6d78d1"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-18T17:43:49.847Z",
+      "createdAt": "2026-03-18T17:43:49.847Z",
+      "role": "workflow:owner",
+      "workflowId": "2uSDNg165-9m0G8hhf3cv",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-18T17:43:49.801Z",
+  "versionId": "f2d77624-d01a-4c13-a64e-0de6949b4017"
+}

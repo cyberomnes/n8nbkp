@@ -1,0 +1,95 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-19T19:00:45.000Z",
+    "createdAt": "2026-03-19T19:00:30.034Z",
+    "versionId": "b5b528dc-72ef-4567-a852-625f55c91417",
+    "workflowId": "PDNE6OJuHAef5GA1FCj2f",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "almatalkhook",
+          "authentication": "headerAuth",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "c86b8606-54b8-4f96-8320-4e63a2a779df",
+        "name": "Webhook",
+        "webhookId": "c76eb6c4-b41a-4188-94b1-82e2ab4ef60a",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "b7LvSwQSqG2ILJQo",
+            "name": "AlmaTalkhook"
+          }
+        }
+      }
+    ],
+    "connections": {},
+    "authors": "Cyber Omnes",
+    "name": "Version b5b528dc",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "b5b528dc-72ef-4567-a852-625f55c91417",
+  "connections": {},
+  "createdAt": "2026-03-19T18:59:55.438Z",
+  "id": "PDNE6OJuHAef5GA1FCj2f",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ALMATALKHOOK",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "almatalkhook",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c86b8606-54b8-4f96-8320-4e63a2a779df",
+      "name": "Webhook",
+      "webhookId": "c76eb6c4-b41a-4188-94b1-82e2ab4ef60a",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "b7LvSwQSqG2ILJQo",
+          "name": "AlmaTalkhook"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8nbkp",
+  "repo_owner": "cyberomnes",
+  "repo_path": "cyberomnes/n8nbkp/",
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-19T18:59:55.470Z",
+      "createdAt": "2026-03-19T18:59:55.470Z",
+      "role": "workflow:owner",
+      "workflowId": "PDNE6OJuHAef5GA1FCj2f",
+      "projectId": "0wopg4LuKwAYZbx5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-19T19:00:40.650Z",
+  "versionId": "b5b528dc-72ef-4567-a852-625f55c91417"
+}
